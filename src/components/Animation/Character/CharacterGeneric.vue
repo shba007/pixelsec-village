@@ -1,110 +1,106 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { onTick } from 'vue3-pixi'
 
 interface Route {
   x: number
   y: number
+  scale: number
   time: number
 }
 
-type HeadOrientation = 'front' | 'back' | 'left' | 'right'
+type Orientation = 'front' | 'back' | 'left' | 'right'
 
 interface Character {
-  imgs: string[]
-  isAnimating: boolean
+  loaded: boolean
+  aliases: string[]
   position: {
     x: number
     y: number
+    scale: number
+    time: number
   }
-  speed: number
   direction: number
-  headOrientation: HeadOrientation
+  orientation: string
+  animation: 'init' | 'started' | 'finished'
 }
 
 const props = defineProps<{
-  route: Route[]
+  steps: Route[]
+  animation: boolean
 }>()
 
 const animations = {
-  frontStill: ['@/assets/character/generic/front-still.png'],
-  frontWalk: ['@/assets/character/generic/front-still.png', '@/assets/character/generic/front-walk-1.png', '@/assets/character/generic/front-walk-2.png'],
-  backWalk: [],
-  leftWalk: [],
-  rightWalk: []
+  frontStill: ['characterGenericFrontStill'],
+  frontWalk: ['characterGenericFrontWalk1', 'characterGenericFrontWalk2'],
+  backWalk: ['characterGenericBackWalk1', 'characterGenericBackWalk2'],
+  leftWalk: ['characterGenericLeftWalk1', 'characterGenericLeftWalk2'],
+  rightWalk: ['characterGenericRightWalk1', 'characterGenericRightWalk2']
 }
 
 const activeCharacter = reactive<Character>({
-  imgs: animations.frontStill,
-  isAnimating: false,
-  position: { x: 420, y: 150 },
-  speed: 0,
+  loaded: false,
+  aliases: animations.frontStill,
+  position: {
+    x: props.steps[0].x,
+    y: props.steps[0].y,
+    scale: props.steps[0].scale,
+    time: props.steps[0].time
+  },
   direction: 1,
-  headOrientation: 'front'
+  orientation: 'front',
+  animation: 'started'
 })
 
-/* setTimeout(() => {
-  activeCharacter.speed = 1.3
-  activeCharacter.isAnimating = true
-  activeCharacter.imgs = animations['right']
-}, 2000)
- */
+watch(props.steps, (value) => {
+  activeCharacter.position.x = value[0].x
+  activeCharacter.position.y = value[0].y
+  activeCharacter.position.scale = value[0].scale
+  activeCharacter.position.time = value[0].time
+})
+
 // Move Character
-let currentIndex = 0
+let totalElaspedTime = 0
+let progress = 0
+const currentCharacterPositionIndex = ref(0)
 
 onTick((delta) => {
-  if (!activeCharacter.isAnimating) return
+  if (props.animation && activeCharacter.animation === 'started') {
+    totalElaspedTime += delta / 100
+    const dt = props.steps[currentCharacterPositionIndex.value + 1].time - props.steps[currentCharacterPositionIndex.value].time
+    const dx = props.steps[currentCharacterPositionIndex.value + 1].x - props.steps[currentCharacterPositionIndex.value].x
+    const dy = props.steps[currentCharacterPositionIndex.value + 1].y - props.steps[currentCharacterPositionIndex.value].y
+    const ds = props.steps[currentCharacterPositionIndex.value + 1].scale - props.steps[currentCharacterPositionIndex.value].scale
+    progress = Math.min(totalElaspedTime / dt, 1)
+    activeCharacter.position.x = props.steps[currentCharacterPositionIndex.value].x + dx * progress
+    activeCharacter.position.y = props.steps[currentCharacterPositionIndex.value].y + dy * progress
+    activeCharacter.position.scale = props.steps[currentCharacterPositionIndex.value].scale + ds * progress
+    activeCharacter.position.time = props.steps[currentCharacterPositionIndex.value].time + dt * progress
 
-  if (currentIndex < props.route.length - 1) {
-    const nextPoint = props.route[currentIndex + 1]
-    const dx = nextPoint.x - activeCharacter.position.x
-    const dy = nextPoint.y - activeCharacter.position.y
-    const distance = Math.sqrt(dx * dx + dy * dy)
+    if (dy > 0) activeCharacter.aliases = animations['frontWalk']
+    else if (dy < 0) activeCharacter.aliases = animations['backWalk']
+    else if (dx > 0) activeCharacter.aliases = animations['rightWalk']
+    else if (dx < 0) activeCharacter.aliases = animations['leftWalk']
 
-    if (dx > 0) activeCharacter.headOrientation = 'right'
-    else if (dx < 0) activeCharacter.headOrientation = 'left'
-    else if (dy > 0) activeCharacter.headOrientation = 'front'
-    else if (dy < 0) activeCharacter.headOrientation = 'back'
-
-    activeCharacter.imgs = animations[activeCharacter.headOrientation + 'Walk']
-
-    console.log({ headOrientation: activeCharacter.headOrientation })
-
-    if (distance < activeCharacter.speed * delta) {
-      // If close enough to the next point, snap to it and move to the next
-      activeCharacter.position.x = nextPoint.x
-      activeCharacter.position.y = nextPoint.y
-      currentIndex++
-    } else {
-      // Move towards the next point
-      const angle = Math.atan2(dy, dx)
-      activeCharacter.position.x += Math.cos(angle) * activeCharacter.speed * delta
-      activeCharacter.position.y += Math.sin(angle) * activeCharacter.speed * delta
+    if (progress == 1) {
+      activeCharacter.animation = 'finished'
+      totalElaspedTime = 0
+      currentCharacterPositionIndex.value = currentCharacterPositionIndex.value === 0 ? 1 : 0
+      activeCharacter.animation = 'started'
+      // console.log({ totalElaspedTime, currentCharacterPositionIndex: currentCharacterPositionIndex.value, animation: activeCharacter.animation })
     }
-
-    // console.log(`Current Position: x=${activeCharacter.position.x}, y=${activeCharacter.position.y}`);
-  } else {
-    // console.log('Reached the end of the route.');
-    activeCharacter.isAnimating = false
   }
 })
-
-function onChangeAnimation() {
-  // console.log("Animation Changed")
-}
 </script>
 
 <template>
-  <Loader :resources="[...Object.values(animations)]">
-    <AnimatedSprite
-      :playing="activeCharacter.isAnimating"
-      :animation-speed="0.1"
-      :textures="activeCharacter.imgs"
-      :anchor="0.5"
-      :scale="0.3"
-      :x="activeCharacter.position.x"
-      :y="activeCharacter.position.y"
-      @loop="onChangeAnimation"
-    />
-  </Loader>
+  <AnimatedSprite
+    :playing="animation && activeCharacter.animation === 'started'"
+    :animation-speed="0.08"
+    :textures="activeCharacter.aliases"
+    :anchor="0.5"
+    :x="activeCharacter.position.x"
+    :y="activeCharacter.position.y"
+    :scale="activeCharacter.position.scale"
+  />
 </template>

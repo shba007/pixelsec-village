@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { Application, Loader, External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
@@ -7,7 +7,8 @@ import { useWindowSize } from '@vueuse/core'
 import { resources, useGameStore } from '@/stores/game'
 import Scene1 from '@/components/Scene/Scene1.vue'
 import Scene2 from '@/components/Scene/Scene2.vue'
-import CharacterGeneric from './components/Animation/Character/CharacterGeneric.vue'
+import Scene3 from '@/components/Scene/Scene3.vue'
+import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 
 interface AssetState {
   x: number
@@ -20,7 +21,7 @@ export interface Asset {
   loaded: boolean
   alias: string
   steps: AssetState[]
-  current: AssetState
+  position: AssetState
   animation: 'init' | 'started' | 'finished'
 }
 
@@ -42,15 +43,15 @@ const map = reactive<Asset>({
     { x: -670, y: -430, scale: 0.53, time: 10 },
     { x: -550, y: -280, scale: 0.53, time: 12 }
   ],
-  current: { x: 0, y: 0, scale: 0, time: 0 },
+  position: { x: 0, y: 0, scale: 0, time: 0 },
   animation: 'init'
 })
 
 function onLoad() {
-  map.current.x = map.steps[0].x
-  map.current.y = map.steps[0].y
-  map.current.scale = map.steps[0].scale
-  map.current.time = map.steps[0].time
+  map.position.x = map.steps[0].x
+  map.position.y = map.steps[0].y
+  map.position.scale = map.steps[0].scale
+  map.position.time = map.steps[0].time
   map.loaded = true
   map.animation = 'started'
 }
@@ -61,11 +62,16 @@ let progress = 0
 onTick((delta) => {
   if (map.animation === 'started') {
     totalElaspedTime += delta / 100
-    progress = Math.min(totalElaspedTime / (map.steps[currentMapPositionIndex.value + 1].time - map.steps[currentMapPositionIndex.value].time), 1)
-    map.current.x = map.steps[currentMapPositionIndex.value].x + (map.steps[currentMapPositionIndex.value + 1].x - map.steps[currentMapPositionIndex.value].x) * progress
-    map.current.y = map.steps[currentMapPositionIndex.value].y + (map.steps[currentMapPositionIndex.value + 1].y - map.steps[currentMapPositionIndex.value].y) * progress
-    map.current.scale = map.steps[currentMapPositionIndex.value].scale + (map.steps[currentMapPositionIndex.value + 1].scale - map.steps[currentMapPositionIndex.value].scale) * progress
-    map.current.time = map.steps[currentMapPositionIndex.value].time + (map.steps[currentMapPositionIndex.value + 1].time - map.steps[currentMapPositionIndex.value].time) * progress
+    const dt = map.steps[currentMapPositionIndex.value + 1].time - map.steps[currentMapPositionIndex.value].time
+    const dx = map.steps[currentMapPositionIndex.value + 1].x - map.steps[currentMapPositionIndex.value].x
+    const dy = map.steps[currentMapPositionIndex.value + 1].y - map.steps[currentMapPositionIndex.value].y
+    const ds = map.steps[currentMapPositionIndex.value + 1].scale - map.steps[currentMapPositionIndex.value].scale
+
+    progress = Math.min(totalElaspedTime / dt, 1)
+    map.position.x = map.steps[currentMapPositionIndex.value].x + dx * progress
+    map.position.y = map.steps[currentMapPositionIndex.value].y + dy * progress
+    map.position.scale = map.steps[currentMapPositionIndex.value].scale + ds * progress
+    map.position.time = map.steps[currentMapPositionIndex.value].time + dt * progress
 
     if (progress == 1) {
       map.animation = 'finished'
@@ -78,6 +84,35 @@ onTick((delta) => {
 watch(currentMapPositionIndex, (value) => {
   if (map.animation === 'finished') map.animation = 'started'
 })
+
+const genericCharactersSteps = ref<AssetState[][]>([
+  [
+    { x: 2500, y: 1350, scale: 0.85, time: 0 },
+    { x: 2500, y: 1180, scale: 0.85, time: 2 },
+    { x: 2500, y: 1350, scale: 0.85, time: 4 }
+  ],
+  [
+    { x: 2960, y: 1630, scale: 0.85, time: 0 },
+    { x: 2960, y: 1860, scale: 0.85, time: 2 },
+    { x: 2960, y: 1630, scale: 0.85, time: 4 }
+  ],
+  [
+    { x: 2260, y: 1100, scale: 0.85, time: 0 },
+    { x: 3180, y: 1100, scale: 0.85, time: 5 },
+    { x: 2260, y: 1100, scale: 0.85, time: 10 }
+  ],
+  [
+    { x: 1660, y: 1370, scale: 0.85, time: 0 },
+    { x: 1660, y: 1530, scale: 0.85, time: 3 },
+    { x: 1660, y: 1370, scale: 0.85, time: 6 }
+  ]
+])
+
+/* const genericCharacterSteps = ref([
+  { x: 1660, y: 1370, scale: 0.85, time: 0 },
+  { x: 1660, y: 1530, scale: 0.85, time: 3 },
+  { x: 1660, y: 1370, scale: 0.85, time: 6 },
+]) */
 </script>
 
 <template>
@@ -87,28 +122,42 @@ watch(currentMapPositionIndex, (value) => {
         <Text :x="120" :y="120" :anchor="0.5"> Loading... </Text>
       </template>
       <template #default>
-        <Container :x="map.current.x" :y="map.current.y" :scale="map.current.scale">
+        <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
           <Sprite :texture="map.alias" :anchor="0" />
-          <CharacterGeneric />
+          <CharacterGeneric v-for="genericCharacter of genericCharactersSteps" :steps="genericCharacter"
+            :animation="true" />
+          <!-- <CharacterGeneric :steps="genericCharacterSteps" :animation="false" /> -->
           <template v-if="currentScenceIndex === 0">
-            <Scene1 v-if="map.animation === 'finished'" :screenWidth="screenWidth" :screenHeight="screenHeight" />
+            <Scene1 v-if="map.animation === 'finished'" />
           </template>
           <template v-else-if="currentScenceIndex === 1">
-            <Scene2 />
+            <Scene2 v-if="map.animation === 'finished'" />
+          </template>
+          <template v-else-if="currentScenceIndex === 2">
+            <Scene3 v-if="map.animation === 'finished'" />
           </template>
         </Container>
       </template>
     </Loader>
-    <!--   <External style="margin-top: 20px; position: absolute; bottom: 0; background: '#fff';" tag="div">
-      <input v-model="map.current.x" type="number" min="-10000" max="10000" step="10">
-      <input v-model="map.current.y" type="number" min="-10000" max="10000" step="10">
-      <input v-model="map.current.scale" type="number" min="0" max="2" step="0.01">
+    <!--  <External>
+      <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
+        <div class="flex flex-col gap-2 ">
+          <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10">
+          <input v-model="map.position.y" type="number" min="-10000" max="10000" step="10">
+          <input v-model="map.position.scale" type="number" min="0" max="2" step="0.01">
+        </div>
+        <div class="flex flex-col gap-2">
+          <input v-model="genericCharacterSteps[0].x" type="number" min="-10000" max="10000" step="10">
+          <input v-model="genericCharacterSteps[0].y" type="number" min="-10000" max="10000" step="10">
+          <input v-model="genericCharacterSteps[0].scale" type="number" min="0" max="2" step="0.01">
+        </div>
+      </div>
     </External> -->
   </Application>
 </template>
 
 <style>
 input {
-  width: 100%;
+  @apply px-2 py-1;
 }
 </style>
