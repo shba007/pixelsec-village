@@ -5,8 +5,9 @@ import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
 
 import { resources, useGameStore } from '@/stores/game'
-import Scene1 from '@/components/Scenes/Scene1.vue'
-import Scene2 from '@/components/Scenes/Scene2.vue'
+import Scene1 from '@/components/Scene/Scene1.vue'
+import Scene2 from '@/components/Scene/Scene2.vue'
+import CharacterGeneric from './components/Animation/Character/CharacterGeneric.vue'
 
 interface AssetState {
   x: number
@@ -60,32 +61,11 @@ let progress = 0
 onTick((delta) => {
   if (map.animation === 'started') {
     totalElaspedTime += delta / 100
-    progress = Math.min(
-      totalElaspedTime /
-        (map.steps[currentMapPositionIndex.value + 1].time -
-          map.steps[currentMapPositionIndex.value].time),
-      1
-    )
-    map.current.x =
-      map.steps[currentMapPositionIndex.value].x +
-      (map.steps[currentMapPositionIndex.value + 1].x -
-        map.steps[currentMapPositionIndex.value].x) *
-        progress
-    map.current.y =
-      map.steps[currentMapPositionIndex.value].y +
-      (map.steps[currentMapPositionIndex.value + 1].y -
-        map.steps[currentMapPositionIndex.value].y) *
-        progress
-    map.current.scale =
-      map.steps[currentMapPositionIndex.value].scale +
-      (map.steps[currentMapPositionIndex.value + 1].scale -
-        map.steps[currentMapPositionIndex.value].scale) *
-        progress
-    map.current.time =
-      map.steps[currentMapPositionIndex.value].time +
-      (map.steps[currentMapPositionIndex.value + 1].time -
-        map.steps[currentMapPositionIndex.value].time) *
-        progress
+    progress = Math.min(totalElaspedTime / (map.steps[currentMapPositionIndex.value + 1].time - map.steps[currentMapPositionIndex.value].time), 1)
+    map.current.x = map.steps[currentMapPositionIndex.value].x + (map.steps[currentMapPositionIndex.value + 1].x - map.steps[currentMapPositionIndex.value].x) * progress
+    map.current.y = map.steps[currentMapPositionIndex.value].y + (map.steps[currentMapPositionIndex.value + 1].y - map.steps[currentMapPositionIndex.value].y) * progress
+    map.current.scale = map.steps[currentMapPositionIndex.value].scale + (map.steps[currentMapPositionIndex.value + 1].scale - map.steps[currentMapPositionIndex.value].scale) * progress
+    map.current.time = map.steps[currentMapPositionIndex.value].time + (map.steps[currentMapPositionIndex.value + 1].time - map.steps[currentMapPositionIndex.value].time) * progress
 
     if (progress == 1) {
       map.animation = 'finished'
@@ -107,20 +87,11 @@ watch(currentMapPositionIndex, (value) => {
         <Text :x="120" :y="120" :anchor="0.5"> Loading... </Text>
       </template>
       <template #default>
-        <Container :x="0" :y="0" :scale="1">
-          <Sprite
-            :texture="map.alias"
-            :anchor="0"
-            :x="map.current.x"
-            :y="map.current.y"
-            :scale="map.current.scale"
-          />
+        <Container :x="map.current.x" :y="map.current.y" :scale="map.current.scale">
+          <Sprite :texture="map.alias" :anchor="0" />
+          <CharacterGeneric />
           <template v-if="currentScenceIndex === 0">
-            <Scene1
-              v-if="map.animation === 'finished'"
-              :screenWidth="screenWidth"
-              :screenHeight="screenHeight"
-            />
+            <Scene1 v-if="map.animation === 'finished'" :screenWidth="screenWidth" :screenHeight="screenHeight" />
           </template>
           <template v-else-if="currentScenceIndex === 1">
             <Scene2 />

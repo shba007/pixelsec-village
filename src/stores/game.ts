@@ -1,11 +1,6 @@
 import { reactive, computed, ref, watchEffect } from 'vue'
 import { defineStore } from 'pinia'
-import {
-  breakpointsTailwind,
-  useBreakpoints,
-  useFullscreen,
-  useScreenOrientation
-} from '@vueuse/core'
+import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation } from '@vueuse/core'
 
 import mapTextureUrl from '@/assets/map.jpg'
 import popupBG1TextureUrl from '@/assets/popup-bg-1.png'
@@ -19,18 +14,8 @@ export const useGameStore = defineStore('game', () => {
   const breakpoints = useBreakpoints(breakpointsTailwind)
   const isMobile = breakpoints.smallerOrEqual('md')
 
-  const {
-    isSupported: isFullscreenSupported,
-    isFullscreen,
-    enter: enterFullscreen,
-    exit: exitFullscreen
-  } = useFullscreen()
-  const {
-    isSupported: isOrientationSupported,
-    orientation,
-    lockOrientation,
-    unlockOrientation
-  } = useScreenOrientation()
+  const { isSupported: isFullscreenSupported, isFullscreen, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
+  const { isSupported: isOrientationSupported, orientation, lockOrientation, unlockOrientation } = useScreenOrientation()
 
   // const $mapPosition = reactive({ x: 400, y: 680, scale: 0.22 })
   // const mapPosition = computed(() => $mapPosition)
