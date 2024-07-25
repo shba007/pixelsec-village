@@ -1,8 +1,8 @@
-import { reactive, computed, ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation } from '@vueuse/core'
+import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation, watchArray } from '@vueuse/core'
 
-import mapTexture from '@/assets/new-map.jpg'
+import mapTexture from '@/assets/map.jpg'
 import popupBG1Texture from '@/assets/popup-bg-1.png'
 import popupBG2Texture from '@/assets/popup-bg-2.png'
 // Charcters
@@ -100,7 +100,7 @@ export const useGameStore = defineStore('game', () => {
   const currentMapPositionIndex = ref(0)
   const isFullScreenAlertShow = ref(false)
 
-  watchEffect(async () => {
+  watchArray([isFullscreenSupported, isOrientationSupported], async () => {
     if (isFullscreenSupported.value && isOrientationSupported.value) {
       try {
         await exitFullscreen()

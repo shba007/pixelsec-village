@@ -142,9 +142,9 @@ const tram = reactive<Asset>({
       <template #default>
         <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
           <Sprite texture="/images/map.jpg" />
-          <External>
+          <!--  <External>
             <img src="/images/map.jpg" />
-          </External>
+          </External> -->
           <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
             :animation="true" />
           <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"

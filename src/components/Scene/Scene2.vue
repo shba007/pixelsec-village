@@ -13,7 +13,7 @@ function handleMove() {
   gameStore.nextMapPosition()
 }
 
-// useTimeoutFn(handleMove, 2000)
+useTimeoutFn(handleMove, 2000)
 </script>
 
 <template>
