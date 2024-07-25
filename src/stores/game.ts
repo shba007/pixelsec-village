@@ -5,6 +5,7 @@ import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientatio
 import mapTexture from '@/assets/map.jpg'
 import popupBG1Texture from '@/assets/popup-bg-1.png'
 import popupBG2Texture from '@/assets/popup-bg-2.png'
+// Charcters
 import characterGenericFrontStillTexture from '@/assets/character/generic/front-still.png'
 import characterGenericFrontWalk1Texture from '@/assets/character/generic/front-walk-1.png'
 import characterGenericFrontWalk2Texture from '@/assets/character/generic/front-walk-2.png'
@@ -20,13 +21,38 @@ import characterMainBlackFrontWalk1Texture from '@/assets/character/main/black/f
 import characterMainBlackFrontWalk2Texture from '@/assets/character/main/black/front-walk-2.png'
 import characterMainBlackLeftWalk1Texture from '@/assets/character/main/black/left-walk-1.png'
 import characterMainBlackLeftWalk2Texture from '@/assets/character/main/black/left-walk-2.png'
-// import characterMainBlackRightWalk1Texture from '@/assets/character/main/black/right-walk-1.png'
-// import characterMainBlackRightWalk2Texture from '@/assets/character/main/black/right-walk-2.png'
+// 
+import characterMainViolateFrontStillTexture from '@/assets/character/main/violate/front-still.png'
+import characterMainViolateFrontWalk1Texture from '@/assets/character/main/violate/front-walk-1.png'
+import characterMainViolateFrontWalk2Texture from '@/assets/character/main/violate/front-walk-2.png'
+import characterMainViolateLeftWalk1Texture from '@/assets/character/main/violate/left-walk-1.png'
+import characterMainViolateLeftWalk2Texture from '@/assets/character/main/violate/left-walk-2.png'
+// 
+import characterMainRedFrontStillTexture from '@/assets/character/main/red/front-still.png'
+import characterMainRedFrontWalk1Texture from '@/assets/character/main/red/front-walk-1.png'
+import characterMainRedFrontWalk2Texture from '@/assets/character/main/red/front-walk-2.png'
+import characterMainRedLeftWalk1Texture from '@/assets/character/main/red/left-walk-1.png'
+import characterMainRedLeftWalk2Texture from '@/assets/character/main/red/left-walk-2.png'
+// 
+import characterMainBlueFrontStillTexture from '@/assets/character/main/red/front-still.png'
+import characterMainBlueFrontWalk1Texture from '@/assets/character/main/red/front-walk-1.png'
+import characterMainBlueFrontWalk2Texture from '@/assets/character/main/red/front-walk-2.png'
+import characterMainBlueLeftWalk1Texture from '@/assets/character/main/red/left-walk-1.png'
+import characterMainBlueLeftWalk2Texture from '@/assets/character/main/red/left-walk-2.png'
+// 
+import characterStationMasterWave1Texture from '@/assets/character/station-master/wave-1.png'
+import characterStationMasterWave2Texture from '@/assets/character/station-master/wave-2.png'
+import characterStationMasterWave3Texture from '@/assets/character/station-master/wave-3.png'
+// 
+import tramFrontTexture from '@/assets/tram/front.png'
+// import tramLeftTexture from '@/assets/tram/left.png'
+import tramRightTexture from '@/assets/tram/right.png'
 
 export const resources = {
   map: mapTexture,
   popupBG1: popupBG1Texture,
   popupBG2: popupBG2Texture,
+  // Characters
   characterGenericFrontStill: characterGenericFrontStillTexture,
   characterGenericFrontWalk1: characterGenericFrontWalk1Texture,
   characterGenericFrontWalk2: characterGenericFrontWalk2Texture,
@@ -42,20 +68,27 @@ export const resources = {
   characterMainBlackFrontWalk2: characterMainBlackFrontWalk2Texture,
   characterMainBlackLeftWalk1: characterMainBlackLeftWalk1Texture,
   characterMainBlackLeftWalk2: characterMainBlackLeftWalk2Texture,
-  // characterMainBlackRightWalk1: characterMainBlackRightWalk1Texture,
-  // characterMainBlackRightWalk2: characterMainBlackRightWalk2Texture,
-
-  /*   characterGenericBackWalk1: characterGenericBackWalk1Texture,
-    characterGenericBackWalk2: characterGenericBackWalk2Texture,
-    characterGenericLeftWalk1: characterGenericLeftWalk1Texture,
-    characterGenericLeftWalk2: characterGenericLeftWalk2Texture,
-    characterGenericRightWalk1: characterGenericRightWalk1Texture,
-    characterGenericRightWalk2: characterGenericRightWalk2Texture */
+  // 
+  characterMainViolateFrontStill: characterMainViolateFrontStillTexture,
+  characterMainViolateFrontWalk1: characterMainViolateFrontWalk1Texture,
+  characterMainViolateFrontWalk2: characterMainViolateFrontWalk2Texture,
+  characterMainViolateLeftWalk1: characterMainViolateLeftWalk1Texture,
+  characterMainViolateLeftWalk2: characterMainViolateLeftWalk2Texture,
+  // 
+  characterStationMasterWave1: characterStationMasterWave1Texture,
+  characterStationMasterWave2: characterStationMasterWave2Texture,
+  characterStationMasterWave3: characterStationMasterWave3Texture,
+  // 
+  tramFront: tramFrontTexture,
+  tramRight: tramRightTexture,
 }
+
+export type Character = 'black' | 'blue' | 'red' | 'violate'
 
 export const useGameStore = defineStore('game', () => {
   const breakpoints = useBreakpoints(breakpointsTailwind)
   const isMobile = breakpoints.smallerOrEqual('md')
+  const activeCharacter = ref<Character | null>(null)
 
   const { isSupported: isFullscreenSupported, isFullscreen, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, orientation, lockOrientation, unlockOrientation } = useScreenOrientation()
@@ -71,7 +104,7 @@ export const useGameStore = defineStore('game', () => {
     if (isFullscreenSupported.value && isOrientationSupported.value) {
       try {
         await exitFullscreen()
-        await unlockOrientation()
+        unlockOrientation()
         isFullScreenAlertShow.value = false
       } catch (error) {
         isFullScreenAlertShow.value = true
@@ -93,7 +126,6 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
-  /* x   */
   function nextScene() {
     currentScenceIndex.value++
   }
@@ -102,12 +134,18 @@ export const useGameStore = defineStore('game', () => {
     currentMapPositionIndex.value++
   }
 
+  function setActiveCharacter(value: Character) {
+    activeCharacter.value = value
+  }
+
   return {
     isMobile,
     currentScenceIndex,
     currentMapPositionIndex,
+    activeCharacter,
     toggleGameMode,
     nextScene,
-    nextMapPosition
+    nextMapPosition,
+    setActiveCharacter
   }
 })

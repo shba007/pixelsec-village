@@ -21,7 +21,7 @@ interface Character {
     time: number
   }
   direction: number
-  orientation: string
+  orientation: Orientation
   animation: 'init' | 'started' | 'finished'
 }
 
@@ -94,13 +94,7 @@ onTick((delta) => {
 </script>
 
 <template>
-  <AnimatedSprite
-    :playing="animation && activeCharacter.animation === 'started'"
-    :animation-speed="0.08"
-    :textures="activeCharacter.aliases"
-    :anchor="0.5"
-    :x="activeCharacter.position.x"
-    :y="activeCharacter.position.y"
-    :scale="activeCharacter.position.scale"
-  />
+  <AnimatedSprite :playing="animation && activeCharacter.animation === 'started'" :animation-speed="0.08"
+    :textures="activeCharacter.aliases" :anchor="0.5" :x="activeCharacter.position.x" :y="activeCharacter.position.y"
+    :scale="activeCharacter.position.scale" />
 </template>

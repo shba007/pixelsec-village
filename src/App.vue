@@ -5,10 +5,13 @@ import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
 
 import { resources, useGameStore } from '@/stores/game'
+import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
+import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
+import Tram from '@/components/Animation/Tram.vue'
 import Scene1 from '@/components/Scene/Scene1.vue'
 import Scene2 from '@/components/Scene/Scene2.vue'
 import Scene3 from '@/components/Scene/Scene3.vue'
-import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
+import Scene4 from '@/components/Scene/Scene4.vue'
 
 interface AssetState {
   x: number
@@ -41,7 +44,7 @@ const map = reactive<Asset>({
     { x: -1065, y: -595, scale: 0.53, time: 6 },
     { x: -670, y: -620, scale: 0.53, time: 8 },
     { x: -670, y: -430, scale: 0.53, time: 10 },
-    { x: -550, y: -280, scale: 0.53, time: 12 }
+    { x: -550, y: -280, scale: 0.53, time: 11 }
   ],
   position: { x: 0, y: 0, scale: 0, time: 0 },
   animation: 'init'
@@ -85,7 +88,7 @@ watch(currentMapPositionIndex, (value) => {
   if (map.animation === 'finished') map.animation = 'started'
 })
 
-const genericCharactersSteps = ref<AssetState[][]>([
+const characterGenericSteps = ref<AssetState[][]>([
   [
     { x: 2500, y: 1350, scale: 0.85, time: 0 },
     { x: 2500, y: 1180, scale: 0.85, time: 2 },
@@ -108,11 +111,26 @@ const genericCharactersSteps = ref<AssetState[][]>([
   ]
 ])
 
-/* const genericCharacterSteps = ref([
-  { x: 1660, y: 1370, scale: 0.85, time: 0 },
-  { x: 1660, y: 1530, scale: 0.85, time: 3 },
-  { x: 1660, y: 1370, scale: 0.85, time: 6 },
-]) */
+const characterStationMaster = reactive({
+  x: 1670, y: 1030, scale: 1
+})
+
+const tram = reactive<Asset>({
+  loaded: false,
+  alias: 'tram',
+  steps: [
+    { x: 1810, y: 1100, scale: 1, time: 0 },
+    { x: 1810, y: 1120, scale: 1, time: 0.5 },
+    { x: 2355, y: 1120, scale: 1, time: 4 },
+    { x: 2355, y: 2000, scale: 1, time: 6 },
+    { x: 3340, y: 2000, scale: 1, time: 8 },
+    { x: 3340, y: 4060, scale: 1, time: 14 },
+    { x: 4980, y: 4060, scale: 1, time: 18 },
+    { x: 4980, y: 3380, scale: 1, time: 20 },
+  ],
+  position: { x: 0, y: 0, scale: 0, time: 0 },
+  animation: 'init'
+})
 </script>
 
 <template>
@@ -124,8 +142,11 @@ const genericCharactersSteps = ref<AssetState[][]>([
       <template #default>
         <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
           <Sprite :texture="map.alias" :anchor="0" />
-          <CharacterGeneric v-for="genericCharacter of genericCharactersSteps" :steps="genericCharacter"
+          <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
             :animation="true" />
+          <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
+            :scale="characterStationMaster.scale" />
+          <Tram :steps="tram.steps" :animation="true" initalOrientation="right" />
           <!-- <CharacterGeneric :steps="genericCharacterSteps" :animation="false" /> -->
           <template v-if="currentScenceIndex === 0">
             <Scene1 v-if="map.animation === 'finished'" />
@@ -136,10 +157,13 @@ const genericCharactersSteps = ref<AssetState[][]>([
           <template v-else-if="currentScenceIndex === 2">
             <Scene3 v-if="map.animation === 'finished'" />
           </template>
+          <template v-else-if="currentScenceIndex === 3">
+            <Scene4 v-if="map.animation === 'finished'" />
+          </template>
         </Container>
       </template>
     </Loader>
-    <!--  <External>
+    <!-- <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
         <div class="flex flex-col gap-2 ">
           <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10">
@@ -147,9 +171,9 @@ const genericCharactersSteps = ref<AssetState[][]>([
           <input v-model="map.position.scale" type="number" min="0" max="2" step="0.01">
         </div>
         <div class="flex flex-col gap-2">
-          <input v-model="genericCharacterSteps[0].x" type="number" min="-10000" max="10000" step="10">
-          <input v-model="genericCharacterSteps[0].y" type="number" min="-10000" max="10000" step="10">
-          <input v-model="genericCharacterSteps[0].scale" type="number" min="0" max="2" step="0.01">
+          <input v-model="tramSteps[0].x" type="number" min="-10000" max="10000" step="10">
+          <input v-model="tramSteps[0].y" type="number" min="-10000" max="10000" step="10">
+          <input v-model="tramSteps[0].scale" type="number" min="0" max="2" step="0.01">
         </div>
       </div>
     </External> -->

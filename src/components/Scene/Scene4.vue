@@ -18,21 +18,25 @@ const characters = [
 
 const gameStore = useGameStore()
 
-function onCharcterSet(type: Character) {
+function onClick(value: boolean) {
   gameStore.nextScene()
   gameStore.nextMapPosition()
-  gameStore.setActiveCharacter(type)
 }
 </script>
 
 <template>
   <External class="absolute top-0 left-0 w-screen h-screen">
-    <Modal title="Select your Avatar" description="Choose your main character energy.">
+    <Modal title="Before we begin" description="let’s go through the T&Cs.">
       <div class="flex gap-8">
-        <button v-for="{ type, image } of characters" @click="onCharcterSet(type)">
-          <img :src="image" :width="48" class="hover:scale-125 duration-300" />
-        </button>
+        <button class="btn" @click="onClick(false)">Skip T&Cs</button>
+        <button class="btn" @click="onClick(true)">Read T&Cs</button>
       </div>
     </Modal>
   </External>
 </template>
+
+<style lang="css" scoped>
+.btn {
+  @apply p-4;
+}
+</style>
