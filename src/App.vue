@@ -131,6 +131,11 @@ const tram = reactive<Asset>({
   position: { x: 0, y: 0, scale: 0, time: 0 },
   animation: 'init'
 })
+const abcd = reactive({
+  x: 30,
+  y: 30,
+  scale: 3.69
+})
 </script>
 
 <template>
@@ -141,7 +146,7 @@ const tram = reactive<Asset>({
       </template>
       <template #default>
         <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
-          <Sprite texture="/images/map.jpg" :anchor="0.5" :x="0" :y="0" :scale="1" />
+          <Sprite texture="/images/map.jpg" :x="abcd.x" :y="abcd.y" :scale="abcd.scale" />
           <!--  <External>
             <img src="/images/map.jpg" />
           </External> -->
@@ -166,7 +171,7 @@ const tram = reactive<Asset>({
         </Container>
       </template>
     </Loader>
-    <!-- <External>
+    <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
         <div class="flex flex-col gap-2 ">
           <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10">
@@ -174,12 +179,12 @@ const tram = reactive<Asset>({
           <input v-model="map.position.scale" type="number" min="0" max="2" step="0.01">
         </div>
         <div class="flex flex-col gap-2">
-          <input v-model="tramSteps[0].x" type="number" min="-10000" max="10000" step="10">
-          <input v-model="tramSteps[0].y" type="number" min="-10000" max="10000" step="10">
-          <input v-model="tramSteps[0].scale" type="number" min="0" max="2" step="0.01">
+          <input v-model="abcd.x" type="number" min="-10000" max="10000" step="10">
+          <input v-model="abcd.y" type="number" min="-10000" max="10000" step="10">
+          <input v-model="abcd.scale" type="number" min="0" max="20" step="0.01">
         </div>
       </div>
-    </External> -->
+    </External>
   </Application>
 </template>
 
