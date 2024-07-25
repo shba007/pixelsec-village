@@ -141,7 +141,7 @@ const tram = reactive<Asset>({
       </template>
       <template #default>
         <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
-          <Sprite texture="/images/map.jpg" />
+          <Sprite texture="/images/map.jpg" :anchor="0.5" :x="0" :y="0" :scale="1" />
           <!--  <External>
             <img src="/images/map.jpg" />
           </External> -->
