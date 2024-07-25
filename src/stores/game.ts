@@ -3,8 +3,10 @@ import { defineStore } from 'pinia'
 import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation, watchArray } from '@vueuse/core'
 
 import mapTexture from '@/assets/map.jpg'
-import popupBG1Texture from '@/assets/popup-bg-1.png'
-import popupBG2Texture from '@/assets/popup-bg-2.png'
+import popupLandscapeTexture from "@/assets/popup/bg-landscape.png";
+import popupPortraitTexture from "@/assets/popup/bg-portrait.png";
+import buttonLongTexture from "@/assets/buttons/long.png";
+import buttonLongPressedTexture from "@/assets/buttons/long-pressed.png";
 // Charcters
 import characterGenericFrontStillTexture from '@/assets/character/generic/front-still.png'
 import characterGenericFrontWalk1Texture from '@/assets/character/generic/front-walk-1.png'
@@ -50,8 +52,10 @@ import tramRightTexture from '@/assets/tram/right.png'
 
 export const resources = {
   map: mapTexture,
-  popupBG1: popupBG1Texture,
-  popupBG2: popupBG2Texture,
+  popupLandscape: popupLandscapeTexture,
+  popupPortrait: popupPortraitTexture,
+  buttonLong: buttonLongTexture,
+  buttonLongPressed: buttonLongPressedTexture,
   // Characters
   characterGenericFrontStill: characterGenericFrontStillTexture,
   characterGenericFrontWalk1: characterGenericFrontWalk1Texture,

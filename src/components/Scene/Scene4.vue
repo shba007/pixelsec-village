@@ -28,15 +28,15 @@ function onClick(value: boolean) {
   <External class="absolute top-0 left-0 w-screen h-screen">
     <Modal title="Before we begin" description="let’s go through the T&Cs.">
       <div class="flex gap-8">
-        <button class="btn" @click="onClick(false)">Skip T&Cs</button>
-        <button class="btn" @click="onClick(true)">Read T&Cs</button>
+        <button class="active-btn" @click="onClick(false)">Skip T&Cs</button>
+        <button class="active-btn" @click="onClick(true)">Read T&Cs</button>
       </div>
     </Modal>
   </External>
 </template>
 
 <style lang="css" scoped>
-.btn {
-  @apply p-4;
+.active-btn {
+  @apply px-4 py-1.5 bg-[url(@/assets/buttons/long-pressed.png)] bg-contain bg-bottom bg-no-repeat active:bg-[url(@/assets/buttons/long.png)] text-lg;
 }
 </style>
