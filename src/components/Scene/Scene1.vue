@@ -8,9 +8,10 @@ import Modal from '@/components/Modal.vue'
 
 const gameStore = useGameStore()
 
-function handleStart() {
+async function handleStart() {
   gameStore.nextScene()
   gameStore.nextMapPosition()
+  await gameStore.toggleGameMode(true)
 }
 </script>
 

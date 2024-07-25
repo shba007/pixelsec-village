@@ -2,7 +2,7 @@ import { reactive, computed, ref, watchEffect } from 'vue'
 import { defineStore } from 'pinia'
 import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation } from '@vueuse/core'
 
-import mapTexture from '@/assets/map.jpg'
+import mapTexture from '@/assets/new-map.jpg'
 import popupBG1Texture from '@/assets/popup-bg-1.png'
 import popupBG2Texture from '@/assets/popup-bg-2.png'
 // Charcters

@@ -134,36 +134,38 @@ const tram = reactive<Asset>({
 </script>
 
 <template>
-  <Application ref="app" :resize-to="mainWindow">
-    <Loader :resources="resources" :on-resolved="onLoad">
-      <template #fallback>
-        <Text :x="120" :y="120" :anchor="0.5"> Loading... </Text>
-      </template>
-      <template #default>
-        <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
-          <Sprite :texture="map.alias" :anchor="0" />
-          <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
-            :animation="true" />
-          <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
-            :scale="characterStationMaster.scale" />
-          <Tram :steps="tram.steps" :animation="true" initalOrientation="right" />
-          <!-- <CharacterGeneric :steps="genericCharacterSteps" :animation="false" /> -->
-          <template v-if="currentScenceIndex === 0">
-            <Scene1 v-if="map.animation === 'finished'" />
-          </template>
-          <template v-else-if="currentScenceIndex === 1">
-            <Scene2 v-if="map.animation === 'finished'" />
-          </template>
-          <template v-else-if="currentScenceIndex === 2">
-            <Scene3 v-if="map.animation === 'finished'" />
-          </template>
-          <template v-else-if="currentScenceIndex === 3">
-            <Scene4 v-if="map.animation === 'finished'" />
-          </template>
-        </Container>
-      </template>
-    </Loader>
-    <!-- <External>
+  <main>
+    <img src="/images/map.jpg" />
+    <Application ref="app" :resize-to="mainWindow">
+      <Loader :resources="resources" :on-resolved="onLoad">
+        <template #fallback>
+          <Text :x="120" :y="120" :anchor="0.5"> Loading... </Text>
+        </template>
+        <template #default>
+          <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
+            <Sprite :texture="map.alias" :anchor="0" />
+            <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
+              :animation="true" />
+            <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
+              :scale="characterStationMaster.scale" />
+            <Tram :steps="tram.steps" :animation="true" initalOrientation="right" />
+            <!-- <CharacterGeneric :steps="genericCharacterSteps" :animation="false" /> -->
+            <template v-if="currentScenceIndex === 0">
+              <Scene1 v-if="map.animation === 'finished'" />
+            </template>
+            <template v-else-if="currentScenceIndex === 1">
+              <Scene2 v-if="map.animation === 'finished'" />
+            </template>
+            <template v-else-if="currentScenceIndex === 2">
+              <Scene3 v-if="map.animation === 'finished'" />
+            </template>
+            <template v-else-if="currentScenceIndex === 3">
+              <Scene4 v-if="map.animation === 'finished'" />
+            </template>
+          </Container>
+        </template>
+      </Loader>
+      <!-- <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
         <div class="flex flex-col gap-2 ">
           <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10">
@@ -177,7 +179,8 @@ const tram = reactive<Asset>({
         </div>
       </div>
     </External> -->
-  </Application>
+    </Application>
+  </main>
 </template>
 
 <style>
