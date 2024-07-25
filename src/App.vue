@@ -168,7 +168,7 @@ const tram = reactive<Asset>({
         </Container>
       </template>
     </Loader>
-    <External>
+    <!-- <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
         <div class="flex flex-col gap-2 ">
           <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10">
@@ -181,7 +181,7 @@ const tram = reactive<Asset>({
           <input v-model="abcd.scale" type="number" min="0" max="20" step="0.01">
         </div>
       </div>
-    </External>
+    </External> -->
   </Application>
 </template>
 
