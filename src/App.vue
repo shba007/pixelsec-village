@@ -131,11 +131,11 @@ const tram = reactive<Asset>({
   position: { x: 0, y: 0, scale: 0, time: 0 },
   animation: 'init'
 })
-const abcd = reactive({
-  x: 30,
-  y: 30,
-  scale: 3.69
-})
+/* const abcd = reactive({
+  x: 0,
+  y: 0,
+  scale: 1
+}) */
 </script>
 
 <template>
@@ -146,10 +146,7 @@ const abcd = reactive({
       </template>
       <template #default>
         <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
-          <Sprite texture="/images/map.jpg" :x="abcd.x" :y="abcd.y" :scale="abcd.scale" />
-          <!--  <External>
-            <img src="/images/map.jpg" />
-          </External> -->
+          <Sprite :texture="map.alias" :x="0" :y="0" :scale="2" />
           <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
             :animation="true" />
           <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
