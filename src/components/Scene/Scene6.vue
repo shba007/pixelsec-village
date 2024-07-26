@@ -39,7 +39,7 @@ watch(() => arrivedState.bottom, (value) => {
 <template>
   <External class="absolute top-0 left-0 w-screen h-screen">
     <Modal title="Terms and Conditions for Affinidi Services">
-      <p ref="el" class="w-full flex-1 overflow-scroll">
+      <p ref="el" class="w-full overflow-auto">
       <h1 style="padding-top: 3pt;text-indent: 0pt;text-align: center;">
       </h1>
       <p style="padding-top: 4pt;text-indent: 0pt;text-align: left;"><br /></p>
@@ -1666,11 +1666,11 @@ watch(() => arrivedState.bottom, (value) => {
                     device storage.</p>
                 </li>
                 <li data-list-text="vii)">
-                  <p class="s5" style="padding-left: 59pt;text-indent: -18pt;line-height: 122%;text-align: left;"><a
-                      href="http://www.vault.affinidi.com/" class="s2" target="_blank">While using web app - @
-                    </a><span
-                      style=" color: #00F; font-family:&quot;Times New Roman&quot;, serif; font-style: normal; font-weight: normal; text-decoration: underline; font-size: 10pt;">www.vault.affinidi.com</span>
-                    <span style=" color: #000;">or the mobile app(Android), the user is also provided an option to
+                  <p class="s5" style="padding-left: 59pt;text-indent: -18pt;line-height: 122%;text-align: left;">While
+                    using web app - @
+                    <a href="http://www.vault.affinidi.com/" target="_blank"
+                      style=" color: #00F; font-family:&quot;Times New Roman&quot;, serif; font-style: normal; font-weight: normal; text-decoration: underline; font-size: 10pt;">www.vault.affinidi.com</a>
+                    <span style=" color: #000;"> or the mobile app(Android), the user is also provided an option to
                       back up and restore their data from the cloud wherein the user can upload a backup of his
                       vault into the cloud and then restore it with a backup ID and his current pass- phrase.</span>
                   </p>

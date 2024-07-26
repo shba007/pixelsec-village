@@ -14,6 +14,9 @@ import Scene3 from '@/components/Scene/Scene3.vue'
 import Scene4 from '@/components/Scene/Scene4.vue'
 import Scene5 from '@/components/Scene/Scene5.vue'
 import Scene6 from './components/Scene/Scene6.vue'
+import StreetLamp from './components/Animation/StreetLamp.vue'
+import Pigeon from './components/Animation/Pigeon.vue'
+import Cloud from './components/Animation/Cloud.vue'
 
 interface AssetState {
   x: number
@@ -42,20 +45,22 @@ const map = reactive<Asset>({
   loaded: false,
   alias: 'map',
   steps: [
-    ...(isMobile.value ? [
-      { x: -95, y: 0, scale: 0.127, time: 0 },
-      { x: -270, y: -125, scale: 0.25, time: 3 }
-    ] : [
-      { x: -95, y: 0, scale: 0.28, time: 0 },
-      { x: -270, y: -125, scale: 0.30, time: 3 }
-    ]),
+    ...(isMobile.value
+      ? [
+        { x: -95, y: 0, scale: 0.127, time: 0 },
+        { x: -270, y: -125, scale: 0.25, time: 3 }
+      ]
+      : [
+        { x: -95, y: 0, scale: 0.28, time: 0 },
+        { x: -270, y: -125, scale: 0.3, time: 3 }
+      ]),
     { x: -1065, y: -595, scale: 0.53, time: 6 },
     { x: -670, y: -620, scale: 0.53, time: 8 },
     { x: -670, y: -430, scale: 0.53, time: 10 },
     { x: -550, y: -280, scale: 0.53, time: 11 },
     { x: -550, y: -280, scale: 0.53, time: 11 }
   ],
-  position: { x: 0, y: 0, scale: 0, time: 0 },
+  position: { x: 0, y: 0, scale: 1, time: 0 },
   animation: 'init'
 })
 
@@ -148,6 +153,105 @@ const tram = reactive<Asset>({
   y: 0,
   scale: 1
 }) */
+const pegions = ref([
+  { x: 1570, y: 1450, scale: 1, flip: false },
+  { x: 1720, y: 1490, scale: 1, flip: false },
+  { x: 1940, y: 1760, scale: 1, flip: true },
+  { x: 2020, y: 1810, scale: 1, flip: false },
+  { x: 1490, y: 1860, scale: 1, flip: false },
+  { x: 1620, y: 1890, scale: 1, flip: true },
+  { x: 2930, y: 1930, scale: 1, flip: true },
+  { x: 2410, y: 2290, scale: 1, flip: true },
+  { x: 1940, y: 2850, scale: 1, flip: true },
+  { x: 2110, y: 3760, scale: 1, flip: false },
+  { x: 2190, y: 3800, scale: 1, flip: true },
+  { x: 2110, y: 4150, scale: 1, flip: false },
+  { x: 3140, y: 4740, scale: 1, flip: true },
+  { x: 1250, y: 5150, scale: 1, flip: true },
+  { x: 1210, y: 5200, scale: 1, flip: true }
+])
+
+const streetLamp = ref([
+  { x: 3240, y: 1030, scale: 1 },
+  { x: 1420, y: 1220, scale: 1 },
+  { x: 1440, y: 2475, scale: 1 },
+  { x: 2240, y: 2475, scale: 1 },
+  { x: 745, y: 4570, scale: 1 },
+  { x: 745, y: 4920, scale: 1 },
+  { x: 745, y: 5250, scale: 1 },
+  { x: 745, y: 5590, scale: 1 },
+  { x: 3420, y: 5080, scale: 1 },
+  { x: 3420, y: 5320, scale: 1 },
+  { x: 4090, y: 5080, scale: 1 },
+  { x: 4610, y: 5080, scale: 1 },
+  { x: 4970, y: 5080, scale: 1 }
+])
+
+const height = ref(3844 * 2)
+const widthRange = ref(3124 * 2)
+const clouds = ref<
+  {
+    size: 'lg' | 'md' | 'sm'
+    x: number
+    y: number
+    direction: number
+  }[]
+>([
+  {
+    size: 'lg',
+    x: -100,
+    y: height.value * 0.2,
+    direction: 1
+  },
+  {
+    size: 'lg',
+    x: -300,
+    y: height.value * 0.32,
+    direction: 1
+  },
+  {
+    size: 'lg',
+    x: -600,
+    y: height.value * 0.46,
+    direction: 1
+  },
+  {
+    size: 'sm',
+    x: -200,
+    y: height.value * 0.54,
+    direction: 1
+  },
+  {
+    size: 'md',
+    x: -50,
+    y: height.value * 0.66,
+    direction: 1
+  },
+  {
+    size: 'lg',
+    x: -250,
+    y: height.value * 0.69,
+    direction: 1
+  },
+  {
+    size: 'sm',
+    x: -50,
+    y: height.value * 0.78,
+    direction: 1
+  },
+  {
+    size: 'md',
+    x: -300,
+    y: height.value * 0.9,
+    direction: 1
+  },
+  {
+    size: 'sm',
+    x: -600,
+    y: height.value * 0.96,
+    direction: 1
+  }
+])
 </script>
 
 <template>
@@ -159,11 +263,15 @@ const tram = reactive<Asset>({
       <template #default>
         <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
           <Sprite :texture="map.alias" :x="0" :y="0" :scale="2" />
+          <Pigeon v-for="{ x, y, flip } in pegions" :x="x" :y="y" :scale="1" :flip="flip" />
+          <StreetLamp v-for="{ x, y } in streetLamp" :x="x" :y="y" :scale="1" />
           <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
             :animation="true" />
           <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
             :scale="characterStationMaster.scale" />
           <Tram :steps="tram.steps" :animation="true" initalOrientation="right" />
+          <Cloud v-for="{ size, x, y, direction } in clouds" :width-range="widthRange" :size="size" :x="x" :y="y"
+            :direction="direction" />
           <template v-if="currentScenceIndex === 0">
             <Scene1 v-if="map.animation === 'finished'" />
           </template>
@@ -185,18 +293,18 @@ const tram = reactive<Asset>({
         </Container>
       </template>
     </Loader>
-    <!--  <External>
+    <!-- <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
-        <div class="flex flex-col gap-2 ">
-          <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10">
-          <input v-model="map.position.y" type="number" min="-10000" max="10000" step="10">
-          <input v-model="map.position.scale" type="number" min="0" max="2" step="0.01">
+        <div class="flex flex-col gap-2">
+          <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="map.position.y" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="map.position.scale" type="number" min="0" max="2" step="0.01" />
         </div>
-         <div class="flex flex-col gap-2">
-          <input v-model="abcd.x" type="number" min="-10000" max="10000" step="10">
-          <input v-model="abcd.y" type="number" min="-10000" max="10000" step="10">
-          <input v-model="abcd.scale" type="number" min="0" max="20" step="0.01">
-        </div> 
+        <div class="flex flex-col gap-2">
+          <input v-model="streetLamp[0].x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="streetLamp[0].y" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="streetLamp[0].scale" type="number" min="0" max="20" step="0.01" />
+        </div>
       </div>
     </External> -->
   </Application>

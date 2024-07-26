@@ -2,11 +2,25 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation, watchArray } from '@vueuse/core'
 
+import frontINET from '/fonts/INET.ttf'
+import frontLAN from '/fonts/LAN.ttf'
 import mapTexture from '@/assets/map.jpg'
 import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
 import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
 import buttonLongTexture from '@/assets/buttons/long.png'
 import buttonLongPressedTexture from '@/assets/buttons/long-pressed.png'
+import pigeonLeftPeckTexture from '@/assets/pigeon/left-peck.png'
+import pigeonLeftStandTexture from '@/assets/pigeon/left-stand.png'
+import pigeonRightPeckTexture from '@/assets/pigeon/right-peck.png'
+import pigeonRightStandTexture from '@/assets/pigeon/right-stand.png'
+import streetLampTexture1 from '@/assets/street-lamp/lamp-1.png'
+import streetLampTexture2 from '@/assets/street-lamp/lamp-2.png'
+import streetLampTexture3 from '@/assets/street-lamp/lamp-3.png'
+import streetLampTexture4 from '@/assets/street-lamp/lamp-4.png'
+import streetLampTexture5 from '@/assets/street-lamp/lamp-5.png'
+import cloudLargeTexture from '@/assets/clouds/large.png'
+import cloudMediumTexture from '@/assets/clouds/medium.png'
+import cloudSmallTexture from '@/assets/clouds/small.png'
 // Charcters
 import characterGenericFrontStillTexture from '@/assets/character/generic/front-still.png'
 import characterGenericFrontWalk1Texture from '@/assets/character/generic/front-walk-1.png'
@@ -52,6 +66,8 @@ import tramBackTexture from '@/assets/tram/back.png'
 import tramRightTexture from '@/assets/tram/right.png'
 
 export const resources = {
+  frontINET,
+  frontLAN,
   map: mapTexture,
   popupLandscape: popupLandscapeTexture,
   popupPortrait: popupPortraitTexture,
@@ -86,7 +102,19 @@ export const resources = {
   //
   tramFront: tramFrontTexture,
   tramBack: tramBackTexture,
-  tramRight: tramRightTexture
+  tramRight: tramRightTexture,
+  pigeonleftPeck: pigeonLeftPeckTexture,
+  pigeonLeftStand: pigeonLeftStandTexture,
+  pigeonRightPeck: pigeonRightPeckTexture,
+  pigeonRightStand: pigeonRightStandTexture,
+  streetLamp1: streetLampTexture1,
+  streetLamp2: streetLampTexture2,
+  streetLamp3: streetLampTexture3,
+  streetLamp4: streetLampTexture4,
+  streetLamp5: streetLampTexture5,
+  cloudLarge: cloudLargeTexture,
+  cloudMedium: cloudMediumTexture,
+  cloudSmall: cloudSmallTexture
 }
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
@@ -134,7 +162,7 @@ export const useGameStore = defineStore('game', () => {
 
   function nextScene(screen = 1) {
     currentScenceIndex.value += screen
-    console.log("NextScene", currentScenceIndex.value)
+    console.log('NextScene', currentScenceIndex.value)
   }
 
   function nextMapPosition() {

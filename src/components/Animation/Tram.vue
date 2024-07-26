@@ -99,6 +99,13 @@ onTick((delta) => {
 </script>
 
 <template>
-  <AnimatedSprite :playing="animation && tram.animation === 'started'" :animation-speed="0.08" :textures="tram.aliases"
-    :anchor="0.5" :x="tram.position.x" :y="tram.position.y" :scale="tram.position.scale" />
+  <AnimatedSprite
+    :playing="animation && tram.animation === 'started'"
+    :animation-speed="0.08"
+    :textures="tram.aliases"
+    :anchor="0.5"
+    :x="tram.position.x"
+    :y="tram.position.y"
+    :scale="tram.position.scale"
+  />
 </template>
