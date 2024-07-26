@@ -1,38 +1,22 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
 import { External } from 'vue3-pixi'
 
-import { useGameStore, type Character } from '@/stores/game'
+import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
-import characterMainBlackWalkingTexture from '@/assets/character/main/black/walking.gif'
-import characterMainViolateWalkingTexture from '@/assets/character/main/violate/walking.gif'
-import characterMainRedWalkingTexture from '@/assets/character/main/red/walking.gif'
-import characterMainBlueWalkingTexture from '@/assets/character/main/blue/walking.gif'
-
-const characters = [
-  { type: 'black', image: characterMainBlackWalkingTexture },
-  { type: 'violate', image: characterMainViolateWalkingTexture },
-  { type: 'red', image: characterMainRedWalkingTexture },
-  { type: 'blue', image: characterMainBlueWalkingTexture },
-] as const
+import { useTimeoutFn } from '@vueuse/core'
 
 const gameStore = useGameStore()
 
-function onCharcterSet(type: Character) {
+function handleMove() {
   gameStore.nextScene()
   gameStore.nextMapPosition()
-  gameStore.setActiveCharacter(type)
 }
+
+useTimeoutFn(handleMove, 2000)
 </script>
 
 <template>
   <External class="absolute top-0 left-0 w-screen h-screen">
-    <Modal title="Select your Avatar" description="Choose your main character energy.">
-      <div class="flex gap-8">
-        <button v-for="{ type, image } of characters" @click="onCharcterSet(type)">
-          <img :src="image" :width="48" class="hover:scale-125 duration-300" />
-        </button>
-      </div>
-    </Modal>
+    <Modal title="let the adventure begin" description="Excited to find out which house you will arrive in? Answer the questions to determine your result."> </Modal>
   </External>
 </template>

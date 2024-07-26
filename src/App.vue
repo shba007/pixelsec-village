@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { Application, Loader, External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
@@ -12,6 +12,8 @@ import Scene1 from '@/components/Scene/Scene1.vue'
 import Scene2 from '@/components/Scene/Scene2.vue'
 import Scene3 from '@/components/Scene/Scene3.vue'
 import Scene4 from '@/components/Scene/Scene4.vue'
+import Scene5 from '@/components/Scene/Scene5.vue'
+import Scene6 from './components/Scene/Scene6.vue'
 
 interface AssetState {
   x: number
@@ -35,15 +37,22 @@ const { currentScenceIndex, currentMapPositionIndex } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
+const isMobile = computed(() => screenHeight.value < 640 || screenWidth.value < 640)
 const map = reactive<Asset>({
   loaded: false,
   alias: 'map',
   steps: [
-    { x: -95, y: 0, scale: 0.127, time: 0 },
-    { x: -270, y: -125, scale: 0.25, time: 3 },
+    ...(isMobile.value ? [
+      { x: -95, y: 0, scale: 0.127, time: 0 },
+      { x: -270, y: -125, scale: 0.25, time: 3 }
+    ] : [
+      { x: -95, y: 0, scale: 0.28, time: 0 },
+      { x: -270, y: -125, scale: 0.30, time: 3 }
+    ]),
     { x: -1065, y: -595, scale: 0.53, time: 6 },
     { x: -670, y: -620, scale: 0.53, time: 8 },
     { x: -670, y: -430, scale: 0.53, time: 10 },
+    { x: -550, y: -280, scale: 0.53, time: 11 },
     { x: -550, y: -280, scale: 0.53, time: 11 }
   ],
   position: { x: 0, y: 0, scale: 0, time: 0 },
@@ -78,7 +87,7 @@ onTick((delta) => {
 
     if (progress == 1) {
       map.animation = 'finished'
-      console.log({ totalElaspedTime })
+      // console.log({ totalElaspedTime })
       totalElaspedTime = 0
     }
   }
@@ -112,7 +121,9 @@ const characterGenericSteps = ref<AssetState[][]>([
 ])
 
 const characterStationMaster = reactive({
-  x: 1670, y: 1030, scale: 1
+  x: 1670,
+  y: 1030,
+  scale: 1
 })
 
 const tram = reactive<Asset>({
@@ -126,11 +137,12 @@ const tram = reactive<Asset>({
     { x: 3340, y: 2000, scale: 1, time: 8 },
     { x: 3340, y: 4060, scale: 1, time: 14 },
     { x: 4980, y: 4060, scale: 1, time: 18 },
-    { x: 4980, y: 3380, scale: 1, time: 20 },
+    { x: 4980, y: 3380, scale: 1, time: 20 }
   ],
   position: { x: 0, y: 0, scale: 0, time: 0 },
   animation: 'init'
 })
+
 /* const abcd = reactive({
   x: 0,
   y: 0,
@@ -152,7 +164,6 @@ const tram = reactive<Asset>({
           <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
             :scale="characterStationMaster.scale" />
           <Tram :steps="tram.steps" :animation="true" initalOrientation="right" />
-          <!-- <CharacterGeneric :steps="genericCharacterSteps" :animation="false" /> -->
           <template v-if="currentScenceIndex === 0">
             <Scene1 v-if="map.animation === 'finished'" />
           </template>
@@ -165,21 +176,27 @@ const tram = reactive<Asset>({
           <template v-else-if="currentScenceIndex === 3">
             <Scene4 v-if="map.animation === 'finished'" />
           </template>
+          <template v-else-if="currentScenceIndex === 4">
+            <Scene5 v-if="map.animation === 'finished'" />
+          </template>
+          <template v-else-if="currentScenceIndex === 5">
+            <Scene6 v-if="map.animation === 'finished'" />
+          </template>
         </Container>
       </template>
     </Loader>
-    <!-- <External>
+    <!--  <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
         <div class="flex flex-col gap-2 ">
           <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10">
           <input v-model="map.position.y" type="number" min="-10000" max="10000" step="10">
           <input v-model="map.position.scale" type="number" min="0" max="2" step="0.01">
         </div>
-        <div class="flex flex-col gap-2">
+         <div class="flex flex-col gap-2">
           <input v-model="abcd.x" type="number" min="-10000" max="10000" step="10">
           <input v-model="abcd.y" type="number" min="-10000" max="10000" step="10">
           <input v-model="abcd.scale" type="number" min="0" max="20" step="0.01">
-        </div>
+        </div> 
       </div>
     </External> -->
   </Application>

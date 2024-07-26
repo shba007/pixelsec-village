@@ -13,30 +13,26 @@ const characters = [
   { type: 'black', image: characterMainBlackWalkingTexture },
   { type: 'violate', image: characterMainViolateWalkingTexture },
   { type: 'red', image: characterMainRedWalkingTexture },
-  { type: 'blue', image: characterMainBlueWalkingTexture },
+  { type: 'blue', image: characterMainBlueWalkingTexture }
 ] as const
 
 const gameStore = useGameStore()
 
-function onClick(value: boolean) {
+function onCharcterSet(type: Character) {
   gameStore.nextScene()
   gameStore.nextMapPosition()
+  gameStore.setActiveCharacter(type)
 }
 </script>
 
 <template>
   <External class="absolute top-0 left-0 w-screen h-screen">
-    <Modal title="Before we begin" description="let’s go through the T&Cs.">
+    <Modal title="Select your Avatar" description="Choose your main character energy.">
       <div class="flex gap-8">
-        <button class="active-btn" @click="onClick(false)">Skip T&Cs</button>
-        <button class="active-btn" @click="onClick(true)">Read T&Cs</button>
+        <button v-for="{ type, image } of characters" @click="onCharcterSet(type)">
+          <img :src="image" :width="48" class="hover:scale-125 duration-300" />
+        </button>
       </div>
     </Modal>
   </External>
 </template>
-
-<style lang="css" scoped>
-.active-btn {
-  @apply px-4 py-1.5 bg-[url(@/assets/buttons/long-pressed.png)] bg-contain bg-bottom bg-no-repeat active:bg-[url(@/assets/buttons/long.png)] text-lg;
-}
-</style>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
 import { External } from 'vue3-pixi'
 import rotateIndicator from '@/assets/rotate-indicator.png'
 
@@ -17,8 +16,11 @@ async function handleStart() {
 
 <template>
   <External class="absolute top-0 left-0 w-screen h-screen">
-    <Modal title="welcome to dataville" description="Where your online habits and choices will shape the kind of house you live in.
-          Let’s go!">
+    <Modal
+      title="welcome to dataville"
+      description="Where your online habits and choices will shape the kind of house you live in.
+          Let’s go!"
+    >
       <button class="flex items-end gap-2" @click="handleStart">
         <img :src="rotateIndicator" alt="rotate-indicator" />
         <span class="pb-2 pt-4 text-xl">Full screen</span>

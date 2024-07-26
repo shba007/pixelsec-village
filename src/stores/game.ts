@@ -3,10 +3,10 @@ import { defineStore } from 'pinia'
 import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation, watchArray } from '@vueuse/core'
 
 import mapTexture from '@/assets/map.jpg'
-import popupLandscapeTexture from "@/assets/popup/bg-landscape.png";
-import popupPortraitTexture from "@/assets/popup/bg-portrait.png";
-import buttonLongTexture from "@/assets/buttons/long.png";
-import buttonLongPressedTexture from "@/assets/buttons/long-pressed.png";
+import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
+import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
+import buttonLongTexture from '@/assets/buttons/long.png'
+import buttonLongPressedTexture from '@/assets/buttons/long-pressed.png'
 // Charcters
 import characterGenericFrontStillTexture from '@/assets/character/generic/front-still.png'
 import characterGenericFrontWalk1Texture from '@/assets/character/generic/front-walk-1.png'
@@ -23,30 +23,31 @@ import characterMainBlackFrontWalk1Texture from '@/assets/character/main/black/f
 import characterMainBlackFrontWalk2Texture from '@/assets/character/main/black/front-walk-2.png'
 import characterMainBlackLeftWalk1Texture from '@/assets/character/main/black/left-walk-1.png'
 import characterMainBlackLeftWalk2Texture from '@/assets/character/main/black/left-walk-2.png'
-// 
+//
 import characterMainViolateFrontStillTexture from '@/assets/character/main/violate/front-still.png'
 import characterMainViolateFrontWalk1Texture from '@/assets/character/main/violate/front-walk-1.png'
 import characterMainViolateFrontWalk2Texture from '@/assets/character/main/violate/front-walk-2.png'
 import characterMainViolateLeftWalk1Texture from '@/assets/character/main/violate/left-walk-1.png'
 import characterMainViolateLeftWalk2Texture from '@/assets/character/main/violate/left-walk-2.png'
-// 
+//
 import characterMainRedFrontStillTexture from '@/assets/character/main/red/front-still.png'
 import characterMainRedFrontWalk1Texture from '@/assets/character/main/red/front-walk-1.png'
 import characterMainRedFrontWalk2Texture from '@/assets/character/main/red/front-walk-2.png'
 import characterMainRedLeftWalk1Texture from '@/assets/character/main/red/left-walk-1.png'
 import characterMainRedLeftWalk2Texture from '@/assets/character/main/red/left-walk-2.png'
-// 
+//
 import characterMainBlueFrontStillTexture from '@/assets/character/main/red/front-still.png'
 import characterMainBlueFrontWalk1Texture from '@/assets/character/main/red/front-walk-1.png'
 import characterMainBlueFrontWalk2Texture from '@/assets/character/main/red/front-walk-2.png'
 import characterMainBlueLeftWalk1Texture from '@/assets/character/main/red/left-walk-1.png'
 import characterMainBlueLeftWalk2Texture from '@/assets/character/main/red/left-walk-2.png'
-// 
+//
 import characterStationMasterWave1Texture from '@/assets/character/station-master/wave-1.png'
 import characterStationMasterWave2Texture from '@/assets/character/station-master/wave-2.png'
 import characterStationMasterWave3Texture from '@/assets/character/station-master/wave-3.png'
-// 
+//
 import tramFrontTexture from '@/assets/tram/front.png'
+import tramBackTexture from '@/assets/tram/back.png'
 // import tramLeftTexture from '@/assets/tram/left.png'
 import tramRightTexture from '@/assets/tram/right.png'
 
@@ -72,19 +73,20 @@ export const resources = {
   characterMainBlackFrontWalk2: characterMainBlackFrontWalk2Texture,
   characterMainBlackLeftWalk1: characterMainBlackLeftWalk1Texture,
   characterMainBlackLeftWalk2: characterMainBlackLeftWalk2Texture,
-  // 
+  //
   characterMainViolateFrontStill: characterMainViolateFrontStillTexture,
   characterMainViolateFrontWalk1: characterMainViolateFrontWalk1Texture,
   characterMainViolateFrontWalk2: characterMainViolateFrontWalk2Texture,
   characterMainViolateLeftWalk1: characterMainViolateLeftWalk1Texture,
   characterMainViolateLeftWalk2: characterMainViolateLeftWalk2Texture,
-  // 
+  //
   characterStationMasterWave1: characterStationMasterWave1Texture,
   characterStationMasterWave2: characterStationMasterWave2Texture,
   characterStationMasterWave3: characterStationMasterWave3Texture,
-  // 
+  //
   tramFront: tramFrontTexture,
-  tramRight: tramRightTexture,
+  tramBack: tramBackTexture,
+  tramRight: tramRightTexture
 }
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
@@ -130,8 +132,9 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
-  function nextScene() {
-    currentScenceIndex.value++
+  function nextScene(screen = 1) {
+    currentScenceIndex.value += screen
+    console.log("NextScene", currentScenceIndex.value)
   }
 
   function nextMapPosition() {

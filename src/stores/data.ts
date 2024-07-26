@@ -1,5 +1,5 @@
-import { defineStore } from "pinia"
-import { ref, reactive } from "vue"
+import { defineStore } from 'pinia'
+import { ref, reactive } from 'vue'
 
 export type ageChoice = '18-25' | '26-35' | '36-44' | '45-54'
 export type spendTimeChoice = 'Music' | 'Social Media' | 'Banking' | 'Shopping Cart' | 'Email' | 'Movie' | 'Gaming' | 'Health Tracker'
@@ -20,7 +20,7 @@ export const useDataStore = defineStore('data', () => {
     age: null,
     spendTime: [],
     annoyingPoints: null,
-    dataTradeOff: null,
+    dataTradeOff: null
   })
 
   function setReadTC(value: boolean) {
@@ -34,6 +34,6 @@ export const useDataStore = defineStore('data', () => {
   return {
     activeSceneIndex,
     nextScene,
-    setReadTC,
+    setReadTC
   }
 })
