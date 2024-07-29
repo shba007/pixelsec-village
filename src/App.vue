@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, reactive, ref, watch, watchEffect } from 'vue'
 import { Application, Loader, External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
-import { useWindowSize } from '@vueuse/core'
+import { useWindowSize, watchArray } from '@vueuse/core'
 
 import { resources, useGameStore } from '@/stores/game'
 import type { Asset, AssetState } from '@/utils/types'
@@ -26,8 +26,6 @@ const { currentScenceIndex, currentMapPositionIndex } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
-const isMobile = computed(() => screenHeight.value < 640 || screenWidth.value < 640)
-
 const zoomFactor = computed(() => screenWidth.value / 1280)
 const map = reactive<Asset>({
   loaded: false,
@@ -45,19 +43,6 @@ const map = reactive<Asset>({
   animation: 'init'
 })
 
-/* ...(isMobile.value ? [
-      { x: -95, y: 0, scale: 0.127, time: 0 },
-      { x: -270, y: -125, scale: 0.25, time: 3 }
-    ] : [
-      { x: -95, y: 0, scale: 0.28, time: 0 },
-      { x: -270, y: -125, scale: 0.30, time: 3 }
-    ]),
-    { x: -1065, y: -595, scale: 0.53, time: 6 },
-    { x: -670, y: -620, scale: 0.53, time: 8 },
-    { x: -670, y: -430, scale: 0.53, time: 10 },
-    { x: -550, y: -280, scale: 0.53, time: 11 },
-    { x: -550, y: -280, scale: 0.53, time: 11 } */
-
 function onLoad() {
   map.position.x = map.steps[0].x
   map.position.y = map.steps[0].y
@@ -67,11 +52,11 @@ function onLoad() {
   map.animation = 'started'
 }
 
-/* function autoScale() {
-  const x = screenWidth.value
-  const y = 0.0015104166666667 * x + 3.893333333333333
-  return y / 2.95
-} */
+watch(screenWidth, () => {
+  const newScale = (screenWidth.value / screenHeight.value < 1) ? 0.84 : 0.46
+  map.steps[0].scale = newScale
+  map.position.scale = newScale
+})
 
 let totalElaspedTime = 0
 let progress = 0
@@ -131,16 +116,17 @@ const tram = reactive<Asset>({
   loaded: false,
   alias: 'tram',
   steps: [
-    { x: 896, y: 551, scale: 0.5, time: 0 },
-    { x: 896, y: 561, scale: 0.5, time: 0.5 },
-    { x: 1180, y: 561, scale: 0.5, time: 4 },
-    { x: 1180, y: 1008, scale: 0.5, time: 6 },
-    { x: 1670, y: 1008, scale: 0.5, time: 8 },
-    { x: 1670, y: 2040, scale: 0.5, time: 14 },
-    { x: 2490, y: 2040, scale: 0.5, time: 18 },
-    { x: 2490, y: 1708, scale: 0.5, time: 20 }
+    { x: 896, y: 551, scale: 0.5, alpha: 0, time: 0 },
+    { x: 896, y: 561, scale: 0.5, alpha: 1, time: 0.5 },
+    { x: 1180, y: 561, scale: 0.5, alpha: 1, time: 4 },
+    { x: 1180, y: 1008, scale: 0.5, alpha: 1, time: 6 },
+    { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 8 },
+    { x: 1670, y: 2040, scale: 0.5, alpha: 1, time: 14 },
+    { x: 2490, y: 2040, scale: 0.5, alpha: 1, time: 18 },
+    { x: 2490, y: 1708, scale: 0.5, alpha: 1, time: 20 },
+    { x: 2490, y: 1695, scale: 0.5, alpha: 0, time: 20.5 }
   ],
-  position: { x: 0, y: 0, scale: 0, time: 0 },
+  position: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'init'
 })
 
@@ -209,7 +195,7 @@ const clouds = ref<
       <template #default>
         <Container :x="map.position.x * map.position.scale * zoomFactor"
           :y="map.position.y * map.position.scale * zoomFactor" :scale="map.position.scale * zoomFactor">
-          <Sprite :texture="map.alias" :x="0" :y="0" :scale="1" :anchor="0" />
+          <Sprite :texture="map.alias" :x="0" :y="0" :scale="0.667" :anchor="0" />
           <Pigeon v-for="{ x, y, flip, scale } in pegions" :x="x" :y="y" :scale="scale" :flip="flip" />
           <StreetLamp v-for="{ x, y, scale } in streetLamp" :x="x" :y="y" :scale="scale" />
           <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
@@ -240,7 +226,7 @@ const clouds = ref<
         </Container>
       </template>
     </Loader>
-    <!--  <External>
+    <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
         <div class="flex flex-col gap-2">
           <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10" />
@@ -254,7 +240,7 @@ const clouds = ref<
           <input v-model="pegions[0].flip" type="checkbox" />
         </div>
       </div>
-    </External> -->
+    </External>
   </Application>
 </template>
 

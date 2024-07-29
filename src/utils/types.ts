@@ -2,6 +2,7 @@ export interface AssetState {
   x: number
   y: number
   scale: number
+  alpha?: number
   time: number
 }
 
