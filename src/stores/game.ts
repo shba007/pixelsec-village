@@ -1,24 +1,28 @@
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation, useWindowSize, watchArray } from '@vueuse/core'
+import { useFullscreen, useScreenOrientation, useWindowSize, watchArray } from '@vueuse/core'
 
 import frontINET from '/fonts/INET.ttf'
 import frontLAN from '/fonts/LAN.ttf'
-import mapTexture from '@/assets/map.jpg'
-import map1xTexture from '@/assets/map-1x.jpg'
 import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
 import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
 import buttonLongTexture from '@/assets/buttons/long.png'
 import buttonLongPressedTexture from '@/assets/buttons/long-pressed.png'
+//
+import map1xTexture from '@/assets/map-1x.jpg'
+import map2xTexture from '@/assets/map-2x.jpg'
+//
 import pigeonLeftPeckTexture from '@/assets/pigeon/left-peck.png'
 import pigeonLeftStandTexture from '@/assets/pigeon/left-stand.png'
 import pigeonRightPeckTexture from '@/assets/pigeon/right-peck.png'
 import pigeonRightStandTexture from '@/assets/pigeon/right-stand.png'
+//
 import streetLampTexture1 from '@/assets/street-lamp/lamp-1.png'
 import streetLampTexture2 from '@/assets/street-lamp/lamp-2.png'
 import streetLampTexture3 from '@/assets/street-lamp/lamp-3.png'
 import streetLampTexture4 from '@/assets/street-lamp/lamp-4.png'
 import streetLampTexture5 from '@/assets/street-lamp/lamp-5.png'
+//
 import flagPinkTexture1 from '@/assets/flags/pink/flag-1.png'
 import flagPinkTexture2 from '@/assets/flags/pink/flag-2.png'
 import flagSchoolBlueTexture1 from '@/assets/flags/school/blue-1.png'
@@ -27,9 +31,21 @@ import flagSchoolRedTexture1 from '@/assets/flags/school/red-1.png'
 import flagSchoolRedTexture2 from '@/assets/flags/school/red-2.png'
 import flagStationTexture1 from '@/assets/flags/station/flag-1.png'
 import flagStationTexture2 from '@/assets/flags/station/flag-2.png'
+//
+import waveTexture1 from '@/assets/waves/1.png'
+import waveTexture2 from '@/assets/waves/2.png'
+import waveTexture3 from '@/assets/waves/3.png'
+import waveTexture4 from '@/assets/waves/4.png'
+import waveTexture5 from '@/assets/waves/5.png'
+//
 import cloudLargeTexture from '@/assets/clouds/large.png'
 import cloudMediumTexture from '@/assets/clouds/medium.png'
 import cloudSmallTexture from '@/assets/clouds/small.png'
+//
+import tramFrontTexture from '@/assets/tram/front.png'
+import tramBackTexture from '@/assets/tram/back.png'
+// import tramLeftTexture from '@/assets/tram/left.png'
+import tramRightTexture from '@/assets/tram/right.png'
 // Charcters
 import characterGenericFrontStillTexture from '@/assets/character/generic/front-still.png'
 import characterGenericFrontWalk1Texture from '@/assets/character/generic/front-walk-1.png'
@@ -69,19 +85,51 @@ import characterStationMasterWave1Texture from '@/assets/character/station-maste
 import characterStationMasterWave2Texture from '@/assets/character/station-master/wave-2.png'
 import characterStationMasterWave3Texture from '@/assets/character/station-master/wave-3.png'
 //
-import tramFrontTexture from '@/assets/tram/front.png'
-import tramBackTexture from '@/assets/tram/back.png'
-// import tramLeftTexture from '@/assets/tram/left.png'
-import tramRightTexture from '@/assets/tram/right.png'
 
 export const resources = reactive({
   frontINET,
   frontLAN,
-  map: mapTexture,
   popupLandscape: popupLandscapeTexture,
   popupPortrait: popupPortraitTexture,
   buttonLong: buttonLongTexture,
   buttonLongPressed: buttonLongPressedTexture,
+  //
+  map: map1xTexture,
+  //
+  pigeonleftPeck: pigeonLeftPeckTexture,
+  pigeonLeftStand: pigeonLeftStandTexture,
+  pigeonRightPeck: pigeonRightPeckTexture,
+  pigeonRightStand: pigeonRightStandTexture,
+  //
+  streetLamp1: streetLampTexture1,
+  streetLamp2: streetLampTexture2,
+  streetLamp3: streetLampTexture3,
+  streetLamp4: streetLampTexture4,
+  streetLamp5: streetLampTexture5,
+  //
+  flagPink1: flagPinkTexture1,
+  flagPink2: flagPinkTexture2,
+  flagSchoolBlue1: flagSchoolBlueTexture1,
+  flagSchoolBlue2: flagSchoolBlueTexture2,
+  flagSchoolRed1: flagSchoolRedTexture1,
+  flagSchoolRed2: flagSchoolRedTexture2,
+  flagStation1: flagStationTexture1,
+  flagStation2: flagStationTexture2,
+  //
+  wave1: waveTexture1,
+  wave2: waveTexture2,
+  wave3: waveTexture3,
+  wave4: waveTexture4,
+  wave5: waveTexture5,
+  //
+  cloudLarge: cloudLargeTexture,
+  cloudMedium: cloudMediumTexture,
+  cloudSmall: cloudSmallTexture,
+  //
+  tramFront: tramFrontTexture,
+  tramBack: tramBackTexture,
+  tramRight: tramRightTexture,
+
   // Characters
   characterGenericFrontStill: characterGenericFrontStillTexture,
   characterGenericFrontWalk1: characterGenericFrontWalk1Texture,
@@ -107,31 +155,7 @@ export const resources = reactive({
   //
   characterStationMasterWave1: characterStationMasterWave1Texture,
   characterStationMasterWave2: characterStationMasterWave2Texture,
-  characterStationMasterWave3: characterStationMasterWave3Texture,
-  //
-  tramFront: tramFrontTexture,
-  tramBack: tramBackTexture,
-  tramRight: tramRightTexture,
-  pigeonleftPeck: pigeonLeftPeckTexture,
-  pigeonLeftStand: pigeonLeftStandTexture,
-  pigeonRightPeck: pigeonRightPeckTexture,
-  pigeonRightStand: pigeonRightStandTexture,
-  streetLamp1: streetLampTexture1,
-  streetLamp2: streetLampTexture2,
-  streetLamp3: streetLampTexture3,
-  streetLamp4: streetLampTexture4,
-  streetLamp5: streetLampTexture5,
-  flagPink1: flagPinkTexture1,
-  flagPink2: flagPinkTexture2,
-  flagSchoolBlue1: flagSchoolBlueTexture1,
-  flagSchoolBlue2: flagSchoolBlueTexture2,
-  flagSchoolRed1: flagSchoolRedTexture1,
-  flagSchoolRed2: flagSchoolRedTexture2,
-  flagStation1: flagStationTexture1,
-  flagStation2: flagStationTexture2,
-  cloudLarge: cloudLargeTexture,
-  cloudMedium: cloudMediumTexture,
-  cloudSmall: cloudSmallTexture
+  characterStationMasterWave3: characterStationMasterWave3Texture
 })
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -139,39 +163,37 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 export type Character = 'black' | 'blue' | 'red' | 'violate'
 
 export const useGameStore = defineStore('game', () => {
-  const breakpoints = useBreakpoints(breakpointsTailwind)
-  const isMobile = breakpoints.smallerOrEqual('md')
+  const isMobile = computed(() => !(screenWidth.value > 640 && screenHeight.value > 640))
   const activeCharacter = ref<Character | null>(null)
 
-  if (screenWidth.value > 640 && screenHeight.value > 640) {
-    resources.map = map1xTexture
-    console.log("Desktop")
+  if (!isMobile.value) {
+    resources.map = map2xTexture
   }
 
-  const { isSupported: isFullscreenSupported, isFullscreen, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
-  const { isSupported: isOrientationSupported, orientation, lockOrientation, unlockOrientation } = useScreenOrientation()
+  const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
+  const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
 
   // const $mapPosition = reactive({ x: 400, y: 680, scale: 0.22 })
   // const mapPosition = computed(() => $mapPosition)
 
   const currentScenceIndex = ref(0)
   const currentMapPositionIndex = ref(0)
-  const isFullScreenAlertShow = ref(false)
+  const isIphone = ref(false)
 
   watchArray([isFullscreenSupported, isOrientationSupported], async () => {
     if (isFullscreenSupported.value && isOrientationSupported.value) {
       try {
         await exitFullscreen()
         unlockOrientation()
-        isFullScreenAlertShow.value = false
+        isIphone.value = false
       } catch (error) {
-        isFullScreenAlertShow.value = true
+        isIphone.value = true
       }
     } else {
-      isFullScreenAlertShow.value = true
+      isIphone.value = true
     }
 
-    console.log({ isFullScreenAlertShow: isFullScreenAlertShow.value })
+    console.log({ isIphone: isIphone.value })
   })
 
   async function toggleGameMode(value: boolean) {
@@ -199,6 +221,7 @@ export const useGameStore = defineStore('game', () => {
 
   return {
     isMobile,
+    isIphone,
     currentScenceIndex,
     currentMapPositionIndex,
     activeCharacter,

@@ -7,6 +7,21 @@
   src: url('/fonts/INET.ttf'); /*URL to font*/
 }
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  scrollbar-width: 6px;
+}
+
+*::-webkit-scrollbar {
+  @apply block size-[6px] bg-slate-50;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply rounded-md bg-slate-300;
+}
+
 body {
   @apply font-inet;
 }

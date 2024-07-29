@@ -9,9 +9,9 @@ defineProps<{
   scale: number
 }>()
 
-const imgs = ['streetLamp1', 'streetLamp2', 'streetLamp3', 'streetLamp4', 'streetLamp5']
+const imgs = ['wave1', 'wave2', 'wave3', 'wave4', 'wave5', 'wave4', 'wave3', 'wave2']
 const playing = useTimeout(getRandomInteger(100, 2000))
-const speed = ref(getRandomInteger(1000, 2000) / 20000)
+const speed = ref(getRandomInteger(500, 1000) / 20000)
 </script>
 
 <template>

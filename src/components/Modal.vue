@@ -2,12 +2,9 @@
 import popupLandscape from '@/assets/popup/bg-landscape.png'
 import popupPortrait from '@/assets/popup/bg-portrait.png'
 
-const props = defineProps<{
+defineProps<{
   title: string
   description?: string
-}>()
-const emit = defineEmits<{
-  (event: 'start'): void
 }>()
 </script>
 

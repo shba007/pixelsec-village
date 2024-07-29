@@ -1,26 +1,15 @@
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { External } from 'vue3-pixi'
 
 import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
-import characterMainBlackWalkingTexture from '@/assets/character/main/black/walking.gif'
-import characterMainViolateWalkingTexture from '@/assets/character/main/violate/walking.gif'
-import characterMainRedWalkingTexture from '@/assets/character/main/red/walking.gif'
-import characterMainBlueWalkingTexture from '@/assets/character/main/blue/walking.gif'
-import { useIntervalFn, useScroll, useTimeoutFn } from '@vueuse/core'
-
-const characters = [
-  { type: 'black', image: characterMainBlackWalkingTexture },
-  { type: 'violate', image: characterMainViolateWalkingTexture },
-  { type: 'red', image: characterMainRedWalkingTexture },
-  { type: 'blue', image: characterMainBlueWalkingTexture }
-] as const
+import { useScroll, useTimeoutFn } from '@vueuse/core'
 
 const gameStore = useGameStore()
 
 const el = ref<HTMLParagraphElement | null>(null)
-const { y, arrivedState } = useScroll(el, { behavior: 'smooth' })
+const { arrivedState } = useScroll(el, { behavior: 'smooth' })
 
 /* useIntervalFn(() => {
   y.value += 1

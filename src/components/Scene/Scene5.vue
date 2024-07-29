@@ -1,20 +1,8 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
 import { External } from 'vue3-pixi'
 
-import { useGameStore, type Character } from '@/stores/game'
+import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
-import characterMainBlackWalkingTexture from '@/assets/character/main/black/walking.gif'
-import characterMainViolateWalkingTexture from '@/assets/character/main/violate/walking.gif'
-import characterMainRedWalkingTexture from '@/assets/character/main/red/walking.gif'
-import characterMainBlueWalkingTexture from '@/assets/character/main/blue/walking.gif'
-
-const characters = [
-  { type: 'black', image: characterMainBlackWalkingTexture },
-  { type: 'violate', image: characterMainViolateWalkingTexture },
-  { type: 'red', image: characterMainRedWalkingTexture },
-  { type: 'blue', image: characterMainBlueWalkingTexture }
-] as const
 
 const gameStore = useGameStore()
 

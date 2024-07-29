@@ -4,14 +4,25 @@ import rotateIndicator from '@/assets/rotate-indicator.png'
 
 import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
+import { storeToRefs } from 'pinia'
+import { breakpointsTailwind, useBreakpoints, useTimeoutFn } from '@vueuse/core'
+import { computed, onMounted } from 'vue'
 
 const gameStore = useGameStore()
+const { isIphone } = storeToRefs(gameStore)
 
 async function handleStart() {
   gameStore.nextScene()
   gameStore.nextMapPosition()
   await gameStore.toggleGameMode(true)
 }
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isDesktop = computed(() => breakpoints.isGreaterOrEqual('md'))
+
+onMounted(() => {
+  if (isDesktop.value) useTimeoutFn(handleStart, 2000)
+})
 </script>
 
 <template>
@@ -21,9 +32,9 @@ async function handleStart() {
       description="Where your online habits and choices will shape the kind of house you live in.
           Let’s go!"
     >
-      <button class="flex items-end gap-2" @click="handleStart">
+      <button v-if="!isDesktop" class="flex items-end gap-2" @click="handleStart">
         <img :src="rotateIndicator" alt="rotate-indicator" />
-        <span class="pb-2 pt-4 text-xl">Full screen</span>
+        <span class="pb-2 pt-4 text-xl">{{ isIphone ? 'Full screen' : 'Rotate' }}</span>
       </button>
     </Modal>
   </External>

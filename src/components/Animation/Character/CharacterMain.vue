@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { onTick } from 'vue3-pixi'
 
 interface Route {
@@ -9,7 +9,7 @@ interface Route {
   time: number
 }
 
-type Orientation = 'front' | 'back' | 'left' | 'right'
+// type Orientation = 'front' | 'back' | 'left' | 'right'
 
 interface Character {
   loaded: boolean

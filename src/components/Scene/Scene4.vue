@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
 import { External } from 'vue3-pixi'
 
 import { useGameStore, type Character } from '@/stores/game'
@@ -29,7 +28,7 @@ function onCharcterSet(type: Character) {
   <External class="absolute top-0 left-0 w-screen h-screen">
     <Modal title="Select your Avatar" description="Choose your main character energy.">
       <div class="flex gap-8">
-        <button v-for="{ type, image } of characters" @click="onCharcterSet(type)">
+        <button v-for="{ type, image } of characters" :key="image" @click="onCharcterSet(type)">
           <img :src="image" :width="48" class="hover:scale-125 duration-300" />
         </button>
       </div>
