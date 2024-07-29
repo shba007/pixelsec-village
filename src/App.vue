@@ -28,29 +28,35 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const isMobile = computed(() => screenHeight.value < 640 || screenWidth.value < 640)
 
+const zoomFactor = computed(() => screenWidth.value / 1280)
 const map = reactive<Asset>({
   loaded: false,
   alias: 'map',
   steps: [
-    /*   ...(isMobile.value
-        ? [
-          { x: -424, y: -348, scale: 0.46, time: 0 },
-          { x: -270, y: -125, scale: 0.25, time: 3 }
-        ]
-        : [
-          { x: -424, y: -348, scale: 0.72, time: 0 },
-          { x: -270, y: -125, scale: 0.3, time: 3 }
-        ]), */
+    { x: -360, y: -260, scale: 0.46, time: 0 },
+    { x: -540, y: -270, scale: 0.93, time: 3 },
     { x: -990, y: -560, scale: 1.96, time: 6 },
-    // 1.38
-    { x: -670, y: -620, scale: 0.53, time: 8 },
-    { x: -670, y: -430, scale: 0.53, time: 10 },
-    { x: -550, y: -280, scale: 0.53, time: 11 },
-    { x: -550, y: -280, scale: 0.53, time: 11 }
+    { x: -795, y: -590, scale: 2.01, time: 8 },
+    { x: -720, y: -405, scale: 1.97, time: 10 },
+    { x: -600, y: -270, scale: 2.01, time: 11 },
+    { x: -600, y: -270, scale: 2.01, time: 11 }
   ],
   position: { x: 0, y: 0, scale: 1, time: 0 },
   animation: 'init'
 })
+
+/* ...(isMobile.value ? [
+      { x: -95, y: 0, scale: 0.127, time: 0 },
+      { x: -270, y: -125, scale: 0.25, time: 3 }
+    ] : [
+      { x: -95, y: 0, scale: 0.28, time: 0 },
+      { x: -270, y: -125, scale: 0.30, time: 3 }
+    ]),
+    { x: -1065, y: -595, scale: 0.53, time: 6 },
+    { x: -670, y: -620, scale: 0.53, time: 8 },
+    { x: -670, y: -430, scale: 0.53, time: 10 },
+    { x: -550, y: -280, scale: 0.53, time: 11 },
+    { x: -550, y: -280, scale: 0.53, time: 11 } */
 
 function onLoad() {
   map.position.x = map.steps[0].x
@@ -58,14 +64,14 @@ function onLoad() {
   map.position.scale = map.steps[0].scale
   map.position.time = map.steps[0].time
   map.loaded = true
-  map.animation = 'init'
+  map.animation = 'started'
 }
 
-function autoScale() {
+/* function autoScale() {
   const x = screenWidth.value
   const y = 0.0015104166666667 * x + 3.893333333333333
   return y / 2.95
-}
+} */
 
 let totalElaspedTime = 0
 let progress = 0
@@ -98,82 +104,78 @@ watch(currentMapPositionIndex, (value) => {
 
 const characterGenericSteps = ref<AssetState[][]>([
   [
-    { x: 2500, y: 1350, scale: 0.85, time: 0 },
-    { x: 2500, y: 1180, scale: 0.85, time: 2 },
-    { x: 2500, y: 1350, scale: 0.85, time: 4 }
+    { x: 1250, y: 677.5, scale: 0.425, time: 0 },
+    { x: 1250, y: 591.171875, scale: 0.425, time: 2 },
+    { x: 1250, y: 677.5, scale: 0.425, time: 4 }
   ],
   [
-    { x: 2960, y: 1630, scale: 0.85, time: 0 },
-    { x: 2960, y: 1860, scale: 0.85, time: 2 },
-    { x: 2960, y: 1630, scale: 0.85, time: 4 }
+    { x: 1480, y: 820, scale: 0.425, time: 0 },
+    { x: 1480, y: 936, scale: 0.425, time: 2 },
+    { x: 1480, y: 820, scale: 0.425, time: 4 }
   ],
   [
-    { x: 2260, y: 1100, scale: 0.85, time: 0 },
-    { x: 3180, y: 1100, scale: 0.85, time: 5 },
-    { x: 2260, y: 1100, scale: 0.85, time: 10 }
+    { x: 1140, y: 550, scale: 0.425, time: 0 },
+    { x: 1606, y: 550, scale: 0.425, time: 5 },
+    { x: 1140, y: 550, scale: 0.425, time: 10 }
   ],
   [
-    { x: 1660, y: 1370, scale: 0.85, time: 0 },
-    { x: 1660, y: 1530, scale: 0.85, time: 3 },
-    { x: 1660, y: 1370, scale: 0.85, time: 6 }
+    { x: 820, y: 687, scale: 0.425, time: 0 },
+    { x: 820, y: 768, scale: 0.425, time: 3 },
+    { x: 820, y: 687, scale: 0.425, time: 6 }
   ]
 ])
 
-const characterStationMaster = reactive({
-  x: 1670,
-  y: 1030,
-  scale: 1
-})
+const characterStationMaster = reactive({ x: 840, y: 515, scale: 0.48 })
 
 const tram = reactive<Asset>({
   loaded: false,
   alias: 'tram',
   steps: [
-    { x: 1810, y: 1100, scale: 1, time: 0 },
-    { x: 1810, y: 1120, scale: 1, time: 0.5 },
-    { x: 2355, y: 1120, scale: 1, time: 4 },
-    { x: 2355, y: 2000, scale: 1, time: 6 },
-    { x: 3340, y: 2000, scale: 1, time: 8 },
-    { x: 3340, y: 4060, scale: 1, time: 14 },
-    { x: 4980, y: 4060, scale: 1, time: 18 },
-    { x: 4980, y: 3380, scale: 1, time: 20 }
+    { x: 896, y: 551, scale: 0.5, time: 0 },
+    { x: 896, y: 561, scale: 0.5, time: 0.5 },
+    { x: 1180, y: 561, scale: 0.5, time: 4 },
+    { x: 1180, y: 1008, scale: 0.5, time: 6 },
+    { x: 1670, y: 1008, scale: 0.5, time: 8 },
+    { x: 1670, y: 2040, scale: 0.5, time: 14 },
+    { x: 2490, y: 2040, scale: 0.5, time: 18 },
+    { x: 2490, y: 1708, scale: 0.5, time: 20 }
   ],
   position: { x: 0, y: 0, scale: 0, time: 0 },
   animation: 'init'
 })
 
 const pegions = ref([
-  { x: 1570, y: 1450, scale: 1, flip: false },
-  { x: 1720, y: 1490, scale: 1, flip: false },
-  { x: 1940, y: 1760, scale: 1, flip: true },
-  { x: 2020, y: 1810, scale: 1, flip: false },
-  { x: 1490, y: 1860, scale: 1, flip: false },
-  { x: 1620, y: 1890, scale: 1, flip: true },
-  { x: 2930, y: 1930, scale: 1, flip: true },
-  { x: 2410, y: 2290, scale: 1, flip: true },
-  { x: 1940, y: 2850, scale: 1, flip: true },
-  { x: 2110, y: 3760, scale: 1, flip: false },
-  { x: 2190, y: 3800, scale: 1, flip: true },
-  { x: 2110, y: 4150, scale: 1, flip: false },
-  { x: 3140, y: 4740, scale: 1, flip: true },
-  { x: 1250, y: 5150, scale: 1, flip: true },
-  { x: 1210, y: 5200, scale: 1, flip: true }
+  { x: 780, y: 725, scale: 0.5, flip: false },
+  { x: 860, y: 750, scale: 0.5, flip: false },
+  { x: 970, y: 880, scale: 0.5, flip: true },
+  { x: 1010, y: 900, scale: 0.5, flip: false },
+  { x: 740, y: 930, scale: 0.5, flip: false },
+  { x: 800, y: 940, scale: 0.5, flip: true },
+  { x: 1470, y: 970, scale: 0.5, flip: true },
+  { x: 1205, y: 1145, scale: 0.5, flip: true },
+  { x: 970, y: 1425, scale: 0.5, flip: true },
+  { x: 1060, y: 1885, scale: 0.5, flip: false },
+  { x: 1100, y: 1900, scale: 0.5, flip: true },
+  { x: 1050, y: 2075, scale: 0.5, flip: false },
+  { x: 1570, y: 2370, scale: 0.5, flip: true },
+  { x: 620, y: 2580, scale: 0.5, flip: true },
+  { x: 600, y: 2600, scale: 0.5, flip: true }
 ])
 
 const streetLamp = ref([
-  { x: 3240, y: 1030, scale: 1 },
-  { x: 1420, y: 1220, scale: 1 },
-  { x: 1440, y: 2475, scale: 1 },
-  { x: 2240, y: 2475, scale: 1 },
-  { x: 745, y: 4570, scale: 1 },
-  { x: 745, y: 4920, scale: 1 },
-  { x: 745, y: 5250, scale: 1 },
-  { x: 745, y: 5590, scale: 1 },
-  { x: 3420, y: 5080, scale: 1 },
-  { x: 3420, y: 5320, scale: 1 },
-  { x: 4090, y: 5080, scale: 1 },
-  { x: 4610, y: 5080, scale: 1 },
-  { x: 4970, y: 5080, scale: 1 }
+  { x: 1615, y: 515, scale: 0.5 },
+  { x: 710, y: 610, scale: 0.5 },
+  { x: 710, y: 1240, scale: 0.5 },
+  { x: 1130, y: 1240, scale: 0.5 },
+  { x: 370, y: 2290, scale: 0.5 },
+  { x: 370, y: 2490, scale: 0.5 },
+  { x: 370, y: 2650, scale: 0.5 },
+  { x: 370, y: 2800, scale: 0.5 },
+  { x: 1710, y: 2540, scale: 0.5 },
+  { x: 1710, y: 2660, scale: 0.5 },
+  { x: 2050, y: 2540, scale: 0.5 },
+  { x: 2320, y: 2540, scale: 0.5 },
+  { x: 2500, y: 2540, scale: 0.5 }
 ])
 
 const height = ref(3844 * 2)
@@ -186,60 +188,15 @@ const clouds = ref<
     direction: number
   }[]
 >([
-  {
-    size: 'lg',
-    x: -100,
-    y: height.value * 0.2,
-    direction: 1
-  },
-  {
-    size: 'lg',
-    x: -300,
-    y: height.value * 0.32,
-    direction: 1
-  },
-  {
-    size: 'lg',
-    x: -600,
-    y: height.value * 0.46,
-    direction: 1
-  },
-  {
-    size: 'sm',
-    x: -200,
-    y: height.value * 0.54,
-    direction: 1
-  },
-  {
-    size: 'md',
-    x: -50,
-    y: height.value * 0.66,
-    direction: 1
-  },
-  {
-    size: 'lg',
-    x: -250,
-    y: height.value * 0.69,
-    direction: 1
-  },
-  {
-    size: 'sm',
-    x: -50,
-    y: height.value * 0.78,
-    direction: 1
-  },
-  {
-    size: 'md',
-    x: -300,
-    y: height.value * 0.9,
-    direction: 1
-  },
-  {
-    size: 'sm',
-    x: -600,
-    y: height.value * 0.96,
-    direction: 1
-  }
+  { size: 'lg', x: -100, y: height.value * 0.2, direction: 1 },
+  { size: 'lg', x: -300, y: height.value * 0.32, direction: 1 },
+  { size: 'lg', x: -600, y: height.value * 0.46, direction: 1 },
+  { size: 'sm', x: -200, y: height.value * 0.54, direction: 1 },
+  { size: 'md', x: -50, y: height.value * 0.66, direction: 1 },
+  { size: 'lg', x: -250, y: height.value * 0.69, direction: 1 },
+  { size: 'sm', x: -50, y: height.value * 0.78, direction: 1 },
+  { size: 'md', x: -300, y: height.value * 0.9, direction: 1 },
+  { size: 'sm', x: -600, y: height.value * 0.96, direction: 1 }
 ])
 </script>
 
@@ -250,17 +207,18 @@ const clouds = ref<
         <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
       </template>
       <template #default>
-        <Container :x="map.position.x * autoScale()" :y="map.position.y * autoScale()" :scale="autoScale()">
+        <Container :x="map.position.x * map.position.scale * zoomFactor"
+          :y="map.position.y * map.position.scale * zoomFactor" :scale="map.position.scale * zoomFactor">
           <Sprite :texture="map.alias" :x="0" :y="0" :scale="1" :anchor="0" />
-          <!--  <Pigeon v-for="{ x, y, flip } in pegions" :x="x" :y="y" :scale="1" :flip="flip" />
-          <StreetLamp v-for="{ x, y } in streetLamp" :x="x" :y="y" :scale="1" />
+          <Pigeon v-for="{ x, y, flip, scale } in pegions" :x="x" :y="y" :scale="scale" :flip="flip" />
+          <StreetLamp v-for="{ x, y, scale } in streetLamp" :x="x" :y="y" :scale="scale" />
           <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
             :animation="true" />
           <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
             :scale="characterStationMaster.scale" />
           <Tram :steps="tram.steps" :animation="true" initalOrientation="right" />
           <Cloud v-for="{ size, x, y, direction } in clouds" :width-range="widthRange" :size="size" :x="x" :y="y"
-            :direction="direction" /> -->
+            :direction="direction" />
           <template v-if="currentScenceIndex === 0">
             <Scene1 v-if="map.animation === 'finished'" />
           </template>
@@ -282,20 +240,21 @@ const clouds = ref<
         </Container>
       </template>
     </Loader>
-    <External>
+    <!--  <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
         <div class="flex flex-col gap-2">
           <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10" />
           <input v-model="map.position.y" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="map.position.scale" type="number" min="0" max="2" step="0.01" />
+          <input v-model="map.position.scale" type="number" min="0" max="3" step="0.01" />
         </div>
         <div class="flex flex-col gap-2">
-          <input v-model="streetLamp[0].x" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="streetLamp[0].y" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="streetLamp[0].scale" type="number" min="0" max="20" step="0.01" />
+          <input v-model="pegions[0].x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="pegions[0].y" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="pegions[0].scale" type="number" min="0" max="20" step="0.01" />
+          <input v-model="pegions[0].flip" type="checkbox" />
         </div>
       </div>
-    </External>
+    </External> -->
   </Application>
 </template>
 

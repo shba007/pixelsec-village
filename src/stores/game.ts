@@ -18,6 +18,14 @@ import streetLampTexture2 from '@/assets/street-lamp/lamp-2.png'
 import streetLampTexture3 from '@/assets/street-lamp/lamp-3.png'
 import streetLampTexture4 from '@/assets/street-lamp/lamp-4.png'
 import streetLampTexture5 from '@/assets/street-lamp/lamp-5.png'
+import flagPinkTexture1 from '@/assets/flags/pink/flag-1.png'
+import flagPinkTexture2 from '@/assets/flags/pink/flag-2.png'
+import flagSchoolBlueTexture1 from '@/assets/flags/school/blue-1.png'
+import flagSchoolBlueTexture2 from '@/assets/flags/school/blue-2.png'
+import flagSchoolRedTexture1 from '@/assets/flags/school/red-1.png'
+import flagSchoolRedTexture2 from '@/assets/flags/school/red-2.png'
+import flagStationTexture1 from '@/assets/flags/station/flag-1.png'
+import flagStationTexture2 from '@/assets/flags/station/flag-2.png'
 import cloudLargeTexture from '@/assets/clouds/large.png'
 import cloudMediumTexture from '@/assets/clouds/medium.png'
 import cloudSmallTexture from '@/assets/clouds/small.png'
@@ -112,6 +120,14 @@ export const resources = {
   streetLamp3: streetLampTexture3,
   streetLamp4: streetLampTexture4,
   streetLamp5: streetLampTexture5,
+  flagPink1: flagPinkTexture1,
+  flagPink2: flagPinkTexture2,
+  flagSchoolBlue1: flagSchoolBlueTexture1,
+  flagSchoolBlue2: flagSchoolBlueTexture2,
+  flagSchoolRed1: flagSchoolRedTexture1,
+  flagSchoolRed2: flagSchoolRedTexture2,
+  flagStation1: flagStationTexture1,
+  flagStation2: flagStationTexture2,
   cloudLarge: cloudLargeTexture,
   cloudMedium: cloudMediumTexture,
   cloudSmall: cloudSmallTexture
