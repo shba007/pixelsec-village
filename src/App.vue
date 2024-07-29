@@ -5,33 +5,19 @@ import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
 
 import { resources, useGameStore } from '@/stores/game'
+import type { Asset, AssetState } from '@/utils/types'
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
 import Tram from '@/components/Animation/Tram.vue'
+import StreetLamp from '@/components/Animation/StreetLamp.vue'
+import Pigeon from '@/components/Animation/Pigeon.vue'
+import Cloud from '@/components/Animation/Cloud.vue'
 import Scene1 from '@/components/Scene/Scene1.vue'
 import Scene2 from '@/components/Scene/Scene2.vue'
 import Scene3 from '@/components/Scene/Scene3.vue'
 import Scene4 from '@/components/Scene/Scene4.vue'
 import Scene5 from '@/components/Scene/Scene5.vue'
-import Scene6 from './components/Scene/Scene6.vue'
-import StreetLamp from './components/Animation/StreetLamp.vue'
-import Pigeon from './components/Animation/Pigeon.vue'
-import Cloud from './components/Animation/Cloud.vue'
-
-interface AssetState {
-  x: number
-  y: number
-  scale: number
-  time: number
-}
-
-export interface Asset {
-  loaded: boolean
-  alias: string
-  steps: AssetState[]
-  position: AssetState
-  animation: 'init' | 'started' | 'finished'
-}
+import Scene6 from '@/components/Scene/Scene6.vue'
 
 const mainWindow = window
 
@@ -41,20 +27,22 @@ const { currentScenceIndex, currentMapPositionIndex } = storeToRefs(gameStore)
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const isMobile = computed(() => screenHeight.value < 640 || screenWidth.value < 640)
+
 const map = reactive<Asset>({
   loaded: false,
   alias: 'map',
   steps: [
-    ...(isMobile.value
-      ? [
-        { x: -95, y: 0, scale: 0.127, time: 0 },
-        { x: -270, y: -125, scale: 0.25, time: 3 }
-      ]
-      : [
-        { x: -95, y: 0, scale: 0.28, time: 0 },
-        { x: -270, y: -125, scale: 0.3, time: 3 }
-      ]),
-    { x: -1065, y: -595, scale: 0.53, time: 6 },
+    /*   ...(isMobile.value
+        ? [
+          { x: -424, y: -348, scale: 0.46, time: 0 },
+          { x: -270, y: -125, scale: 0.25, time: 3 }
+        ]
+        : [
+          { x: -424, y: -348, scale: 0.72, time: 0 },
+          { x: -270, y: -125, scale: 0.3, time: 3 }
+        ]), */
+    { x: -990, y: -560, scale: 1.96, time: 6 },
+    // 1.38
     { x: -670, y: -620, scale: 0.53, time: 8 },
     { x: -670, y: -430, scale: 0.53, time: 10 },
     { x: -550, y: -280, scale: 0.53, time: 11 },
@@ -70,7 +58,13 @@ function onLoad() {
   map.position.scale = map.steps[0].scale
   map.position.time = map.steps[0].time
   map.loaded = true
-  map.animation = 'started'
+  map.animation = 'init'
+}
+
+function autoScale() {
+  const x = screenWidth.value
+  const y = 0.0015104166666667 * x + 3.893333333333333
+  return y / 2.95
 }
 
 let totalElaspedTime = 0
@@ -148,11 +142,6 @@ const tram = reactive<Asset>({
   animation: 'init'
 })
 
-/* const abcd = reactive({
-  x: 0,
-  y: 0,
-  scale: 1
-}) */
 const pegions = ref([
   { x: 1570, y: 1450, scale: 1, flip: false },
   { x: 1720, y: 1490, scale: 1, flip: false },
@@ -258,12 +247,12 @@ const clouds = ref<
   <Application ref="app" :resize-to="mainWindow">
     <Loader :resources="resources" :on-resolved="onLoad">
       <template #fallback>
-        <Text :x="120" :y="120" :anchor="0.5"> Loading... </Text>
+        <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
       </template>
       <template #default>
-        <Container :x="map.position.x" :y="map.position.y" :scale="map.position.scale">
-          <Sprite :texture="map.alias" :x="0" :y="0" :scale="2" />
-          <Pigeon v-for="{ x, y, flip } in pegions" :x="x" :y="y" :scale="1" :flip="flip" />
+        <Container :x="map.position.x * autoScale()" :y="map.position.y * autoScale()" :scale="autoScale()">
+          <Sprite :texture="map.alias" :x="0" :y="0" :scale="1" :anchor="0" />
+          <!--  <Pigeon v-for="{ x, y, flip } in pegions" :x="x" :y="y" :scale="1" :flip="flip" />
           <StreetLamp v-for="{ x, y } in streetLamp" :x="x" :y="y" :scale="1" />
           <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
             :animation="true" />
@@ -271,7 +260,7 @@ const clouds = ref<
             :scale="characterStationMaster.scale" />
           <Tram :steps="tram.steps" :animation="true" initalOrientation="right" />
           <Cloud v-for="{ size, x, y, direction } in clouds" :width-range="widthRange" :size="size" :x="x" :y="y"
-            :direction="direction" />
+            :direction="direction" /> -->
           <template v-if="currentScenceIndex === 0">
             <Scene1 v-if="map.animation === 'finished'" />
           </template>
@@ -293,7 +282,7 @@ const clouds = ref<
         </Container>
       </template>
     </Loader>
-    <!-- <External>
+    <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
         <div class="flex flex-col gap-2">
           <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10" />
@@ -306,7 +295,7 @@ const clouds = ref<
           <input v-model="streetLamp[0].scale" type="number" min="0" max="20" step="0.01" />
         </div>
       </div>
-    </External> -->
+    </External>
   </Application>
 </template>
 
