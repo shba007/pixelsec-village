@@ -193,15 +193,20 @@ const clouds = ref<
         <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
       </template>
       <template #default>
-        <Container :x="map.position.x * map.position.scale * zoomFactor" :y="map.position.y * map.position.scale * zoomFactor" :scale="map.position.scale * zoomFactor">
-          <Sprite :texture="map.alias" :x="0" :y="0" :scale="0.667" :anchor="0" />
+        <Container :x="map.position.x * map.position.scale * zoomFactor"
+          :y="map.position.y * map.position.scale * zoomFactor" :scale="map.position.scale * zoomFactor">
+          <Sprite :texture="map.alias" :x="0" :y="0" :scale="1" :anchor="0" />
+          <!-- <Flag/> -->
           <Pigeon v-for="{ x, y, flip, scale } in pegions" :x="x" :y="y" :scale="scale" :flip="flip" />
           <StreetLamp v-for="{ x, y, scale } in streetLamp" :x="x" :y="y" :scale="scale" />
-          <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter" :animation="true" />
-          <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y" :scale="characterStationMaster.scale" />
+          <CharacterGeneric v-for="genericCharacter of characterGenericSteps" :steps="genericCharacter"
+            :animation="true" />
+          <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
+            :scale="characterStationMaster.scale" />
           <!-- @vue-ignore -->
           <Tram :steps="tram.steps" :animation="true" initalOrientation="right" />
-          <Cloud v-for="{ size, x, y, direction } in clouds" :width-range="widthRange" :size="size" :x="x" :y="y" :direction="direction" />
+          <Cloud v-for="{ size, x, y, direction } in clouds" :width-range="widthRange" :size="size" :x="x" :y="y"
+            :direction="direction" />
           <template v-if="currentScenceIndex === 0">
             <Scene1 v-if="map.animation === 'finished'" />
           </template>
