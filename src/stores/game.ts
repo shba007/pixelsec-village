@@ -1,10 +1,11 @@
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation, watchArray } from '@vueuse/core'
+import { breakpointsTailwind, useBreakpoints, useFullscreen, useScreenOrientation, useWindowSize, watchArray } from '@vueuse/core'
 
 import frontINET from '/fonts/INET.ttf'
 import frontLAN from '/fonts/LAN.ttf'
 import mapTexture from '@/assets/map.jpg'
+import map1xTexture from '@/assets/map-1x.jpg'
 import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
 import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
 import buttonLongTexture from '@/assets/buttons/long.png'
@@ -73,7 +74,7 @@ import tramBackTexture from '@/assets/tram/back.png'
 // import tramLeftTexture from '@/assets/tram/left.png'
 import tramRightTexture from '@/assets/tram/right.png'
 
-export const resources = {
+export const resources = reactive({
   frontINET,
   frontLAN,
   map: mapTexture,
@@ -131,7 +132,9 @@ export const resources = {
   cloudLarge: cloudLargeTexture,
   cloudMedium: cloudMediumTexture,
   cloudSmall: cloudSmallTexture
-}
+})
+
+const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
 
@@ -139,6 +142,11 @@ export const useGameStore = defineStore('game', () => {
   const breakpoints = useBreakpoints(breakpointsTailwind)
   const isMobile = breakpoints.smallerOrEqual('md')
   const activeCharacter = ref<Character | null>(null)
+
+  if (screenWidth.value > 640 && screenHeight.value > 640) {
+    resources.map = map1xTexture
+    console.log("Desktop")
+  }
 
   const { isSupported: isFullscreenSupported, isFullscreen, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, orientation, lockOrientation, unlockOrientation } = useScreenOrientation()

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch, watchEffect } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { Application, Loader, External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
-import { useWindowSize, watchArray } from '@vueuse/core'
+import { useWindowSize } from '@vueuse/core'
 
 import { resources, useGameStore } from '@/stores/game'
 import type { Asset, AssetState } from '@/utils/types'
+
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
 import Tram from '@/components/Animation/Tram.vue'
@@ -195,7 +196,7 @@ const clouds = ref<
       <template #default>
         <Container :x="map.position.x * map.position.scale * zoomFactor"
           :y="map.position.y * map.position.scale * zoomFactor" :scale="map.position.scale * zoomFactor">
-          <Sprite :texture="map.alias" :x="0" :y="0" :scale="0.667" :anchor="0" />
+          <Sprite :texture="map.alias" :x="0" :y="0" :scale="1" :anchor="0" />
           <!-- <Flag/> -->
           <Pigeon v-for="{ x, y, flip, scale } in pegions" :x="x" :y="y" :scale="scale" :flip="flip" />
           <StreetLamp v-for="{ x, y, scale } in streetLamp" :x="x" :y="y" :scale="scale" />
