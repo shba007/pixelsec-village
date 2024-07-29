@@ -195,7 +195,7 @@ const clouds = ref<
       <template #default>
         <Container :x="map.position.x * map.position.scale * zoomFactor"
           :y="map.position.y * map.position.scale * zoomFactor" :scale="map.position.scale * zoomFactor">
-          <Sprite :texture="map.alias" :x="0" :y="0" :scale="1" :anchor="0" />
+          <Sprite :texture="map.alias" :x="0" :y="0" :scale="0.667" :anchor="0" />
           <!-- <Flag/> -->
           <Pigeon v-for="{ x, y, flip, scale } in pegions" :x="x" :y="y" :scale="scale" :flip="flip" />
           <StreetLamp v-for="{ x, y, scale } in streetLamp" :x="x" :y="y" :scale="scale" />
@@ -228,7 +228,7 @@ const clouds = ref<
         </Container>
       </template>
     </Loader>
-    <External>
+    <!-- <External>
       <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
         <div class="flex flex-col gap-2">
           <input v-model="map.position.x" type="number" min="-10000" max="10000" step="10" />
@@ -242,7 +242,7 @@ const clouds = ref<
           <input v-model="pegions[0].flip" type="checkbox" />
         </div>
       </div>
-    </External>
+    </External> -->
   </Application>
 </template>
 
