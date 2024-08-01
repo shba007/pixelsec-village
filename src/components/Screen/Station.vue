@@ -7,6 +7,10 @@ import { resources, useGameStore } from '@/stores/game'
 import type { Asset, AssetState } from '@/utils/types'
 import StationCloud from '@/components/Animation/StationCloud.vue'
 
+const emit = defineEmits<{
+  (event: 'close'): void
+}>()
+
 const gameStore = useGameStore()
 
 const { width: widthRange, height: screenHeight } = useWindowSize()
