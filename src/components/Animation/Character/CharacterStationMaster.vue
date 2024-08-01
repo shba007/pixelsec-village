@@ -9,5 +9,5 @@ const imgs = ['characterStationMasterWave1', 'characterStationMasterWave2', 'cha
 </script>
 
 <template>
-  <AnimatedSprite :playing="true" :animation-speed="0.05" :textures="imgs" :anchor="0.5" :scale="scale" :x="x" :y="y" />
+  <AnimatedSprite :textures="imgs" :texture-options="{ scaleMode: 'nearest' }" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="true" :animation-speed="0.05" />
 </template>

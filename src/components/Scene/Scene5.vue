@@ -14,7 +14,7 @@ function onClick(value: boolean) {
 
 <template>
   <External class="absolute top-0 left-0 w-screen h-screen">
-    <Modal title="Before we begin" description="let’s go through the T&Cs.">
+    <Modal title="" description="Before we begin <br/> let’s go through the T&Cs.">
       <div class="flex gap-8">
         <button class="active-btn" @click="onClick(false)">Skip T&Cs</button>
         <button class="active-btn" @click="onClick(true)">Read T&Cs</button>

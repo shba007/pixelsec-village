@@ -12,9 +12,9 @@ const props = defineProps<{
 
 const imgs = props.flip ? ['pigeonLeftStand', 'pigeonleftPeck'] : ['pigeonRightStand', 'pigeonRightPeck']
 const playing = useTimeout(getRandomInteger(100, 2000))
-const speed = ref(getRandomInteger(100, 300) / 10000)
+const speed = 0.01
 </script>
 
 <template>
-  <AnimatedSprite :playing="playing" :animation-speed="speed" :textures="imgs" :anchor="0.5" :scale="scale" :x="x" :y="y" />
+  <AnimatedSprite :textures="imgs" :texture-options="{ scaleMode: 'nearest' }" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
 </template>

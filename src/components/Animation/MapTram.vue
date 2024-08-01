@@ -106,13 +106,14 @@ onTick((delta) => {
 
 <template>
   <AnimatedSprite
-    :playing="animation && tram.animation === 'started'"
-    :animation-speed="0.08"
     :textures="tram.aliases"
+    :texture-options="{ scaleMode: 'nearest' }"
     :anchor="0.5"
     :x="tram.position.x"
     :y="tram.position.y"
     :scale="tram.position.scale"
     :alpha="tram.position.alpha"
+    :playing="animation && tram.animation === 'started'"
+    :animation-speed="0.08"
   />
 </template>

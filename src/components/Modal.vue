@@ -16,7 +16,7 @@ defineProps<{
     </picture>
     <div class="relative flex size-full flex-col justify-center items-center gap-10 px-7 py-8 max-w-[820px] mx-auto z-10 overflow-hidden">
       <h1 class="text-center text-4xl font-bold uppercase">{{ title }}</h1>
-      <p v-if="description" class="text-center text-2xl">{{ description }}</p>
+      <p v-if="description" class="text-center text-2xl" v-html="description" />
       <slot />
     </div>
   </div>

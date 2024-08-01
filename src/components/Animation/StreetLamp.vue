@@ -15,5 +15,5 @@ const speed = ref(getRandomInteger(1000, 2000) / 20000)
 </script>
 
 <template>
-  <AnimatedSprite :playing="playing" :animation-speed="speed" :textures="imgs" :anchor="0.5" :scale="scale" :x="x" :y="y" />
+  <AnimatedSprite :textures="imgs" :texture-options="{ scaleMode: 'nearest' }" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
 </template>

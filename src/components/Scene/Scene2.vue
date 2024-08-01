@@ -11,3 +11,5 @@ function handleMove() {
 
 useTimeoutFn(handleMove, 2000)
 </script>
+
+<template></template>

@@ -4,6 +4,13 @@ import { useFullscreen, useScreenOrientation, useWindowSize, watchArray } from '
 
 import frontINET from '/fonts/INET.ttf'
 import frontLAN from '/fonts/LAN.ttf'
+//
+import fountainTexture1 from '@/assets/fountain/1.png'
+import fountainTexture2 from '@/assets/fountain/2.png'
+import fountainTexture3 from '@/assets/fountain/3.png'
+import fountainTexture4 from '@/assets/fountain/4.png'
+import fountainTexture5 from '@/assets/fountain/5.png'
+//
 import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
 import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
 import buttonLongTexture from '@/assets/buttons/long.png'
@@ -85,77 +92,107 @@ import characterStationMasterWave1Texture from '@/assets/character/station-maste
 import characterStationMasterWave2Texture from '@/assets/character/station-master/wave-2.png'
 import characterStationMasterWave3Texture from '@/assets/character/station-master/wave-3.png'
 //
+import stationSkyTexture from '@/assets/station/sky.png'
+import stationCloud1Texture from '@/assets/station/cloud-1.png'
+import stationCloud2Texture from '@/assets/station/cloud-2.png'
+import stationCloud3Texture from '@/assets/station/cloud-3.png'
+//
+import stationPlatformBackgroundTexture from '@/assets/station/platform-background.png'
+import stationPlatformForegroundTexture from '@/assets/station/platform-foreground.png'
+//
+import stationTramTexture from '@/assets/station/tram.png'
 
 export const resources = reactive({
-  frontINET,
-  frontLAN,
-  popupLandscape: popupLandscapeTexture,
-  popupPortrait: popupPortraitTexture,
-  buttonLong: buttonLongTexture,
-  buttonLongPressed: buttonLongPressedTexture,
-  //
-  map: map1xTexture,
-  //
-  pigeonleftPeck: pigeonLeftPeckTexture,
-  pigeonLeftStand: pigeonLeftStandTexture,
-  pigeonRightPeck: pigeonRightPeckTexture,
-  pigeonRightStand: pigeonRightStandTexture,
-  //
-  streetLamp1: streetLampTexture1,
-  streetLamp2: streetLampTexture2,
-  streetLamp3: streetLampTexture3,
-  streetLamp4: streetLampTexture4,
-  streetLamp5: streetLampTexture5,
-  //
-  flagPink1: flagPinkTexture1,
-  flagPink2: flagPinkTexture2,
-  flagSchoolBlue1: flagSchoolBlueTexture1,
-  flagSchoolBlue2: flagSchoolBlueTexture2,
-  flagSchoolRed1: flagSchoolRedTexture1,
-  flagSchoolRed2: flagSchoolRedTexture2,
-  flagStation1: flagStationTexture1,
-  flagStation2: flagStationTexture2,
-  //
-  wave1: waveTexture1,
-  wave2: waveTexture2,
-  wave3: waveTexture3,
-  wave4: waveTexture4,
-  wave5: waveTexture5,
-  //
-  cloudLarge: cloudLargeTexture,
-  cloudMedium: cloudMediumTexture,
-  cloudSmall: cloudSmallTexture,
-  //
-  tramFront: tramFrontTexture,
-  tramBack: tramBackTexture,
-  tramRight: tramRightTexture,
+  map: {
+    frontINET,
+    frontLAN,
+    //
+    fountain1: fountainTexture1,
+    fountain2: fountainTexture2,
+    fountain3: fountainTexture3,
+    fountain4: fountainTexture4,
+    fountain5: fountainTexture5,
+    //
+    popupLandscape: popupLandscapeTexture,
+    popupPortrait: popupPortraitTexture,
+    buttonLong: buttonLongTexture,
+    buttonLongPressed: buttonLongPressedTexture,
+    //
+    map: map1xTexture,
+    //
+    pigeonleftPeck: pigeonLeftPeckTexture,
+    pigeonLeftStand: pigeonLeftStandTexture,
+    pigeonRightPeck: pigeonRightPeckTexture,
+    pigeonRightStand: pigeonRightStandTexture,
+    //
+    streetLamp1: streetLampTexture1,
+    streetLamp2: streetLampTexture2,
+    streetLamp3: streetLampTexture3,
+    streetLamp4: streetLampTexture4,
+    streetLamp5: streetLampTexture5,
+    //
+    flagPink1: flagPinkTexture1,
+    flagPink2: flagPinkTexture2,
+    flagSchoolBlue1: flagSchoolBlueTexture1,
+    flagSchoolBlue2: flagSchoolBlueTexture2,
+    flagSchoolRed1: flagSchoolRedTexture1,
+    flagSchoolRed2: flagSchoolRedTexture2,
+    flagStation1: flagStationTexture1,
+    flagStation2: flagStationTexture2,
+    //
+    wave1: waveTexture1,
+    wave2: waveTexture2,
+    wave3: waveTexture3,
+    wave4: waveTexture4,
+    wave5: waveTexture5,
+    //
+    cloudLarge: cloudLargeTexture,
+    cloudMedium: cloudMediumTexture,
+    cloudSmall: cloudSmallTexture,
+    //
+    tramFront: tramFrontTexture,
+    tramBack: tramBackTexture,
+    tramRight: tramRightTexture,
 
-  // Characters
-  characterGenericFrontStill: characterGenericFrontStillTexture,
-  characterGenericFrontWalk1: characterGenericFrontWalk1Texture,
-  characterGenericFrontWalk2: characterGenericFrontWalk2Texture,
-  characterGenericBackWalk1: characterGenericBackWalk1Texture,
-  characterGenericBackWalk2: characterGenericBackWalk2Texture,
-  characterGenericLeftWalk1: characterGenericLeftWalk1Texture,
-  characterGenericLeftWalk2: characterGenericLeftWalk2Texture,
-  characterGenericRightWalk1: characterGenericRightWalk1Texture,
-  characterGenericRightWalk2: characterGenericRightWalk2Texture,
-  // Main Character
-  characterMainBlackFrontStill: characterMainBlackFrontStillTexture,
-  characterMainBlackFrontWalk1: characterMainBlackFrontWalk1Texture,
-  characterMainBlackFrontWalk2: characterMainBlackFrontWalk2Texture,
-  characterMainBlackLeftWalk1: characterMainBlackLeftWalk1Texture,
-  characterMainBlackLeftWalk2: characterMainBlackLeftWalk2Texture,
-  //
-  characterMainViolateFrontStill: characterMainViolateFrontStillTexture,
-  characterMainViolateFrontWalk1: characterMainViolateFrontWalk1Texture,
-  characterMainViolateFrontWalk2: characterMainViolateFrontWalk2Texture,
-  characterMainViolateLeftWalk1: characterMainViolateLeftWalk1Texture,
-  characterMainViolateLeftWalk2: characterMainViolateLeftWalk2Texture,
-  //
-  characterStationMasterWave1: characterStationMasterWave1Texture,
-  characterStationMasterWave2: characterStationMasterWave2Texture,
-  characterStationMasterWave3: characterStationMasterWave3Texture
+    // Characters
+    characterGenericFrontStill: characterGenericFrontStillTexture,
+    characterGenericFrontWalk1: characterGenericFrontWalk1Texture,
+    characterGenericFrontWalk2: characterGenericFrontWalk2Texture,
+    characterGenericBackWalk1: characterGenericBackWalk1Texture,
+    characterGenericBackWalk2: characterGenericBackWalk2Texture,
+    characterGenericLeftWalk1: characterGenericLeftWalk1Texture,
+    characterGenericLeftWalk2: characterGenericLeftWalk2Texture,
+    characterGenericRightWalk1: characterGenericRightWalk1Texture,
+    characterGenericRightWalk2: characterGenericRightWalk2Texture,
+    // Main Character
+    characterMainBlackFrontStill: characterMainBlackFrontStillTexture,
+    characterMainBlackFrontWalk1: characterMainBlackFrontWalk1Texture,
+    characterMainBlackFrontWalk2: characterMainBlackFrontWalk2Texture,
+    characterMainBlackLeftWalk1: characterMainBlackLeftWalk1Texture,
+    characterMainBlackLeftWalk2: characterMainBlackLeftWalk2Texture,
+    //
+    characterMainViolateFrontStill: characterMainViolateFrontStillTexture,
+    characterMainViolateFrontWalk1: characterMainViolateFrontWalk1Texture,
+    characterMainViolateFrontWalk2: characterMainViolateFrontWalk2Texture,
+    characterMainViolateLeftWalk1: characterMainViolateLeftWalk1Texture,
+    characterMainViolateLeftWalk2: characterMainViolateLeftWalk2Texture,
+    //
+    characterStationMasterWave1: characterStationMasterWave1Texture,
+    characterStationMasterWave2: characterStationMasterWave2Texture,
+    characterStationMasterWave3: characterStationMasterWave3Texture
+  },
+  station: {
+    sky: stationSkyTexture,
+    //
+    cloud1: stationCloud1Texture,
+    cloud2: stationCloud2Texture,
+    cloud3: stationCloud3Texture,
+    //
+    platformBackground: stationPlatformBackgroundTexture,
+    platformForeground: stationPlatformForegroundTexture,
+    //
+    stationTram: stationTramTexture
+  }
 })
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -167,7 +204,7 @@ export const useGameStore = defineStore('game', () => {
   const activeCharacter = ref<Character | null>(null)
 
   if (!isMobile.value) {
-    resources.map = map2xTexture
+    resources.map.map = map2xTexture
   }
 
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
