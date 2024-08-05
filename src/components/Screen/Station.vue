@@ -7,6 +7,10 @@ import { resources, useGameStore } from '@/stores/game'
 import type { Asset, AssetState } from '@/utils/types'
 import StationCloud from '@/components/Animation/StationCloud.vue'
 
+const props = defineProps<{
+  isLoad: boolean,
+}>()
+
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
@@ -23,7 +27,6 @@ const screen = reactive<Asset>({
   position: { x: 0, y: 0, scale: 1, time: 0 },
   animation: 'init'
 })
-
 
 const clouds = ref<
   {
@@ -56,7 +59,7 @@ function onLoad() { }
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container :x="(canvasScreen.width / 2)" :y="0" :scale="screen.position.scale * zoomFactor">
+      <Container v-if="isLoad" :x="(canvasScreen.width / 2)" :y="0" :scale="screen.position.scale * zoomFactor">
         <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1.5"
           :anchor-x="0.5" />
         <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange"

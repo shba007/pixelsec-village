@@ -23,6 +23,10 @@ import Scene4 from '@/components/Scene/Scene4.vue'
 import Scene5 from '@/components/Scene/Scene5.vue'
 import Scene6 from '@/components/Scene/Scene6.vue'
 
+const props = defineProps<{
+  isLoad: boolean,
+}>()
+
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
@@ -226,7 +230,6 @@ const clouds = ref<
 ])
 
 watchArray([currentScenceIndex, screen], () => {
-  console.log(currentScenceIndex.value, screen.animation)
   if (currentScenceIndex.value === 6 && screen.animation == 'finished')
     emit('close')
 })
@@ -238,7 +241,7 @@ watchArray([currentScenceIndex, screen], () => {
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container :x="screen.position.x * screen.position.scale * zoomFactor"
+      <Container v-if="isLoad" :x="screen.position.x * screen.position.scale * zoomFactor"
         :y="screen.position.y * screen.position.scale * zoomFactor" :scale="screen.position.scale * zoomFactor">
         <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0"
           :scale="isMobile ? 1 : 0.5" :anchor="0" />

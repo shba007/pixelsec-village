@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { Application } from 'vue3-pixi'
 
+import { resources } from '@/stores/game'
 import ScreenMap from '@/components/Screen/Map.vue'
 import ScreenStation from '@/components/Screen/Station.vue'
 
@@ -21,8 +22,8 @@ const mainWindow = window
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
-    <ScreenMap v-if="currentScreen === 'map'" @close="updateIndex" />
-    <ScreenStation v-else-if="currentScreen === 'station'" @close="updateIndex" />
+    <ScreenMap :is-load="currentScreen === 'map'" @close="updateIndex" />
+    <ScreenStation :is-load="currentScreen === 'station'" @close="updateIndex" />
   </Application>
 </template>
 
