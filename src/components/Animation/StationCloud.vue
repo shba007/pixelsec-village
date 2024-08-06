@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { reverseSawTooth, sawTooth } from '@/utils/helper';
 import { computed, reactive, watch } from 'vue'
 import { onTick } from 'vue3-pixi'
 
@@ -14,7 +13,8 @@ const props = defineProps<{
 const cloud = reactive({
   x: props.x,
   y: props.y,
-  direction: props.direction
+  direction: props.direction,
+  width: 200
 })
 
 watch(
@@ -36,27 +36,26 @@ const img = computed(() => {
       return 'cloud1'
   }
 })
+
 const speed = computed(() => {
   switch (props.size) {
     case '1':
-      return 5
+      return 1
     case '2':
-      return 10
+      return 1.5
     case '3':
-      return 15
+      return 2
     default:
-      return 15
+      return 2
   }
 })
 
-const interpolFunc = cloud.direction == 1 ? sawTooth : reverseSawTooth
-
 onTick((delta) => {
-  cloud.x = interpolFunc(cloud.x, delta * 0.05 * speed.value, props.widthRange + 100, props.widthRange + 100)
+  cloud.x = cloud.x + delta * speed.value
+  if (cloud.x > props.widthRange + cloud.width / 2) cloud.x = -(props.widthRange + cloud.width / 2)
 })
 </script>
 
 <template>
-  <Sprite :texture="img" :texture-options="{ scaleMode: 'nearest' }" :anchor="0.5" :scale="1" :x="cloud.x"
-    :y="cloud.y" />
+  <Sprite :texture="img" :texture-options="{ scaleMode: 'nearest' }" :anchor="0.5" :scale="1" :x="cloud.x" :y="cloud.y" />
 </template>

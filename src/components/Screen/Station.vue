@@ -1,30 +1,32 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { Loader, External, useScreen } from 'vue3-pixi'
-import { useWindowSize } from '@vueuse/core'
 
-import { resources, useGameStore } from '@/stores/game'
+import { resources } from '@/stores/game'
 import type { Asset, AssetState } from '@/utils/types'
 import StationCloud from '@/components/Animation/StationCloud.vue'
-import StationTram from '../Animation/StationTram.vue'
+import StationTram from '@/components/Animation/StationTram.vue'
+import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
+import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
+import Pigeon from '@/components/Animation/Pigeon.vue'
 
-const props = defineProps<{
-  isLoad: boolean,
+defineProps<{
+  isLoad: boolean
 }>()
 
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
 
-const gameStore = useGameStore()
-
 const canvasScreen = useScreen()
 
-const { width: widthRange, height: screenHeight } = useWindowSize()
+function onLoad() {}
 
-function onLoad() { }
+const zoomFactor = computed(() => {
+  const aspectRatio = canvasScreen.value.width / canvasScreen.value.height
+  return aspectRatio > 1280 / 720 ? canvasScreen.value.height / 720 : canvasScreen.value.width / 1280
+})
 
-const zoomFactor = computed(() => screenHeight.value / 720)
 const screen = reactive<Asset>({
   loaded: false,
   alias: 'sky',
@@ -32,6 +34,8 @@ const screen = reactive<Asset>({
   position: { x: 0, y: 0, scale: 1, time: 0 },
   animation: 'init'
 })
+
+const sky = reactive({ x: 0, y: -110 })
 
 const clouds = ref<
   {
@@ -41,55 +45,61 @@ const clouds = ref<
     direction: number
   }[]
 >([
-  { size: '2', x: -200, y: 15, direction: 1 },
-  { size: '1', x: -150, y: 45, direction: 1 },
-  { size: '3', x: -100, y: 80, direction: 1 }
+  { size: '2', x: -canvasScreen.value.width / 2 - 200, y: 15 - 350, direction: 1 },
+  { size: '1', x: -canvasScreen.value.width / 2 - 150, y: 95 - 350, direction: 1 },
+  { size: '3', x: -canvasScreen.value.width / 2 - 100, y: 150 - 350, direction: 1 }
 ])
 
-const tram = reactive({ x: -1240, y: 320 })
+const tram = reactive({ x: -canvasScreen.value.width - 800, y: -25 })
 
 const platform = { bg: 'platformBackground', fg: 'platformForeground' }
+
+const stationMaster = reactive({ x: -210, y: 90 })
+const pegion = ref([
+  { x: 360, y: 290, scale: 1, flip: false },
+  { x: 450, y: 260, scale: 1, flip: true }
+])
+
+const charactersGeneric = ref<AssetState[][]>([
+  [
+    { x: canvasScreen.value.width / 2 + 50, y: -10, scale: 1, time: 0 },
+    { x: canvasScreen.value.width / 2 + 50, y: -10, scale: 1, time: 2 },
+    { x: 0, y: -10, scale: 1, time: 6 }
+  ]
+])
 </script>
 
 <template>
-  <Loader :resources="resources.station" :on-resolved="onLoad">
+  <Loader :resources="{ ...resources.general, ...resources.station }" :on-resolved="onLoad">
     <template #fallback>
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="(canvasScreen.width / 2)" :y="0" :scale="screen.position.scale * zoomFactor">
-        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1.5"
-          :anchor-x="0.5" />
-        <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange"
-          :size="size" :x="x" :y="y" :direction="direction" />
-        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1"
-          :anchor-x="0.5" />
-        <!-- <Sprite :texture="'stationTram'" :x="tram.position.x" :y="tram.position.y" :scale="tram.position.scale"
-          :anchor-x="0" :anchor-y="0.5" /> -->
-        <StationTram :x="tram.x" :y="tram.y" :width-range="widthRange" />
-        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1"
-          :anchor-x="0.5" />
+      <Container v-if="isLoad" :x="canvasScreen.width / 2" :y="canvasScreen.height / 2" :scale="screen.position.scale * zoomFactor">
+        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="sky.x" :y="sky.y" :scale="1.4" :anchor="0.5" />
+        <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="canvasScreen.width" :size="size" :x="x" :y="y" :direction="direction" />
+        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="-80" :scale="1" :anchor="0.5" />
+        <CharacterGeneric :steps="charactersGeneric[0]" :animation="true" />
+        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1" :anchor="0.5" />
+        <StationTram :x="tram.x" :y="tram.y" :width-range="canvasScreen.width" />
+        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1" :anchor="0.5" />
+        <CharacterStationMaster :x="stationMaster.x" :y="stationMaster.y" :scale="1" place="station" />
+        <Pigeon v-for="{ x, y, scale, flip } in pegion" :x="x" :y="y" :scale="scale" :flip="flip" />
       </Container>
+      <External>
+        <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
+          <div class="flex flex-col gap-2">
+            <input v-model="screen.position.x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="screen.position.y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="screen.position.scale" type="number" min="0" max="10" step="0.01" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
+            <!-- <input v-model="tram.scale" type="number" min="0" max="20" step="0.01" /> -->
+          </div>
+        </div>
+      </External>
     </template>
   </Loader>
-  <External>
-    <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
-      <div class="flex flex-col gap-2">
-        <input v-model="screen.position.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="screen.position.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="screen.position.scale" type="number" min="0" max="10" step="0.01" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <input v-model="tram.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="tram.y" type="number" min="-10000" max="10000" step="10" />
-        <!-- <input v-model="tram.scale" type="number" min="0" max="20" step="0.01" /> -->
-      </div>
-    </div>
-  </External>
 </template>
-
-<style>
-input {
-  @apply px-2 py-1;
-}
-</style>

@@ -88,9 +88,9 @@ import characterMainBlueFrontWalk2Texture from '@/assets/character/main/red/fron
 import characterMainBlueLeftWalk1Texture from '@/assets/character/main/red/left-walk-1.png'
 import characterMainBlueLeftWalk2Texture from '@/assets/character/main/red/left-walk-2.png'
 //
-import characterStationMasterWave1Texture from '@/assets/character/station-master/wave-1.png'
-import characterStationMasterWave2Texture from '@/assets/character/station-master/wave-2.png'
-import characterStationMasterWave3Texture from '@/assets/character/station-master/wave-3.png'
+import mapCharacterStationMaster1Texture from '@/assets/character/station-master/wave-1.png'
+import mapCharacterStationMaster2Texture from '@/assets/character/station-master/wave-2.png'
+import mapCharacterStationMaster3Texture from '@/assets/character/station-master/wave-3.png'
 //
 import stationSkyTexture from '@/assets/station/sky.png'
 import stationCloud1Texture from '@/assets/station/cloud-1.png'
@@ -102,8 +102,33 @@ import stationPlatformForegroundTexture from '@/assets/station/platform-foregrou
 //
 import stationTramTexture from '@/assets/station/tram.png'
 import stationTramWireTexture from '@/assets/station/tram-wire.png'
+//
+import stationCharacterStationMaster1Texture from '@/assets/character/station-master/station-1.png'
+import stationCharacterStationMaster2Texture from '@/assets/character/station-master/station-2.png'
 
 export const resources = reactive({
+  general: {
+    pigeonleftPeck: pigeonLeftPeckTexture,
+    pigeonLeftStand: pigeonLeftStandTexture,
+    pigeonRightPeck: pigeonRightPeckTexture,
+    pigeonRightStand: pigeonRightStandTexture,
+    // Characters
+    characterGenericFrontStill: characterGenericFrontStillTexture,
+    characterGenericFrontWalk1: characterGenericFrontWalk1Texture,
+    characterGenericFrontWalk2: characterGenericFrontWalk2Texture,
+    characterGenericBackWalk1: characterGenericBackWalk1Texture,
+    characterGenericBackWalk2: characterGenericBackWalk2Texture,
+    characterGenericLeftWalk1: characterGenericLeftWalk1Texture,
+    characterGenericLeftWalk2: characterGenericLeftWalk2Texture,
+    characterGenericRightWalk1: characterGenericRightWalk1Texture,
+    characterGenericRightWalk2: characterGenericRightWalk2Texture,
+    //
+    mapCharacterStationMaster1: mapCharacterStationMaster1Texture,
+    mapCharacterStationMaster2: mapCharacterStationMaster2Texture,
+    mapCharacterStationMaster3: mapCharacterStationMaster3Texture,
+    stationCharacterStationMaster1: stationCharacterStationMaster1Texture,
+    stationCharacterStationMaster2: stationCharacterStationMaster2Texture
+  },
   map: {
     frontINET,
     frontLAN,
@@ -120,11 +145,6 @@ export const resources = reactive({
     buttonLongPressed: buttonLongPressedTexture,
     //
     map: map1xTexture,
-    //
-    pigeonleftPeck: pigeonLeftPeckTexture,
-    pigeonLeftStand: pigeonLeftStandTexture,
-    pigeonRightPeck: pigeonRightPeckTexture,
-    pigeonRightStand: pigeonRightStandTexture,
     //
     streetLamp1: streetLampTexture1,
     streetLamp2: streetLampTexture2,
@@ -155,16 +175,6 @@ export const resources = reactive({
     tramBack: tramBackTexture,
     tramRight: tramRightTexture,
 
-    // Characters
-    characterGenericFrontStill: characterGenericFrontStillTexture,
-    characterGenericFrontWalk1: characterGenericFrontWalk1Texture,
-    characterGenericFrontWalk2: characterGenericFrontWalk2Texture,
-    characterGenericBackWalk1: characterGenericBackWalk1Texture,
-    characterGenericBackWalk2: characterGenericBackWalk2Texture,
-    characterGenericLeftWalk1: characterGenericLeftWalk1Texture,
-    characterGenericLeftWalk2: characterGenericLeftWalk2Texture,
-    characterGenericRightWalk1: characterGenericRightWalk1Texture,
-    characterGenericRightWalk2: characterGenericRightWalk2Texture,
     // Main Character
     characterMainBlackFrontStill: characterMainBlackFrontStillTexture,
     characterMainBlackFrontWalk1: characterMainBlackFrontWalk1Texture,
@@ -176,13 +186,8 @@ export const resources = reactive({
     characterMainViolateFrontWalk1: characterMainViolateFrontWalk1Texture,
     characterMainViolateFrontWalk2: characterMainViolateFrontWalk2Texture,
     characterMainViolateLeftWalk1: characterMainViolateLeftWalk1Texture,
-    characterMainViolateLeftWalk2: characterMainViolateLeftWalk2Texture,
+    characterMainViolateLeftWalk2: characterMainViolateLeftWalk2Texture
     //
-    characterStationMasterWave1: characterStationMasterWave1Texture,
-    characterStationMasterWave2: characterStationMasterWave2Texture,
-    characterStationMasterWave3: characterStationMasterWave3Texture,
-    // 
-    stationTramWire: stationTramWireTexture
   },
   station: {
     sky: stationSkyTexture,
@@ -194,7 +199,11 @@ export const resources = reactive({
     platformBackground: stationPlatformBackgroundTexture,
     platformForeground: stationPlatformForegroundTexture,
     //
-    stationTram: stationTramTexture
+    stationTram: stationTramTexture,
+    stationTramWire: stationTramWireTexture
+    //
+
+    //
   }
 })
 

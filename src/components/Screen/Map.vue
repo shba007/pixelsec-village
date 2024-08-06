@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch, watchEffect } from 'vue'
-import { Loader, External, onTick } from 'vue3-pixi'
+import { Loader, External, onTick, useScreen } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
-import { useWindowSize, watchArray } from '@vueuse/core'
 
 import { resources, useGameStore } from '@/stores/game'
 import type { Asset, AssetState } from '@/utils/types'
@@ -24,19 +23,19 @@ import Scene5 from '@/components/Scene/Scene5.vue'
 import Scene6 from '@/components/Scene/Scene6.vue'
 
 const props = defineProps<{
-  isLoad: boolean,
+  isLoad: boolean
 }>()
 
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
 
+const canvasScreen = useScreen()
+
 const gameStore = useGameStore()
 const { currentScenceIndex, currentMapPositionIndex, isMobile } = storeToRefs(gameStore)
 
-const { width: screenWidth } = useWindowSize()
-
-const zoomFactor = computed(() => screenWidth.value / 1280)
+const zoomFactor = computed(() => canvasScreen.value.width / 1280)
 const screen = reactive<Asset>({
   loaded: false,
   alias: 'map',
@@ -229,76 +228,51 @@ const clouds = ref<
   { size: 'sm', x: -600, y: height.value * 0.96, direction: 1 }
 ])
 
-watchArray([currentScenceIndex, screen], () => {
-  if (currentScenceIndex.value === 6 && screen.animation == 'finished')
-    emit('close')
+watchEffect(() => {
+  if (currentScenceIndex.value === 6 && screen.animation === 'finished') emit('close')
 })
 </script>
 
 <template>
-  <Loader :resources="resources.map" :on-resolved="onLoad">
+  <Loader :resources="{ ...resources.general, ...resources.map }" :on-resolved="onLoad">
     <template #fallback>
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="screen.position.x * screen.position.scale * zoomFactor"
-        :y="screen.position.y * screen.position.scale * zoomFactor" :scale="screen.position.scale * zoomFactor">
-        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0"
-          :scale="isMobile ? 1 : 0.5" :anchor="0" />
+      <Container v-if="isLoad" :x="screen.position.x * screen.position.scale * zoomFactor" :y="screen.position.y * screen.position.scale * zoomFactor" :scale="screen.position.scale * zoomFactor">
+        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="isMobile ? 1 : 0.5" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
         <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale"
-          :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
         <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :steps="genericCharacter"
-          :animation="true" />
-        <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
-          :scale="characterStationMaster.scale" />
+        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :steps="genericCharacter" :animation="true" />
+        <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y" :scale="characterStationMaster.scale" place="map" />
         <!-- @vue-ignore -->
         <MapTram :steps="tram.steps" :animation="true" initalOrientation="right" />
-        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange"
-          :size="size" :x="x" :y="y" :direction="direction" />
-        <template v-if="currentScenceIndex === 0">
-          <Scene1 v-if="screen.animation === 'finished'" />
-        </template>
-        <template v-else-if="currentScenceIndex === 1">
-          <Scene2 v-if="screen.animation === 'finished'" />
-        </template>
-        <template v-else-if="currentScenceIndex === 2">
-          <Scene3 v-if="screen.animation === 'finished'" />
-        </template>
-        <template v-else-if="currentScenceIndex === 3">
-          <Scene4 v-if="screen.animation === 'finished'" />
-        </template>
-        <template v-else-if="currentScenceIndex === 4">
-          <Scene5 v-if="screen.animation === 'finished'" />
-        </template>
-        <template v-else-if="currentScenceIndex === 5">
-          <Scene6 v-if="screen.animation === 'finished'" />
-        </template>
+        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange" :size="size" :x="x" :y="y" :direction="direction" />
+        <Scene1 v-if="currentScenceIndex === 0 && screen.animation === 'finished'" />
+        <Scene2 v-else-if="currentScenceIndex === 1 && screen.animation === 'finished'" />
+        <Scene3 v-else-if="currentScenceIndex === 2 && screen.animation === 'finished'" />
+        <Scene4 v-else-if="currentScenceIndex === 3 && screen.animation === 'finished'" />
+        <Scene5 v-else-if="currentScenceIndex === 4 && screen.animation === 'finished'" />
+        <Scene6 v-else-if="currentScenceIndex === 5 && screen.animation === 'finished'" />
       </Container>
+      <!-- <External>
+        <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
+          <div class="flex flex-col gap-2">
+            <input v-model="screen.position.x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="screen.position.y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="screen.position.scale" type="number" min="0" max="10" step="0.01" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <input v-model="fountain.x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="fountain.y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="fountain.scale" type="number" min="0" max="20" step="0.01" />
+          </div>
+        </div>
+      </External> -->
     </template>
   </Loader>
-  <!-- <External>
-    <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
-      <div class="flex flex-col gap-2">
-        <input v-model="screen.position.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="screen.position.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="screen.position.scale" type="number" min="0" max="10" step="0.01" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <input v-model="fountain.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="fountain.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="fountain.scale" type="number" min="0" max="20" step="0.01" />
-      </div>
-    </div>
-  </External> -->
 </template>
-
-<style>
-input {
-  @apply px-2 py-1;
-}
-</style>

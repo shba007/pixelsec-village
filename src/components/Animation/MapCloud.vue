@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
 import { onTick } from 'vue3-pixi'
+import { reverseSawTooth, sawTooth } from '@/utils/helper'
 
 const props = defineProps<{
   size: 'lg' | 'md' | 'sm'
@@ -28,6 +29,7 @@ const img = computed(() => {
       return 'cloudLarge'
   }
 })
+
 const speed = computed(() => {
   switch (props.size) {
     case 'lg':
@@ -40,18 +42,6 @@ const speed = computed(() => {
       return 15
   }
 })
-
-function sawTooth(prevT: number, t: number, period: number, amplitude: number) {
-  const normalizedTime = (prevT + t) % period
-  const sawToothValue = normalizedTime % amplitude
-  return sawToothValue
-}
-
-function reverseSawTooth(prevT: number, t: number, period: number, amplitude: number) {
-  const normalizedTime = (prevT + t) % period
-  const sawToothValue = normalizedTime % amplitude
-  return sawToothValue
-}
 
 const interpolFunc = cloud.direction == 1 ? sawTooth : reverseSawTooth
 
