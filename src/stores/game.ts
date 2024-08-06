@@ -101,6 +101,7 @@ import stationPlatformBackgroundTexture from '@/assets/station/platform-backgrou
 import stationPlatformForegroundTexture from '@/assets/station/platform-foreground.png'
 //
 import stationTramTexture from '@/assets/station/tram.png'
+import stationTramWireTexture from '@/assets/station/tram-wire.png'
 
 export const resources = reactive({
   map: {
@@ -179,7 +180,9 @@ export const resources = reactive({
     //
     characterStationMasterWave1: characterStationMasterWave1Texture,
     characterStationMasterWave2: characterStationMasterWave2Texture,
-    characterStationMasterWave3: characterStationMasterWave3Texture
+    characterStationMasterWave3: characterStationMasterWave3Texture,
+    // 
+    stationTramWire: stationTramWireTexture
   },
   station: {
     sky: stationSkyTexture,

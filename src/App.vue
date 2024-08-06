@@ -8,13 +8,14 @@ import ScreenStation from '@/components/Screen/Station.vue'
 
 type Screen = 'map' | 'station'
 
-const currentScreenIndex = ref(0)
+const currentScreenIndex = ref(1)
 const screens = ['map', 'station'] as Screen[]
 
 const currentScreen = computed<Screen>(() => screens[currentScreenIndex.value])
 
 function updateIndex() {
   currentScreenIndex.value++
+  console.log("update index", currentScreenIndex.value)
 }
 
 const mainWindow = window
@@ -22,8 +23,8 @@ const mainWindow = window
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
-    <ScreenMap :is-load="currentScreen === 'map'" @close="updateIndex" />
-    <ScreenStation :is-load="currentScreen === 'station'" @close="updateIndex" />
+    <ScreenMap :is-load="currentScreenIndex === 0" @close="currentScreenIndex = 1" />
+    <ScreenStation :is-load="currentScreenIndex === 1" @close="currentScreenIndex = 2" />
   </Application>
 </template>
 

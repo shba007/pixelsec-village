@@ -6,6 +6,7 @@ import { useWindowSize } from '@vueuse/core'
 import { resources, useGameStore } from '@/stores/game'
 import type { Asset, AssetState } from '@/utils/types'
 import StationCloud from '@/components/Animation/StationCloud.vue'
+import StationTram from '../Animation/StationTram.vue'
 
 const props = defineProps<{
   isLoad: boolean,
@@ -17,7 +18,11 @@ const emit = defineEmits<{
 
 const gameStore = useGameStore()
 
+const canvasScreen = useScreen()
+
 const { width: widthRange, height: screenHeight } = useWindowSize()
+
+function onLoad() { }
 
 const zoomFactor = computed(() => screenHeight.value / 720)
 const screen = reactive<Asset>({
@@ -41,16 +46,9 @@ const clouds = ref<
   { size: '3', x: -100, y: 80, direction: 1 }
 ])
 
-const tram = reactive({
-  steps: [],
-  position: { x: 0, y: 0, scale: 0, time: 0 }
-})
+const tram = reactive({ x: -1240, y: 320 })
 
 const platform = { bg: 'platformBackground', fg: 'platformForeground' }
-
-const canvasScreen = useScreen()
-
-function onLoad() { }
 </script>
 
 <template>
@@ -66,12 +64,15 @@ function onLoad() { }
           :size="size" :x="x" :y="y" :direction="direction" />
         <Sprite :texture="platform.bg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1"
           :anchor-x="0.5" />
+        <!-- <Sprite :texture="'stationTram'" :x="tram.position.x" :y="tram.position.y" :scale="tram.position.scale"
+          :anchor-x="0" :anchor-y="0.5" /> -->
+        <StationTram :x="tram.x" :y="tram.y" :width-range="widthRange" />
         <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1"
           :anchor-x="0.5" />
       </Container>
     </template>
   </Loader>
-  <!--  <External>
+  <External>
     <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
       <div class="flex flex-col gap-2">
         <input v-model="screen.position.x" type="number" min="-10000" max="10000" step="10" />
@@ -79,12 +80,12 @@ function onLoad() { }
         <input v-model="screen.position.scale" type="number" min="0" max="10" step="0.01" />
       </div>
       <div class="flex flex-col gap-2">
-        <input v-model="clouds[2].x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="clouds[2].y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="clouds[2].size" type="number" min="0" max="20" step="0.01" />
+        <input v-model="tram.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="tram.y" type="number" min="-10000" max="10000" step="10" />
+        <!-- <input v-model="tram.scale" type="number" min="0" max="20" step="0.01" /> -->
       </div>
     </div>
-  </External> -->
+  </External>
 </template>
 
 <style>
