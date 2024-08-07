@@ -239,24 +239,25 @@ watchEffect(() => {
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container
-        :renderable="isLoad"
-        :x="screen.position.x * screen.position.scale * zoomFactor"
-        :y="screen.position.y * screen.position.scale * zoomFactor"
-        :scale="screen.position.scale * zoomFactor"
-      >
-        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="isMobile ? 1 : 0.5" :anchor="0" />
+      <Container :renderable="isLoad" :x="screen.position.x * screen.position.scale * zoomFactor"
+        :y="screen.position.y * screen.position.scale * zoomFactor" :scale="screen.position.scale * zoomFactor">
+        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0"
+          :scale="isMobile ? 1 : 0.5" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
         <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale"
+          :flip="flip" />
         <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :steps="genericCharacter" :animation="true" />
-        <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y" :scale="characterStationMaster.scale" place="map" />
+        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :steps="genericCharacter"
+          :animation="true" place="map" />
+        <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
+          :scale="characterStationMaster.scale" place="map" />
         <!-- @vue-ignore -->
         <MapTram :steps="tram.steps" :animation="true" initalOrientation="right" />
-        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange" :size="size" :x="x" :y="y" :direction="direction" />
+        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange"
+          :size="size" :x="x" :y="y" :direction="direction" />
         <template v-if="isLoad">
           <Scene1 v-if="currentScenceIndex === 0 && screen.animation === 'finished'" />
           <Scene2 v-else-if="currentScenceIndex === 1 && screen.animation === 'finished'" />
