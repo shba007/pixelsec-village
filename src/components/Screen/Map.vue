@@ -21,6 +21,7 @@ import Scene3 from '@/components/Scene/Scene3.vue'
 import Scene4 from '@/components/Scene/Scene4.vue'
 import Scene5 from '@/components/Scene/Scene5.vue'
 import Scene6 from '@/components/Scene/Scene6.vue'
+import { useWindowSize } from '@vueuse/core'
 
 const props = defineProps<{
   isLoad: boolean
@@ -30,12 +31,11 @@ const emit = defineEmits<{
   (event: 'close'): void
 }>()
 
-const canvasScreen = useScreen()
-
+const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
 const { currentScenceIndex, currentMapPositionIndex, isMobile } = storeToRefs(gameStore)
 
-const zoomFactor = computed(() => canvasScreen.value.width / 1280)
+const zoomFactor = computed(() => screenWidth.value / 1280)
 const screen = reactive<Asset>({
   loaded: false,
   alias: 'map',
@@ -53,14 +53,6 @@ const screen = reactive<Asset>({
 })
 
 function onLoad() {
-  /*   const newScale = isMobile.value ? 0.94 : 0.46
-    screen.steps[0].scale = newScale */
-
-  if (!isMobile.value) {
-    screen.steps[0].scale = 0.47
-    screen.steps[1].scale = 0.93
-  }
-
   screen.position.x = screen.steps[0].x
   screen.position.y = screen.steps[0].y
   screen.position.scale = screen.steps[0].scale
@@ -68,12 +60,6 @@ function onLoad() {
   screen.loaded = true
   screen.animation = 'started'
 }
-
-/* watch(isMobile, (value) => {
-  const newScale = value ? 0.84 : 0.46
-  screen.steps[0].scale = newScale
-  screen.position.scale = newScale
-})*/
 
 let totalElaspedTime = 0
 let progress = 0
@@ -242,7 +228,7 @@ watchEffect(() => {
       <Container v-if="isLoad" :x="screen.position.x * screen.position.scale * zoomFactor"
         :y="screen.position.y * screen.position.scale * zoomFactor" :scale="screen.position.scale * zoomFactor">
         <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0"
-          :scale="isMobile ? 1 : 0.5" :anchor="0" />
+          :scale="isMobile ? 1 : 1" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
@@ -267,8 +253,8 @@ watchEffect(() => {
         <Scene6 v-else-if="currentScenceIndex === 5 && screen.animation === 'finished'" />
         <!-- </template> -->
       </Container>
-      <!-- <External>
-        <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
+      <External>
+        <!--   <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
             <input v-model="screen.position.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.position.y" type="number" min="-10000" max="10000" step="10" />
@@ -279,8 +265,8 @@ watchEffect(() => {
             <input v-model="fountain.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="fountain.scale" type="number" min="0" max="20" step="0.01" />
           </div>
-        </div>
-      </External> -->
+        </div> -->
+      </External>
     </template>
   </Loader>
 </template>

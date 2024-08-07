@@ -10,9 +10,9 @@ import { computed, onMounted } from 'vue'
 </script>
 
 <template>
-    <External class="absolute top-0 left-0 w-screen h-screen">
-        <Modal title="" description="">
-            <p>Please verify your age for tram ticket purchase</p>
-        </Modal>
-    </External>
+  <External class="absolute top-0 left-0 w-screen h-screen">
+    <Modal title="" description="">
+      <p>Please verify your age for tram ticket purchase</p>
+    </Modal>
+  </External>
 </template>

@@ -10,7 +10,8 @@ import CharacterStationMaster from '@/components/Animation/Character/CharacterSt
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import Pigeon from '@/components/Animation/Pigeon.vue'
 import Modal from '@/components/Modal.vue'
-import Scene21 from '../Scene/Scene-2-1.vue'
+import Scene21 from '@/components/Scene/Scene-2-1.vue'
+import { useWindowSize } from '@vueuse/core'
 
 defineProps<{
   isLoad: boolean
@@ -21,12 +22,13 @@ const emit = defineEmits<{
 }>()
 
 const canvasScreen = useScreen()
+const { width: screenWidth, height: screenHeight } = useWindowSize()
 
-function onLoad() { }
+function onLoad() {}
 
 const zoomFactor = computed(() => {
-  const aspectRatio = canvasScreen.value.width / canvasScreen.value.height
-  return aspectRatio > 1280 / 720 ? canvasScreen.value.height / 720 : canvasScreen.value.width / 1280
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
 })
 
 const screen = reactive<Asset>({
@@ -47,12 +49,12 @@ const clouds = ref<
     direction: number
   }[]
 >([
-  { size: '2', x: -canvasScreen.value.width / 2 - 200, y: 15 - 350, direction: 1 },
-  { size: '1', x: -canvasScreen.value.width / 2 - 150, y: 95 - 350, direction: 1 },
-  { size: '3', x: -canvasScreen.value.width / 2 - 100, y: 150 - 350, direction: 1 }
+  { size: '2', x: -screenWidth.value / 2 - 200, y: 15 - 350, direction: 1 },
+  { size: '1', x: -screenWidth.value / 2 - 150, y: 95 - 350, direction: 1 },
+  { size: '3', x: -screenWidth.value / 2 - 100, y: 150 - 350, direction: 1 }
 ])
 
-const tram = reactive({ x: -canvasScreen.value.width - 800, y: -25 })
+const tram = reactive({ x: -screenWidth.value - 800, y: -25 })
 
 const platform = { bg: 'platformBackground', fg: 'platformForeground' }
 
@@ -63,8 +65,8 @@ const pegion = ref([
 ])
 
 const charactersGeneric = ref<AssetState[]>([
-  { x: canvasScreen.value.width, y: -10, scale: 1, time: 0 },
-  { x: canvasScreen.value.width, y: -10, scale: 1, time: 2 },
+  { x: screenWidth.value, y: -10, scale: 1, time: 0 },
+  { x: screenWidth.value, y: -10, scale: 1, time: 2 },
   { x: 0, y: -10, scale: 1, time: 8 }
 ])
 </script>
@@ -75,22 +77,16 @@ const charactersGeneric = ref<AssetState[]>([
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="canvasScreen.width / 2" :y="canvasScreen.height / 2"
-        :scale="screen.position.scale * zoomFactor">
-        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="sky.x" :y="sky.y" :scale="1.4"
-          :anchor="0.5" />
-        <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index"
-          :width-range="canvasScreen.width" :size="size" :x="x" :y="y" :direction="direction" />
-        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="-200" :scale="1"
-          :anchor="0.5" />
+      <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="screen.position.scale * zoomFactor">
+        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="sky.x" :y="sky.y" :scale="1.4" :anchor="0.5" />
+        <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="screenWidth" :size="size" :x="x" :y="y" :direction="direction" />
+        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="-200" :scale="1" :anchor="0.5" />
         <CharacterGeneric :steps="charactersGeneric" :animation="true" place="station" />
-        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1"
-          :anchor="0.5" />
-        <StationTram :x="tram.x" :y="tram.y" :width-range="canvasScreen.width" />
-        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1"
-          :anchor="0.5" />
+        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1" :anchor="0.5" />
+        <StationTram :x="tram.x" :y="tram.y" :width-range="screenWidth" />
+        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1" :anchor="0.5" />
         <CharacterStationMaster :x="stationMaster.x" :y="stationMaster.y" :scale="1" place="station" />
-        <Pigeon v-for="{ x, y, scale, flip }, index in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
         <!-- <template v-if="isLoad"> -->
         <!-- <Scene21 /> -->
         <!-- </template> -->

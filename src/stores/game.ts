@@ -1,4 +1,4 @@
-import { computed, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useFullscreen, useScreenOrientation, useWindowSize, watchArray } from '@vueuse/core'
 
@@ -108,6 +108,7 @@ import stationTramWireTexture from '@/assets/station/tram-wire.png'
 //
 import stationCharacterStationMaster1Texture from '@/assets/character/station-master/station-1.png'
 import stationCharacterStationMaster2Texture from '@/assets/character/station-master/station-2.png'
+import { useScreen } from 'vue3-pixi'
 
 export const resources = reactive({
   general: {
@@ -210,17 +211,22 @@ export const resources = reactive({
   }
 })
 
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-
 export type Character = 'black' | 'blue' | 'red' | 'violate'
 
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+
 export const useGameStore = defineStore('game', () => {
-  const isMobile = computed(() => !(screenWidth.value > 640 && screenHeight.value > 640))
+  const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
   const activeCharacter = ref<Character | null>(null)
 
-  if (!isMobile.value) {
-    resources.map.map = map2xTexture
-  }
+  watch(isMobile, (value) => {
+    resources.map.map = value ? map1xTexture : map2xTexture
+  })
+
+  onMounted(() => {
+    resources.map.map = isMobile.value ? map1xTexture : map2xTexture
+    console.log({ isMobile: isMobile.value, map: resources.map.map })
+  })
 
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
@@ -249,12 +255,16 @@ export const useGameStore = defineStore('game', () => {
   })
 
   async function toggleGameMode(value: boolean) {
-    if (value) {
-      await enterFullscreen()
-      await lockOrientation('landscape')
-    } else {
-      await exitFullscreen()
-      await unlockOrientation()
+    try {
+      if (value) {
+        await enterFullscreen()
+        await lockOrientation('landscape')
+      } else {
+        await exitFullscreen()
+        await unlockOrientation()
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
