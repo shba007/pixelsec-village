@@ -17,7 +17,7 @@ const mainWindow = window
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
     <ScreenMap :is-load="currentScreenIndex === 0" @close="updateIndex(1)" />
-    <ScreenStation :is-load="currentScreenIndex === 1" @close="updateIndex(2)" />
+    <!-- <ScreenStation :is-load="currentScreenIndex === 1" @close="updateIndex(2)" /> -->
   </Application>
 </template>
 
