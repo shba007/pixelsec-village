@@ -70,12 +70,12 @@ const charactersGeneric = ref<AssetState[]>([
 </script>
 
 <template>
-  <Loader :resources="{ ...resources.general, ...resources.station }" :on-resolved="onLoad">
+  <Loader :resources="{ ...resources.station }" :on-resolved="onLoad">
     <template #fallback>
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container :renderable="isLoad" :x="canvasScreen.width / 2" :y="canvasScreen.height / 2"
+      <Container v-if="isLoad" :x="canvasScreen.width / 2" :y="canvasScreen.height / 2"
         :scale="screen.position.scale * zoomFactor">
         <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="sky.x" :y="sky.y" :scale="1.4"
           :anchor="0.5" />
@@ -91,9 +91,9 @@ const charactersGeneric = ref<AssetState[]>([
           :anchor="0.5" />
         <CharacterStationMaster :x="stationMaster.x" :y="stationMaster.y" :scale="1" place="station" />
         <Pigeon v-for="{ x, y, scale, flip }, index in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
-        <template v-if="isLoad">
-          <!-- <Scene21 /> -->
-        </template>
+        <!-- <template v-if="isLoad"> -->
+        <!-- <Scene21 /> -->
+        <!-- </template> -->
       </Container>
       <!-- <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
