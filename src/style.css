@@ -3,8 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Inet'; /*a name to be used later*/
-  src: url('/fonts/INET.ttf'); /*URL to font*/
+  font-family: 'Inet';
+  src: url('/fonts/INET.ttf');
+}
+
+@font-face {
+  font-family: 'Lan';
+  src: url('/fonts/LAN.ttf');
 }
 
 * {
@@ -23,5 +28,5 @@
 }
 
 body {
-  @apply font-inet;
+  @apply font-lan;
 }

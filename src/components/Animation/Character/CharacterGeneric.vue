@@ -28,13 +28,14 @@ interface Character {
 const props = defineProps<{
   steps: Route[]
   animation: boolean
+  place: 'map' | 'station'
 }>()
 
 const animations = {
   frontStill: ['characterGenericFrontStill'],
   frontWalk: ['characterGenericFrontWalk1', 'characterGenericFrontWalk2'],
   backWalk: ['characterGenericBackWalk1', 'characterGenericBackWalk2'],
-  leftWalk: ['characterGenericLeftWalk1', 'characterGenericLeftWalk2'],
+  leftWalk: props.place === 'map' ? ['characterGenericLeftWalk1', 'characterGenericLeftWalk2'] : ['characterGenericLeftWalk1Side', 'characterGenericLeftWalk2Side'],
   rightWalk: ['characterGenericRightWalk1', 'characterGenericRightWalk2']
 }
 

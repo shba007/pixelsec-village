@@ -35,7 +35,7 @@ const screen = reactive<Asset>({
   animation: 'init'
 })
 
-const sky = reactive({ x: 0, y: -110 })
+const sky = reactive({ x: 0, y: -300 })
 
 const clouds = ref<
   {
@@ -54,18 +54,16 @@ const tram = reactive({ x: -canvasScreen.value.width - 800, y: -25 })
 
 const platform = { bg: 'platformBackground', fg: 'platformForeground' }
 
-const stationMaster = reactive({ x: -210, y: 90 })
+const stationMaster = reactive({ x: -210, y: 86 })
 const pegion = ref([
   { x: 360, y: 290, scale: 1, flip: false },
   { x: 450, y: 260, scale: 1, flip: true }
 ])
 
-const charactersGeneric = ref<AssetState[][]>([
-  [
-    { x: canvasScreen.value.width / 2 + 50, y: -10, scale: 1, time: 0 },
-    { x: canvasScreen.value.width / 2 + 50, y: -10, scale: 1, time: 2 },
-    { x: 0, y: -10, scale: 1, time: 6 }
-  ]
+const charactersGeneric = ref<AssetState[]>([
+  { x: canvasScreen.value.width, y: -10, scale: 1, time: 0 },
+  { x: canvasScreen.value.width, y: -10, scale: 1, time: 2 },
+  { x: 0, y: -10, scale: 1, time: 8 }
 ])
 </script>
 
@@ -75,18 +73,19 @@ const charactersGeneric = ref<AssetState[][]>([
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="canvasScreen.width / 2" :y="canvasScreen.height / 2" :scale="screen.position.scale * zoomFactor">
+      <Container :renderable="isLoad" :x="canvasScreen.width / 2" :y="canvasScreen.height / 2" :scale="screen.position.scale * zoomFactor">
         <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="sky.x" :y="sky.y" :scale="1.4" :anchor="0.5" />
         <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="canvasScreen.width" :size="size" :x="x" :y="y" :direction="direction" />
-        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="-80" :scale="1" :anchor="0.5" />
-        <CharacterGeneric :steps="charactersGeneric[0]" :animation="true" />
+        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="-200" :scale="1" :anchor="0.5" />
+        <CharacterGeneric :steps="charactersGeneric" :animation="true" place="station" />
         <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1" :anchor="0.5" />
         <StationTram :x="tram.x" :y="tram.y" :width-range="canvasScreen.width" />
         <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1" :anchor="0.5" />
         <CharacterStationMaster :x="stationMaster.x" :y="stationMaster.y" :scale="1" place="station" />
         <Pigeon v-for="{ x, y, scale, flip } in pegion" :x="x" :y="y" :scale="scale" :flip="flip" />
+        <template v-if="isLoad"> </template>
       </Container>
-      <External>
+      <!-- <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
             <input v-model="screen.position.x" type="number" min="-10000" max="10000" step="10" />
@@ -96,10 +95,9 @@ const charactersGeneric = ref<AssetState[][]>([
           <div class="flex flex-col gap-2">
             <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
-            <!-- <input v-model="tram.scale" type="number" min="0" max="20" step="0.01" /> -->
           </div>
         </div>
-      </External>
+      </External> -->
     </template>
   </Loader>
 </template>

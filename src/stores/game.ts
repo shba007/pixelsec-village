@@ -63,6 +63,9 @@ import characterGenericLeftWalk1Texture from '@/assets/character/generic/left-wa
 import characterGenericLeftWalk2Texture from '@/assets/character/generic/left-walk-2.png'
 import characterGenericRightWalk1Texture from '@/assets/character/generic/right-walk-1.png'
 import characterGenericRightWalk2Texture from '@/assets/character/generic/right-walk-2.png'
+//
+import characterGenericLeftWalk1SideTexture from '@/assets/character/generic/left-walk-1-side.png'
+import characterGenericLeftWalk2SideTexture from '@/assets/character/generic/left-walk-2-side.png'
 // Main Character
 import characterMainBlackFrontStillTexture from '@/assets/character/main/black/front-still.png'
 import characterMainBlackFrontWalk1Texture from '@/assets/character/main/black/front-walk-1.png'
@@ -123,6 +126,9 @@ export const resources = reactive({
     characterGenericRightWalk1: characterGenericRightWalk1Texture,
     characterGenericRightWalk2: characterGenericRightWalk2Texture,
     //
+    characterGenericLeftWalk1Side: characterGenericLeftWalk1SideTexture,
+    characterGenericLeftWalk2Side: characterGenericLeftWalk2SideTexture,
+    //
     mapCharacterStationMaster1: mapCharacterStationMaster1Texture,
     mapCharacterStationMaster2: mapCharacterStationMaster2Texture,
     mapCharacterStationMaster3: mapCharacterStationMaster3Texture,
@@ -174,7 +180,6 @@ export const resources = reactive({
     tramFront: tramFrontTexture,
     tramBack: tramBackTexture,
     tramRight: tramRightTexture,
-
     // Main Character
     characterMainBlackFrontStill: characterMainBlackFrontStillTexture,
     characterMainBlackFrontWalk1: characterMainBlackFrontWalk1Texture,
@@ -201,8 +206,6 @@ export const resources = reactive({
     //
     stationTram: stationTramTexture,
     stationTramWire: stationTramWireTexture
-    //
-
     //
   }
 })

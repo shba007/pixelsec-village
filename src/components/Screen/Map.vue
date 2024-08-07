@@ -239,7 +239,12 @@ watchEffect(() => {
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="screen.position.x * screen.position.scale * zoomFactor" :y="screen.position.y * screen.position.scale * zoomFactor" :scale="screen.position.scale * zoomFactor">
+      <Container
+        :renderable="isLoad"
+        :x="screen.position.x * screen.position.scale * zoomFactor"
+        :y="screen.position.y * screen.position.scale * zoomFactor"
+        :scale="screen.position.scale * zoomFactor"
+      >
         <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="isMobile ? 1 : 0.5" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
@@ -252,12 +257,14 @@ watchEffect(() => {
         <!-- @vue-ignore -->
         <MapTram :steps="tram.steps" :animation="true" initalOrientation="right" />
         <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange" :size="size" :x="x" :y="y" :direction="direction" />
-        <Scene1 v-if="currentScenceIndex === 0 && screen.animation === 'finished'" />
-        <Scene2 v-else-if="currentScenceIndex === 1 && screen.animation === 'finished'" />
-        <Scene3 v-else-if="currentScenceIndex === 2 && screen.animation === 'finished'" />
-        <Scene4 v-else-if="currentScenceIndex === 3 && screen.animation === 'finished'" />
-        <Scene5 v-else-if="currentScenceIndex === 4 && screen.animation === 'finished'" />
-        <Scene6 v-else-if="currentScenceIndex === 5 && screen.animation === 'finished'" />
+        <template v-if="isLoad">
+          <Scene1 v-if="currentScenceIndex === 0 && screen.animation === 'finished'" />
+          <Scene2 v-else-if="currentScenceIndex === 1 && screen.animation === 'finished'" />
+          <Scene3 v-else-if="currentScenceIndex === 2 && screen.animation === 'finished'" />
+          <Scene4 v-else-if="currentScenceIndex === 3 && screen.animation === 'finished'" />
+          <Scene5 v-else-if="currentScenceIndex === 4 && screen.animation === 'finished'" />
+          <Scene6 v-else-if="currentScenceIndex === 5 && screen.animation === 'finished'" />
+        </template>
       </Container>
       <!-- <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
