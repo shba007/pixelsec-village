@@ -5,25 +5,19 @@ import { breakpointsTailwind, useBreakpoints, useTimeoutFn } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
-import stationMasterImage from "@/assets/character/station-master/station.gif";
+import stationMasterImage from '@/assets/character/station-master/station.gif'
 
 const gameStore = useGameStore()
 
-const stationMaster = reactive({ x: 0, y: 0 })
-const ages = [
-  '18-25',
-  '26-35',
-  '36-44',
-  '45-54'
-]
+const ages = ['18-25', '26-35', '36-44', '45-54']
 
 function onClick(value: string) {
-  gameStore.nextScene(value ? 1 : 2)
+  gameStore.nextScene()
 }
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-screen h-screen">
+  <External class="absolute top-0 left-0 w-dvw h-dvh">
     <Modal title="" description="">
       <div class="flex flex-col items-center justify-center">
         <div class="flex items-center">

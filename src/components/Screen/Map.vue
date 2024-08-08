@@ -15,12 +15,12 @@ import MapCloud from '@/components/Animation/MapCloud.vue'
 import Fountain from '@/components/Animation/Fountain.vue'
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
-import Scene1 from '@/components/Scene/Scene1.vue'
-import Scene2 from '@/components/Scene/Scene2.vue'
-import Scene3 from '@/components/Scene/Scene3.vue'
-import Scene4 from '@/components/Scene/Scene4.vue'
-import Scene5 from '@/components/Scene/Scene5.vue'
-import Scene6 from '@/components/Scene/Scene6.vue'
+import Scene1 from '@/components/Scene/Scene-1-1.vue'
+import Scene2 from '@/components/Scene/Scene-1-2.vue'
+import Scene3 from '@/components/Scene/Scene-1-3.vue'
+import Scene4 from '@/components/Scene/Scene-1-4.vue'
+import Scene5 from '@/components/Scene/Scene-1-5.vue'
+import Scene6 from '@/components/Scene/Scene-1-6.vue'
 import { useWindowSize } from '@vueuse/core'
 
 const props = defineProps<{
@@ -33,7 +33,7 @@ const emit = defineEmits<{
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentScenceIndex, currentMapPositionIndex, isMobile } = storeToRefs(gameStore)
+const { currentSceneIndex, currentMapPositionIndex, isMobile } = storeToRefs(gameStore)
 
 const zoomFactor = computed(() => screenWidth.value / 1280)
 const screen = reactive<Asset>({
@@ -215,7 +215,7 @@ const clouds = ref<
 ])
 
 watchEffect(() => {
-  if (currentScenceIndex.value === 6 && screen.animation === 'finished') emit('close')
+  if (currentSceneIndex.value === 6 && screen.animation === 'finished') emit('close')
 })
 </script>
 
@@ -225,32 +225,26 @@ watchEffect(() => {
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="screen.position.x * screen.position.scale * zoomFactor"
-        :y="screen.position.y * screen.position.scale * zoomFactor" :scale="screen.position.scale * zoomFactor">
-        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0"
-          :scale="isMobile ? 1 : 1" :anchor="0" />
+      <Container v-if="isLoad" :x="screen.position.x * screen.position.scale * zoomFactor" :y="screen.position.y * screen.position.scale * zoomFactor" :scale="screen.position.scale * zoomFactor">
+        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="isMobile ? 1 : 1" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
         <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale"
-          :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
         <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :steps="genericCharacter"
-          :animation="true" place="map" />
-        <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y"
-          :scale="characterStationMaster.scale" place="map" />
+        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :steps="genericCharacter" :animation="true" place="map" />
+        <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y" :scale="characterStationMaster.scale" place="map" />
         <!-- @vue-ignore -->
         <MapTram :steps="tram.steps" :animation="true" initalOrientation="right" />
-        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange"
-          :size="size" :x="x" :y="y" :direction="direction" />
+        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange" :size="size" :x="x" :y="y" :direction="direction" />
         <!-- <template v-if="isLoad"> -->
-        <Scene1 v-if="currentScenceIndex === 0 && screen.animation === 'finished'" />
-        <Scene2 v-else-if="currentScenceIndex === 1 && screen.animation === 'finished'" />
-        <Scene3 v-else-if="currentScenceIndex === 2 && screen.animation === 'finished'" />
-        <Scene4 v-else-if="currentScenceIndex === 3 && screen.animation === 'finished'" />
-        <Scene5 v-else-if="currentScenceIndex === 4 && screen.animation === 'finished'" />
-        <Scene6 v-else-if="currentScenceIndex === 5 && screen.animation === 'finished'" />
+        <Scene1 v-if="currentSceneIndex === 0 && screen.animation === 'finished'" />
+        <Scene2 v-else-if="currentSceneIndex === 1 && screen.animation === 'finished'" />
+        <Scene3 v-else-if="currentSceneIndex === 2 && screen.animation === 'finished'" />
+        <Scene4 v-else-if="currentSceneIndex === 3 && screen.animation === 'finished'" />
+        <Scene5 v-else-if="currentSceneIndex === 4 && screen.animation === 'finished'" />
+        <Scene6 v-else-if="currentSceneIndex === 5 && screen.animation === 'finished'" />
         <!-- </template> -->
       </Container>
       <External>

@@ -108,7 +108,6 @@ import stationTramWireTexture from '@/assets/station/tram-wire.png'
 //
 import stationCharacterStationMaster1Texture from '@/assets/character/station-master/station-1.png'
 import stationCharacterStationMaster2Texture from '@/assets/character/station-master/station-2.png'
-import { useScreen } from 'vue3-pixi'
 
 export const resources = reactive({
   general: {
@@ -234,7 +233,7 @@ export const useGameStore = defineStore('game', () => {
   // const $mapPosition = reactive({ x: 400, y: 680, scale: 0.22 })
   // const mapPosition = computed(() => $mapPosition)
 
-  const currentScenceIndex = ref(0)
+  const currentSceneIndex = ref(0)
   const currentMapPositionIndex = ref(0)
   const isIphone = ref(false)
 
@@ -269,8 +268,8 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function nextScene(screen = 1) {
-    currentScenceIndex.value += screen
-    console.log('NextScene', currentScenceIndex.value)
+    currentSceneIndex.value += screen
+    console.log('NextScene', currentSceneIndex.value)
   }
 
   function nextMapPosition() {
@@ -284,7 +283,7 @@ export const useGameStore = defineStore('game', () => {
   return {
     isMobile,
     isIphone,
-    currentScenceIndex,
+    currentSceneIndex,
     currentMapPositionIndex,
     activeCharacter,
     toggleGameMode,

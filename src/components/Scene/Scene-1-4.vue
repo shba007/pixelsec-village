@@ -25,7 +25,7 @@ function onCharcterSet(type: Character) {
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-screen h-screen">
+  <External class="absolute top-0 left-0 w-dvw h-dvh">
     <Modal title="Select your Avatar" description="Choose your main character energy.">
       <div class="flex gap-8">
         <button v-for="{ type, image } of characters" :key="image" @click="onCharcterSet(type)">

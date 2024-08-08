@@ -26,7 +26,7 @@ watch(() => arrivedState.bottom, (value) => {
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-screen h-screen">
+  <External class="absolute top-0 left-0 w-dvw h-dvh">
     <Modal title="Terms and Conditions for Affinidi Services">
       <p ref="el" class="w-full overflow-auto">
       <h1 style="padding-top: 3pt;text-indent: 0pt;text-align: center;">

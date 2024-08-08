@@ -13,7 +13,7 @@ function onClick(value: boolean) {
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-screen h-screen">
+  <External class="absolute top-0 left-0 w-dvw h-dvh">
     <Modal title="" description="Before we begin <br/> let’s go through the T&Cs.">
       <div class="flex gap-8">
         <button class="active-btn" @click="onClick(false)">Skip T&Cs</button>

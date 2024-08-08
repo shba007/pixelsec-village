@@ -5,7 +5,7 @@ import { Application } from 'vue3-pixi'
 import ScreenMap from '@/components/Screen/Map.vue'
 import ScreenStation from '@/components/Screen/Station.vue'
 
-const currentScreenIndex = ref(1)
+const currentScreenIndex = ref(0)
 
 function updateIndex(value: number) {
   currentScreenIndex.value = value

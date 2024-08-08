@@ -26,7 +26,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-screen h-screen">
+  <External class="absolute top-0 left-0 w-dvw h-dvh">
     <Modal
       title="welcome to dataville"
       description="Where your online habits and choices will shape the kind of house you live in.
