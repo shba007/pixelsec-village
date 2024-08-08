@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
-import { onTick } from 'vue3-pixi'
+import { External, onTick } from 'vue3-pixi'
 
 interface Route {
   x: number
   y: number
   scale: number
+  alpha: number
   time: number
 }
 
@@ -18,6 +19,7 @@ interface Character {
     x: number
     y: number
     scale: number
+    alpha: number
     time: number
   }
   direction: number
@@ -30,11 +32,15 @@ const props = defineProps<{
   animation: boolean
 }>()
 
+const emit = defineEmits<{
+  (e: 'move', x: number, y: number): void
+}>()
+
 const animations = {
-  frontStill: ['characterMainFrontStill'],
-  frontWalk: ['characterMainFrontWalk1', 'characterMainFrontWalk2'],
+  frontStill: ['characterMainBlackFrontStill'],
+  frontWalk: ['characterMainBlackFrontWalk1', 'characterMainBlackFrontWalk2'],
   backWalk: ['characterMainBackWalk1', 'characterMainBackWalk2'],
-  leftWalk: ['characterMainLeftWalk1', 'characterMainLeftWalk2'],
+  leftWalk: ['characterMainBlackLeftWalk1', 'characterMainBlackLeftWalk1'],
   rightWalk: ['characterMainRightWalk1', 'characterMainRightWalk2']
 }
 
@@ -45,6 +51,7 @@ const activeCharacter = reactive<Character>({
     x: props.steps[0].x,
     y: props.steps[0].y,
     scale: props.steps[0].scale,
+    alpha: props.steps[0].alpha,
     time: props.steps[0].time
   },
   direction: 1,
@@ -71,11 +78,15 @@ onTick((delta) => {
     const dx = props.steps[currentCharacterPositionIndex.value + 1].x - props.steps[currentCharacterPositionIndex.value].x
     const dy = props.steps[currentCharacterPositionIndex.value + 1].y - props.steps[currentCharacterPositionIndex.value].y
     const ds = props.steps[currentCharacterPositionIndex.value + 1].scale - props.steps[currentCharacterPositionIndex.value].scale
+    const da = props.steps[currentCharacterPositionIndex.value + 1].alpha - props.steps[currentCharacterPositionIndex.value].alpha
     progress = Math.min(totalElaspedTime / dt, 1)
     activeCharacter.position.x = props.steps[currentCharacterPositionIndex.value].x + dx * progress
     activeCharacter.position.y = props.steps[currentCharacterPositionIndex.value].y + dy * progress
     activeCharacter.position.scale = props.steps[currentCharacterPositionIndex.value].scale + ds * progress
+    activeCharacter.position.alpha = props.steps[currentCharacterPositionIndex.value].alpha + da * progress
     activeCharacter.position.time = props.steps[currentCharacterPositionIndex.value].time + dt * progress
+
+    emit('move', activeCharacter.position.x, activeCharacter.position.y)
 
     if (dy > 0) activeCharacter.aliases = animations['frontWalk']
     else if (dy < 0) activeCharacter.aliases = animations['backWalk']
@@ -85,9 +96,9 @@ onTick((delta) => {
     if (progress == 1) {
       activeCharacter.animation = 'finished'
       totalElaspedTime = 0
-      currentCharacterPositionIndex.value = currentCharacterPositionIndex.value === 0 ? 1 : 0
-      activeCharacter.animation = 'started'
-      // console.log({ totalElaspedTime, currentCharacterPositionIndex: currentCharacterPositionIndex.value, animation: activeCharacter.animation })
+      currentCharacterPositionIndex.value++
+
+      if (currentCharacterPositionIndex.value < props.steps.length - 1) activeCharacter.animation = 'started'
     }
   }
 })
@@ -104,4 +115,13 @@ onTick((delta) => {
     :playing="animation && activeCharacter.animation === 'started'"
     :animation-speed="0.08"
   />
+  <External>
+    <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50">
+      <div class="flex flex-col gap-2">
+        <input v-model="activeCharacter.position.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="activeCharacter.position.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="activeCharacter.position.scale" type="number" min="0" max="20" step="0.01" />
+      </div>
+    </div>
+  </External>
 </template>

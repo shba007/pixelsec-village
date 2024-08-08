@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watchEffect } from 'vue'
 import { Loader, External, useScreen } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { useGameStore } from '@/stores/game'
@@ -22,6 +22,9 @@ defineProps<{
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
+
+const gameStore = useGameStore()
+const { currentSceneIndex } = storeToRefs(gameStore)
 
 const canvasScreen = useScreen()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -72,8 +75,12 @@ const charactersGeneric = ref<AssetState[]>([
   { x: 0, y: -10, scale: 1, time: 8 }
 ])
 
-const gameStore = useGameStore()
-const { currentSceneIndex } = storeToRefs(gameStore)
+watchEffect(() => {
+  if (currentSceneIndex.value === 8) {
+    emit('close')
+    gameStore.nextMapPosition()
+  }
+})
 </script>
 
 <template>
@@ -92,12 +99,12 @@ const { currentSceneIndex } = storeToRefs(gameStore)
         <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1" :anchor="0.5" />
         <CharacterStationMaster :x="stationMaster.x" :y="stationMaster.y" :scale="1" place="station" />
         <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
-        <template v-if="isLoad">
-          <Scene1 v-if="currentSceneIndex === 6" />
-          <Scene2 v-else-if="currentSceneIndex === 7" />
-        </template>
+        <!-- <template v-if="isLoad"> -->
+        <Scene1 v-if="currentSceneIndex === 6" />
+        <Scene2 v-else-if="currentSceneIndex === 7" />
+        <!-- </template> -->
       </Container>
-      <External>
+      <!-- <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <p>{{ currentSceneIndex }}</p>
           <div class="flex flex-col gap-2">
@@ -105,12 +112,12 @@ const { currentSceneIndex } = storeToRefs(gameStore)
             <input v-model="screen.position.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.position.scale" type="number" min="0" max="10" step="0.01" />
           </div>
-          <!--  <div class="flex flex-col gap-2">
+           <div class="flex flex-col gap-2">
             <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
-          </div> -->
+          </div>
         </div>
-      </External>
+      </External> -->
     </template>
   </Loader>
 </template>

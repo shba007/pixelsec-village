@@ -34,6 +34,10 @@ const props = defineProps<{
   initalOrientation: Orientation
 }>()
 
+const emit = defineEmits<{
+  (e: 'move', x: number, y: number): void
+}>()
+
 const animations = {
   frontStill: ['tramFront'],
   frontMove: ['tramFront'],
@@ -85,6 +89,8 @@ onTick((delta) => {
     tram.position.alpha = props.steps[currentTramPositionIndex.value].alpha + da * progress
     tram.position.time = props.steps[currentTramPositionIndex.value].time + dt * progress
 
+    emit('move', tram.position.x, tram.position.y)
+
     if (dy > 0) tram.aliases = animations['frontMove']
     else if (dy < 0) tram.aliases = animations['backMove']
     else if (dx > 0) tram.aliases = animations['rightMove']
@@ -95,10 +101,7 @@ onTick((delta) => {
       totalElaspedTime = 0
       currentTramPositionIndex.value++
 
-      // console.log({ x: props.steps[currentTramPositionIndex.value].x, y: props.steps[currentTramPositionIndex.value].y })
       if (currentTramPositionIndex.value < props.steps.length - 1) tram.animation = 'started'
-      // console.log({ currentTramPositionIndex: currentTramPositionIndex.value, length: props.steps.length, animation: tram.animation })
-      // console.log({ totalElaspedTime, currentCharacterPositionIndex: currentCharacterPositionIndex.value, animation: activeCharacter.animation })
     }
   }
 })

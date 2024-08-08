@@ -27,11 +27,7 @@ onMounted(() => {
 
 <template>
   <External class="absolute top-0 left-0 w-dvw h-dvh">
-    <Modal
-      title="welcome to dataville"
-      description="Where your online habits and choices will shape the kind of house you live in.
-          Let’s go!"
-    >
+    <Modal title="welcome to <br/> dataville" description="Where your online<br/> habits and choices<br/> will shape the kind<br/> of house you live in.<br/>Let’s go!">
       <button v-if="!isDesktop" class="flex items-end gap-2" @click="handleStart">
         <img :src="rotateIndicator" alt="rotate-indicator" />
         <!-- <span class="pb-2 pt-4 text-xl">{{ isIphone ? 'Full screen' : 'Rotate' }}</span> -->

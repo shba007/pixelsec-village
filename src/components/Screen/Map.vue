@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 
 import { resources, useGameStore } from '@/stores/game'
 import type { Asset, AssetState } from '@/utils/types'
+import { useWindowSize } from '@vueuse/core'
 
 import StreetLamp from '@/components/Animation/StreetLamp.vue'
 import Pigeon from '@/components/Animation/Pigeon.vue'
@@ -15,13 +16,13 @@ import MapCloud from '@/components/Animation/MapCloud.vue'
 import Fountain from '@/components/Animation/Fountain.vue'
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
+import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 import Scene1 from '@/components/Scene/Scene-1-1.vue'
 import Scene2 from '@/components/Scene/Scene-1-2.vue'
 import Scene3 from '@/components/Scene/Scene-1-3.vue'
 import Scene4 from '@/components/Scene/Scene-1-4.vue'
 import Scene5 from '@/components/Scene/Scene-1-5.vue'
 import Scene6 from '@/components/Scene/Scene-1-6.vue'
-import { useWindowSize } from '@vueuse/core'
 
 const props = defineProps<{
   isLoad: boolean
@@ -33,7 +34,7 @@ const emit = defineEmits<{
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentSceneIndex, currentMapPositionIndex, isMobile } = storeToRefs(gameStore)
+const { currentSceneIndex, currentMapPositionIndex, currentMapAnimation, isMobile } = storeToRefs(gameStore)
 
 const zoomFactor = computed(() => screenWidth.value / 1280)
 const screen = reactive<Asset>({
@@ -45,6 +46,7 @@ const screen = reactive<Asset>({
     { x: -990, y: -560, scale: 1.96, time: 6 },
     { x: -795, y: -590, scale: 2.01, time: 8 },
     { x: -720, y: -405, scale: 1.97, time: 10 },
+    { x: -600, y: -270, scale: 2.01, time: 11 },
     { x: -600, y: -270, scale: 2.01, time: 11 },
     { x: -600, y: -270, scale: 2.01, time: 11 }
   ],
@@ -58,14 +60,14 @@ function onLoad() {
   screen.position.scale = screen.steps[0].scale
   screen.position.time = screen.steps[0].time
   screen.loaded = true
-  screen.animation = 'started'
+  currentMapAnimation.value = 'started'
 }
 
 let totalElaspedTime = 0
 let progress = 0
 
 onTick((delta) => {
-  if (screen.animation === 'started') {
+  if (currentMapAnimation.value === 'started') {
     totalElaspedTime += delta / 100
     const dt = screen.steps[currentMapPositionIndex.value + 1].time - screen.steps[currentMapPositionIndex.value].time
     const dx = screen.steps[currentMapPositionIndex.value + 1].x - screen.steps[currentMapPositionIndex.value].x
@@ -79,15 +81,17 @@ onTick((delta) => {
     screen.position.time = screen.steps[currentMapPositionIndex.value].time + dt * progress
 
     if (progress == 1) {
-      screen.animation = 'finished'
-      // console.log({ totalElaspedTime })
       totalElaspedTime = 0
+      // console.log({ totalElaspedTime })
+      currentMapAnimation.value = 'finished'
+
+      if (currentSceneIndex.value === 8 && currentMapAnimation.value === 'finished') {
+        tram.animation = 'started'
+        characterMain.animation = 'started'
+      }
+      console.log('currentSceneIndex', currentSceneIndex.value, currentMapPositionIndex.value, currentMapAnimation.value)
     }
   }
-})
-
-watch(currentMapPositionIndex, () => {
-  if (screen.animation === 'finished') screen.animation = 'started'
 })
 
 const wave = reactive({
@@ -179,15 +183,34 @@ const tram = reactive<Asset>({
   loaded: false,
   alias: 'tram',
   steps: [
-    { x: 896, y: 551, scale: 0.5, alpha: 0, time: 0 },
-    { x: 896, y: 561, scale: 0.5, alpha: 1, time: 0.5 },
-    { x: 1180, y: 561, scale: 0.5, alpha: 1, time: 4 },
-    { x: 1180, y: 1008, scale: 0.5, alpha: 1, time: 6 },
-    { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 8 },
-    { x: 1670, y: 2040, scale: 0.5, alpha: 1, time: 14 },
+    { x: 896, y: 515, scale: 0.5, alpha: 0, time: 0 },
+    { x: 896, y: 561, scale: 0.5, alpha: 1, time: 0.5 }, //
+    { x: 1180, y: 561, scale: 0.5, alpha: 1, time: 3 }, //
+    { x: 1180, y: 1008, scale: 0.5, alpha: 1, time: 6 }, //
+    { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 9 }, //
+    { x: 1670, y: 2040, scale: 0.5, alpha: 1, time: 14 }, //
     { x: 2490, y: 2040, scale: 0.5, alpha: 1, time: 18 },
     { x: 2490, y: 1708, scale: 0.5, alpha: 1, time: 20 },
     { x: 2490, y: 1695, scale: 0.5, alpha: 0, time: 20.5 }
+  ],
+  position: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
+  animation: 'init'
+})
+const characterMain = reactive<Asset>({
+  loaded: false,
+  alias: '',
+  steps: [
+    { x: 840, y: 515, scale: 2, alpha: 0, time: 0 },
+    { x: 896, y: 561, scale: 2, alpha: 1, time: 0.5 }, //
+    { x: 1180, y: 561, scale: 2, alpha: 1, time: 3 }, //
+    { x: 1180, y: 1008, scale: 2, alpha: 1, time: 6 }, //
+    { x: 1670, y: 1008, scale: 2, alpha: 1, time: 9 }, //
+    { x: 1670, y: 1280, scale: 2, alpha: 1, time: 11.5 }, //
+    { x: 1020, y: 1280, scale: 2, alpha: 1, time: 13 }, //
+    // { x: 1020, y: 1280, scale: 2, alpha: 1, time: 15 },//
+    { x: 1020, y: 1210, scale: 2, alpha: 1, time: 15 }, //
+    { x: 920, y: 1210, scale: 2, alpha: 1, time: 16 }, //
+    { x: 920, y: 1211, scale: 2, alpha: 1, time: 26.5 } //
   ],
   position: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'init'
@@ -215,8 +238,15 @@ const clouds = ref<
 ])
 
 watchEffect(() => {
-  if (currentSceneIndex.value === 6 && screen.animation === 'finished') emit('close')
+  if (currentSceneIndex.value === 6 && currentMapAnimation.value === 'finished') emit('close')
 })
+
+// write a function which updates the map coordinate by locking character position to the center
+// watchCharacter x, y by emit from character update x, y
+function lockCharaterToMapCenter(x: number, y: number) {
+  screen.position.x = -1.005 * x + 324.49
+  screen.position.y = -1.005 * y + screenHeight.value / 3
+}
 </script>
 
 <template>
@@ -235,31 +265,32 @@ watchEffect(() => {
         <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
         <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :steps="genericCharacter" :animation="true" place="map" />
         <CharacterStationMaster :x="characterStationMaster.x" :y="characterStationMaster.y" :scale="characterStationMaster.scale" place="map" />
+        <CharacterMain :steps="characterMain.steps" :animation="characterMain.animation === 'started'" initalOrientation="front" @move="lockCharaterToMapCenter" />
         <!-- @vue-ignore -->
-        <MapTram :steps="tram.steps" :animation="true" initalOrientation="right" />
+        <MapTram :steps="tram.steps" :animation="tram.animation === 'started'" initalOrientation="right" />
         <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="widthRange" :size="size" :x="x" :y="y" :direction="direction" />
         <!-- <template v-if="isLoad"> -->
-        <Scene1 v-if="currentSceneIndex === 0 && screen.animation === 'finished'" />
-        <Scene2 v-else-if="currentSceneIndex === 1 && screen.animation === 'finished'" />
-        <Scene3 v-else-if="currentSceneIndex === 2 && screen.animation === 'finished'" />
-        <Scene4 v-else-if="currentSceneIndex === 3 && screen.animation === 'finished'" />
-        <Scene5 v-else-if="currentSceneIndex === 4 && screen.animation === 'finished'" />
-        <Scene6 v-else-if="currentSceneIndex === 5 && screen.animation === 'finished'" />
+        <Scene1 v-if="currentSceneIndex === 0 && currentMapAnimation === 'finished'" />
+        <Scene2 v-else-if="currentSceneIndex === 1 && currentMapAnimation === 'finished'" />
+        <Scene3 v-else-if="currentSceneIndex === 2 && currentMapAnimation === 'finished'" />
+        <Scene4 v-else-if="currentSceneIndex === 3 && currentMapAnimation === 'finished'" />
+        <Scene5 v-else-if="currentSceneIndex === 4 && currentMapAnimation === 'finished'" />
+        <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
         <!-- </template> -->
       </Container>
       <External>
-        <!--   <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
+        <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
             <input v-model="screen.position.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.position.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.position.scale" type="number" min="0" max="10" step="0.01" />
           </div>
-          <div class="flex flex-col gap-2">
-            <input v-model="fountain.x" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="fountain.y" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="fountain.scale" type="number" min="0" max="20" step="0.01" />
-          </div>
-        </div> -->
+          <!--  <div class="flex flex-col gap-2">
+            <input v-model="characterMain.position.x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="characterMain.position.y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="characterMain.position.scale" type="number" min="0" max="20" step="0.01" />
+          </div> -->
+        </div>
       </External>
     </template>
   </Loader>

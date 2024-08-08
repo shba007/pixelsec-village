@@ -70,8 +70,12 @@ import characterGenericLeftWalk2SideTexture from '@/assets/character/generic/lef
 import characterMainBlackFrontStillTexture from '@/assets/character/main/black/front-still.png'
 import characterMainBlackFrontWalk1Texture from '@/assets/character/main/black/front-walk-1.png'
 import characterMainBlackFrontWalk2Texture from '@/assets/character/main/black/front-walk-2.png'
+// import characterMainBlackRightWalk1Texture from '@/assets/character/main/black/right-walk-1.png'
+// import characterMainBlackRightWalk2Texture from '@/assets/character/main/black/right-walk-2.png'
 import characterMainBlackLeftWalk1Texture from '@/assets/character/main/black/left-walk-1.png'
 import characterMainBlackLeftWalk2Texture from '@/assets/character/main/black/left-walk-2.png'
+import characterMainBlackBackWalk1Texture from '@/assets/character/main/black/back-walk-1.png'
+import characterMainBlackBackWalk2Texture from '@/assets/character/main/black/back-walk-2.png'
 //
 import characterMainViolateFrontStillTexture from '@/assets/character/main/violate/front-still.png'
 import characterMainViolateFrontWalk1Texture from '@/assets/character/main/violate/front-walk-1.png'
@@ -184,8 +188,12 @@ export const resources = reactive({
     characterMainBlackFrontStill: characterMainBlackFrontStillTexture,
     characterMainBlackFrontWalk1: characterMainBlackFrontWalk1Texture,
     characterMainBlackFrontWalk2: characterMainBlackFrontWalk2Texture,
+    // characterMainBlackRightWalk1: characterMainBlackRightWalk1Texture,
+    // characterMainBlackRightWalk2: characterMainBlackRightWalk2Texture,
     characterMainBlackLeftWalk1: characterMainBlackLeftWalk1Texture,
     characterMainBlackLeftWalk2: characterMainBlackLeftWalk2Texture,
+    characterMainBlackBackWalk1: characterMainBlackBackWalk1Texture,
+    characterMainBlackBackWalk2: characterMainBlackBackWalk2Texture,
     //
     characterMainViolateFrontStill: characterMainViolateFrontStillTexture,
     characterMainViolateFrontWalk1: characterMainViolateFrontWalk1Texture,
@@ -219,12 +227,12 @@ export const useGameStore = defineStore('game', () => {
   const activeCharacter = ref<Character | null>(null)
 
   watch(isMobile, (value) => {
-    resources.map.map = value ? map1xTexture : map2xTexture
+    resources.map.map = value ? map1xTexture : map1xTexture
   })
 
   onMounted(() => {
-    resources.map.map = isMobile.value ? map1xTexture : map2xTexture
-    console.log({ isMobile: isMobile.value, map: resources.map.map })
+    resources.map.map = isMobile.value ? map1xTexture : map1xTexture
+    // console.log({ isMobile: isMobile.value, map: resources.map.map })
   })
 
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
@@ -235,6 +243,7 @@ export const useGameStore = defineStore('game', () => {
 
   const currentSceneIndex = ref(0)
   const currentMapPositionIndex = ref(0)
+  const currentMapAnimation = ref<'init' | 'started' | 'finished'>('init')
   const isIphone = ref(false)
 
   watchArray([isFullscreenSupported, isOrientationSupported], async () => {
@@ -249,8 +258,6 @@ export const useGameStore = defineStore('game', () => {
     } else {
       isIphone.value = true
     }
-
-    console.log({ isIphone: isIphone.value })
   })
 
   async function toggleGameMode(value: boolean) {
@@ -263,7 +270,7 @@ export const useGameStore = defineStore('game', () => {
         await unlockOrientation()
       }
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
 
@@ -273,6 +280,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function nextMapPosition() {
+    currentMapAnimation.value = 'started'
     currentMapPositionIndex.value++
   }
 
@@ -285,6 +293,7 @@ export const useGameStore = defineStore('game', () => {
     isIphone,
     currentSceneIndex,
     currentMapPositionIndex,
+    currentMapAnimation,
     activeCharacter,
     toggleGameMode,
     nextScene,

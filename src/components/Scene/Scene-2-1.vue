@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue'
 import { External } from 'vue3-pixi'
-import { breakpointsTailwind, useBreakpoints, useTimeoutFn } from '@vueuse/core'
-import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
 import stationMasterImage from '@/assets/character/station-master/station.gif'
@@ -19,10 +16,10 @@ function onClick(value: string) {
 <template>
   <External class="absolute top-0 left-0 w-dvw h-dvh">
     <Modal title="" description="">
-      <div class="flex flex-col items-center justify-center">
-        <div class="flex items-center">
-          <img :src="stationMasterImage" />
-          <p class="text-4xl text-left">Please verify your age for tram ticket purchase</p>
+      <div class="relative flex flex-col items-center justify-center">
+        <div class="flex items-center gap-4">
+          <img :src="stationMasterImage" class="aspect-square object-contain" :height="134" />
+          <p class="text-3xl text-left">Please verify your age for tram ticket purchase</p>
         </div>
         <div class="flex gap-4">
           <button v-for="age of ages" class="active-btn text-3xl px-8 py-2 whitespace-nowrap" @click="onClick(age)">
