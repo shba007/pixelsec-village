@@ -16,7 +16,7 @@ type Animation = 'init' | 'started' | 'finished'
 interface Object {
   loaded: boolean
   aliases: string[]
-  position: {
+  state: {
     x: number
     y: number
     scale: number
@@ -29,7 +29,7 @@ interface Object {
 }
 
 const props = defineProps<{
-  steps: Route[]
+  states: Route[]
   animation: boolean
   initalOrientation: Orientation
 }>()
@@ -49,47 +49,47 @@ const animations = {
 const tram = reactive<Object>({
   loaded: false,
   aliases: animations.frontStill,
-  position: {
-    x: props.steps[0].x,
-    y: props.steps[0].y,
-    scale: props.steps[0].scale,
-    alpha: props.steps[0].alpha,
-    time: props.steps[0].time
+  state: {
+    x: props.states[0].x,
+    y: props.states[0].y,
+    scale: props.states[0].scale,
+    alpha: props.states[0].alpha,
+    time: props.states[0].time
   },
   direction: 1,
   orientation: props.initalOrientation,
   animation: 'started'
 })
 
-watch(props.steps, (value) => {
-  tram.position.x = value[0].x
-  tram.position.y = value[0].y
-  tram.position.scale = value[0].scale
-  tram.position.alpha = value[0].alpha
-  tram.position.time = value[0].time
+watch(props.states, (value) => {
+  tram.state.x = value[0].x
+  tram.state.y = value[0].y
+  tram.state.scale = value[0].scale
+  tram.state.alpha = value[0].alpha
+  tram.state.time = value[0].time
 })
 
 // Move Character
 let totalElaspedTime = 0
 let progress = 0
-const currentTramPositionIndex = ref(0)
+const currentTramStateIndex = ref(0)
 
 onTick((delta) => {
   if (props.animation && tram.animation === 'started') {
     totalElaspedTime += delta / 100
-    const dt = props.steps[currentTramPositionIndex.value + 1].time - props.steps[currentTramPositionIndex.value].time
-    const dx = props.steps[currentTramPositionIndex.value + 1].x - props.steps[currentTramPositionIndex.value].x
-    const dy = props.steps[currentTramPositionIndex.value + 1].y - props.steps[currentTramPositionIndex.value].y
-    const ds = props.steps[currentTramPositionIndex.value + 1].scale - props.steps[currentTramPositionIndex.value].scale
-    const da = props.steps[currentTramPositionIndex.value + 1].alpha - props.steps[currentTramPositionIndex.value].alpha
+    const dt = props.states[currentTramStateIndex.value + 1].time - props.states[currentTramStateIndex.value].time
+    const dx = props.states[currentTramStateIndex.value + 1].x - props.states[currentTramStateIndex.value].x
+    const dy = props.states[currentTramStateIndex.value + 1].y - props.states[currentTramStateIndex.value].y
+    const ds = props.states[currentTramStateIndex.value + 1].scale - props.states[currentTramStateIndex.value].scale
+    const da = props.states[currentTramStateIndex.value + 1].alpha - props.states[currentTramStateIndex.value].alpha
     progress = Math.min(totalElaspedTime / dt, 1)
-    tram.position.x = props.steps[currentTramPositionIndex.value].x + dx * progress
-    tram.position.y = props.steps[currentTramPositionIndex.value].y + dy * progress
-    tram.position.scale = props.steps[currentTramPositionIndex.value].scale + ds * progress
-    tram.position.alpha = props.steps[currentTramPositionIndex.value].alpha + da * progress
-    tram.position.time = props.steps[currentTramPositionIndex.value].time + dt * progress
+    tram.state.x = props.states[currentTramStateIndex.value].x + dx * progress
+    tram.state.y = props.states[currentTramStateIndex.value].y + dy * progress
+    tram.state.scale = props.states[currentTramStateIndex.value].scale + ds * progress
+    tram.state.alpha = props.states[currentTramStateIndex.value].alpha + da * progress
+    tram.state.time = props.states[currentTramStateIndex.value].time + dt * progress
 
-    emit('move', tram.position.x, tram.position.y)
+    emit('move', tram.state.x, tram.state.y)
 
     if (dy > 0) tram.aliases = animations['frontMove']
     else if (dy < 0) tram.aliases = animations['backMove']
@@ -99,9 +99,9 @@ onTick((delta) => {
     if (progress == 1) {
       tram.animation = 'finished'
       totalElaspedTime = 0
-      currentTramPositionIndex.value++
+      currentTramStateIndex.value++
 
-      if (currentTramPositionIndex.value < props.steps.length - 1) tram.animation = 'started'
+      if (currentTramStateIndex.value < props.states.length - 1) tram.animation = 'started'
     }
   }
 })
@@ -112,10 +112,10 @@ onTick((delta) => {
     :textures="tram.aliases"
     :texture-options="{ scaleMode: 'nearest' }"
     :anchor="0.5"
-    :x="tram.position.x"
-    :y="tram.position.y"
-    :scale="tram.position.scale"
-    :alpha="tram.position.alpha"
+    :x="tram.state.x"
+    :y="tram.state.y"
+    :scale="tram.state.scale"
+    :alpha="tram.state.alpha"
     :playing="animation && tram.animation === 'started'"
     :animation-speed="0.08"
   />

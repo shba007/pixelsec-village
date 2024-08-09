@@ -19,7 +19,7 @@ const gameStore = useGameStore()
 
 function onCharcterSet(type: Character) {
   gameStore.nextScene()
-  gameStore.nextMapPosition()
+  gameStore.nextMapState()
   gameStore.setActiveCharacter(type)
 }
 </script>

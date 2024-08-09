@@ -70,30 +70,42 @@ import characterGenericLeftWalk2SideTexture from '@/assets/character/generic/lef
 import characterMainBlackFrontStillTexture from '@/assets/character/main/black/front-still.png'
 import characterMainBlackFrontWalk1Texture from '@/assets/character/main/black/front-walk-1.png'
 import characterMainBlackFrontWalk2Texture from '@/assets/character/main/black/front-walk-2.png'
-// import characterMainBlackRightWalk1Texture from '@/assets/character/main/black/right-walk-1.png'
-// import characterMainBlackRightWalk2Texture from '@/assets/character/main/black/right-walk-2.png'
-import characterMainBlackLeftWalk1Texture from '@/assets/character/main/black/left-walk-1.png'
-import characterMainBlackLeftWalk2Texture from '@/assets/character/main/black/left-walk-2.png'
 import characterMainBlackBackWalk1Texture from '@/assets/character/main/black/back-walk-1.png'
 import characterMainBlackBackWalk2Texture from '@/assets/character/main/black/back-walk-2.png'
+import characterMainBlackLeftWalk1Texture from '@/assets/character/main/black/left-walk-1.png'
+import characterMainBlackLeftWalk2Texture from '@/assets/character/main/black/left-walk-2.png'
+import characterMainBlackRightWalk1Texture from '@/assets/character/main/black/right-walk-1.png'
+import characterMainBlackRightWalk2Texture from '@/assets/character/main/black/right-walk-2.png'
 //
 import characterMainViolateFrontStillTexture from '@/assets/character/main/violate/front-still.png'
 import characterMainViolateFrontWalk1Texture from '@/assets/character/main/violate/front-walk-1.png'
 import characterMainViolateFrontWalk2Texture from '@/assets/character/main/violate/front-walk-2.png'
+import characterMainViolateBackWalk1Texture from '@/assets/character/main/violate/back-walk-1.png'
+import characterMainViolateBackWalk2Texture from '@/assets/character/main/violate/back-walk-2.png'
 import characterMainViolateLeftWalk1Texture from '@/assets/character/main/violate/left-walk-1.png'
 import characterMainViolateLeftWalk2Texture from '@/assets/character/main/violate/left-walk-2.png'
+import characterMainViolateRightWalk1Texture from '@/assets/character/main/violate/right-walk-1.png'
+import characterMainViolateRightWalk2Texture from '@/assets/character/main/violate/right-walk-2.png'
 //
 import characterMainRedFrontStillTexture from '@/assets/character/main/red/front-still.png'
 import characterMainRedFrontWalk1Texture from '@/assets/character/main/red/front-walk-1.png'
 import characterMainRedFrontWalk2Texture from '@/assets/character/main/red/front-walk-2.png'
+import characterMainRedBackWalk1Texture from '@/assets/character/main/red/back-walk-1.png'
+import characterMainRedBackWalk2Texture from '@/assets/character/main/red/back-walk-2.png'
 import characterMainRedLeftWalk1Texture from '@/assets/character/main/red/left-walk-1.png'
 import characterMainRedLeftWalk2Texture from '@/assets/character/main/red/left-walk-2.png'
+import characterMainRedRightWalk1Texture from '@/assets/character/main/red/right-walk-1.png'
+import characterMainRedRightWalk2Texture from '@/assets/character/main/red/right-walk-2.png'
 //
-import characterMainBlueFrontStillTexture from '@/assets/character/main/red/front-still.png'
-import characterMainBlueFrontWalk1Texture from '@/assets/character/main/red/front-walk-1.png'
-import characterMainBlueFrontWalk2Texture from '@/assets/character/main/red/front-walk-2.png'
-import characterMainBlueLeftWalk1Texture from '@/assets/character/main/red/left-walk-1.png'
-import characterMainBlueLeftWalk2Texture from '@/assets/character/main/red/left-walk-2.png'
+import characterMainBlueFrontStillTexture from '@/assets/character/main/blue/front-still.png'
+import characterMainBlueFrontWalk1Texture from '@/assets/character/main/blue/front-walk-1.png'
+import characterMainBlueFrontWalk2Texture from '@/assets/character/main/blue/front-walk-2.png'
+import characterMainBlueBackWalk1Texture from '@/assets/character/main/blue/back-walk-1.png'
+import characterMainBlueBackWalk2Texture from '@/assets/character/main/blue/back-walk-2.png'
+import characterMainBlueLeftWalk1Texture from '@/assets/character/main/blue/left-walk-1.png'
+import characterMainBlueLeftWalk2Texture from '@/assets/character/main/blue/left-walk-2.png'
+import characterMainBlueRightWalk1Texture from '@/assets/character/main/blue/right-walk-1.png'
+import characterMainBlueRightWalk2Texture from '@/assets/character/main/blue/right-walk-2.png'
 //
 import mapCharacterStationMaster1Texture from '@/assets/character/station-master/wave-1.png'
 import mapCharacterStationMaster2Texture from '@/assets/character/station-master/wave-2.png'
@@ -185,21 +197,55 @@ export const resources = reactive({
     tramBack: tramBackTexture,
     tramRight: tramRightTexture,
     // Main Character
+    characterMainFrontStill: characterMainBlackFrontStillTexture,
+    characterMainFrontWalk1: characterMainBlackFrontWalk1Texture,
+    characterMainFrontWalk2: characterMainBlackFrontWalk2Texture,
+    characterMainBackWalk1: characterMainBlackBackWalk1Texture,
+    characterMainBackWalk2: characterMainBlackBackWalk2Texture,
+    characterMainLeftWalk1: characterMainBlackLeftWalk1Texture,
+    characterMainLeftWalk2: characterMainBlackLeftWalk2Texture,
+    characterMainRightWalk1: characterMainBlackRightWalk1Texture,
+    characterMainRightWalk2: characterMainBlackRightWalk2Texture,
+    //
     characterMainBlackFrontStill: characterMainBlackFrontStillTexture,
     characterMainBlackFrontWalk1: characterMainBlackFrontWalk1Texture,
     characterMainBlackFrontWalk2: characterMainBlackFrontWalk2Texture,
-    // characterMainBlackRightWalk1: characterMainBlackRightWalk1Texture,
-    // characterMainBlackRightWalk2: characterMainBlackRightWalk2Texture,
-    characterMainBlackLeftWalk1: characterMainBlackLeftWalk1Texture,
-    characterMainBlackLeftWalk2: characterMainBlackLeftWalk2Texture,
     characterMainBlackBackWalk1: characterMainBlackBackWalk1Texture,
     characterMainBlackBackWalk2: characterMainBlackBackWalk2Texture,
+    characterMainBlackLeftWalk1: characterMainBlackLeftWalk1Texture,
+    characterMainBlackLeftWalk2: characterMainBlackLeftWalk2Texture,
+    characterMainBlackRightWalk1: characterMainBlackRightWalk1Texture,
+    characterMainBlackRightWalk2: characterMainBlackRightWalk2Texture,
     //
     characterMainViolateFrontStill: characterMainViolateFrontStillTexture,
     characterMainViolateFrontWalk1: characterMainViolateFrontWalk1Texture,
     characterMainViolateFrontWalk2: characterMainViolateFrontWalk2Texture,
+    characterMainViolateBackWalk1: characterMainViolateBackWalk1Texture,
+    characterMainViolateBackWalk2: characterMainViolateBackWalk2Texture,
     characterMainViolateLeftWalk1: characterMainViolateLeftWalk1Texture,
-    characterMainViolateLeftWalk2: characterMainViolateLeftWalk2Texture
+    characterMainViolateLeftWalk2: characterMainViolateLeftWalk2Texture,
+    characterMainViolateRightWalk1: characterMainViolateRightWalk1Texture,
+    characterMainViolateRightWalk2: characterMainViolateRightWalk2Texture,
+    //
+    characterMainRedFrontStill: characterMainRedFrontStillTexture,
+    characterMainRedFrontWalk1: characterMainRedFrontWalk1Texture,
+    characterMainRedFrontWalk2: characterMainRedFrontWalk2Texture,
+    characterMainRedBackWalk1: characterMainRedBackWalk1Texture,
+    characterMainRedBackWalk2: characterMainRedBackWalk2Texture,
+    characterMainRedLeftWalk1: characterMainRedLeftWalk1Texture,
+    characterMainRedLeftWalk2: characterMainRedLeftWalk2Texture,
+    characterMainRedRightWalk1: characterMainRedRightWalk1Texture,
+    characterMainRedRightWalk2: characterMainRedRightWalk2Texture,
+    //
+    characterMainBlueFrontStill: characterMainBlueFrontStillTexture,
+    characterMainBlueFrontWalk1: characterMainBlueFrontWalk1Texture,
+    characterMainBlueFrontWalk2: characterMainBlueFrontWalk2Texture,
+    characterMainBlueBackWalk1: characterMainBlueBackWalk1Texture,
+    characterMainBlueBackWalk2: characterMainBlueBackWalk2Texture,
+    characterMainBlueLeftWalk1: characterMainBlueLeftWalk1Texture,
+    characterMainBlueLeftWalk2: characterMainBlueLeftWalk2Texture,
+    characterMainBlueRightWalk1: characterMainBlueRightWalk1Texture,
+    characterMainBlueRightWalk2: characterMainBlueRightWalk2Texture
     //
   },
   station: {
@@ -222,12 +268,41 @@ export type Character = 'black' | 'blue' | 'red' | 'violate'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
+function capitalizeFirstLetter(word: string): string {
+  if (!word) return word
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+}
+
 export const useGameStore = defineStore('game', () => {
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
   const activeCharacter = ref<Character | null>(null)
 
   watch(isMobile, (value) => {
     resources.map.map = value ? map1xTexture : map1xTexture
+  })
+
+  watch(activeCharacter, (value) => {
+    if (!value) return
+    // @ts-ignore
+    resources.map.characterMainFrontStill = resources.map[`characterMain${capitalizeFirstLetter(value)}FrontStill`]
+    // @ts-ignore
+    resources.map.characterMainFrontWalk1 = resources.map[`characterMain${capitalizeFirstLetter(value)}FrontWalk1`]
+    // @ts-ignore
+    resources.map.characterMainFrontWalk2 = resources.map[`characterMain${capitalizeFirstLetter(value)}FrontWalk2`]
+    // @ts-ignore
+    resources.map.characterMainBackWalk1 = resources.map[`characterMain${capitalizeFirstLetter(value)}BackWalk1`]
+    // @ts-ignore
+    resources.map.characterMainBackWalk2 = resources.map[`characterMain${capitalizeFirstLetter(value)}BackWalk2`]
+    // @ts-ignore
+    resources.map.characterMainLeftWalk1 = resources.map[`characterMain${capitalizeFirstLetter(value)}LeftWalk1`]
+    // @ts-ignore
+    resources.map.characterMainLeftWalk2 = resources.map[`characterMain${capitalizeFirstLetter(value)}LeftWalk2`]
+    // @ts-ignore
+    resources.map.characterMainRightWalk1 = resources.map[`characterMain${capitalizeFirstLetter(value)}RightWalk1`]
+    // @ts-ignore
+    resources.map.characterMainRightWalk1 = resources.map[`characterMain${capitalizeFirstLetter(value)}RightWalk1`]
+    // @ts-ignore
+    resources.map.characterMainRightWalk2 = resources.map[`characterMain${capitalizeFirstLetter(value)}RightWalk2`]
   })
 
   onMounted(() => {
@@ -238,11 +313,11 @@ export const useGameStore = defineStore('game', () => {
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
 
-  // const $mapPosition = reactive({ x: 400, y: 680, scale: 0.22 })
-  // const mapPosition = computed(() => $mapPosition)
+  // const $mapState = reactive({ x: 400, y: 680, scale: 0.22 })
+  // const mapState = computed(() => $mapState)
 
   const currentSceneIndex = ref(0)
-  const currentMapPositionIndex = ref(0)
+  const currentMapStateIndex = ref(0)
   const currentMapAnimation = ref<'init' | 'started' | 'finished'>('init')
   const isIphone = ref(false)
 
@@ -279,9 +354,9 @@ export const useGameStore = defineStore('game', () => {
     console.log('NextScene', currentSceneIndex.value)
   }
 
-  function nextMapPosition() {
+  function nextMapState() {
     currentMapAnimation.value = 'started'
-    currentMapPositionIndex.value++
+    currentMapStateIndex.value++
   }
 
   function setActiveCharacter(value: Character) {
@@ -292,12 +367,12 @@ export const useGameStore = defineStore('game', () => {
     isMobile,
     isIphone,
     currentSceneIndex,
-    currentMapPositionIndex,
+    currentMapStateIndex,
     currentMapAnimation,
     activeCharacter,
     toggleGameMode,
     nextScene,
-    nextMapPosition,
+    nextMapState,
     setActiveCharacter
   }
 })

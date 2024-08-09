@@ -8,7 +8,7 @@ const gameStore = useGameStore()
 
 function onClick(value: boolean) {
   gameStore.nextScene(value ? 1 : 2)
-  gameStore.nextMapPosition()
+  gameStore.nextMapState()
 }
 </script>
 

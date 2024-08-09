@@ -518,7 +518,7 @@ watch(() => arrivedState.bottom, (value) => {
                   <p style="padding-left: 66pt;text-indent: -32pt;line-height: 122%;text-align: justify;"><a
                       name="bookmark7">&zwnj;</a>We reserve the right to change our Services (in completely or in
                     part) at any time with effect for the future if this becomes necessary for good reasons, neither
-                    Consumer nor the Developer is placed in a significantly worse position by the change and the
+                    Consumer nor the Developer is placed in a significantly worse state by the change and the
                     change is reasonable for the</p>
                   <p
                     style="padding-top: 3pt;padding-left: 66pt;text-indent: 0pt;line-height: 122%;text-align: justify;">
@@ -923,7 +923,7 @@ watch(() => arrivedState.bottom, (value) => {
                   <p style="padding-left: 66pt;text-indent: -25pt;line-height: 122%;text-align: justify;"><a
                       name="bookmark12">&zwnj;</a>We reserve the right to change our Services (completely or in
                     part) at any time with effect for the future if this becomes necessary for good reasons,
-                    Consumer is not placed in a significantly worse position by the change and the change is
+                    Consumer is not placed in a significantly worse state by the change and the change is
                     reasonable for Consumer. Good reasons in- clude, for example, changes to the services of our own
                     contractual partners and the adaptation of our Services to technical innovations. Reasonable
                     reasons include, in particular, changes that do not significantly affect the interests of

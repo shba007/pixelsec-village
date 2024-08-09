@@ -1,15 +1,15 @@
-export interface AssetState {
+export interface State {
   x: number
   y: number
   scale: number
-  alpha?: number
+  alpha: number
   time: number
 }
 
 export interface Asset {
   loaded: boolean
   alias: string
-  steps: AssetState[]
-  position: AssetState
+  states: State[]
+  state: State
   animation: 'init' | 'started' | 'finished'
 }

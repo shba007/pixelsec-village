@@ -13,7 +13,7 @@ const { isIphone } = storeToRefs(gameStore)
 
 async function handleStart() {
   gameStore.nextScene()
-  gameStore.nextMapPosition()
+  gameStore.nextMapState()
   await gameStore.toggleGameMode(true)
 }
 
