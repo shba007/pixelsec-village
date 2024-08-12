@@ -27,9 +27,9 @@ function onCharcterSet(type: Character) {
 <template>
   <External class="absolute top-0 left-0 w-dvw h-dvh">
     <Modal title="Select your Avatar" description="Choose your main character energy.">
-      <div class="flex gap-8">
+      <div class="flex gap-12">
         <button v-for="{ type, image } of characters" :key="image" @click="onCharcterSet(type)">
-          <img :src="image" :width="48" class="hover:scale-125 duration-300" />
+          <img :src="image" :width="96" class="hover:scale-125 duration-300" />
         </button>
       </div>
     </Modal>

@@ -42,8 +42,8 @@ const screen = reactive<Asset>({
   loaded: false,
   alias: 'map',
   states: [
-    { x: -360, y: -260, scale: 0.94, alpha: 1, time: 0 },
-    { x: -540, y: -270, scale: 1.64, alpha: 1, time: 3 },
+    { x: -340, y: -260, scale: 0.94, alpha: 1, time: 0 },
+    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 3 },
     { x: -990, y: -560, scale: 1.96, alpha: 1, time: 6 },
     { x: -795, y: -590, scale: 2.01, alpha: 1, time: 8 },
     { x: -720, y: -405, scale: 1.97, alpha: 1, time: 10 },
@@ -279,20 +279,26 @@ onTick((delta) => {
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="isMobile ? 1 : 1" :anchor="0" />
+      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+        :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0"
+          :scale="isMobile ? 1 : 1" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
         <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale"
+          :flip="flip" />
         <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter" :animation="true" place="map" />
+        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter"
+          :animation="true" place="map" />
         <CharacterStationMaster :state="characterStationMaster.state" place="map" />
-        <CharacterMain :states="characterMain.states" :animation="characterMain.animation === 'started'" initalOrientation="front" @move="lockCharaterToMapCenter" />
+        <CharacterMain :states="characterMain.states" :animation="characterMain.animation === 'started'"
+          initalOrientation="front" @move="lockCharaterToMapCenter" />
         <!-- @vue-ignore -->
         <MapTram :states="tram.states" :animation="tram.animation === 'started'" initalOrientation="right" />
-        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size" :x="x" :y="y" :direction="direction" />
+        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size"
+          :x="x" :y="y" :direction="direction" />
         <!-- <template v-if="isLoad"> -->
         <Scene1 v-if="currentSceneIndex === 0 && currentMapAnimation === 'finished'" />
         <Scene2 v-else-if="currentSceneIndex === 1 && currentMapAnimation === 'finished'" />
@@ -302,8 +308,8 @@ onTick((delta) => {
         <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
         <!-- </template> -->
       </Container>
-      <!-- <External>
-        <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
+      <External>
+        <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 -z-50">
           <div class="flex flex-col gap-2">
             <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
@@ -313,9 +319,9 @@ onTick((delta) => {
             <input v-model="characterMain.state.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="characterMain.state.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="characterMain.state.scale" type="number" min="0" max="20" step="0.01" />
-          </div> 
+          </div>
         </div>
-      </External> -->
+      </External>
     </template>
   </Loader>
 </template>

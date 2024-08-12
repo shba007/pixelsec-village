@@ -14,7 +14,7 @@ function onClick(value: boolean) {
 
 <template>
   <External class="absolute top-0 left-0 w-dvw h-dvh">
-    <Modal title="" description="Before we begin <br/> let’s go through the T&Cs.">
+    <Modal title="" description="Before we begin, <br/> let’s go through the T&Cs.">
       <div class="flex gap-8">
         <button class="active-btn" @click="onClick(false)">Skip T&Cs</button>
         <button class="active-btn" @click="onClick(true)">Read T&Cs</button>
@@ -25,6 +25,6 @@ function onClick(value: boolean) {
 
 <style lang="css" scoped>
 .active-btn {
-  @apply px-4 py-1.5 bg-[url(@/assets/buttons/long.png)] bg-contain bg-bottom bg-no-repeat active:bg-[url(@/assets/buttons/long-pressed.png)] text-lg;
+  @apply px-4 py-1.5 bg-[url(@/assets/buttons/long.png)] font-inet bg-contain bg-bottom bg-no-repeat active:bg-[url(@/assets/buttons/long-pressed.png)] text-lg;
 }
 </style>

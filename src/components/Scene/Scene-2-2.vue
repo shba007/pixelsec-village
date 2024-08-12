@@ -6,7 +6,11 @@ import popupSquare from '@/assets/popup/bg-square.png'
 
 const gameStore = useGameStore()
 
-function onSelect(items: string[]) {
+function onSelect(topics: string[]) {
+  console.log({ topics })
+}
+
+function onComplete() {
   gameStore.nextScene()
 }
 </script>
