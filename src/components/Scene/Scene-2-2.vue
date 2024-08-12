@@ -8,7 +8,7 @@ import { ref } from 'vue'
 
 const gameStore = useGameStore()
 const imgElem = ref<HTMLImageElement>()
-const pointer = usePointer({ target: imgElem.value })
+// const pointer = usePointer({ target: imgElem.value })
 
 function onClick() {
   // console.log(pointer.x.value)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { State } from '@/utils/types'
 
-const props = defineProps<{
+defineProps<{
   state: State
   place: 'map' | 'station'
 }>()

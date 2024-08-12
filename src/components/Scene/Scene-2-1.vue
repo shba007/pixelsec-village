@@ -22,7 +22,7 @@ function onClick(value: string) {
           <p class="text-3xl text-left">Please verify your age for tram ticket purchase</p>
         </div>
         <div class="flex gap-4">
-          <button v-for="age of ages" class="active-btn text-3xl px-8 py-2 whitespace-nowrap" @click="onClick(age)">
+          <button v-for="age of ages" :key="age" class="active-btn text-3xl px-8 py-2 whitespace-nowrap" @click="onClick(age)">
             {{ age }}
           </button>
         </div>

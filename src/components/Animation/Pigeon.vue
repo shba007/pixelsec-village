@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { getRandomInteger } from '@/utils/helper'
 import { useTimeout } from '@vueuse/core'
-import { ref } from 'vue'
 
 const props = defineProps<{
   x: number
