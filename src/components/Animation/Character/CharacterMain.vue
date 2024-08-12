@@ -103,7 +103,7 @@ onTick((delta) => {
     :playing="animation && activeCharacter.animation === 'started'"
     :animation-speed="0.08"
   />
-  <External>
+  <!-- <External>
     <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50">
       <div class="flex flex-col gap-2">
         <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />
@@ -111,5 +111,5 @@ onTick((delta) => {
         <input v-model="activeCharacter.state.scale" type="number" min="0" max="20" step="0.01" />
       </div>
     </div>
-  </External>
+  </External> -->
 </template>

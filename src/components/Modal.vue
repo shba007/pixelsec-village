@@ -15,7 +15,7 @@ withDefaults(
 </script>
 
 <template>
-  <div class="max-h-[80vh] max-w-2xl w-3/4 p-1" :class="{ 'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-[65/106] sm:aspect-[106/65]': isAbsolute }">
+  <div class="max-h-[80vh] max-w-2xl w-3/4 p-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-[65/106] sm:aspect-[106/65]">
     <picture class="absolute left-0 top-0 size-full">
       <source media="(min-width:648px)" :srcset="popupLandscape" alt="popupLandscape" class="size-full" />
       <img :src="popupPortrait" alt="popupPortrait" class="size-full" />

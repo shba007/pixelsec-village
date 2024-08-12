@@ -274,6 +274,7 @@ function capitalizeFirstLetter(word: string): string {
 }
 
 export const useGameStore = defineStore('game', () => {
+  const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
   const activeCharacter = ref<Character | null>(null)
 
@@ -364,6 +365,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   return {
+    isLandscape,
     isMobile,
     isIphone,
     currentSceneIndex,

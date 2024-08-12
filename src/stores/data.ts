@@ -14,7 +14,6 @@ interface Choice {
 }
 
 export const useDataStore = defineStore('data', () => {
-  const activeSceneIndex = ref(0)
   const choices = reactive<Choice>({
     readTC: null,
     age: null,
@@ -27,13 +26,7 @@ export const useDataStore = defineStore('data', () => {
     return (choices.readTC = value)
   }
 
-  function nextScene() {
-    return (activeSceneIndex.value += 1)
-  }
-
   return {
-    activeSceneIndex,
-    nextScene,
     setReadTC
   }
 })

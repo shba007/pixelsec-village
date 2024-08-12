@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watchEffect } from 'vue'
+import { computed, reactive, ref, watch, watchEffect } from 'vue'
 import { Loader, External, useScreen } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { useGameStore } from '@/stores/game'
@@ -15,7 +15,7 @@ import Pigeon from '@/components/Animation/Pigeon.vue'
 import Scene1 from '@/components/Scene/Scene-2-1.vue'
 import Scene2 from '@/components/Scene/Scene-2-2.vue'
 
-defineProps<{
+const props = defineProps<{
   isLoad: boolean
 }>()
 
@@ -37,8 +37,8 @@ const zoomFactor = computed(() => {
 const sky = reactive<Asset>({
   loaded: false,
   alias: 'sky',
-  states: [{ x: 0, y: -100, scale: 1.4, alpha: 1, time: 0 }],
-  state: { x: 0, y: -100, scale: 1.4, alpha: 1, time: 0 },
+  states: [{ x: 0, y: -470, scale: 1.4, alpha: 1, time: 0 }],
+  state: { x: 0, y: -470, scale: 1.4, alpha: 1, time: 0 },
   animation: 'init'
 })
 
@@ -84,8 +84,14 @@ watchEffect(() => {
 
 function onLoad() {
   characterStationMaster.state = characterStationMaster.states[0]
-  setTimeout(() => gameStore.nextScene(), 2000)
 }
+
+watch(
+  () => props.isLoad,
+  () => {
+    setTimeout(() => gameStore.nextScene(), 2000)
+  }
+)
 </script>
 
 <template>
@@ -109,7 +115,7 @@ function onLoad() {
         <Scene2 v-else-if="currentSceneIndex === 8" />
         <!-- </template> -->
       </Container>
-      <External>
+      <!--  <External>
         <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50">
           <p>{{ currentSceneIndex }}</p>
           <div class="flex flex-col gap-2">
@@ -117,12 +123,12 @@ function onLoad() {
             <input v-model="sky.state.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="sky.state.scale" type="number" min="0" max="10" step="0.01" />
           </div>
-          <!--  <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2">
             <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
-          </div> -->
+          </div>
         </div>
-      </External>
+      </External> -->
     </template>
   </Loader>
 </template>

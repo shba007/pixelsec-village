@@ -302,20 +302,20 @@ onTick((delta) => {
         <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
         <!-- </template> -->
       </Container>
-      <External>
+      <!-- <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
             <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
           </div>
-          <!--  <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2">
             <input v-model="characterMain.state.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="characterMain.state.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="characterMain.state.scale" type="number" min="0" max="20" step="0.01" />
-          </div> -->
+          </div> 
         </div>
-      </External>
+      </External> -->
     </template>
   </Loader>
 </template>

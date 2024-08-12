@@ -18,11 +18,11 @@ function onClick(value: string) {
     <Modal title="" description="">
       <div class="relative flex flex-col items-center justify-center">
         <div class="flex items-center gap-4">
-          <img :src="stationMasterImage" class="aspect-square object-contain" :height="134" />
-          <p class="text-3xl text-left">Please verify your age for tram ticket purchase</p>
+          <img :src="stationMasterImage" class="aspect-square object-contain h-[160px]" />
+          <p class="text-2xl text-left">Please verify your age for tram ticket purchase</p>
         </div>
-        <div class="flex gap-4">
-          <button v-for="age of ages" :key="age" class="active-btn text-3xl px-8 py-2 whitespace-nowrap" @click="onClick(age)">
+        <div class="flex gap-2 md:gap-4">
+          <button v-for="age of ages" :key="age" class="active-btn text-2xl px-6 py-1 md:px-8 md:py-2 whitespace-nowrap" @click="onClick(age)">
             {{ age }}
           </button>
         </div>
