@@ -274,7 +274,7 @@ export const resources = reactive({
     //
   },
   icecream: {
-    icecreamScene: icecreamSceneTexture,
+    icecreamScene: icecreamSceneTexture
   }
 })
 

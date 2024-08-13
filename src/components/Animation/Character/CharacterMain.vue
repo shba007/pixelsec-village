@@ -86,21 +86,26 @@ onTick((delta) => {
       totalElaspedTime = 0
       currentCharacterStateIndex.value++
 
-      if (currentCharacterStateIndex.value < props.states.length - 1)
-        activeCharacter.animation = 'started'
+      if (currentCharacterStateIndex.value < props.states.length - 1) activeCharacter.animation = 'started'
 
-      if (activeCharacter.animation === 'finished')
-        emit('playing', false)
+      if (activeCharacter.animation === 'finished') emit('playing', false)
     }
   }
 })
 </script>
 
 <template>
-  <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: 'nearest' }" :anchor="0.5"
-    :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha" :playing="animation && activeCharacter.animation === 'started'"
-    :animation-speed="0.08" />
+  <AnimatedSprite
+    :textures="activeCharacter.aliases"
+    :texture-options="{ scaleMode: 'nearest' }"
+    :anchor="0.5"
+    :x="activeCharacter.state.x"
+    :y="activeCharacter.state.y"
+    :scale="activeCharacter.state.scale"
+    :alpha="activeCharacter.state.alpha"
+    :playing="animation && activeCharacter.animation === 'started'"
+    :animation-speed="0.08"
+  />
   <!-- <External>
     <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50">
       <div class="flex flex-col gap-2">

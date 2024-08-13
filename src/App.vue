@@ -16,7 +16,7 @@ const currentScreenIndex = ref(0)
 
 function updateIndex(value: number) {
   currentScreenIndex.value = value
-  console.log("updatedIndex", value)
+  console.log('updatedIndex', value)
 }
 
 const mainWindow = window
@@ -24,8 +24,7 @@ const mainWindow = window
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
-    <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2"
-      :current-screen-index="currentScreenIndex" @close="updateIndex" />
+    <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2" :current-screen-index="currentScreenIndex" @close="updateIndex" />
     <ScreenStation :is-load="currentScreenIndex === 1" @close="updateIndex" />
     <ScreenIcecream :is-load="currentScreenIndex === 3" @close="updateIndex" />
     <SceneRotate v-if="currentSceneIndex > 0 && !isLandscape" />

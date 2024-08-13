@@ -3,8 +3,8 @@ import { External } from 'vue3-pixi'
 import { useGameStore } from '@/stores/game'
 import SmartPhone from '@/components/Animation/SmartPhone.vue'
 import popupSquare from '@/assets/popup/bg-square.png'
-import { ref } from 'vue';
-import { watchDebounced } from '@vueuse/core';
+import { ref } from 'vue'
+import { watchDebounced } from '@vueuse/core'
 
 const gameStore = useGameStore()
 const selectedTopics = ref<string[]>()
@@ -14,11 +14,7 @@ function onSelect(topics: string[]) {
   selectedTopics.value = topics
 }
 
-watchDebounced(
-  selectedTopics,
-  onComplete,
-  { debounce: 2000 },
-)
+watchDebounced(selectedTopics, onComplete, { debounce: 2000 })
 
 function onComplete() {
   gameStore.nextScene()
@@ -31,7 +27,7 @@ function onComplete() {
       <SmartPhone @select="onSelect" />
       <!-- <Modal title="" description="How will you spend your time on the tram? <br/> Pick more than one." class="relative aspect-square" :isAbsolute="false" /> -->
       <div class="flex items-center size-full justify-center relative w-[35vw] aspect-square">
-        <img :src="popupSquare" alt="popupSquare" class="absolute left-0 top-0 w-full h-full object-contain" />
+        <img :src="popupSquare" alt="popupSquare" class="absolute left-0 top-0 size-full object-contain" />
         <p class="text-left text-2xl whitespace-nowrap z-10">
           How will you<br />
           spend your time<br />
