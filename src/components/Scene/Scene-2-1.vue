@@ -18,7 +18,7 @@ function onClick(value: string) {
     <Modal title="" description="">
       <div class="relative flex flex-col items-center justify-center">
         <div class="flex items-center gap-4">
-          <img src="/images/character-station-master.gif" class="aspect-square object-contain h-[160px]" />
+          <img src="/images/character-station-master.gif" class="aspect-square object-contain h-[160px] md:h-[256px]" />
           <p class="text-4xl lg:text-[3rem] lg:leading-[3rem] text-left">Please verify your age for tram ticket purchase</p>
         </div>
         <div class="flex gap-2 md:gap-4">

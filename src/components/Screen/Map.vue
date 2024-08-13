@@ -136,6 +136,16 @@ const charactersGeneric = ref<State[][]>([
     { x: 1480, y: 820, scale: 0.425, alpha: 1, time: 0 },
     { x: 1480, y: 936, scale: 0.425, alpha: 1, time: 2 },
     { x: 1480, y: 820, scale: 0.425, alpha: 1, time: 4 }
+  ],
+  [
+    { x: 960, y: 1050, scale: 0.425, alpha: 1, time: 0 },
+    { x: 960, y: 1100, scale: 0.425, alpha: 1, time: 1.5 },
+    { x: 960, y: 1050, scale: 0.425, alpha: 1, time: 3 }
+  ],
+  [
+    { x: 630, y: 1280, scale: 0.425, alpha: 1, time: 0 },
+    { x: 740, y: 1280, scale: 0.425, alpha: 1, time: 1.5 },
+    { x: 630, y: 1280, scale: 0.425, alpha: 1, time: 3 }
   ]
 ])
 
@@ -256,7 +266,6 @@ onTick((delta) => {
     if (progress == 1) {
       totalElaspedTime = 0
       currentMapAnimation.value = 'finished'
-      // console.log({ totalElaspedTime })
 
       if (props.currentScreenIndex === 2 && currentMapAnimation.value === 'finished') {
         tram.animation = 'started'
@@ -309,20 +318,20 @@ onTick((delta) => {
         <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
         <!-- </template> -->
       </Container>
-      <!-- <External>
+      <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
             <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
           </div>
-          <div class="flex flex-col gap-2">
-            <input v-model="station.fg.x" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="station.fg.y" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="station.fg.scale" type="number" min="0" max="20" step="0.01" />
-          </div>
+          <!--   <div class="flex flex-col gap-2">
+            <input v-model="charactersGeneric[5][0].x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="charactersGeneric[5][0].y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="charactersGeneric[5][0].scale" type="number" min="0" max="20" step="0.01" />
+          </div> -->
         </div>
-      </External> -->
+      </External>
     </template>
   </Loader>
 </template>

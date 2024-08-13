@@ -28,7 +28,7 @@ onMounted(() => {
     <Modal
       title="welcome to dataville"
       :container-class="isDesktop ? '' : 'justify-between gap-0 py-4'"
-      description="Where your online habits and choices will shape the kind of house you live in. Let’s go!"
+      description="Where your online habits and choices will shape the kind of house you live in.<br/> Let’s go!"
     >
       <button v-if="!isDesktop" class="flex flex-col justify-center items-center gap-1" @click="handleStart">
         <img :src="rotateIndicator" alt="rotate-indicator" class="size-[48px] md:size-[80px] object-contain" />

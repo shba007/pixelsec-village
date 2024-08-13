@@ -148,13 +148,12 @@ onTick((delta) => {
       :animation-speed="0.08"
     />
   </Container>
-  <External>
+  <!--  <External>
     <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50">
       <div class="flex flex-col gap-2">
         <input v-model="activeTrail.x" type="number" min="-10000" max="10000" step="10" />
         <input v-model="activeTrail.y" type="number" min="-10000" max="10000" step="10" />
-        <!-- <input v-model="activeTrail.scale" type="number" min="0" max="20" step="0.01" /> -->
-      </div>
-    </div>
-  </External>
+  </div>
+  </div>
+  </External> -->
 </template>
