@@ -306,7 +306,16 @@ function capitalizeFirstLetter(word: string): string {
 export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
+  const $motionBlur = ref(false)
+
   const activeCharacter = ref<Character | null>(null)
+  const currentScreenIndex = ref(0)
+  const hardStop = computed(() => currentSceneIndex.value > 0 && !isLandscape.value)
+  const motionBlur = computed(() => $motionBlur.value)
+
+  function toggleMotionBlur(value: boolean) {
+    $motionBlur.value = value
+  }
 
   watch(isMobile, (value) => {
     resources.map.map = value ? map1xTexture : map1xTexture
@@ -382,6 +391,10 @@ export const useGameStore = defineStore('game', () => {
     currentMapStateIndex,
     currentMapAnimation,
     activeCharacter,
+    currentScreenIndex,
+    hardStop,
+    motionBlur,
+    toggleMotionBlur,
     toggleGameMode,
     nextScene,
     nextMapState,

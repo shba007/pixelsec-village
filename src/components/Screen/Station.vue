@@ -2,10 +2,9 @@
 import { computed, reactive, ref, watch, watchEffect } from 'vue'
 import { Loader, External, useScreen } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
-import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 
-import { resources } from '@/stores/game'
+import { useGameStore, resources } from '@/stores/game'
 import type { Asset, State } from '@/utils/types'
 import StationCloud from '@/components/Animation/StationCloud.vue'
 import StationTram from '@/components/Animation/StationTram.vue'
@@ -101,15 +100,21 @@ watch(
     </template>
     <template #default>
       <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-        <Sprite :texture="sky.alias" :texture-options="{ scaleMode: 'nearest' }" :x="sky.state.x" :y="sky.state.y" :scale="sky.state.scale" :anchor="0.5" />
-        <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="screenWidth" :size="size" :x="x" :y="y" :direction="direction" />
-        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="-200" :scale="1" :anchor="0.5" />
+        <Sprite :texture="sky.alias" :texture-options="{ scaleMode: 'nearest' }" :x="sky.state.x" :y="sky.state.y"
+          :scale="sky.state.scale" :anchor="0.5" />
+        <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="screenWidth"
+          :size="size" :x="x" :y="y" :direction="direction" />
+        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="-200" :scale="1"
+          :anchor="0.5" />
         <CharacterGeneric :states="charactersGeneric" :animation="true" place="station" />
-        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1" :anchor="0.5" />
+        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1"
+          :anchor="0.5" />
         <StationTram :x="tram.x" :y="tram.y" :width-range="screenWidth" />
-        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1" :anchor="0.5" />
+        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0" :scale="1"
+          :anchor="0.5" />
         <CharacterStationMaster :state="characterStationMaster.state" place="station" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale"
+          :flip="flip" />
         <!-- <template v-if="isLoad"> -->
         <Scene1 v-if="currentSceneIndex === 7" />
         <Scene2 v-else-if="currentSceneIndex === 8" />

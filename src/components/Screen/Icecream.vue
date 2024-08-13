@@ -5,7 +5,7 @@ import { Loader, External } from 'vue3-pixi'
 import type { Asset } from '@/utils/types'
 import { resources } from '@/stores/game'
 
-const props = defineProps<{
+defineProps<{
   isLoad: boolean
 }>()
 
@@ -28,7 +28,7 @@ const icecreamScene = reactive<Asset>({
   animation: 'init'
 })
 
-function onLoad() {}
+function onLoad() { }
 </script>
 
 <template>
@@ -38,7 +38,8 @@ function onLoad() {}
     </template>
     <template #default>
       <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-        <Sprite :texture="icecreamScene.alias" :texture-options="{ scaleMode: 'nearest' }" :x="icecreamScene.state.x" :y="icecreamScene.state.y" :scale="icecreamScene.state.scale" :anchor="0.5" />
+        <Sprite :texture="icecreamScene.alias" :texture-options="{ scaleMode: 'nearest' }" :x="icecreamScene.state.x"
+          :y="icecreamScene.state.y" :scale="icecreamScene.state.scale" :anchor="0.5" />
       </Container>
       <!-- <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
