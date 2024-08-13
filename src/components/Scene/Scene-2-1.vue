@@ -2,13 +2,13 @@
 import { External } from 'vue3-pixi'
 import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
-import stationMasterImage from '@/assets/character/station-master/station.gif'
 
 const gameStore = useGameStore()
 
 const ages = ['18-25', '26-35', '36-44', '45-54']
 
 function onClick(value: string) {
+  // DATA-COLLECT
   gameStore.nextScene()
 }
 </script>
@@ -18,7 +18,7 @@ function onClick(value: string) {
     <Modal title="" description="">
       <div class="relative flex flex-col items-center justify-center">
         <div class="flex items-center gap-4">
-          <img :src="stationMasterImage" class="aspect-square object-contain h-[160px]" />
+          <img src="/images/character-station-master.gif" class="aspect-square object-contain h-[160px]" />
           <p class="text-2xl text-left">Please verify your age for tram ticket purchase</p>
         </div>
         <div class="flex gap-2 md:gap-4">

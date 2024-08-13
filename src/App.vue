@@ -7,7 +7,7 @@ import { useGameStore } from '@/stores/game'
 import ScreenMap from '@/components/Screen/Map.vue'
 import ScreenStation from '@/components/Screen/Station.vue'
 import ScreenIcecream from '@/components/Screen/Icecream.vue'
-import SceneRotate from './components/Scene/Scene-Rotate.vue'
+import SceneRotate from '@/components/Scene/Scene-Rotate.vue'
 
 const gameStore = useGameStore()
 const { currentSceneIndex, isLandscape } = storeToRefs(gameStore)

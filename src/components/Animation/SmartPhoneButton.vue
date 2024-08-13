@@ -7,6 +7,6 @@ defineProps<{
 
 <template>
   <button class="h-full aspect-square">
-    <img :src="`/smartphone/${image}${highlighted ? '-highlighted' : ''}.png`" :alt="image" class="size-full" />
+    <img :src="`/images/smartphone/${image}${highlighted ? '-highlighted' : ''}.png`" :alt="image" class="size-full" />
   </button>
 </template>

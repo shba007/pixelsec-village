@@ -20,17 +20,15 @@ function toggleSelect(topic: string) {
 </script>
 
 <template>
-  <div class="relative h-[95dvh] max-h-[640px] aspect-[400/722]">
-    <img :src="smartphoneBg" alt="Smart Phone" class="absolute top-1/2 -translate-y-1/2 -z-10 object-contain" />
-    <div class="grid grid-rows-4 grid-cols-2 gap-0.5 items-center size-full pb-11 px-4 pt-5 lg:px-8 lg:pt-10 lg:pb-[4.5rem]">
-      <SmartPhoneButton
-        v-for="(topic, index) of topics"
-        :key="topic"
-        :image="topic"
+  <div class="relative h-[95dvh] max-h-[640px] aspect-[400/722] z-0">
+    <img :src="smartphoneBg" alt="Smart Phone"
+      class="absolute top-1/2 -translate-y-1/2 h-full -z-10 object-contain bg-green-500" />
+    <div
+      class="grid grid-rows-4 grid-cols-2 gap-0.5 items-center size-full pb-11 px-4 pt-5 lg:px-8 lg:pt-10 lg:pb-[4.5rem]">
+      <SmartPhoneButton v-for="(topic, index) of topics" :key="topic" :image="topic"
         :highlighted="selectedTopics.has(topic)"
         :class="[`row-start-${Math.floor(index / 2) + 1} col-start-${(index % 2) + 1}`, index % 2 ? 'justify-self-start' : 'justify-self-end']"
-        @click="toggleSelect(topic)"
-      />
+        @click="toggleSelect(topic)" />
     </div>
   </div>
 </template>

@@ -3,16 +3,12 @@ import { External } from 'vue3-pixi'
 
 import { useGameStore, type Character } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
-import characterMainBlackWalkingTexture from '@/assets/character/main/black/walking.gif'
-import characterMainViolateWalkingTexture from '@/assets/character/main/violate/walking.gif'
-import characterMainRedWalkingTexture from '@/assets/character/main/red/walking.gif'
-import characterMainBlueWalkingTexture from '@/assets/character/main/blue/walking.gif'
 
 const characters = [
-  { type: 'black', image: characterMainBlackWalkingTexture },
-  { type: 'violate', image: characterMainViolateWalkingTexture },
-  { type: 'red', image: characterMainRedWalkingTexture },
-  { type: 'blue', image: characterMainBlueWalkingTexture }
+  { type: 'black', image: '/images/character-main-black-walking.gif' },
+  { type: 'violate', image: '/images/character-main-violate-walking.gif' },
+  { type: 'red', image: '/images/character-main-red-walking.gif' },
+  { type: 'blue', image: '/images/character-main-blue-walking.gif' }
 ] as const
 
 const gameStore = useGameStore()
