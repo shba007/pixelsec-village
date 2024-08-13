@@ -29,7 +29,7 @@ function onComplete() {
         <!-- <Modal title="" description="How will you spend your time on the tram? <br/> Pick more than one." class="relative aspect-square" :isAbsolute="false" /> -->
         <div class="flex items-center size-full justify-center relative w-[35vw] aspect-square">
           <img :src="popupSquare" alt="popupSquare" class="absolute left-0 top-0 size-full object-contain" />
-          <p class="text-left text-2xl whitespace-nowrap z-10">
+          <p class="text-left text-3xl lg:text-[2.5rem] lg:leading-[3rem] whitespace-nowrap z-10">
             How will you<br />
             spend your time<br />
             on the tram? <br /><br />
