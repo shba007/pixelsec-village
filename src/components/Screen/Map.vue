@@ -30,7 +30,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'close'): void
+  (event: 'close', nextSceneIndex: number): void
 }>()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -43,17 +43,18 @@ const screen = reactive<Asset>({
   alias: 'map',
   states: [
     { x: -340, y: -260, scale: 0.94, alpha: 1, time: 0 },
-    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 3 },
-    { x: -990, y: -560, scale: 1.96, alpha: 1, time: 6 },
-    { x: -795, y: -590, scale: 2.01, alpha: 1, time: 8 },
-    { x: -720, y: -405, scale: 1.97, alpha: 1, time: 10 },
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 11 },
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 11 },
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 11 }
+    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 2 },
+    { x: -990, y: -560, scale: 1.96, alpha: 1, time: 5 },
+    { x: -795, y: -590, scale: 2.01, alpha: 1, time: 7 },
+    { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 },
+    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
+    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
+    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 }
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init'
 })
+const station = reactive({ bg: { x: 725, y: 265, scale: 0.5 }, fg: { x: 867, y: 259.5, scale: 0.5 } })
 
 const wave = reactive({
   x: 240,
@@ -117,25 +118,25 @@ const streetLamp = ref([
 
 const charactersGeneric = ref<State[][]>([
   [
+    { x: 1270, y: 550, scale: 0.425, alpha: 1, time: 0 },
+    { x: 1606, y: 550, scale: 0.425, alpha: 1, time: 5 },
+    { x: 1270, y: 550, scale: 0.425, alpha: 1, time: 10 }
+  ],
+  [
     { x: 1250, y: 677.5, scale: 0.425, alpha: 1, time: 0 },
-    { x: 1250, y: 591.17, scale: 0.425, alpha: 1, time: 2 },
+    { x: 1250, y: 615, scale: 0.425, alpha: 1, time: 2 },
     { x: 1250, y: 677.5, scale: 0.425, alpha: 1, time: 4 }
+  ],
+  [
+    { x: 820, y: 687, scale: 0.425, alpha: 1, time: 0 },
+    { x: 820, y: 768, scale: 0.425, alpha: 1, time: 3 },
+    { x: 820, y: 687, scale: 0.425, alpha: 1, time: 6 }
   ],
   [
     { x: 1480, y: 820, scale: 0.425, alpha: 1, time: 0 },
     { x: 1480, y: 936, scale: 0.425, alpha: 1, time: 2 },
     { x: 1480, y: 820, scale: 0.425, alpha: 1, time: 4 }
   ],
-  [
-    { x: 1140, y: 550, scale: 0.425, alpha: 1, time: 0 },
-    { x: 1606, y: 550, scale: 0.425, alpha: 1, time: 5 },
-    { x: 1140, y: 550, scale: 0.425, alpha: 1, time: 10 }
-  ],
-  [
-    { x: 820, y: 687, scale: 0.425, alpha: 1, time: 0 },
-    { x: 820, y: 768, scale: 0.425, alpha: 1, time: 3 },
-    { x: 820, y: 687, scale: 0.425, alpha: 1, time: 6 }
-  ]
 ])
 
 const characterStationMaster = reactive({
@@ -150,10 +151,10 @@ const tram = reactive<Asset>({
   loaded: false,
   alias: 'tram',
   states: [
-    { x: 896, y: 515, scale: 0.5, alpha: 0, time: 0 },
-    { x: 896, y: 520, scale: 0.5, alpha: 1, time: 0.5 },
-    { x: 896, y: 520, scale: 0.5, alpha: 1, time: 1.5 }, // entering the tram
-    { x: 896, y: 561, scale: 0.5, alpha: 1, time: 3 }, //
+    { x: 900, y: 515, scale: 0.5, alpha: 0, time: 0 },
+    { x: 900, y: 520, scale: 0.5, alpha: 1, time: 0.5 },
+    { x: 900, y: 520, scale: 0.5, alpha: 1, time: 1.5 }, // entering the tram
+    { x: 900, y: 561, scale: 0.5, alpha: 1, time: 3 }, //
     { x: 1178, y: 561, scale: 0.5, alpha: 1, time: 6 }, //
     { x: 1178, y: 1008, scale: 0.5, alpha: 1, time: 9 }, //
     { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 12 }, //
@@ -213,12 +214,16 @@ const clouds = ref<
 ])
 
 watchEffect(() => {
-  if (currentSceneIndex.value === 6 && currentMapAnimation.value === 'finished') emit('close')
+  if (currentSceneIndex.value === 6 && currentMapAnimation.value === 'finished') emit('close', 1)
 })
 
 function lockCharaterToMapCenter(x: number, y: number) {
   screen.state.x = -1.005 * x + 324.49
   screen.state.y = -1.005 * y + screenHeight.value / 5
+}
+
+function onCharacterStop() {
+  emit('close', 3)
 }
 
 function onLoad() {
@@ -271,6 +276,7 @@ onTick((delta) => {
     }
   }
 })
+
 </script>
 
 <template>
@@ -283,6 +289,8 @@ onTick((delta) => {
         :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
         <Sprite :texture="screen.alias" :texture-options="{ scaleMode: 'nearest' }" :x="0" :y="0"
           :scale="isMobile ? 1 : 1" :anchor="0" />
+        <Sprite texture="stationBg" :texture-options="{ scaleMode: 'nearest' }" :x="station.bg.x" :y="station.bg.y"
+          :scale="station.bg.scale" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
@@ -294,9 +302,11 @@ onTick((delta) => {
           :animation="true" place="map" />
         <CharacterStationMaster :state="characterStationMaster.state" place="map" />
         <CharacterMain :states="characterMain.states" :animation="characterMain.animation === 'started'"
-          initalOrientation="front" @move="lockCharaterToMapCenter" />
-        <!-- @vue-ignore -->
+          initalOrientation="front" @move="lockCharaterToMapCenter" @playing="onCharacterStop" />
         <MapTram :states="tram.states" :animation="tram.animation === 'started'" initalOrientation="right" />
+        <Sprite texture="stationFg" :texture-options="{ scaleMode: 'nearest' }" :x="station.fg.x" :y="station.fg.y"
+          :scale="station.fg.scale" :anchor="0" />
+        <!-- @vue-ignore -->
         <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size"
           :x="x" :y="y" :direction="direction" />
         <!-- <template v-if="isLoad"> -->
@@ -308,20 +318,20 @@ onTick((delta) => {
         <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
         <!-- </template> -->
       </Container>
-      <External>
-        <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 -z-50">
+      <!-- <External>
+        <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
             <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
           </div>
           <div class="flex flex-col gap-2">
-            <input v-model="characterMain.state.x" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="characterMain.state.y" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="characterMain.state.scale" type="number" min="0" max="20" step="0.01" />
+            <input v-model="station.fg.x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="station.fg.y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="station.fg.scale" type="number" min="0" max="20" step="0.01" />
           </div>
         </div>
-      </External>
+      </External> -->
     </template>
   </Loader>
 </template>

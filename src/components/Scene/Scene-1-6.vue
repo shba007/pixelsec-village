@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onBeforeUnmount, onUnmounted, ref, watch } from 'vue'
 import { External } from 'vue3-pixi'
 
 import { useGameStore } from '@/stores/game'
@@ -8,27 +8,38 @@ import { useScroll, useTimeoutFn } from '@vueuse/core'
 
 const gameStore = useGameStore()
 
-const el = ref<HTMLParagraphElement | null>(null)
-const { arrivedState } = useScroll(el, { behavior: 'smooth' })
+const targetElem = ref<HTMLParagraphElement | null>(null)
+const { arrivedState, y } = useScroll(targetElem, { behavior: 'instant' })
 
-/* useIntervalFn(() => {
-  y.value += 1
-}, 10) */
+let interval: any
 
 function handleMove() {
   gameStore.nextScene()
 }
 
+function autoScroll() {
+  interval = setInterval(() => {
+    y.value += 2000
+  }, 75);
+}
+
 watch(() => arrivedState.bottom, (value) => {
-  if (value)
+  if (value) {
+    clearInterval(interval)
     useTimeoutFn(handleMove, 3000)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (interval)
+    clearInterval(interval)
 })
 </script>
 
 <template>
   <External class="absolute top-0 left-0 w-dvw h-dvh">
-    <Modal title="Terms and Conditions <br/> for Affinidi Services">
-      <p ref="el" class="w-full overflow-auto">
+    <Modal title="Terms and Conditions <br/> for Affinidi Services" container-class="pt-0 pb-4 gap-0">
+      <p ref="targetElem" class="w-full overflow-auto my-2">
       <h1 style="padding-top: 3pt;text-indent: 0pt;text-align: center;">
       </h1>
       <p style="padding-top: 4pt;text-indent: 0pt;text-align: left;"><br /></p>
@@ -1850,6 +1861,9 @@ watch(() => arrivedState.bottom, (value) => {
       <p style="padding-top: 2pt;padding-left: 33pt;text-indent: 0pt;text-align: left;">Android OS Version: V.6.0 or
         higher</p>
       </p>
+      <button
+        class="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full aspect-square px-3 py-0.5 text-2xl bg-white shadow-md"
+        @click="autoScroll">↓</button>
     </Modal>
   </External>
 </template>

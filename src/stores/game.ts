@@ -19,6 +19,10 @@ import buttonLongPressedTexture from '@/assets/buttons/long-pressed.png'
 import map1xTexture from '@/assets/map-1x.jpg'
 import map2xTexture from '@/assets/map-2x.jpg'
 //
+// import stationTexture from '@/assets/station.png'
+import stationBgTexture from '@/assets/station-bg.png'
+import stationFgTexture from '@/assets/station-fg.png'
+//
 import pigeonLeftPeckTexture from '@/assets/pigeon/left-peck.png'
 import pigeonLeftStandTexture from '@/assets/pigeon/left-stand.png'
 import pigeonRightPeckTexture from '@/assets/pigeon/right-peck.png'
@@ -125,6 +129,9 @@ import stationTramWireTexture from '@/assets/station/tram-wire.png'
 import stationCharacterStationMaster1Texture from '@/assets/character/station-master/station-1.png'
 import stationCharacterStationMaster2Texture from '@/assets/character/station-master/station-2.png'
 
+//
+import icecreamSceneTexture from '@/assets/icecream/icecream.png'
+
 export const resources = reactive({
   general: {
     pigeonleftPeck: pigeonLeftPeckTexture,
@@ -167,6 +174,10 @@ export const resources = reactive({
     buttonLongPressed: buttonLongPressedTexture,
     //
     map: map1xTexture,
+    //
+    // station: stationTexture,
+    stationBg: stationBgTexture,
+    stationFg: stationFgTexture,
     //
     streetLamp1: streetLampTexture1,
     streetLamp2: streetLampTexture2,
@@ -261,6 +272,9 @@ export const resources = reactive({
     stationTram: stationTramTexture,
     stationTramWire: stationTramWireTexture
     //
+  },
+  icecream: {
+    icecreamScene: icecreamSceneTexture,
   }
 })
 
@@ -308,33 +322,14 @@ export const useGameStore = defineStore('game', () => {
 
   onMounted(() => {
     resources.map.map = isMobile.value ? map1xTexture : map1xTexture
-    // console.log({ isMobile: isMobile.value, map: resources.map.map })
   })
 
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
 
-  // const $mapState = reactive({ x: 400, y: 680, scale: 0.22 })
-  // const mapState = computed(() => $mapState)
-
   const currentSceneIndex = ref(0)
   const currentMapStateIndex = ref(0)
   const currentMapAnimation = ref<'init' | 'started' | 'finished'>('init')
-  const isIphone = ref(false)
-
-  watchArray([isFullscreenSupported, isOrientationSupported], async () => {
-    if (isFullscreenSupported.value && isOrientationSupported.value) {
-      try {
-        await exitFullscreen()
-        unlockOrientation()
-        isIphone.value = false
-      } catch (error) {
-        isIphone.value = true
-      }
-    } else {
-      isIphone.value = true
-    }
-  })
 
   async function toggleGameMode(value: boolean) {
     try {
@@ -367,7 +362,6 @@ export const useGameStore = defineStore('game', () => {
   return {
     isLandscape,
     isMobile,
-    isIphone,
     currentSceneIndex,
     currentMapStateIndex,
     currentMapAnimation,
