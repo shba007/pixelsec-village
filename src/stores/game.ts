@@ -1,6 +1,6 @@
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
-import { useFullscreen, useScreenOrientation, useWindowSize, watchArray } from '@vueuse/core'
+import { useFullscreen, useScreenOrientation, useWindowSize } from '@vueuse/core'
 
 import frontINET from '/fonts/INET.ttf'
 import frontLAN from '/fonts/LAN.ttf'
@@ -128,9 +128,17 @@ import stationTramWireTexture from '@/assets/station/tram-wire.png'
 //
 import stationCharacterStationMaster1Texture from '@/assets/character/station-master/station-1.png'
 import stationCharacterStationMaster2Texture from '@/assets/character/station-master/station-2.png'
-
 //
 import icecreamSceneTexture from '@/assets/icecream/icecream.png'
+//
+import dataTrailBack1Texture from '@/assets/trail/trail-back-1.png'
+import dataTrailBack2Texture from '@/assets/trail/trail-back-2.png'
+import dataTrailBack3Texture from '@/assets/trail/trail-back-3.png'
+import dataTrailBack4Texture from '@/assets/trail/trail-back-4.png'
+import dataTrailSide1Texture from '@/assets/trail/trail-side-1.png'
+import dataTrailSide2Texture from '@/assets/trail/trail-side-2.png'
+import dataTrailSide3Texture from '@/assets/trail/trail-side-3.png'
+import dataTrailSide4Texture from '@/assets/trail/trail-side-4.png'
 
 export const resources = reactive({
   general: {
@@ -256,10 +264,19 @@ export const resources = reactive({
     characterMainBlueLeftWalk1: characterMainBlueLeftWalk1Texture,
     characterMainBlueLeftWalk2: characterMainBlueLeftWalk2Texture,
     characterMainBlueRightWalk1: characterMainBlueRightWalk1Texture,
-    characterMainBlueRightWalk2: characterMainBlueRightWalk2Texture
+    characterMainBlueRightWalk2: characterMainBlueRightWalk2Texture,
     //
+    dataTrailBack1: dataTrailBack1Texture,
+    dataTrailBack2: dataTrailBack2Texture,
+    dataTrailBack3: dataTrailBack3Texture,
+    dataTrailBack4: dataTrailBack4Texture,
+    dataTrailSide1: dataTrailSide1Texture,
+    dataTrailSide2: dataTrailSide2Texture,
+    dataTrailSide3: dataTrailSide3Texture,
+    dataTrailSide4: dataTrailSide4Texture
   },
   station: {
+    //
     sky: stationSkyTexture,
     //
     cloud1: stationCloud1Texture,
@@ -271,7 +288,6 @@ export const resources = reactive({
     //
     stationTram: stationTramTexture,
     stationTramWire: stationTramWireTexture
-    //
   },
   icecream: {
     icecreamScene: icecreamSceneTexture

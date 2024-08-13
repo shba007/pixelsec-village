@@ -24,7 +24,7 @@ const emit = defineEmits<{
   (e: 'playing', state: boolean): void
 }>()
 
-const animations = {
+const characterAnimations = {
   frontStill: ['characterMainFrontStill'],
   frontWalk: ['characterMainFrontWalk1', 'characterMainFrontWalk2'],
   backWalk: ['characterMainBackWalk1', 'characterMainBackWalk2'],
@@ -32,9 +32,14 @@ const animations = {
   rightWalk: ['characterMainRightWalk1', 'characterMainRightWalk2']
 }
 
+const trailAnimations = {
+  back: ['dataTrailBack1', 'dataTrailBack2', 'dataTrailBack3', 'dataTrailBack4'],
+  side: ['dataTrailSide1', 'dataTrailSide2', 'dataTrailSide3', 'dataTrailSide4']
+}
+
 const activeCharacter = reactive<Character>({
   loaded: false,
-  aliases: animations.frontStill,
+  aliases: characterAnimations.frontStill,
   state: {
     x: props.states[0].x,
     y: props.states[0].y,
@@ -45,6 +50,12 @@ const activeCharacter = reactive<Character>({
   direction: 1,
   orientation: 'front',
   animation: 'started'
+})
+
+const activeTrail = reactive({
+  aliases: [] as string[],
+  x: 0,
+  y: 0
 })
 
 watch(props.states, (value) => {
@@ -76,10 +87,27 @@ onTick((delta) => {
 
     emit('move', activeCharacter.state.x, activeCharacter.state.y)
 
-    if (dy > 0) activeCharacter.aliases = animations['frontWalk']
-    else if (dy < 0) activeCharacter.aliases = animations['backWalk']
-    else if (dx > 0) activeCharacter.aliases = animations['rightWalk']
-    else if (dx < 0) activeCharacter.aliases = animations['leftWalk']
+    if (dy > 0) {
+      activeCharacter.aliases = characterAnimations['frontWalk']
+      activeTrail.aliases = trailAnimations['back']
+      activeTrail.x = 0
+      activeTrail.y = 0
+    } else if (dy < 0) {
+      activeCharacter.aliases = characterAnimations['backWalk']
+      activeTrail.aliases = trailAnimations['back']
+      activeTrail.x = 0
+      activeTrail.y = 30
+    } else if (dx > 0) {
+      activeCharacter.aliases = characterAnimations['rightWalk']
+      activeTrail.aliases = trailAnimations['side']
+      activeTrail.x = -1 * 15
+      activeTrail.y = 1 * 15
+    } else if (dx < 0) {
+      activeCharacter.aliases = characterAnimations['leftWalk']
+      activeTrail.aliases = trailAnimations['side']
+      activeTrail.x = 1 * 25
+      activeTrail.y = 1 * 15
+    }
 
     if (progress == 1) {
       activeCharacter.animation = 'finished'
@@ -95,24 +123,38 @@ onTick((delta) => {
 </script>
 
 <template>
-  <AnimatedSprite
-    :textures="activeCharacter.aliases"
-    :texture-options="{ scaleMode: 'nearest' }"
-    :anchor="0.5"
-    :x="activeCharacter.state.x"
-    :y="activeCharacter.state.y"
-    :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha"
-    :playing="animation && activeCharacter.animation === 'started'"
-    :animation-speed="0.08"
-  />
-  <!-- <External>
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
+    <AnimatedSprite
+      v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'"
+      :textures="activeTrail.aliases"
+      :texture-options="{ scaleMode: 'nearest' }"
+      :anchor="0.5"
+      :x="activeTrail.x"
+      :y="activeTrail.y"
+      :scale="1"
+      :alpha="1"
+      :playing="true"
+      :animation-speed="0.08"
+    />
+    <AnimatedSprite
+      :textures="activeCharacter.aliases"
+      :texture-options="{ scaleMode: 'nearest' }"
+      :anchor="0.5"
+      :x="0"
+      :y="0"
+      :scale="1"
+      :alpha="1"
+      :playing="animation && activeCharacter.animation === 'started'"
+      :animation-speed="0.08"
+    />
+  </Container>
+  <External>
     <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50">
       <div class="flex flex-col gap-2">
-        <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="activeCharacter.state.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="activeCharacter.state.scale" type="number" min="0" max="20" step="0.01" />
+        <input v-model="activeTrail.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="activeTrail.y" type="number" min="-10000" max="10000" step="10" />
+        <!-- <input v-model="activeTrail.scale" type="number" min="0" max="20" step="0.01" /> -->
       </div>
     </div>
-  </External> -->
+  </External>
 </template>
