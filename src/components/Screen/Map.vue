@@ -123,9 +123,9 @@ const charactersGeneric = ref<State[][]>([
     { x: 1270, y: 550, scale: 0.425, alpha: 1, time: 10 }
   ],
   [
-    { x: 1250, y: 677.5, scale: 0.425, alpha: 1, time: 0 },
-    { x: 1250, y: 615, scale: 0.425, alpha: 1, time: 2 },
-    { x: 1250, y: 677.5, scale: 0.425, alpha: 1, time: 4 }
+    { x: 1250, y: 685, scale: 0.425, alpha: 1, time: 0 },
+    { x: 1250, y: 630, scale: 0.425, alpha: 1, time: 2 },
+    { x: 1250, y: 685, scale: 0.425, alpha: 1, time: 4 }
   ],
   [
     { x: 820, y: 687, scale: 0.425, alpha: 1, time: 0 },
@@ -151,10 +151,10 @@ const tram = reactive<Asset>({
   loaded: false,
   alias: 'tram',
   states: [
-    { x: 900, y: 515, scale: 0.5, alpha: 0, time: 0 },
-    { x: 900, y: 520, scale: 0.5, alpha: 1, time: 0.5 },
-    { x: 900, y: 520, scale: 0.5, alpha: 1, time: 1.5 }, // entering the tram
-    { x: 900, y: 561, scale: 0.5, alpha: 1, time: 3 }, //
+    { x: 902, y: 515, scale: 0.5, alpha: 0, time: 0 },
+    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 0.5 },
+    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 1.5 }, // entering the tram
+    { x: 902, y: 561, scale: 0.5, alpha: 1, time: 3.5 }, //
     { x: 1178, y: 561, scale: 0.5, alpha: 1, time: 6 }, //
     { x: 1178, y: 1008, scale: 0.5, alpha: 1, time: 9 }, //
     { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 12 }, //
@@ -276,7 +276,6 @@ onTick((delta) => {
     }
   }
 })
-
 </script>
 
 <template>

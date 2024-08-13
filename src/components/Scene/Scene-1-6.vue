@@ -1862,7 +1862,7 @@ onBeforeUnmount(() => {
         higher</p>
       </p>
       <button
-        class="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full aspect-square px-3 py-0.5 text-2xl bg-white shadow-md"
+        class="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full aspect-square px-3 py-0.5 text-2xl bg-slate-100 shadow-md"
         @click="autoScroll">↓</button>
     </Modal>
   </External>

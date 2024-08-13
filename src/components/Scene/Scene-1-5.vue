@@ -25,6 +25,6 @@ function onClick(value: boolean) {
 
 <style lang="css" scoped>
 .active-btn {
-  @apply px-4 py-1.5 bg-[url(@/assets/buttons/long.png)] font-inet bg-contain bg-bottom bg-no-repeat active:bg-[url(@/assets/buttons/long-pressed.png)] text-lg;
+  @apply px-8 py-4 font-inet bg-contain bg-bottom bg-no-repeat bg-[url(@/assets/buttons/long.png)] active:bg-[url(@/assets/buttons/long-pressed.png)] text-center text-3xl lg:text-[2.5rem] lg:leading-[3rem];
 }
 </style>

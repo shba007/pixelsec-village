@@ -20,7 +20,7 @@ function toggleSelect(topic: string) {
 </script>
 
 <template>
-  <div class="relative h-screen max-h-[640px] aspect-[400/722]">
+  <div class="relative h-dvh max-h-[640px] aspect-[400/722]">
     <img :src="smartphoneBg" alt="Smart Phone" class="absolute top-0 left-0 size-full -z-10" />
     <div
       class="grid grid-rows-4 grid-cols-2 gap-0.5 items-center size-full pb-11 px-4 pt-5 lg:px-8 lg:pt-10 lg:pb-[4.5rem]">
