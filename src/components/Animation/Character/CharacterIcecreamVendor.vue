@@ -9,10 +9,12 @@ defineProps<{
 
 const imgs = {
   map: ['mapCharacterIcecreamVendor1', 'mapCharacterIcecreamVendor2'],
-  park: ['parkCharacterIcecreamVendorWave1', 'parkCharacterIcecreamVendorWave2', 'parkCharacterIcecreamVendorHandout']
+  park: ['parkCharacterIcecreamVendorWave1', 'parkCharacterIcecreamVendorWave2'],
+  parkHandout: ['parkCharacterIcecreamVendorHandout']
 }
 </script>
 
 <template>
-  <AnimatedSprite :textures="imgs[place]" :texture-options="{ scaleMode: SCALE_MODES.LINEAR }" :anchor="0.5" :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
+  <AnimatedSprite :textures="imgs[place]" :texture-options="{ scaleMode: SCALE_MODES.LINEAR }" :anchor="0.5"
+    :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
 </template>

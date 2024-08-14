@@ -2,9 +2,10 @@
 import { computed, reactive } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 import { Loader, External } from 'vue3-pixi'
+import { resources } from '@/stores/game'
 import type { Asset } from '@/utils/types'
 import { SCALE_MODES } from '@/utils/types'
-import { resources } from '@/stores/game'
+import CharacterIcecreamVendor from '@/components/Animation/Character/CharacterIcecreamVendor.vue'
 
 defineProps<{
   isLoad: boolean
@@ -31,7 +32,12 @@ const abc = reactive<Asset>({
 
 const park = { bg: 'parkBackground', fg: 'parkForeground' }
 
-function onLoad() {}
+const characterIcecreamVendor = reactive({
+  states: [{ x: -90, y: 170, scale: 1, alpha: 1, time: 0 }],
+  state: { x: -90, y: 170, scale: 1, alpha: 1, time: 0 }
+})
+
+function onLoad() { }
 </script>
 
 <template>
@@ -41,25 +47,26 @@ function onLoad() {}
     </template>
     <template #default>
       <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-        <Sprite :texture="park.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x" :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
-        <Sprite :texture="park.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x" :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <Sprite :texture="park.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
+          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <Sprite :texture="park.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
+          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />
       </Container>
-      <!-- 
-      <External>
+      <!--  <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
             <input v-model="abc.state.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="abc.state.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="abc.state.scale" type="number" min="0" max="10" step="0.01" />
           </div>
-           <div class="flex flex-col gap-2">
-            <input v-model="station.fg.x" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="station.fg.y" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="station.fg.scale" type="number" min="0" max="20" step="0.01" />
-          </div> 
+          <div class="flex flex-col gap-2">
+            <input v-model="characterIcecreamVendor.state.x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="characterIcecreamVendor.state.y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="characterIcecreamVendor.state.scale" type="number" min="0" max="20" step="0.01" />
+          </div>
         </div>
-      </External>
-      -->
+      </External> -->
     </template>
   </Loader>
 </template>
