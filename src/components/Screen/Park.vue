@@ -21,47 +21,47 @@ const zoomFactor = computed(() => {
   return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
 })
 
-const icecreamScene = reactive<Asset>({
+const abc = reactive<Asset>({
   loaded: false,
-  alias: 'icecreamScene',
+  alias: 'park',
   states: [{ x: 0, y: 0, scale: 1, alpha: 1, time: 0 }],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init'
 })
 
-function onLoad() {}
+const park = { bg: 'parkBackground', fg: 'parkForeground' }
+
+function onLoad() { }
 </script>
 
 <template>
-  <Loader :resources="{ ...resources.general, ...resources.icecream }" :on-resolved="onLoad">
+  <Loader :resources="{ ...resources.general, ...resources.park }" :on-resolved="onLoad">
     <template #fallback>
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
       <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-        <Sprite
-          :texture="icecreamScene.alias"
-          :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-          :x="icecreamScene.state.x"
-          :y="icecreamScene.state.y"
-          :scale="icecreamScene.state.scale"
-          :anchor="0.5"
-        />
+        <Sprite :texture="park.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
+          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <Sprite :texture="park.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
+          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
       </Container>
-      <!-- <External>
+      <!-- 
+      <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
-            <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
+            <input v-model="abc.state.x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="abc.state.y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="abc.state.scale" type="number" min="0" max="10" step="0.01" />
           </div>
-          <div class="flex flex-col gap-2">
+           <div class="flex flex-col gap-2">
             <input v-model="station.fg.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="station.fg.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="station.fg.scale" type="number" min="0" max="20" step="0.01" />
-          </div>
+          </div> 
         </div>
-      </External> -->
+      </External>
+      -->
     </template>
   </Loader>
 </template>

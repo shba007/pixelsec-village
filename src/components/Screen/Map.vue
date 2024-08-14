@@ -24,6 +24,7 @@ import Scene3 from '@/components/Scene/Scene-1-3.vue'
 import Scene4 from '@/components/Scene/Scene-1-4.vue'
 import Scene5 from '@/components/Scene/Scene-1-5.vue'
 import Scene6 from '@/components/Scene/Scene-1-6.vue'
+import CharacterIcecreamVendor from '../Animation/Character/CharacterIcecreamVendor.vue'
 
 const props = defineProps<{
   currentScreenIndex: number
@@ -158,6 +159,13 @@ const characterStationMaster = reactive({
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 }
 })
 
+const characterIcecreamVendor = reactive({
+  states: [
+    { x: 835, y: 1235, scale: 0.55, alpha: 1, time: 0 },
+  ],
+  state: { x: 0, y: 0, scale: 0.55, alpha: 1, time: 0 }
+})
+
 const tram = reactive<Asset>({
   loaded: false,
   alias: 'tram',
@@ -195,9 +203,9 @@ const characterMain = reactive<Asset>({
     { x: 1670, y: 1280, scale: 1.5, alpha: 0, time: 14.5 }, // leaving the tram
     { x: 1660, y: 1280, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
     { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 18 },
-    { x: 1020, y: 1210, scale: 1.75, alpha: 1, time: 19 },
-    { x: 920, y: 1210, scale: 1.75, alpha: 1, time: 20 },
-    { x: 920, y: 1211, scale: 1.75, alpha: 1, time: 21 }
+    { x: 1020, y: 1234, scale: 1.75, alpha: 1, time: 19 },
+    { x: 870, y: 1234, scale: 1.75, alpha: 1, time: 20.9 },
+    { x: 870, y: 1235, scale: 1.75, alpha: 1, time: 21 }
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'init'
@@ -231,6 +239,7 @@ watchEffect(() => {
 function lockCharaterToMapCenter(x: number, y: number) {
   screen.state.x = -1.005 * x + 324.49
   screen.state.y = -1.005 * y + screenHeight.value / 5
+  currentMapAnimation.value = 'started'
 }
 
 function onCharacterStop() {
@@ -245,6 +254,7 @@ function onLoad() {
   screen.loaded = true
   currentMapAnimation.value = 'started'
   characterStationMaster.state = characterStationMaster.states[0]
+  characterIcecreamVendor.state = characterIcecreamVendor.states[0]
 }
 
 let totalElaspedTime = 0
@@ -298,28 +308,35 @@ watch(currentMapAnimation, (value) => {
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="isMobile ? 1 : 1" :anchor="0" />
-        <Sprite texture="stationBg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
+      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+        :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+        <Sprite :texture="screen.alias"
+          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0"
+          :scale="isMobile ? 1 : 1" :anchor="0" />
+        <Sprite texture="stationBg"
+          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
+          :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
         <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale"
+          :flip="flip" />
         <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter" :animation="true" place="map" />
+        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter"
+          :animation="true" place="map" />
         <CharacterStationMaster :state="characterStationMaster.state" place="map" />
-        <CharacterMain
-          :states="characterMain.states"
-          :animation="!hardStop && characterMain.animation === 'started'"
-          initalOrientation="front"
-          @move="lockCharaterToMapCenter"
-          @playing="onCharacterStop"
-        />
-        <MapTram :states="tram.states" :animation="!hardStop && tram.animation === 'started'" initalOrientation="right" />
-        <Sprite texture="stationFg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
+        <CharacterMain :states="characterMain.states" :animation="!hardStop && characterMain.animation === 'started'"
+          initalOrientation="front" @move="lockCharaterToMapCenter" @playing="onCharacterStop" />
+        <CharacterIcecreamVendor :state="characterIcecreamVendor.state" place="map" />
+        <MapTram :states="tram.states" :animation="!hardStop && tram.animation === 'started'"
+          initalOrientation="right" />
+        <Sprite texture="stationFg"
+          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
+          :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
         <!-- @vue-ignore -->
-        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size" :x="x" :y="y" :direction="direction" />
+        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size"
+          :x="x" :y="y" :direction="direction" />
         <!-- <template v-if="isLoad"> -->
         <Scene1 v-if="currentSceneIndex === 0 && currentMapAnimation === 'finished'" />
         <Scene2 v-else-if="currentSceneIndex === 1 && currentMapAnimation === 'finished'" />
@@ -329,20 +346,22 @@ watch(currentMapAnimation, (value) => {
         <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
         <!-- </template> -->
       </Container>
-      <!-- <External>
+      <!--
+      <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
             <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
           </div>
-            <div class="flex flex-col gap-2">
-            <input v-model="charactersGeneric[5][0].x" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="charactersGeneric[5][0].y" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="charactersGeneric[5][0].scale" type="number" min="0" max="20" step="0.01" />
-          </div> 
+          <div class="flex flex-col gap-2">
+            <input v-model="characterIcecreamVendor.state.x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="characterIcecreamVendor.state.y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="characterIcecreamVendor.state.scale" type="number" min="0" max="20" step="0.01" />
+          </div>
         </div>
-      </External> -->
+      </External>
+       -->
     </template>
   </Loader>
 </template>

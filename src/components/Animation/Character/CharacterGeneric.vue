@@ -96,14 +96,7 @@ onTick((delta) => {
 </script>
 
 <template>
-  <AnimatedSprite
-    :textures="activeCharacter.aliases"
-    :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-    :anchor="0.5"
-    :x="activeCharacter.state.x"
-    :y="activeCharacter.state.y"
-    :scale="activeCharacter.state.scale"
-    :playing="animation && activeCharacter.animation === 'started'"
-    :animation-speed="0.08"
-  />
+  <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.LINEAR }" :anchor="0.5"
+    :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :playing="animation && activeCharacter.animation === 'started'" :animation-speed="0.08" />
 </template>

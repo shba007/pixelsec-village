@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
 import { Application } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
 import ScreenMap from '@/components/Screen/Map.vue'
 import ScreenStation from '@/components/Screen/Station.vue'
-import ScreenIcecream from '@/components/Screen/Icecream.vue'
+import ScreenPark from '@/components/Screen/Park.vue'
 import SceneRotate from '@/components/Scene/Scene-Rotate.vue'
 
 const gameStore = useGameStore()
@@ -22,9 +21,10 @@ const mainWindow = window
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
-    <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2" :current-screen-index="currentScreenIndex" @close="updateIndex" />
+    <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2"
+      :current-screen-index="currentScreenIndex" @close="updateIndex" />
     <ScreenStation :is-load="currentScreenIndex === 1" @close="updateIndex" />
-    <ScreenIcecream :is-load="currentScreenIndex === 3" @close="updateIndex" />
+    <ScreenPark :is-load="currentScreenIndex === 3" @close="updateIndex" />
     <SceneRotate v-if="hardStop" :overlay="currentScreenIndex === 0 || currentScreenIndex === 2" />
   </Application>
 </template>

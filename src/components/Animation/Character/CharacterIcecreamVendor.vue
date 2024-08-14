@@ -4,12 +4,12 @@ import { SCALE_MODES } from '@/utils/types'
 
 defineProps<{
   state: State
-  place: 'map' | 'station'
+  place: 'map' | 'park'
 }>()
 
 const imgs = {
-  map: ['mapCharacterStationMaster1', 'mapCharacterStationMaster2', 'mapCharacterStationMaster3'],
-  station: ['stationCharacterStationMaster1', 'stationCharacterStationMaster2']
+  map: ['mapCharacterIcecreamVendor1', 'mapCharacterIcecreamVendor2'],
+  park: ['parkCharacterIcecreamVendorWave1', 'parkCharacterIcecreamVendorWave2', 'parkCharacterIcecreamVendorHandout']
 }
 </script>
 

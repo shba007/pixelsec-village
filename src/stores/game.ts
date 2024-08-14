@@ -19,7 +19,6 @@ import buttonLongPressedTexture from '@/assets/buttons/long-pressed.png'
 import map1xTexture from '@/assets/map-1x.jpg'
 import map2xTexture from '@/assets/map-2x.jpg'
 //
-// import stationTexture from '@/assets/station.png'
 import stationBgTexture from '@/assets/station-bg.png'
 import stationFgTexture from '@/assets/station-fg.png'
 //
@@ -111,9 +110,24 @@ import characterMainBlueLeftWalk2Texture from '@/assets/character/main/blue/left
 import characterMainBlueRightWalk1Texture from '@/assets/character/main/blue/right-walk-1.png'
 import characterMainBlueRightWalk2Texture from '@/assets/character/main/blue/right-walk-2.png'
 //
-import mapCharacterStationMaster1Texture from '@/assets/character/station-master/wave-1.png'
-import mapCharacterStationMaster2Texture from '@/assets/character/station-master/wave-2.png'
-import mapCharacterStationMaster3Texture from '@/assets/character/station-master/wave-3.png'
+import dataTrailBack1Texture from '@/assets/trail/trail-back-1.png'
+import dataTrailBack2Texture from '@/assets/trail/trail-back-2.png'
+import dataTrailBack3Texture from '@/assets/trail/trail-back-3.png'
+import dataTrailBack4Texture from '@/assets/trail/trail-back-4.png'
+import dataTrailSide1Texture from '@/assets/trail/trail-side-1.png'
+import dataTrailSide2Texture from '@/assets/trail/trail-side-2.png'
+import dataTrailSide3Texture from '@/assets/trail/trail-side-3.png'
+import dataTrailSide4Texture from '@/assets/trail/trail-side-4.png'
+//
+import mapCharacterStationMaster1Texture from '@/assets/character/station-master/map-1.png'
+import mapCharacterStationMaster2Texture from '@/assets/character/station-master/map-2.png'
+import mapCharacterStationMaster3Texture from '@/assets/character/station-master/map-3.png'
+//
+import mapCharacterIcecreamVendor1Texture from '@/assets/character/icecream-vendor/map-1.png'
+import mapCharacterIcecreamVendor2Texture from '@/assets/character/icecream-vendor/map-2.png'
+import parkCharacterIcecreamVendorWave1Texture from '@/assets/character/icecream-vendor/park-wave-1.png'
+import parkCharacterIcecreamVendorWave2Texture from '@/assets/character/icecream-vendor/park-wave-2.png'
+import parkCharacterIcecreamVendorHandoutTexture from '@/assets/character/icecream-vendor/park-handout.png'
 //
 import stationSkyTexture from '@/assets/station/sky.png'
 import stationCloud1Texture from '@/assets/station/cloud-1.png'
@@ -129,16 +143,8 @@ import stationTramWireTexture from '@/assets/station/tram-wire.png'
 import stationCharacterStationMaster1Texture from '@/assets/character/station-master/station-1.png'
 import stationCharacterStationMaster2Texture from '@/assets/character/station-master/station-2.png'
 //
-import icecreamSceneTexture from '@/assets/icecream/icecream.png'
-//
-import dataTrailBack1Texture from '@/assets/trail/trail-back-1.png'
-import dataTrailBack2Texture from '@/assets/trail/trail-back-2.png'
-import dataTrailBack3Texture from '@/assets/trail/trail-back-3.png'
-import dataTrailBack4Texture from '@/assets/trail/trail-back-4.png'
-import dataTrailSide1Texture from '@/assets/trail/trail-side-1.png'
-import dataTrailSide2Texture from '@/assets/trail/trail-side-2.png'
-import dataTrailSide3Texture from '@/assets/trail/trail-side-3.png'
-import dataTrailSide4Texture from '@/assets/trail/trail-side-4.png'
+import parkBackgroundTexture from '@/assets/park/park-background.png'
+import parkForegroundTexture from '@/assets/park/park-foreground.png'
 
 export const resources = reactive({
   general: {
@@ -183,7 +189,6 @@ export const resources = reactive({
     //
     map: map1xTexture,
     //
-    // station: stationTexture,
     stationBg: stationBgTexture,
     stationFg: stationFgTexture,
     //
@@ -273,7 +278,13 @@ export const resources = reactive({
     dataTrailSide1: dataTrailSide1Texture,
     dataTrailSide2: dataTrailSide2Texture,
     dataTrailSide3: dataTrailSide3Texture,
-    dataTrailSide4: dataTrailSide4Texture
+    dataTrailSide4: dataTrailSide4Texture,
+    //
+    mapCharacterIcecreamVendor1: mapCharacterIcecreamVendor1Texture,
+    mapCharacterIcecreamVendor2: mapCharacterIcecreamVendor2Texture,
+    parkCharacterIcecreamVendorWave1: parkCharacterIcecreamVendorWave1Texture,
+    parkCharacterIcecreamVendorWave2: parkCharacterIcecreamVendorWave2Texture,
+    parkCharacterIcecreamVendorHandout: parkCharacterIcecreamVendorHandoutTexture
   },
   station: {
     //
@@ -289,8 +300,9 @@ export const resources = reactive({
     stationTram: stationTramTexture,
     stationTramWire: stationTramWireTexture
   },
-  icecream: {
-    icecreamScene: icecreamSceneTexture
+  park: {
+    parkBackground: parkBackgroundTexture,
+    parkForeground: parkForegroundTexture
   }
 })
 
@@ -318,7 +330,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   watch(isMobile, (value) => {
-    resources.map.map = value ? map1xTexture : map1xTexture
+    resources.map.map = value ? map1xTexture : map2xTexture
   })
 
   watch(activeCharacter, (value) => {
