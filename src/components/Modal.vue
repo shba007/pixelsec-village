@@ -24,7 +24,7 @@ const props = withDefaults(
       </picture>
       <div class="relative flex size-full flex-col justify-center items-center gap-10 px-6 pb-0 pt-[2.25rem] max-w-[820px] mx-auto z-10 overflow-hidden" :class="containerClass">
         <h1 v-if="title" class="text-center text-3xl lg:text-[2.5rem] lg:leading-[3rem] font-semibold uppercase" v-html="title" />
-        <p v-if="description" class="text-center text-3xl lg:text-[2.5rem] lg:leading-[3rem]" v-html="description" />
+        <p v-if="description" class="text-center text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]" v-html="description" />
         <slot />
       </div>
     </div>

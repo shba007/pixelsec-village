@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { External } from 'vue3-pixi'
+import { useGameStore } from '@/stores/game'
 import rotateIndicator from '@/assets/rotate-indicator.png'
 import Modal from '@/components/Modal.vue'
-import { useGameStore } from '@/stores/game'
-import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
-import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -16,9 +14,6 @@ const props = withDefaults(
 )
 
 const gameStore = useGameStore()
-
-const breakpoints = useBreakpoints(breakpointsTailwind)
-const isDesktop = computed(() => breakpoints.isGreaterOrEqual('md'))
 
 async function handleRotate() {
   await gameStore.toggleGameMode(true)

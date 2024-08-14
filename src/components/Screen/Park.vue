@@ -31,7 +31,7 @@ const abc = reactive<Asset>({
 
 const park = { bg: 'parkBackground', fg: 'parkForeground' }
 
-function onLoad() { }
+function onLoad() {}
 </script>
 
 <template>
@@ -41,10 +41,8 @@ function onLoad() { }
     </template>
     <template #default>
       <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-        <Sprite :texture="park.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
-          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
-        <Sprite :texture="park.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
-          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <Sprite :texture="park.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x" :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <Sprite :texture="park.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x" :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
       </Container>
       <!-- 
       <External>

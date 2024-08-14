@@ -322,8 +322,13 @@ export const useGameStore = defineStore('game', () => {
 
   const activeCharacter = ref<Character | null>(null)
   const currentScreenIndex = ref(0)
-  const hardStop = computed(() => currentSceneIndex.value > 0 && !isLandscape.value)
+  const hardStop = ref(false)
+  const rotationStop = computed(() => hardStop.value || (currentSceneIndex.value > 0 && !isLandscape.value))
   const motionBlur = computed(() => $motionBlur.value)
+
+  function toggleHardStop(value: boolean) {
+    hardStop.value = value
+  }
 
   function toggleMotionBlur(value: boolean) {
     $motionBlur.value = value
@@ -404,8 +409,10 @@ export const useGameStore = defineStore('game', () => {
     currentMapAnimation,
     activeCharacter,
     currentScreenIndex,
-    hardStop,
+    rotationStop,
     motionBlur,
+    hardStop,
+    toggleHardStop,
     toggleMotionBlur,
     toggleGameMode,
     nextScene,

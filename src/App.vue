@@ -9,7 +9,7 @@ import ScreenPark from '@/components/Screen/Park.vue'
 import SceneRotate from '@/components/Scene/Scene-Rotate.vue'
 
 const gameStore = useGameStore()
-const { currentScreenIndex, hardStop } = storeToRefs(gameStore)
+const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
 
 function updateIndex(value: number) {
   currentScreenIndex.value = value
@@ -21,12 +21,15 @@ const mainWindow = window
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
-    <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2"
-      :current-screen-index="currentScreenIndex" @close="updateIndex" />
+    <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2" :current-screen-index="currentScreenIndex" @close="updateIndex" />
     <ScreenStation :is-load="currentScreenIndex === 1" @close="updateIndex" />
     <ScreenPark :is-load="currentScreenIndex === 3" @close="updateIndex" />
-    <SceneRotate v-if="hardStop" :overlay="currentScreenIndex === 0 || currentScreenIndex === 2" />
+    <SceneRotate v-if="rotationStop" :overlay="true" />
   </Application>
+  <!-- DEBUG -->
+  <!-- <button class="fixed right-0 bottom-0 z-[99999] bg-white p-2" @click="gameStore.toggleHardStop(!hardStop)">
+    HardStop {{ hardStop }}
+  </button> -->
 </template>
 
 <style lang="css">
