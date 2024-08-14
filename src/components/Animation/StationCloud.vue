@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue'
 import { onTick } from 'vue3-pixi'
+import { SCALE_MODES } from '@/utils/types'
 
 const props = defineProps<{
   size: '1' | '2' | '3'
@@ -57,5 +58,5 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Sprite :texture="img" :texture-options="{ scaleMode: 'nearest' }" :anchor="0.5" :scale="1" :x="cloud.x" :y="cloud.y" />
+  <Sprite :texture="img" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5" :scale="1" :x="cloud.x" :y="cloud.y" />
 </template>

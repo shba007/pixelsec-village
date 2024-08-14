@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import type { State } from '@/utils/types'
 import { reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
+import type { State } from '@/utils/types'
+import { SCALE_MODES } from '@/utils/types'
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
 
@@ -127,7 +128,7 @@ onTick((delta) => {
     <AnimatedSprite
       v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'"
       :textures="activeTrail.aliases"
-      :texture-options="{ scaleMode: 'nearest' }"
+      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
       :anchor="0.5"
       :x="activeTrail.x"
       :y="activeTrail.y"
@@ -138,7 +139,7 @@ onTick((delta) => {
     />
     <AnimatedSprite
       :textures="activeCharacter.aliases"
-      :texture-options="{ scaleMode: 'nearest' }"
+      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
       :anchor="0.5"
       :x="0"
       :y="0"

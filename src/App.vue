@@ -22,8 +22,7 @@ const mainWindow = window
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
-    <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2"
-      :current-screen-index="currentScreenIndex" @close="updateIndex" />
+    <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2" :current-screen-index="currentScreenIndex" @close="updateIndex" />
     <ScreenStation :is-load="currentScreenIndex === 1" @close="updateIndex" />
     <ScreenIcecream :is-load="currentScreenIndex === 3" @close="updateIndex" />
     <SceneRotate v-if="hardStop" :overlay="currentScreenIndex === 0 || currentScreenIndex === 2" />
@@ -31,14 +30,7 @@ const mainWindow = window
 </template>
 
 <style lang="css">
-* {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -webkit-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
 :root {
-  @apply bg-transparent
+  @apply bg-transparent;
 }
 </style>

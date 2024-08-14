@@ -13,3 +13,8 @@ export interface Asset {
   state: State
   animation: 'init' | 'started' | 'finished'
 }
+
+export enum SCALE_MODES {
+  NEAREST,
+  LINEAR
+}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
 import { onTick } from 'vue3-pixi'
+import { SCALE_MODES } from '@/utils/types'
 
 const props = defineProps<{
   x: number
@@ -24,6 +25,6 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Sprite :texture="tram.img" :texture-options="{ scaleMode: 'nearest' }" :x="tram.x" :y="tram.y" :scale="tram.scale" :anchor-x="0.5" :anchor-y="0.5" />
+  <Sprite :texture="tram.img" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="tram.x" :y="tram.y" :scale="tram.scale" :anchor-x="0.5" :anchor-y="0.5" />
   <Sprite :texture="'stationTramWire'" :x="0" :y="tram.y - 202" :scale="tram.scale" :anchor="0.5" />
 </template>

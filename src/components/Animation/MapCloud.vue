@@ -2,6 +2,7 @@
 import { computed, reactive } from 'vue'
 import { onTick } from 'vue3-pixi'
 import { reverseSawTooth, sawTooth } from '@/utils/helper'
+import { SCALE_MODES } from '@/utils/types'
 
 const props = defineProps<{
   size: 'lg' | 'md' | 'sm'
@@ -51,5 +52,5 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Sprite :texture="img" :texture-options="{ scaleMode: 'nearest' }" :anchor="0.5" :scale="1" :x="cloud.x" :y="cloud.y" />
+  <Sprite :texture="img" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5" :scale="1" :x="cloud.x" :y="cloud.y" />
 </template>

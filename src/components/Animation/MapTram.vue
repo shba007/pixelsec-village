@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
 import { onTick } from 'vue3-pixi'
+import { SCALE_MODES } from '@/utils/types'
 
 interface Route {
   x: number
@@ -110,7 +111,7 @@ onTick((delta) => {
 <template>
   <AnimatedSprite
     :textures="tram.aliases"
-    :texture-options="{ scaleMode: 'nearest' }"
+    :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
     :anchor="0.5"
     :x="tram.state.x"
     :y="tram.state.y"
