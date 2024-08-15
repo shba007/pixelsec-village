@@ -27,17 +27,17 @@ const abc = reactive<Asset>({
   alias: 'park',
   states: [{ x: 0, y: 0, scale: 1, alpha: 1, time: 0 }],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
-  animation: 'init'
+  animation: 'init',
 })
 
 const park = { bg: 'parkBackground', fg: 'parkForeground' }
 
 const characterIcecreamVendor = reactive({
   states: [{ x: -90, y: 170, scale: 1, alpha: 1, time: 0 }],
-  state: { x: -90, y: 170, scale: 1, alpha: 1, time: 0 }
+  state: { x: -90, y: 170, scale: 1, alpha: 1, time: 0 },
 })
 
-function onLoad() { }
+function onLoad() {}
 </script>
 
 <template>
@@ -47,10 +47,8 @@ function onLoad() { }
     </template>
     <template #default>
       <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-        <Sprite :texture="park.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
-          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
-        <Sprite :texture="park.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
-          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <Sprite :texture="park.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x" :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <Sprite :texture="park.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x" :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
         <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />
       </Container>
       <!--  <External>

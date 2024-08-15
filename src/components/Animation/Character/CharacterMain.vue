@@ -30,12 +30,12 @@ const characterAnimations = {
   frontWalk: ['characterMainFrontWalk1', 'characterMainFrontWalk2'],
   backWalk: ['characterMainBackWalk1', 'characterMainBackWalk2'],
   leftWalk: ['characterMainLeftWalk1', 'characterMainLeftWalk2'],
-  rightWalk: ['characterMainRightWalk1', 'characterMainRightWalk2']
+  rightWalk: ['characterMainRightWalk1', 'characterMainRightWalk2'],
 }
 
 const trailAnimations = {
   back: ['dataTrailBack1', 'dataTrailBack2', 'dataTrailBack3', 'dataTrailBack4'],
-  side: ['dataTrailSide1', 'dataTrailSide2', 'dataTrailSide3', 'dataTrailSide4']
+  side: ['dataTrailSide1', 'dataTrailSide2', 'dataTrailSide3', 'dataTrailSide4'],
 }
 
 const activeCharacter = reactive<Character>({
@@ -46,17 +46,17 @@ const activeCharacter = reactive<Character>({
     y: props.states[0].y,
     scale: props.states[0].scale,
     alpha: props.states[0].alpha,
-    time: props.states[0].time
+    time: props.states[0].time,
   },
   direction: 1,
   orientation: 'front',
-  animation: 'started'
+  animation: 'started',
 })
 
 const activeTrail = reactive({
   aliases: [] as string[],
   x: 0,
-  y: 0
+  y: 0,
 })
 
 watch(props.states, (value) => {
@@ -135,8 +135,7 @@ onTick((delta) => {
       :scale="1"
       :alpha="1"
       :playing="true"
-      :animation-speed="0.08"
-    />
+      :animation-speed="0.08" />
     <AnimatedSprite
       :textures="activeCharacter.aliases"
       :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
@@ -146,8 +145,7 @@ onTick((delta) => {
       :scale="1"
       :alpha="1"
       :playing="animation && activeCharacter.animation === 'started'"
-      :animation-speed="0.08"
-    />
+      :animation-speed="0.08" />
   </Container>
   <!--  <External>
     <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50">

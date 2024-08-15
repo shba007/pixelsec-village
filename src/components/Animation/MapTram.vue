@@ -44,7 +44,7 @@ const animations = {
   frontMove: ['tramFront'],
   backMove: ['tramBack'],
   leftMove: ['tramRight'],
-  rightMove: ['tramRight']
+  rightMove: ['tramRight'],
 }
 
 const tram = reactive<Object>({
@@ -55,11 +55,11 @@ const tram = reactive<Object>({
     y: props.states[0].y,
     scale: props.states[0].scale,
     alpha: props.states[0].alpha,
-    time: props.states[0].time
+    time: props.states[0].time,
   },
   direction: 1,
   orientation: props.initalOrientation,
-  animation: 'started'
+  animation: 'started',
 })
 
 watch(props.states, (value) => {
@@ -118,6 +118,5 @@ onTick((delta) => {
     :scale="tram.state.scale"
     :alpha="tram.state.alpha"
     :playing="animation && tram.animation === 'started'"
-    :animation-speed="0.08"
-  />
+    :animation-speed="0.08" />
 </template>

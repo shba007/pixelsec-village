@@ -170,7 +170,7 @@ export const resources = reactive({
     mapCharacterStationMaster2: mapCharacterStationMaster2Texture,
     mapCharacterStationMaster3: mapCharacterStationMaster3Texture,
     stationCharacterStationMaster1: stationCharacterStationMaster1Texture,
-    stationCharacterStationMaster2: stationCharacterStationMaster2Texture
+    stationCharacterStationMaster2: stationCharacterStationMaster2Texture,
   },
   map: {
     frontINET,
@@ -284,7 +284,7 @@ export const resources = reactive({
     mapCharacterIcecreamVendor2: mapCharacterIcecreamVendor2Texture,
     parkCharacterIcecreamVendorWave1: parkCharacterIcecreamVendorWave1Texture,
     parkCharacterIcecreamVendorWave2: parkCharacterIcecreamVendorWave2Texture,
-    parkCharacterIcecreamVendorHandout: parkCharacterIcecreamVendorHandoutTexture
+    parkCharacterIcecreamVendorHandout: parkCharacterIcecreamVendorHandoutTexture,
   },
   station: {
     //
@@ -298,12 +298,12 @@ export const resources = reactive({
     platformForeground: stationPlatformForegroundTexture,
     //
     stationTram: stationTramTexture,
-    stationTramWire: stationTramWireTexture
+    stationTramWire: stationTramWireTexture,
   },
   park: {
     parkBackground: parkBackgroundTexture,
-    parkForeground: parkForegroundTexture
-  }
+    parkForeground: parkForegroundTexture,
+  },
 })
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
@@ -334,6 +334,10 @@ export const useGameStore = defineStore('game', () => {
     $motionBlur.value = value
   }
 
+  onMounted(() => {
+    resources.map.map = isMobile.value ? map1xTexture : map2xTexture
+  })
+
   watch(isMobile, (value) => {
     resources.map.map = value ? map1xTexture : map2xTexture
   })
@@ -363,7 +367,7 @@ export const useGameStore = defineStore('game', () => {
   })
 
   onMounted(() => {
-    resources.map.map = isMobile.value ? map1xTexture : map1xTexture
+    resources.map.map = isMobile.value ? map1xTexture : map2xTexture
   })
 
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
@@ -389,7 +393,6 @@ export const useGameStore = defineStore('game', () => {
 
   function nextScene(screen = 1) {
     currentSceneIndex.value += screen
-    console.log('NextScene', currentSceneIndex.value)
   }
 
   function nextMapState() {
@@ -417,6 +420,6 @@ export const useGameStore = defineStore('game', () => {
     toggleGameMode,
     nextScene,
     nextMapState,
-    setActiveCharacter
+    setActiveCharacter,
   }
 })

@@ -8,7 +8,7 @@ const characters = [
   { type: 'black', image: '/images/character-main-black-walking.gif' },
   { type: 'violate', image: '/images/character-main-violate-walking.gif' },
   { type: 'red', image: '/images/character-main-red-walking.gif' },
-  { type: 'blue', image: '/images/character-main-blue-walking.gif' }
+  { type: 'blue', image: '/images/character-main-blue-walking.gif' },
 ] as const
 
 const gameStore = useGameStore()
@@ -21,12 +21,12 @@ function onCharcterSet(type: Character) {
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-dvw h-dvh">
+  <External class="absolute left-0 top-0 h-dvh w-dvw">
     <!-- description is word breaking -->
     <Modal title="Select your Avatar" description="Choose your main character energy." containerClass="gap-6">
       <div class="flex gap-8 md:gap-12">
         <button v-for="{ type, image } of characters" :key="image" @click="onCharcterSet(type)">
-          <img :src="image" class="w-[48px] lg:w-[80px] hover:scale-125 duration-300" />
+          <img :src="image" class="w-[48px] duration-300 hover:scale-125 lg:w-[80px]" />
         </button>
       </div>
     </Modal>

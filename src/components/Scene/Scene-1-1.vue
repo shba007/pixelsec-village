@@ -28,15 +28,14 @@ watch(isLandscape, (value) => {
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-dvw h-dvh">
+  <External class="absolute left-0 top-0 h-dvh w-dvw">
     <Modal
       title="welcome to dataville"
-      :container-class="!isLandscape ? 'justify-between gap-0 py-4' : ''"
-      description="Where your online habits and choices will shape the kind of house you live in.<br/>Let’s go!"
-    >
-      <button v-if="!isLandscape" class="flex flex-col justify-center items-center gap-1 pb-3" @click="handleStart">
-        <img :src="rotateIndicator" alt="rotate-indicator" class="size-[48px] md:size-[72px] object-contain" />
-        <span class="text-2xl md:text-4xl opacity-50 font-inet -translate-y-3">Full screen</span>
+      :container-class="!isLandscape ? 'justify-between gap-0 !pt-9' : '!pt-9'"
+      description="Where your online habits and choices will shape the kind of house you live in.<br/>Let’s go!">
+      <button v-if="!isLandscape" class="flex flex-col items-center justify-center gap-1 pb-3" @click="handleStart">
+        <img :src="rotateIndicator" alt="rotate-indicator" class="size-[48px] object-contain md:size-[72px]" />
+        <span class="-translate-y-3 font-inet text-2xl opacity-50 md:text-4xl">Full screen</span>
       </button>
     </Modal>
   </External>

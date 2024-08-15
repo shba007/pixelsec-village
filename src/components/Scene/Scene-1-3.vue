@@ -16,7 +16,7 @@ useTimeoutFn(handleMove, 2000)
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-dvw h-dvh">
+  <External class="absolute left-0 top-0 h-dvh w-dvw">
     <Modal title="let the adventure begin" description="Excited to find out which house<br/> you will arrive in? Answer the<br/> questions to determine your result." />
   </External>
 </template>

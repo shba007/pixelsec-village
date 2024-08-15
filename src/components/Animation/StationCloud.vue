@@ -15,7 +15,7 @@ const cloud = reactive({
   x: props.x,
   y: props.y,
   direction: props.direction,
-  width: 200
+  width: 200,
 })
 
 watch(

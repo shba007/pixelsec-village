@@ -16,17 +16,15 @@ function onClick(value: string) {
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-dvw h-dvh">
+  <External class="absolute left-0 top-0 h-dvh w-dvw">
     <Modal title="" description="">
       <div class="relative flex flex-col items-center justify-center">
-        <div class="flex items-center gap-4">
-          <img src="/images/character-station-master.gif" class="aspect-square object-contain h-[180px] lg:h-[256px]" />
-          <p class="text-4xl lg:text-[3rem] lg:leading-[3rem] text-left">Please verify your age for tram ticket purchase
-          </p>
+        <div class="flex items-center">
+          <img src="/images/character-station-master.gif" class="aspect-square h-[180px] object-contain lg:h-[256px]" />
+          <p class="text-left text-4xl lg:text-[3rem] lg:leading-[3rem]">Please verify your age for tram ticket purchase</p>
         </div>
         <div class="flex gap-2 md:gap-4">
-          <button v-for="age of ages" :key="age" class="active-btn text-4xl h-[74px] px-4 pt-5 pb-4 whitespace-nowrap"
-            @click="onClick(age)">
+          <button v-for="age of ages" :key="age" class="active-btn h-[74px] whitespace-nowrap px-4 pb-4 pt-5 text-4xl" @click="onClick(age)">
             {{ age }}
           </button>
         </div>
@@ -37,6 +35,6 @@ function onClick(value: string) {
 
 <style lang="css" scoped>
 .active-btn {
-  @apply bg-contain bg-bottom bg-no-repeat h-[80px] aspect-[5/3] bg-[url(@/assets/buttons/short.png)] active:bg-[url(@/assets/buttons/short-pressed.png)];
+  @apply flex aspect-[5/3] h-[64px] items-center justify-center bg-[url(@/assets/buttons/short.png)] bg-contain bg-bottom bg-no-repeat font-inet text-3xl active:bg-[url(@/assets/buttons/short-pressed.png)] active:text-[#89ab2c] lg:h-[80px] lg:text-[2.5rem] lg:leading-[3rem];
 }
 </style>

@@ -39,7 +39,7 @@ const sky = reactive<Asset>({
   alias: 'sky',
   states: [{ x: 0, y: -305, scale: 1.4, alpha: 1, time: 0 }],
   state: { x: 0, y: -305, scale: 1.4, alpha: 1, time: 0 },
-  animation: 'init'
+  animation: 'init',
 })
 
 const clouds = ref<
@@ -52,7 +52,7 @@ const clouds = ref<
 >([
   { size: '2', x: -screenWidth.value / 2 - 200, y: 15 - 350, direction: 1 },
   { size: '1', x: -screenWidth.value / 2 - 150, y: 95 - 350, direction: 1 },
-  { size: '3', x: -screenWidth.value / 2 - 100, y: 150 - 350, direction: 1 }
+  { size: '3', x: -screenWidth.value / 2 - 100, y: 150 - 350, direction: 1 },
 ])
 
 const tram = reactive({ x: -screenWidth.value - 800, y: -25 })
@@ -61,18 +61,18 @@ const platform = { bg: 'platformBackground', fg: 'platformForeground' }
 
 const pegion = ref([
   { x: 360, y: 290, scale: 1, flip: false },
-  { x: 450, y: 260, scale: 1, flip: true }
+  { x: 450, y: 260, scale: 1, flip: true },
 ])
 
 const characterStationMaster = reactive({
   states: [{ x: -210, y: 86, scale: 1, alpha: 1, time: 0 }],
-  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 }
+  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
 })
 
 const charactersGeneric = ref<State[]>([
   { x: screenWidth.value + 50, y: -10, scale: 1, alpha: 1, time: 0 },
   { x: screenWidth.value + 50, y: -10, scale: 1, alpha: 1, time: 2 },
-  { x: 0, y: -10, scale: 1, alpha: 1, time: 8 }
+  { x: 0, y: -10, scale: 1, alpha: 1, time: 8 },
 ])
 
 watchEffect(() => {
@@ -101,21 +101,15 @@ watch(
     </template>
     <template #default>
       <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-        <Sprite :texture="sky.alias" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="sky.state.x"
-          :y="sky.state.y" :scale="sky.state.scale" :anchor="0.5" />
-        <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="screenWidth"
-          :size="size" :x="x" :y="y" :direction="direction" />
-        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200" :scale="1"
-          :anchor="0.5" />
+        <Sprite :texture="sky.alias" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="sky.state.x" :y="sky.state.y" :scale="sky.state.scale" :anchor="0.5" />
+        <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="screenWidth" :size="size" :x="x" :y="y" :direction="direction" />
+        <Sprite :texture="platform.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200" :scale="1" :anchor="0.5" />
         <CharacterGeneric :states="charactersGeneric" :animation="true" place="station" />
-        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1"
-          :anchor="0.5" />
+        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0.5" />
         <StationTram :x="tram.x" :y="tram.y" :width-range="screenWidth" />
-        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1"
-          :anchor="0.5" />
+        <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0.5" />
         <CharacterStationMaster :state="characterStationMaster.state" place="station" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale"
-          :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
         <!-- <template v-if="isLoad"> -->
         <Scene1 v-if="currentSceneIndex === 7" />
         <Scene2 v-else-if="currentSceneIndex === 8" />

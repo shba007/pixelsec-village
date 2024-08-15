@@ -19,7 +19,7 @@ export const useDataStore = defineStore('data', () => {
     age: null,
     spendTime: [],
     annoyingPoints: null,
-    dataTradeOff: null
+    dataTradeOff: null,
   })
 
   function setReadTC(value: boolean) {
@@ -27,6 +27,6 @@ export const useDataStore = defineStore('data', () => {
   }
 
   return {
-    setReadTC
+    setReadTC,
   }
 })

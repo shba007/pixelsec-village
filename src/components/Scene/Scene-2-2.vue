@@ -22,22 +22,25 @@ function onComplete() {
 </script>
 
 <template>
-  <External class="absolute top-0 left-0 w-dvw h-dvh">
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-      <div class="relative flex items-center gap-10 justify-center translate-x-11">
+  <External class="absolute left-0 top-0 h-dvh w-dvw">
+    <div class="absolute left-1/2 top-1/2 max-h-[80vh] w-3/4 -translate-x-1/2 -translate-y-1/2 md:w-3/5">
+      <div class="relative flex items-center justify-center gap-8 md:translate-x-10">
+        <!-- SMARTPHONE -->
         <SmartPhone @select="onSelect" />
-        <!-- <Modal title="" description="How will you spend your time on the tram? <br/> Pick more than one." class="relative aspect-square" :isAbsolute="false" /> -->
-        <div class="flex items-center size-full justify-center relative w-[35vw] aspect-square">
-          <img :src="popupSquare" alt="popupSquare" class="absolute left-0 top-0 size-full object-contain" />
-          <p class="text-left text-3xl lg:text-[2.5rem] lg:leading-[3rem] whitespace-nowrap z-10">
-            How will you<br />
-            spend your time<br />
-            on the tram? <br /><br />
-            Pick more than<br />
-            one.
+        <!-- SMARTPHONE -->
+        <div class="popup-bg relative flex aspect-[143/130] h-full items-center justify-center overflow-hidden">
+          <p class="flex h-fit flex-col justify-between p-8 text-left text-3xl lg:p-10 lg:text-5xl lg:leading-[3rem]">
+            <span> How will you spend your time on the tram? </span>
+            <span> Pick more than one. </span>
           </p>
         </div>
       </div>
     </div>
   </External>
 </template>
+
+<style scoped>
+.popup-bg {
+  @apply bg-[url('@/assets/popup/bg-square.png')] bg-cover bg-center bg-no-repeat;
+}
+</style>

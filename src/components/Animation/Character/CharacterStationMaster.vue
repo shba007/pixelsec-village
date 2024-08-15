@@ -9,7 +9,7 @@ defineProps<{
 
 const imgs = {
   map: ['mapCharacterStationMaster1', 'mapCharacterStationMaster2', 'mapCharacterStationMaster3'],
-  station: ['stationCharacterStationMaster1', 'stationCharacterStationMaster2']
+  station: ['stationCharacterStationMaster1', 'stationCharacterStationMaster2'],
 }
 </script>
 

@@ -10,20 +10,20 @@ const props = withDefaults(
     overlay?: boolean
   }>(),
   {
-    overlay: false
+    overlay: false,
   }
 )
 </script>
 
 <template>
   <div class="fixed size-full" :class="{ 'bg-white/55': overlay }">
-    <div class="max-h-[80vh] w-3/4 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-[0.61] sm:aspect-[1.64]">
+    <div class="absolute left-1/2 top-1/2 aspect-[65/106] max-h-[80vh] w-3/4 -translate-x-1/2 -translate-y-1/2 sm:aspect-[106/65] md:w-3/5">
       <picture class="absolute left-0 top-0 size-full">
         <source media="(min-width:648px)" :srcset="popupLandscape" alt="popupLandscape" class="size-full" />
         <img :src="popupPortrait" alt="popupPortrait" class="size-full" />
       </picture>
-      <div class="relative flex size-full flex-col justify-center items-center gap-10 px-6 pb-0 pt-[2.25rem] max-w-[820px] mx-auto z-10 overflow-hidden" :class="containerClass">
-        <h1 v-if="title" class="text-center text-3xl lg:text-[2.5rem] lg:leading-[3rem] font-semibold uppercase" v-html="title" />
+      <div class="relative z-10 mx-auto flex size-full max-w-[820px] flex-col items-center justify-center gap-10 overflow-hidden px-6 py-0" :class="containerClass">
+        <h1 v-if="title" class="text-center text-3xl font-semibold uppercase lg:text-[2.5rem] lg:leading-[3rem]" v-html="title" />
         <p v-if="description" class="text-center text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]" v-html="description" />
         <slot />
       </div>

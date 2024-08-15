@@ -15,7 +15,7 @@ const assets = {
   pink: ['flagPink1', 'flagPink2'],
   'school-blue': ['flagSchoolBlue1', 'flagSchoolBlue2'],
   'school-red': ['flagSchoolRed1', 'flagSchoolRed2'],
-  station: ['flagStation1', 'flagStation2']
+  station: ['flagStation1', 'flagStation2'],
 }
 
 const imgs = computed(() => assets[props.type])

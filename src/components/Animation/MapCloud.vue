@@ -15,7 +15,7 @@ const props = defineProps<{
 const cloud = reactive({
   x: props.x,
   y: props.y,
-  direction: props.direction
+  direction: props.direction,
 })
 
 const img = computed(() => {

@@ -37,7 +37,7 @@ const animations = {
   frontWalk: ['characterGenericFrontWalk1', 'characterGenericFrontWalk2'],
   backWalk: ['characterGenericBackWalk1', 'characterGenericBackWalk2'],
   leftWalk: props.place === 'map' ? ['characterGenericLeftWalk1', 'characterGenericLeftWalk2'] : ['characterGenericLeftWalk1Side', 'characterGenericLeftWalk2Side'],
-  rightWalk: ['characterGenericRightWalk1', 'characterGenericRightWalk2']
+  rightWalk: ['characterGenericRightWalk1', 'characterGenericRightWalk2'],
 }
 
 const activeCharacter = reactive<Character>({
@@ -47,11 +47,11 @@ const activeCharacter = reactive<Character>({
     x: props.states[0].x,
     y: props.states[0].y,
     scale: props.states[0].scale,
-    time: props.states[0].time
+    time: props.states[0].time,
   },
   direction: 1,
   orientation: 'front',
-  animation: 'started'
+  animation: 'started',
 })
 
 watch(props.states, (value) => {
@@ -104,6 +104,5 @@ onTick((delta) => {
     :y="activeCharacter.state.y"
     :scale="activeCharacter.state.scale"
     :playing="animation && activeCharacter.animation === 'started'"
-    :animation-speed="0.08"
-  />
+    :animation-speed="0.08" />
 </template>

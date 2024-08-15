@@ -16,5 +16,5 @@ export interface Asset {
 
 export enum SCALE_MODES {
   NEAREST,
-  LINEAR
+  LINEAR,
 }

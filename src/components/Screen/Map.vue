@@ -51,17 +51,17 @@ const screen = reactive<Asset>({
     { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 },
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 }
+    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
-  animation: 'init'
+  animation: 'init',
 })
 const station = reactive({ bg: { x: 725, y: 265, scale: 0.5 }, fg: { x: 867, y: 259.5, scale: 0.5 } })
 
 const wave = reactive({
   x: 240,
   y: 1525,
-  scale: 0.5
+  scale: 0.5,
 })
 
 const flags = ref([
@@ -79,7 +79,7 @@ const flags = ref([
   { type: 'pink', x: 460, y: 2600, scale: 0.5 },
   { type: 'pink', x: 460, y: 2660, scale: 0.5 },
   { type: 'pink', x: 460, y: 2710, scale: 0.5 },
-  { type: 'pink', x: 460, y: 2770, scale: 0.5 }
+  { type: 'pink', x: 460, y: 2770, scale: 0.5 },
 ])
 
 const fountain = reactive({ x: 920, y: 830, scale: 0.5 })
@@ -99,7 +99,7 @@ const pegions = ref([
   { x: 1050, y: 2075, scale: 0.5, flip: false },
   { x: 1570, y: 2370, scale: 0.5, flip: true },
   { x: 620, y: 2580, scale: 0.5, flip: true },
-  { x: 600, y: 2600, scale: 0.5, flip: true }
+  { x: 600, y: 2600, scale: 0.5, flip: true },
 ])
 
 const streetLamp = ref([
@@ -115,53 +115,76 @@ const streetLamp = ref([
   { x: 2485, y: 2540, scale: 0.5 },
   { x: 370, y: 2650, scale: 0.5 },
   { x: 1710, y: 2660, scale: 0.5 },
-  { x: 370, y: 2800, scale: 0.5 }
+  { x: 370, y: 2800, scale: 0.5 },
 ])
 
 const charactersGeneric = ref<State[][]>([
   [
     { x: 1270, y: 550, scale: 0.425, alpha: 1, time: 0 },
     { x: 1606, y: 550, scale: 0.425, alpha: 1, time: 5 },
-    { x: 1270, y: 550, scale: 0.425, alpha: 1, time: 10 }
+    { x: 1270, y: 550, scale: 0.425, alpha: 1, time: 10 },
   ],
   [
     { x: 1250, y: 685, scale: 0.425, alpha: 1, time: 0 },
     { x: 1250, y: 630, scale: 0.425, alpha: 1, time: 2 },
-    { x: 1250, y: 685, scale: 0.425, alpha: 1, time: 4 }
+    { x: 1250, y: 685, scale: 0.425, alpha: 1, time: 4 },
   ],
   [
     { x: 820, y: 687, scale: 0.425, alpha: 1, time: 0 },
     { x: 820, y: 768, scale: 0.425, alpha: 1, time: 3 },
-    { x: 820, y: 687, scale: 0.425, alpha: 1, time: 6 }
+    { x: 820, y: 687, scale: 0.425, alpha: 1, time: 6 },
   ],
   [
     { x: 1480, y: 820, scale: 0.425, alpha: 1, time: 0 },
     { x: 1480, y: 936, scale: 0.425, alpha: 1, time: 2 },
-    { x: 1480, y: 820, scale: 0.425, alpha: 1, time: 4 }
+    { x: 1480, y: 820, scale: 0.425, alpha: 1, time: 4 },
   ],
   [
     { x: 960, y: 1050, scale: 0.425, alpha: 1, time: 0 },
     { x: 960, y: 1100, scale: 0.425, alpha: 1, time: 1.5 },
-    { x: 960, y: 1050, scale: 0.425, alpha: 1, time: 3 }
+    { x: 960, y: 1050, scale: 0.425, alpha: 1, time: 3 },
   ],
   [
     { x: 630, y: 1280, scale: 0.425, alpha: 1, time: 0 },
     { x: 740, y: 1280, scale: 0.425, alpha: 1, time: 1.5 },
-    { x: 630, y: 1280, scale: 0.425, alpha: 1, time: 3 }
-  ]
+    { x: 630, y: 1280, scale: 0.425, alpha: 1, time: 3 },
+  ],
 ])
 
 const characterStationMaster = reactive({
   states: [
     { x: 840, y: 515, scale: 0.48, alpha: 1, time: 0 },
-    { x: 790, y: 512, scale: 0.48, alpha: 1, time: 1 }
+    { x: 790, y: 512, scale: 0.48, alpha: 1, time: 1 },
   ],
-  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 }
+  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
 })
 
 const characterIcecreamVendor = reactive({
   states: [{ x: 835, y: 1235, scale: 0.55, alpha: 1, time: 0 }],
-  state: { x: 0, y: 0, scale: 0.55, alpha: 1, time: 0 }
+  state: { x: 0, y: 0, scale: 0.55, alpha: 1, time: 0 },
+})
+
+const characterMain = reactive<Asset>({
+  loaded: false,
+  alias: 'characterMain',
+  states: [
+    { x: 840, y: 514, scale: 1.5, alpha: 0, time: 0 },
+    { x: 840, y: 515, scale: 1.5, alpha: 1, time: 0.25 },
+    { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.47 },
+    { x: 896, y: 515, scale: 1.5, alpha: 0, time: 1.5 }, // entering the tram
+    { x: 896, y: 561, scale: 1.5, alpha: 0, time: 3 },
+    { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 }, //
+    { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 }, //
+    { x: 1670, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
+    { x: 1670, y: 1280, scale: 1.5, alpha: 0, time: 14.75 }, // leaving the tram
+    { x: 1640, y: 1280, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
+    { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
+    { x: 1020, y: 1237, scale: 1.75, alpha: 1, time: 21 },
+    { x: 885, y: 1237, scale: 1.75, alpha: 1, time: 22.9 },
+    { x: 885, y: 1238, scale: 1.75, alpha: 1, time: 23 },
+  ],
+  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
+  animation: 'init',
 })
 
 const tram = reactive<Asset>({
@@ -180,33 +203,10 @@ const tram = reactive<Asset>({
     { x: 1670, y: 2040, scale: 0.5, alpha: 1, time: 23 },
     { x: 2490, y: 2040, scale: 0.5, alpha: 1, time: 32 },
     { x: 2490, y: 1708, scale: 0.5, alpha: 1, time: 36 },
-    { x: 2490, y: 1695, scale: 0.5, alpha: 0, time: 36.5 }
+    { x: 2490, y: 1695, scale: 0.5, alpha: 0, time: 36.5 },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
-  animation: 'init'
-})
-
-const characterMain = reactive<Asset>({
-  loaded: false,
-  alias: 'characterMain',
-  states: [
-    { x: 840, y: 514, scale: 1.5, alpha: 0, time: 0 },
-    { x: 840, y: 515, scale: 1.5, alpha: 1, time: 0.25 },
-    { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.47 },
-    { x: 896, y: 515, scale: 1.5, alpha: 0, time: 1.5 }, // entering the tram
-    { x: 896, y: 561, scale: 1.5, alpha: 0, time: 3 },
-    { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 }, //
-    { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 }, //
-    { x: 1670, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
-    { x: 1670, y: 1280, scale: 1.5, alpha: 0, time: 14.5 }, // leaving the tram
-    { x: 1660, y: 1280, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
-    { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 18 },
-    { x: 1020, y: 1234, scale: 1.75, alpha: 1, time: 19 },
-    { x: 880, y: 1234, scale: 1.75, alpha: 1, time: 20.9 },
-    { x: 880, y: 1235, scale: 1.75, alpha: 1, time: 21 }
-  ],
-  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
-  animation: 'init'
+  animation: 'init',
 })
 
 const mapHeight = ref(3844 * 2)
@@ -227,7 +227,7 @@ const clouds = ref<
   { size: 'lg', x: -250, y: mapHeight.value * 0.69, direction: 1 },
   { size: 'sm', x: -50, y: mapHeight.value * 0.78, direction: 1 },
   { size: 'md', x: -300, y: mapHeight.value * 0.9, direction: 1 },
-  { size: 'sm', x: -600, y: mapHeight.value * 0.96, direction: 1 }
+  { size: 'sm', x: -600, y: mapHeight.value * 0.96, direction: 1 },
 ])
 
 watchEffect(() => {
@@ -236,7 +236,7 @@ watchEffect(() => {
 
 function lockCharaterToMapCenter(x: number, y: number) {
   screen.state.x = -1.005 * x + 324.49
-  screen.state.y = -1.005 * y + screenHeight.value / 5
+  screen.state.y = -1.005 * y + screenHeight.value / 2 - 308 / 4
   currentMapAnimation.value = 'started'
 }
 
@@ -307,36 +307,28 @@ watch(currentMapAnimation, (value) => {
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-        :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-        <Sprite :texture="screen.alias"
-          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0"
-          :scale="isMobile ? 1 : 1" :anchor="0" />
-        <Sprite texture="stationBg"
-          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
-          :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
+      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" />
+        <Sprite texture="stationBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
         <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale"
-          :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
         <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter"
-          :animation="true" place="map" />
+        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter" :animation="true" place="map" />
         <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-        <CharacterMain :states="characterMain.states"
-          :animation="!rotationStop && characterMain.animation === 'started'" initalOrientation="front"
-          @move="lockCharaterToMapCenter" @playing="onCharacterStop" />
+        <CharacterMain
+          :states="characterMain.states"
+          :animation="!rotationStop && characterMain.animation === 'started'"
+          initalOrientation="front"
+          @move="lockCharaterToMapCenter"
+          @playing="onCharacterStop" />
         <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
-        <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
-          initalOrientation="right" />
-        <Sprite texture="stationFg"
-          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
-          :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
+        <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" initalOrientation="right" />
+        <Sprite texture="stationFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
         <!-- @vue-ignore -->
-        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size"
-          :x="x" :y="y" :direction="direction" />
+        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size" :x="x" :y="y" :direction="direction" />
         <!-- <template v-if="isLoad"> -->
         <Scene1 v-if="currentSceneIndex === 0 && currentMapAnimation === 'finished'" />
         <Scene2 v-else-if="currentSceneIndex === 1 && currentMapAnimation === 'finished'" />
@@ -346,7 +338,7 @@ watch(currentMapAnimation, (value) => {
         <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
         <!-- </template> -->
       </Container>
-      <!-- <External>
+      <!--  <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
           <div class="flex flex-col gap-2">
             <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
