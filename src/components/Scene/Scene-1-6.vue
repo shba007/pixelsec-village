@@ -38,7 +38,7 @@ onBeforeUnmount(() => {
 
 <template>
   <External class="absolute top-0 left-0 w-dvw h-dvh">
-    <Modal title="Terms and Conditions <br/> for Affinidi Services" container-class="pt-0 pb-4 gap-0">
+    <Modal title="Terms and Conditions <br/> for Affinidi Services" container-class="py-8 !gap-0">
       <p ref="targetElem" class="w-full overflow-auto my-2">
       <h1 style="padding-top: 3pt;text-indent: 0pt;text-align: center;">
       </h1>

@@ -56,6 +56,10 @@ import tramFrontTexture from '@/assets/tram/front.png'
 import tramBackTexture from '@/assets/tram/back.png'
 // import tramLeftTexture from '@/assets/tram/left.png'
 import tramRightTexture from '@/assets/tram/right.png'
+//
+import baloon1Texture from '@/assets/baloon-stand/1.png'
+import baloon2Texture from '@/assets/baloon-stand/2.png'
+
 // Charcters
 import characterGenericFrontStillTexture from '@/assets/character/generic/front-still.png'
 import characterGenericFrontWalk1Texture from '@/assets/character/generic/front-walk-1.png'
@@ -220,6 +224,9 @@ export const resources = reactive({
     tramFront: tramFrontTexture,
     tramBack: tramBackTexture,
     tramRight: tramRightTexture,
+    //
+    baloon1: baloon1Texture,
+    baloon2: baloon2Texture,
     // Main Character
     characterMainFrontStill: characterMainBlackFrontStillTexture,
     characterMainFrontWalk1: characterMainBlackFrontWalk1Texture,

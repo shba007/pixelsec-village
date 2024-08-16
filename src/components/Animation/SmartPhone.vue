@@ -19,9 +19,11 @@ function toggleSelect(topic: string) {
 </script>
 
 <template>
-  <div
-    class="smartphone-bg relative grid aspect-[400/722] h-full scale-[115%] grid-cols-2 grid-rows-4 items-center justify-center gap-2 px-5 pb-11 pt-5 lg:px-8 lg:pb-[4.5rem] lg:pt-10">
-    <SmartPhoneButton v-for="(topic, index) of topics" :key="topic" :image="topic"
+  <div class="smartphone-bg relative grid aspect-[400/722] h-full scale-[115%] grid-cols-2 grid-rows-4 items-center justify-center gap-2 px-5 pb-11 pt-5 lg:px-8 lg:pb-[4.5rem] lg:pt-10">
+    <SmartPhoneButton
+      v-for="(topic, index) of topics"
+      :key="topic"
+      :image="topic"
       :highlighted="selectedTopics.has(topic)"
       :class="[`row-start-${Math.floor(index / 2) + 1} col-start-${(index % 2) + 1}`, index % 2 ? 'justify-self-start' : 'justify-self-end']"
       @click="toggleSelect(topic)" />
