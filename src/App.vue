@@ -13,7 +13,6 @@ const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
 
 function updateIndex(value: number) {
   currentScreenIndex.value = value
-  console.log('updatedIndex', value)
 }
 
 const mainWindow = window

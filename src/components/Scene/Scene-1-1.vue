@@ -22,7 +22,6 @@ onMounted(() => {
 })
 
 watch(isLandscape, (value) => {
-  console.log('ScreenRotate', value)
   if (value) useTimeoutFn(handleStart, 3000)
 })
 </script>

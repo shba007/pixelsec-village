@@ -334,10 +334,6 @@ export const useGameStore = defineStore('game', () => {
   const rotationStop = computed(() => hardStop.value || (currentSceneIndex.value > 0 && !isLandscape.value))
   const motionBlur = computed(() => $motionBlur.value)
 
-  watch(rotationStop, (value) => {
-    console.log({ rotationStop: value })
-  })
-
   function toggleHardStop(value: boolean) {
     hardStop.value = value
   }
@@ -346,13 +342,15 @@ export const useGameStore = defineStore('game', () => {
     $motionBlur.value = value
   }
 
-  onMounted(() => {
-    resources.map.map = isMobile.value ? map1xTexture : map2xTexture
-  })
-
-  watch(isMobile, (value) => {
-    resources.map.map = value ? map1xTexture : map2xTexture
-  })
+  /*   onMounted(() => {
+      resources.map.map = isMobile.value ? map1xTexture : map2xTexture
+      console.log({ mapTexture: resources.map.map })
+    })
+  
+    watch(isMobile, (value) => {
+      resources.map.map = value ? map1xTexture : map2xTexture
+      console.log({ mapTexture: resources.map.map })
+    }) */
 
   watch(activeCharacter, (value) => {
     if (!value) return

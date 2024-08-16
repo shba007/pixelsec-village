@@ -10,6 +10,7 @@ const gameStore = useGameStore()
 const selectedTopics = ref<string[]>()
 
 function onSelect(topics: string[]) {
+  // DATA-COLLECT
   console.log({ topics })
   selectedTopics.value = topics
 }
