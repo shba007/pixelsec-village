@@ -319,34 +319,42 @@ watch(currentMapAnimation, (value) => {
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="isMobile ? 1 : 1" :anchor="0" />
-        <Sprite texture="stationBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
+      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+        :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+        <Sprite :texture="screen.alias"
+          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0"
+          :scale="isMobile ? 1 : 1" :anchor="0" />
+        <Sprite texture="stationBg"
+          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
+          :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
         <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale"
+          :flip="flip" />
         <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter" :animation="true" place="map" />
+        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter"
+          :animation="true" place="map" />
         <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-        <CharacterMain
-          :states="characterMain.states"
-          :animation="!rotationStop && characterMain.animation === 'started'"
-          initalOrientation="front"
-          @move="lockCharaterToMapCenter"
-          @playing="onCharacterStop" />
+        <CharacterMain :states="characterMain.states"
+          :animation="!rotationStop && characterMain.animation === 'started'" initalOrientation="front"
+          @move="lockCharaterToMapCenter" @playing="onCharacterStop" />
         <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
-        <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" initalOrientation="right" />
-        <Sprite texture="stationFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
+        <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
+          initalOrientation="right" />
+        <Sprite texture="stationFg"
+          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
+          :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
         <!-- @vue-ignore -->
-        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size" :x="x" :y="y" :direction="direction" />
+        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size"
+          :x="x" :y="y" :direction="direction" />
         <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
         <!-- <template v-if="isLoad"> -->
         <Scene1 v-if="currentSceneIndex === 0 && currentMapAnimation === 'finished'" />
         <Scene2 v-else-if="currentSceneIndex === 1 && currentMapAnimation === 'finished'" />
         <Scene3 v-else-if="currentSceneIndex === 2 && currentMapAnimation === 'finished'" />
-        <!-- <Scene4 v-else-if="currentSceneIndex === 3 && currentMapAnimation === 'finished'" /> -->
+        <Scene4 v-else-if="currentSceneIndex === 3 && currentMapAnimation === 'finished'" />
         <Scene5 v-else-if="currentSceneIndex === 4 && currentMapAnimation === 'finished'" />
         <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
         <!-- </template> -->
