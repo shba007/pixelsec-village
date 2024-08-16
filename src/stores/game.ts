@@ -17,7 +17,7 @@ import buttonLongTexture from '@/assets/buttons/long.png'
 import buttonLongPressedTexture from '@/assets/buttons/long-pressed.png'
 //
 import map1xTexture from '@/assets/map-1x.jpg'
-import map2xTexture from '@/assets/map-2x.jpg'
+// import map2xTexture from '@/assets/map-2x.jpg'
 //
 import stationBgTexture from '@/assets/station-bg.png'
 import stationFgTexture from '@/assets/station-fg.png'
@@ -374,10 +374,6 @@ export const useGameStore = defineStore('game', () => {
     resources.map.characterMainRightWalk1 = resources.map[`characterMain${capitalizeFirstLetter(value)}RightWalk1`]
     // @ts-ignore
     resources.map.characterMainRightWalk2 = resources.map[`characterMain${capitalizeFirstLetter(value)}RightWalk2`]
-  })
-
-  onMounted(() => {
-    resources.map.map = isMobile.value ? map1xTexture : map2xTexture
   })
 
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
