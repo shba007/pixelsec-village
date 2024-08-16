@@ -31,7 +31,8 @@ body {
   @apply font-lan;
 }
 
-img {
+img,
+div {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;

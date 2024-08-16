@@ -319,12 +319,17 @@ export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
   const $motionBlur = ref(false)
+  const currentSceneIndex = ref(0)
 
   const activeCharacter = ref<Character | null>(null)
   const currentScreenIndex = ref(0)
   const hardStop = ref(false)
   const rotationStop = computed(() => hardStop.value || (currentSceneIndex.value > 0 && !isLandscape.value))
   const motionBlur = computed(() => $motionBlur.value)
+
+  watch(rotationStop, (value) => {
+    console.log({ rotationStop: value })
+  })
 
   function toggleHardStop(value: boolean) {
     hardStop.value = value
@@ -373,7 +378,6 @@ export const useGameStore = defineStore('game', () => {
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
 
-  const currentSceneIndex = ref(0)
   const currentMapStateIndex = ref(0)
   const currentMapAnimation = ref<'init' | 'started' | 'finished'>('init')
 

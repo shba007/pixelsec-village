@@ -6,7 +6,8 @@ defineProps<{
 </script>
 
 <template>
-  <button class="aspect-square w-full">
-    <img :src="`/images/smartphone/${image}${highlighted ? '-highlighted' : ''}.png`" :alt="image" class="size-full" />
+  <button class="relative block aspect-[256/284] max-w-[128px] scale-[85%]">
+    <img :src="`/images/smartphone/${image}${highlighted ? '-highlighted' : ''}.png`" :alt="image"
+      class="object-contain aspect-[256/284]" />
   </button>
 </template>

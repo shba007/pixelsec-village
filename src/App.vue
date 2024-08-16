@@ -24,12 +24,10 @@ const mainWindow = window
     <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2" :current-screen-index="currentScreenIndex" @close="updateIndex" />
     <ScreenStation :is-load="currentScreenIndex === 1" @close="updateIndex" />
     <ScreenPark :is-load="currentScreenIndex === 3" @close="updateIndex" />
-    <SceneRotate v-if="rotationStop" :overlay="true" />
+    <SceneRotate v-if="!hardStop && rotationStop" :overlay="true" />
   </Application>
   <!-- DEBUG -->
-  <!-- <button class="fixed right-0 bottom-0 z-[99999] bg-white p-2" @click="gameStore.toggleHardStop(!hardStop)">
-    HardStop {{ hardStop }}
-  </button> -->
+  <button class="fixed right-0 top-0 z-[99999] bg-white p-2" @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
 </template>
 
 <style lang="css">

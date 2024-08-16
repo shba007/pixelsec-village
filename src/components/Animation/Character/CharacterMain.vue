@@ -54,7 +54,7 @@ const activeCharacter = reactive<Character>({
 })
 
 const activeTrail = reactive({
-  aliases: [] as string[],
+  aliases: trailAnimations['back'] as string[],
   x: 0,
   y: 0,
 })
@@ -124,35 +124,23 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
-    <AnimatedSprite
-      v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'"
-      :textures="activeTrail.aliases"
-      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5"
-      :x="activeTrail.x"
-      :y="activeTrail.y"
-      :scale="1"
-      :alpha="1"
-      :playing="true"
-      :animation-speed="0.08" />
-    <AnimatedSprite
-      :textures="activeCharacter.aliases"
-      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5"
-      :x="0"
-      :y="0"
-      :scale="1"
-      :alpha="1"
-      :playing="animation && activeCharacter.animation === 'started'"
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :alpha="activeCharacter.state.alpha">
+    <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
+    <AnimatedSprite :textures="activeTrail.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5"
+      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="true" :animation-speed="0.08" />
+    <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="animation && activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
   </Container>
-  <!--  <External>
-    <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50">
+  <External>
+    <div class="absolute bottom-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
-        <input v-model="activeTrail.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="activeTrail.y" type="number" min="-10000" max="10000" step="10" />
-  </div>
-  </div>
-  </External> -->
+        <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="activeCharacter.state.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="activeCharacter.state.scale" type="number" min="0" max="5" step="0.01" />
+        <input v-model="activeCharacter.state.time" type="number" min="0" max="100" step="0.5" />
+      </div>
+    </div>
+  </External>
 </template>

@@ -170,14 +170,14 @@ const characterMain = reactive<Asset>({
   states: [
     { x: 840, y: 514, scale: 1.5, alpha: 0, time: 0 },
     { x: 840, y: 515, scale: 1.5, alpha: 1, time: 0.25 },
-    { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.47 },
-    { x: 896, y: 515, scale: 1.5, alpha: 0, time: 1.5 }, // entering the tram
+    { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.5 },
+    { x: 880, y: 515, scale: 1.5, alpha: 0, time: 1.25 }, // entering the tram
     { x: 896, y: 561, scale: 1.5, alpha: 0, time: 3 },
     { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 }, //
     { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 }, //
     { x: 1670, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
-    { x: 1670, y: 1280, scale: 1.5, alpha: 0, time: 14.75 }, // leaving the tram
-    { x: 1640, y: 1280, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
+    { x: 1670, y: 1280, scale: 1.5, alpha: 0, time: 14.25 }, // leaving the tram
+    { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
     { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
     { x: 1020, y: 1237, scale: 1.75, alpha: 1, time: 21 },
     { x: 885, y: 1237, scale: 1.75, alpha: 1, time: 22.9 },
@@ -307,28 +307,36 @@ watch(currentMapAnimation, (value) => {
       <Text :x="120" :y="120" :anchor="0.5">Loading...</Text>
     </template>
     <template #default>
-      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-        <Sprite :texture="screen.alias" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" />
-        <Sprite texture="stationBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
+      <Container v-if="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+        :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+        <Sprite :texture="screen.alias"
+          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0"
+          :scale="1" :anchor="0" />
+        <Sprite texture="stationBg"
+          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
+          :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
         <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
         <!-- @vue-ignore -->
         <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
         <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+        <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale"
+          :flip="flip" />
         <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter" :animation="true" place="map" />
+        <CharacterGeneric v-for="(genericCharacter, index) of charactersGeneric" :key="index" :states="genericCharacter"
+          :animation="true" place="map" />
         <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-        <CharacterMain
-          :states="characterMain.states"
-          :animation="!rotationStop && characterMain.animation === 'started'"
-          initalOrientation="front"
-          @move="lockCharaterToMapCenter"
-          @playing="onCharacterStop" />
+        <CharacterMain :states="characterMain.states"
+          :animation="!rotationStop && characterMain.animation === 'started'" initalOrientation="front"
+          @move="lockCharaterToMapCenter" @playing="onCharacterStop" />
         <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
-        <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" initalOrientation="right" />
-        <Sprite texture="stationFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
+        <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
+          initalOrientation="right" />
+        <Sprite texture="stationFg"
+          :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
+          :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
         <!-- @vue-ignore -->
-        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size" :x="x" :y="y" :direction="direction" />
+        <MapCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="mapWidth" :size="size"
+          :x="x" :y="y" :direction="direction" />
         <!-- <template v-if="isLoad"> -->
         <Scene1 v-if="currentSceneIndex === 0 && currentMapAnimation === 'finished'" />
         <Scene2 v-else-if="currentSceneIndex === 1 && currentMapAnimation === 'finished'" />
@@ -338,20 +346,21 @@ watch(currentMapAnimation, (value) => {
         <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
         <!-- </template> -->
       </Container>
-      <!--  <External>
-        <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50">
+      <!-- DEBUG -->
+      <External>
+        <div class="absolute bottom-0 left-0 right-0 z-50 flex w-fit items-center gap-8">
           <div class="flex flex-col gap-2">
             <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
             <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
           </div>
-          <div class="flex flex-col gap-2">
-            <input v-model="station.fg.x" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="station.fg.y" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="station.fg.scale" type="number" min="0" max="20" step="0.01" />
-          </div>
+          <!--  <div class="flex flex-col gap-2">
+            <input v-model="characterMain.state.x" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="characterMain.state.y" type="number" min="-10000" max="10000" step="10" />
+            <input v-model="characterMain.state.scale" type="number" min="0" max="20" step="0.01" />
+          </div> -->
         </div>
-      </External> -->
+      </External>
     </template>
   </Loader>
 </template>
