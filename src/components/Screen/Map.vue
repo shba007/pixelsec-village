@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch, watchEffect } from 'vue'
+import { computed, reactive, ref, watch, watchEffect } from 'vue'
 import { Loader, External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
@@ -15,17 +15,19 @@ import Wave from '@/components/Animation/Wave.vue'
 import MapTram from '@/components/Animation/MapTram.vue'
 import MapCloud from '@/components/Animation/MapCloud.vue'
 import Fountain from '@/components/Animation/Fountain.vue'
+import BaloonStand from '@/components/Animation/BaloonStand.vue'
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
 import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 import CharacterIcecreamVendor from '@/components/Animation/Character/CharacterIcecreamVendor.vue'
+
 import Scene1 from '@/components/Scene/Scene-1-1.vue'
 import Scene2 from '@/components/Scene/Scene-1-2.vue'
 import Scene3 from '@/components/Scene/Scene-1-3.vue'
 import Scene4 from '@/components/Scene/Scene-1-4.vue'
 import Scene5 from '@/components/Scene/Scene-1-5.vue'
 import Scene6 from '@/components/Scene/Scene-1-6.vue'
-import BaloonStand from '../Animation/BaloonStand.vue'
+import Scene7 from '@/components/Scene/Scene-1-7.vue'
 
 const props = defineProps<{
   currentScreenIndex: number
@@ -57,6 +59,7 @@ const screen = reactive<Asset>({
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
 })
+
 const station = reactive({ bg: { x: 725, y: 265, scale: 0.5 }, fg: { x: 867, y: 259.5, scale: 0.5 } })
 
 const wave = reactive({
@@ -241,11 +244,6 @@ watchEffect(() => {
   if (currentSceneIndex.value === 6 && currentMapAnimation.value === 'finished') emit('close', 1)
 })
 
-const showProtipModal = ref(false)
-watch(currentSceneIndex, (value) => {
-  if (value == 9) showProtipModal.value = true
-})
-
 function lockCharaterToMapCenter(x: number, y: number) {
   screen.state.x = -1.005 * x + 324.49
   screen.state.y = -1.005 * y + screenHeight.value / 2 - 308 / 4
@@ -295,12 +293,12 @@ onTick((delta) => {
       }
 
       console.log(
-        'currentScreenIndex',
-        props.currentScreenIndex,
         'currentSceneIndex',
         currentSceneIndex.value,
         'currentMapStateIndex',
         currentMapStateIndex.value,
+        'currentScreenIndex',
+        props.currentScreenIndex,
         'currentMapAnimation',
         currentMapAnimation.value
       )
@@ -342,7 +340,7 @@ watch(currentMapAnimation, (value) => {
           @move="lockCharaterToMapCenter" @playing="onCharacterStop" />
         <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
         <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
-          initalOrientation="right" />
+          :motion-blur="motionBlur" initalOrientation="right" />
         <Sprite texture="stationFg"
           :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
           :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
@@ -357,6 +355,7 @@ watch(currentMapAnimation, (value) => {
         <Scene4 v-else-if="currentSceneIndex === 3 && currentMapAnimation === 'finished'" />
         <Scene5 v-else-if="currentSceneIndex === 4 && currentMapAnimation === 'finished'" />
         <Scene6 v-else-if="currentSceneIndex === 5 && currentMapAnimation === 'finished'" />
+        <Scene7 v-else-if="currentSceneIndex === 9" />
         <!-- </template> -->
       </Container>
       <!-- DEBUG -->

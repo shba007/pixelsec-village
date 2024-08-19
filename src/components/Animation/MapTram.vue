@@ -33,6 +33,7 @@ const props = defineProps<{
   states: Route[]
   animation: boolean
   initalOrientation: Orientation
+  motionBlur: boolean
 }>()
 
 const emit = defineEmits<{
@@ -109,14 +110,8 @@ onTick((delta) => {
 </script>
 
 <template>
-  <AnimatedSprite
-    :textures="tram.aliases"
-    :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-    :anchor="0.5"
-    :x="tram.state.x"
-    :y="tram.state.y"
-    :scale="tram.state.scale"
-    :alpha="tram.state.alpha"
-    :playing="animation && tram.animation === 'started'"
-    :animation-speed="0.08" />
+  <AnimatedSprite :textures="tram.aliases"
+    :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :anchor="0.5"
+    :x="tram.state.x" :y="tram.state.y" :scale="tram.state.scale" :alpha="tram.state.alpha"
+    :playing="animation && tram.animation === 'started'" :animation-speed="0.08" />
 </template>

@@ -3,9 +3,11 @@ import { computed, reactive } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 import { Loader, External } from 'vue3-pixi'
 import { resources } from '@/stores/game'
-import type { Asset } from '@/utils/types'
-import { SCALE_MODES } from '@/utils/types'
+import { SCALE_MODES, type Asset } from '@/utils/types'
+
 import CharacterIcecreamVendor from '@/components/Animation/Character/CharacterIcecreamVendor.vue'
+import Scene1 from "@/components/Scene/Scene-3-1.vue";
+import Scene2 from "@/components/Scene/Scene-3-2.vue";
 
 defineProps<{
   isLoad: boolean
@@ -37,7 +39,7 @@ const characterIcecreamVendor = reactive({
   state: { x: -90, y: 170, scale: 1, alpha: 1, time: 0 },
 })
 
-function onLoad() {}
+function onLoad() { }
 </script>
 
 <template>
@@ -47,9 +49,13 @@ function onLoad() {}
     </template>
     <template #default>
       <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-        <Sprite :texture="park.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x" :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
-        <Sprite :texture="park.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x" :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <Sprite :texture="park.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
+          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
+        <Sprite :texture="park.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="abc.state.x"
+          :y="abc.state.y" :scale="abc.state.scale" :anchor="0.5" />
         <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />
+        <Scene1 v-if="false" class="text-left" />
+        <Scene2 v-else-if="true" class="text-left" />
       </Container>
       <!--  <External>
         <div class="flex items-center absolute gap-8 bottom-0 left-0 right-0 z-50 w-fit">

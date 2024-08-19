@@ -166,15 +166,22 @@ export const resources = reactive({
     characterGenericLeftWalk2: characterGenericLeftWalk2Texture,
     characterGenericRightWalk1: characterGenericRightWalk1Texture,
     characterGenericRightWalk2: characterGenericRightWalk2Texture,
-    //
     characterGenericLeftWalk1Side: characterGenericLeftWalk1SideTexture,
     characterGenericLeftWalk2Side: characterGenericLeftWalk2SideTexture,
     //
     mapCharacterStationMaster1: mapCharacterStationMaster1Texture,
     mapCharacterStationMaster2: mapCharacterStationMaster2Texture,
     mapCharacterStationMaster3: mapCharacterStationMaster3Texture,
+    //
     stationCharacterStationMaster1: stationCharacterStationMaster1Texture,
     stationCharacterStationMaster2: stationCharacterStationMaster2Texture,
+    //
+    mapCharacterIcecreamVendor1: mapCharacterIcecreamVendor1Texture,
+    mapCharacterIcecreamVendor2: mapCharacterIcecreamVendor2Texture,
+    //
+    parkCharacterIcecreamVendorWave1: parkCharacterIcecreamVendorWave1Texture,
+    parkCharacterIcecreamVendorWave2: parkCharacterIcecreamVendorWave2Texture,
+    parkCharacterIcecreamVendorHandout: parkCharacterIcecreamVendorHandoutTexture,
   },
   map: {
     frontINET,
@@ -287,11 +294,13 @@ export const resources = reactive({
     dataTrailSide3: dataTrailSide3Texture,
     dataTrailSide4: dataTrailSide4Texture,
     //
+    mapCharacterStationMaster1: mapCharacterStationMaster1Texture,
+    mapCharacterStationMaster2: mapCharacterStationMaster2Texture,
+    mapCharacterStationMaster3: mapCharacterStationMaster3Texture,
+    //
     mapCharacterIcecreamVendor1: mapCharacterIcecreamVendor1Texture,
     mapCharacterIcecreamVendor2: mapCharacterIcecreamVendor2Texture,
-    parkCharacterIcecreamVendorWave1: parkCharacterIcecreamVendorWave1Texture,
-    parkCharacterIcecreamVendorWave2: parkCharacterIcecreamVendorWave2Texture,
-    parkCharacterIcecreamVendorHandout: parkCharacterIcecreamVendorHandoutTexture,
+    //
   },
   station: {
     //
@@ -306,10 +315,17 @@ export const resources = reactive({
     //
     stationTram: stationTramTexture,
     stationTramWire: stationTramWireTexture,
+    //
+    stationCharacterStationMaster1: stationCharacterStationMaster1Texture,
+    stationCharacterStationMaster2: stationCharacterStationMaster2Texture,
   },
   park: {
     parkBackground: parkBackgroundTexture,
     parkForeground: parkForegroundTexture,
+    //
+    parkCharacterIcecreamVendorWave1: parkCharacterIcecreamVendorWave1Texture,
+    parkCharacterIcecreamVendorWave2: parkCharacterIcecreamVendorWave2Texture,
+    parkCharacterIcecreamVendorHandout: parkCharacterIcecreamVendorHandoutTexture,
   },
 })
 
@@ -325,13 +341,14 @@ function capitalizeFirstLetter(word: string): string {
 export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
-  const $motionBlur = ref(false)
-  const currentSceneIndex = ref(0)
-
   const activeCharacter = ref<Character | null>(null)
+  const currentSceneIndex = ref(0)
+  const currentMapStateIndex = ref(0)
   const currentScreenIndex = ref(0)
+  const currentMapAnimation = ref<'init' | 'started' | 'finished'>('init')
   const hardStop = ref(false)
   const rotationStop = computed(() => hardStop.value || (currentSceneIndex.value > 0 && !isLandscape.value))
+  const $motionBlur = ref(false)
   const motionBlur = computed(() => $motionBlur.value)
 
   function toggleHardStop(value: boolean) {
@@ -378,9 +395,6 @@ export const useGameStore = defineStore('game', () => {
 
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
-
-  const currentMapStateIndex = ref(0)
-  const currentMapAnimation = ref<'init' | 'started' | 'finished'>('init')
 
   async function toggleGameMode(value: boolean) {
     try {
