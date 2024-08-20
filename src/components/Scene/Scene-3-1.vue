@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { External } from 'vue3-pixi'
+import { ref } from 'vue'
+import { useTimeoutFn } from '@vueuse/core'
+import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
+
+const gameStore = useGameStore()
 
 const options = ref([
   { checked: false, describe: 'Past online shopping' },
@@ -9,12 +12,18 @@ const options = ref([
   { checked: false, describe: 'Bank/Card details' },
   { checked: false, describe: 'Social media profile' },
 ])
+
+function handleMove() {
+  // DATA-COLLECT
+  gameStore.nextScene()
+  gameStore.nextMapState()
+}
+
+useTimeoutFn(handleMove, 4000)
 </script>
 
 <template>
-  <!-- <External class="absolute left-0 top-0 h-dvh w-dvw"> -->
-  <Modal type="long" title="" description="It’s a hot day and you need to cool off. How about a free ice-cream in exchange for your personal data? What are you willing to share?" />
-  <!-- </External> -->
+  <Modal type="long" title="" description="It’s a hot day and you need to cool off. How about a free ice-cream in exchange for your personal data? What are you willing to share?" y="top" />
 </template>
 
 <style lang="css" scoped>

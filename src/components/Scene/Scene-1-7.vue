@@ -13,7 +13,5 @@ async function handleStart() {
 </script>
 
 <template>
-  <External class="absolute left-0 top-0 h-dvh w-dvw">
-    <ModalProtip title="You can <strong>Discover</strong> your fragmented data across the digital realm with Affinidi." />
-  </External>
+  <ModalProtip title="You can <strong>Discover</strong> your fragmented data across the digital realm with Affinidi." />
 </template>

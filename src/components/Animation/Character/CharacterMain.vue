@@ -15,14 +15,21 @@ interface Character {
   animation: 'init' | 'started' | 'finished'
 }
 
-const props = defineProps<{
-  states: State[]
-  animation: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    states: State[]
+    currentCharacterStateIndex?: number
+    animation: 'init' | 'started' | 'finished'
+  }>(),
+  {
+    currentCharacterStateIndex: 0,
+  }
+)
 
 const emit = defineEmits<{
   (e: 'move', x: number, y: number): void
-  (e: 'playing', state: boolean): void
+  (e: 'updateStateIndex', stateIndex: number): void
+  (e: 'updateAnimation', state: 'init' | 'started' | 'finished'): void
 }>()
 
 const characterAnimations = {
@@ -72,7 +79,7 @@ let progress = 0
 const currentCharacterStateIndex = ref(0)
 
 onTick((delta) => {
-  if (props.animation && activeCharacter.animation === 'started') {
+  if (props.animation && props.animation === 'started') {
     totalElaspedTime += delta / 100
     const dt = props.states[currentCharacterStateIndex.value + 1].time - props.states[currentCharacterStateIndex.value].time
     const dx = props.states[currentCharacterStateIndex.value + 1].x - props.states[currentCharacterStateIndex.value].x
@@ -111,13 +118,14 @@ onTick((delta) => {
     }
 
     if (progress == 1) {
-      activeCharacter.animation = 'finished'
       totalElaspedTime = 0
       currentCharacterStateIndex.value++
 
-      if (currentCharacterStateIndex.value < props.states.length - 1) activeCharacter.animation = 'started'
+      if (!(currentCharacterStateIndex.value < props.states.length - 1)) {
+        emit('updateAnimation', 'finished')
+      }
 
-      if (activeCharacter.animation === 'finished') emit('playing', false)
+      emit('updateStateIndex', currentCharacterStateIndex.value)
     }
   }
 })
@@ -144,17 +152,19 @@ onTick((delta) => {
       :y="0"
       :scale="1"
       :alpha="1"
-      :playing="animation && activeCharacter.animation === 'started'"
+      :playing="animation === 'started'"
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <!--   <External>
     <div class="absolute bottom-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />
         <input v-model="activeCharacter.state.y" type="number" min="-10000" max="10000" step="10" />
         <input v-model="activeCharacter.state.scale" type="number" min="0" max="5" step="0.01" />
+        <input v-model="activeCharacter.state.alpha" type="number" min="0" max="1" step="0.1" />
         <input v-model="activeCharacter.state.time" type="number" min="0" max="100" step="0.5" />
+        <input v-model="currentCharacterStateIndex" type="number" min="0" max="50" step="1" />
       </div>
     </div>
   </External> -->

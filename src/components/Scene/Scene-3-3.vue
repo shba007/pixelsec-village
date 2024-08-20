@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { External } from 'vue3-pixi'
+import { ref } from 'vue'
 import Modal from '@/components/Modal.vue'
+import { useGameStore } from '@/stores/game'
+
+const gameStore = useGameStore()
 
 const options = ref([
   { title: 'Yes', value: true },
@@ -11,12 +13,14 @@ const selectedOption = ref<boolean | null>(null)
 
 function onClick(value: boolean) {
   selectedOption.value = value
+
+  setTimeout(() => {
+    gameStore.nextScene()
+  }, 300)
 }
 </script>
 
 <template>
-  <!-- <External class="absolute left-0 top-0 h-dvh w-dvw"> -->
-
   <Modal type="mid" title="" description="Would you like to collect all your data from one place for convenience?">
     <div class="flex w-full justify-end px-16">
       <ul class="flex flex-col gap-2">
@@ -29,7 +33,6 @@ function onClick(value: boolean) {
       </ul>
     </div>
   </Modal>
-  <!-- </External> -->
 </template>
 
 <style lang="css" scoped>

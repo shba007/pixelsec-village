@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { External } from 'vue3-pixi'
+import { watchDebounced } from '@vueuse/core'
+import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
+
+const gameStore = useGameStore()
 
 const options = ref([
   { checked: false, describe: 'Past online shopping' },
@@ -10,29 +13,34 @@ const options = ref([
   { checked: false, describe: 'Social media profile' },
 ])
 
-function onClick(index: number, checked: boolean) {
+function onSelect(index: number, checked: boolean) {
+  // DATA-COLLECT
   options.value[index].checked = checked
+}
+
+watchDebounced(options, onComplete, { debounce: 2000, deep: true })
+
+function onComplete() {
+  gameStore.nextScene()
 }
 </script>
 
 <template>
-  <!-- <External class="absolute left-0 top-0 h-dvh w-dvw"> -->
-  <Modal type="short" title="">
-    <ul class="flex flex-col">
-      <li class="flex" v-for="({ checked, describe }, index) of options" :key="index">
-        <button class="active-btn" :class="checked ? 'checked' : 'unchecked'" @click="onClick(index, !checked)" />
+  <Modal type="short" title="" x="right">
+    <ul class="flex flex-col items-start gap-4">
+      <li class="flex gap-4" v-for="({ checked, describe }, index) of options" :key="index">
+        <button class="active-btn" :class="checked ? 'checked' : 'unchecked'" @click="onSelect(index, !checked)" />
         <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]">
           {{ describe }}
         </span>
       </li>
     </ul>
   </Modal>
-  <!-- </External> -->
 </template>
 
 <style lang="css" scoped>
 .active-btn {
-  @apply flex aspect-[8/3] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
+  @apply aspect-[14/18] h-[32px] bg-contain bg-bottom bg-no-repeat lg:h-[80px];
 }
 
 .active-btn.checked {

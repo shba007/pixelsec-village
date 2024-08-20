@@ -21,14 +21,12 @@ function onCharcterSet(type: Character) {
 </script>
 
 <template>
-  <External class="absolute left-0 top-0 h-dvh w-dvw">
-    <!-- description is word breaking -->
-    <Modal title="Select your Avatar" description="Choose your main character energy." containerClass="gap-6">
-      <div class="flex gap-8 md:gap-12">
-        <button v-for="{ type, image } of characters" :key="image" @click="onCharcterSet(type)">
-          <img :src="image" class="w-[48px] duration-300 hover:scale-125 lg:w-[80px]" />
-        </button>
-      </div>
-    </Modal>
-  </External>
+  <!-- description is word breaking -->
+  <Modal title="Select your Avatar" description="Choose your main character energy." containerClass="gap-6">
+    <div class="flex gap-8 md:gap-12">
+      <button v-for="{ type, image } of characters" :key="image" @click="onCharcterSet(type)">
+        <img :src="image" class="w-[48px] duration-300 hover:scale-125 lg:w-[80px]" />
+      </button>
+    </div>
+  </Modal>
 </template>

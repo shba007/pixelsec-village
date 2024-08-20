@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch, watchEffect } from 'vue'
-import { Loader, External, useScreen } from 'vue3-pixi'
+import { computed, onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
+import { External, useScreen } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
-import { useGameStore, resources } from '@/stores/game'
+import { useGameStore } from '@/stores/game'
 import type { Asset, State } from '@/utils/types'
 import { SCALE_MODES } from '@/utils/types'
 import StationCloud from '@/components/Animation/StationCloud.vue'
@@ -15,16 +15,14 @@ import Pigeon from '@/components/Animation/Pigeon.vue'
 import Scene1 from '@/components/Scene/Scene-2-1.vue'
 import Scene2 from '@/components/Scene/Scene-2-2.vue'
 
-const props = defineProps<{
-  isLoad: boolean
-}>()
+const props = defineProps<{}>()
 
 const emit = defineEmits<{
   (event: 'close', nextSceneIndex: number): void
 }>()
 
 const gameStore = useGameStore()
-const { currentSceneIndex } = storeToRefs(gameStore)
+const { currentSceneIndex, rotationStop } = storeToRefs(gameStore)
 
 const canvasScreen = useScreen()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -86,25 +84,12 @@ function onLoad() {
   characterStationMaster.state = characterStationMaster.states[0]
 }
 
-onMounted(onLoad)
-
-watch(
-  () => props.isLoad,
-  () => {
-    setTimeout(() => gameStore.nextScene(), 2000)
-  }
-)
+onBeforeMount(onLoad)
+onMounted(() => setTimeout(() => gameStore.nextScene(), 2000))
 </script>
 
 <template>
-  <!-- <Loader :resources="{ ...resources.general, ...resources.station }" :on-resolved="onLoad">
-    <template #fallback="{ progress }">
-      <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :style="{ fill: 'white' }" :scale="0.5">
-        Loading... {{ Math.round(progress * 100) }}%
-      </Text>
-    </template>
-<template #default> -->
-  <Container v-if="isLoad" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
+  <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Sprite :texture="sky.alias" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="sky.state.x" :y="sky.state.y" :scale="sky.state.scale" :anchor="0.5" />
     <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="screenWidth" :size="size" :x="x" :y="y" :direction="direction" />
     <Sprite :texture="platform.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200" :scale="1" :anchor="0.5" />
@@ -114,12 +99,14 @@ watch(
     <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0.5" />
     <CharacterStationMaster :state="characterStationMaster.state" place="station" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
-    <!-- <template v-if="isLoad"> -->
+  </Container>
+  <Container v-if="!rotationStop">
     <Scene1 v-if="currentSceneIndex === 7" />
     <Scene2 v-else-if="currentSceneIndex === 8" />
-    <!-- </template> -->
   </Container>
-  <!-- <External>
+  <!-- DEBUG -->
+  <!-- 
+  <External>
         <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50 w-fit">
           <div class="flex flex-col gap-2">
             <input v-model="sky.state.x" type="number" min="-10000" max="10000" step="10" />
@@ -131,7 +118,6 @@ watch(
             <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
           </div> 
         </div>
-      </External> -->
-  <!-- </template> -->
-  <!-- </Loader> -->
+      </External>
+       -->
 </template>

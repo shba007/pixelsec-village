@@ -1,10 +1,9 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { External } from 'vue3-pixi'
+import { watchDebounced } from '@vueuse/core'
 import { useGameStore } from '@/stores/game'
 import SmartPhone from '@/components/Animation/SmartPhone.vue'
-import popupSquare from '@/assets/popup/bg-square.png'
-import { ref } from 'vue'
-import { watchDebounced } from '@vueuse/core'
 
 const gameStore = useGameStore()
 const selectedTopics = ref<string[]>()
@@ -23,7 +22,7 @@ function onComplete() {
 </script>
 
 <template>
-  <External class="absolute left-0 top-0 h-dvh w-dvw">
+  <External class="absolute left-0 top-0 -z-0 h-dvh w-dvw">
     <div class="absolute left-1/2 top-1/2 flex max-h-[80vh] w-3/4 -translate-x-1/2 -translate-y-1/2 items-center justify-center md:w-3/5">
       <div class="relative flex items-center justify-center gap-8 md:translate-x-10">
         <!-- SMARTPHONE -->

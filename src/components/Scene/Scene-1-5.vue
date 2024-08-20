@@ -16,15 +16,13 @@ function onClick(value: boolean) {
 </script>
 
 <template>
-  <External class="absolute left-0 top-0 h-dvh w-dvw">
-    <Modal title="" description="">
-      <p class="text-center text-3xl lg:text-[2.5rem] lg:leading-[3rem]" v-html="'Before we begin, <br/> let’s go through the T&Cs.'" />
-      <div class="flex gap-8">
-        <button class="active-btn" @click="onClick(false)">Skip T&Cs</button>
-        <button class="active-btn" @click="onClick(true)">Read T&Cs</button>
-      </div>
-    </Modal>
-  </External>
+  <Modal title="" description="">
+    <p class="text-center text-3xl lg:text-[2.5rem] lg:leading-[3rem]" v-html="'Before we begin, <br/> let’s go through the T&Cs.'" />
+    <div class="flex gap-8">
+      <button class="active-btn" @click="onClick(false)">Skip T&Cs</button>
+      <button class="active-btn" @click="onClick(true)">Read T&Cs</button>
+    </div>
+  </Modal>
 </template>
 
 <style lang="css" scoped>
