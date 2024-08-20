@@ -3,18 +3,17 @@ import { External } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
-import ModalProtip from "@/components/ModalProtip.vue";
+import ModalProtip from '@/components/ModalProtip.vue'
 
 const gameStore = useGameStore()
 
 async function handleStart() {
-    gameStore.nextScene()
+  gameStore.nextScene()
 }
 </script>
 
 <template>
-    <External class="absolute left-0 top-0 h-dvh w-dvw">
-        <ModalProtip
-            title="You can <strong>Discover</strong> your fragmented data across the digital realm with Affinidi." />
-    </External>
+  <External class="absolute left-0 top-0 h-dvh w-dvw">
+    <ModalProtip title="You can <strong>Discover</strong> your fragmented data across the digital realm with Affinidi." />
+  </External>
 </template>

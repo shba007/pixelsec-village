@@ -1,4 +1,4 @@
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useFullscreen, useScreenOrientation, useWindowSize } from '@vueuse/core'
 
@@ -11,10 +11,17 @@ import fountainTexture3 from '@/assets/fountain/3.png'
 import fountainTexture4 from '@/assets/fountain/4.png'
 import fountainTexture5 from '@/assets/fountain/5.png'
 //
+import popupBarTexture from '@/assets/popup/bg-bar.png'
 import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
 import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
+import popupSquareTexture from '@/assets/popup/bg-square.png'
+//
 import buttonLongTexture from '@/assets/buttons/long.png'
 import buttonLongPressedTexture from '@/assets/buttons/long-pressed.png'
+import buttonShortTexture from '@/assets/buttons/short.png'
+import buttonShortPressedTexture from '@/assets/buttons/short-pressed.png'
+import buttonSquareTexture from '@/assets/buttons/square.png'
+import buttonSquarePressedTexture from '@/assets/buttons/square-pressed.png'
 //
 import map1xTexture from '@/assets/map-1x.jpg'
 // import map2xTexture from '@/assets/map-2x.jpg'
@@ -152,7 +159,19 @@ import parkForegroundTexture from '@/assets/park/park-foreground.png'
 
 export const resources = reactive({
   general: {
-    pigeonleftPeck: pigeonLeftPeckTexture,
+    popupBar: popupBarTexture,
+    popupSquare: popupSquareTexture,
+    popupLandscape: popupLandscapeTexture,
+    popupPortrait: popupPortraitTexture,
+    //
+    buttonLong: buttonLongTexture,
+    buttonLongPressed: buttonLongPressedTexture,
+    buttonShort: buttonShortTexture,
+    buttonShortPressed: buttonShortPressedTexture,
+    buttonSquare: buttonSquareTexture,
+    buttonSquarePressed: buttonSquarePressedTexture,
+    //
+    pigeonLeftPeck: pigeonLeftPeckTexture,
     pigeonLeftStand: pigeonLeftStandTexture,
     pigeonRightPeck: pigeonRightPeckTexture,
     pigeonRightStand: pigeonRightStandTexture,
@@ -192,11 +211,6 @@ export const resources = reactive({
     fountain3: fountainTexture3,
     fountain4: fountainTexture4,
     fountain5: fountainTexture5,
-    //
-    popupLandscape: popupLandscapeTexture,
-    popupPortrait: popupPortraitTexture,
-    buttonLong: buttonLongTexture,
-    buttonLongPressed: buttonLongPressedTexture,
     //
     map: map1xTexture,
     //

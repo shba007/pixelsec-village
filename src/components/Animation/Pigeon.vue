@@ -10,7 +10,7 @@ const props = defineProps<{
   flip: boolean
 }>()
 
-const imgs = props.flip ? ['pigeonLeftStand', 'pigeonleftPeck'] : ['pigeonRightStand', 'pigeonRightPeck']
+const imgs = props.flip ? ['pigeonLeftStand', 'pigeonLeftPeck'] : ['pigeonRightStand', 'pigeonRightPeck']
 const playing = useTimeout(getRandomInteger(100, 2000))
 const speed = 0.01
 </script>
