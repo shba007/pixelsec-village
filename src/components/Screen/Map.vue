@@ -252,12 +252,14 @@ watchEffect(() => {
   if (currentSceneIndex.value === 6 && currentScreenAnimation.value === 'finished') emit('close', 1)
   if (currentSceneIndex.value === 10) emit('close', 3)
   if (currentSceneIndex.value === 14) emit('close', 5)
-  // if (currentSceneIndex.value === 6 && currentScreenAnimation.value === 'finished') emit('close', 1)
 })
 
-function lockCharaterToMapCenter(x: number, y: number) {
-  screen.state.x = -1.005 * x + 324.49
-  screen.state.y = -1.005 * y + screenHeight.value / 2 - 308 / 4
+const offset = reactive({ x: 320, y: 150 })
+
+function lockCharacterToMapCenter(x: number, y: number) {
+  offset.y = screenHeight.value / 2 / (zoomFactor.value * screen.state.scale)
+  screen.state.x = -x + offset.x
+  screen.state.y = -y + offset.y
   currentScreenAnimation.value = 'started'
   gameStore.updateScreen(screen.state)
 }
@@ -353,7 +355,7 @@ function handleMCState(stateIndex: number) {
         :states="characterMain.states"
         :animation="rotationStop ? 'finished' : characterMain.animation"
         initalOrientation="front"
-        @move="lockCharaterToMapCenter"
+        @move="lockCharacterToMapCenter"
         @updateStateIndex="handleMCState" />
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur" initalOrientation="right" />
@@ -372,19 +374,20 @@ function handleMCState(stateIndex: number) {
       <Scene7 v-else-if="currentSceneIndex === 9" />
     </Container>
     <!-- DEBUG -->
-    <!--  <External>
-      <div class="absolute bottom-0 left-0 right-0 z-50 flex w-fit items-center gap-8">
+    <External>
+      <!-- <div class="bg-red-500 size-1 fixed -translate-x-1/2 top-1/2 -translate-y-1/2 left-1/2" /> -->
+      <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
           <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
           <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
           <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
         </div>
         <div class="flex flex-col gap-2">
-          <input v-model="baloonStand.x" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="baloonStand.y" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="baloonStand.scale" type="number" min="0" max="20" step="0.01" />
+          <input v-model="offset.x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="offset.y" type="number" min="-10000" max="10000" step="10" />
+          <!-- <input v-model="baloonStand.scale" type="number" min="0" max="20" step="0.01" /> -->
         </div>
       </div>
-    </External> -->
+    </External>
   </Container>
 </template>

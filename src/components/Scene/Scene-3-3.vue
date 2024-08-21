@@ -12,6 +12,7 @@ const options = ref([
 const selectedOption = ref<boolean | null>(null)
 
 function onClick(value: boolean) {
+  // DATA-COLLECT
   selectedOption.value = value
 
   setTimeout(() => {

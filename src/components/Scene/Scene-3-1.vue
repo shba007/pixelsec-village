@@ -1,20 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useTimeoutFn } from '@vueuse/core'
 import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
 
 const gameStore = useGameStore()
 
-const options = ref([
-  { checked: false, describe: 'Past online shopping' },
-  { checked: false, describe: 'Info' },
-  { checked: false, describe: 'Bank/Card details' },
-  { checked: false, describe: 'Social media profile' },
-])
-
 function handleMove() {
-  // DATA-COLLECT
   gameStore.nextScene()
   gameStore.nextMapState()
 }

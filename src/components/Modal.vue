@@ -22,8 +22,8 @@ const props = withDefaults(
     containerClass?: string
     overlay?: boolean
     type?: 'long' | 'mid' | 'short'
-    x: 'left' | 'center' | 'right'
-    y: 'top' | 'center' | 'bottom'
+    x?: 'left' | 'center' | 'right'
+    y?: 'top' | 'center' | 'bottom'
   }>(),
   {
     modalClass: '',
@@ -49,7 +49,7 @@ const modal = computed(() => {
     case 'mid':
       if (isLandscape.value) {
         image = 'popupLandscape'
-        scale = 3.5
+        scale = 4
       } else {
         image = 'popupPortrait'
         scale = 7.5
@@ -57,7 +57,7 @@ const modal = computed(() => {
       break
     case 'short':
       image = 'popupSquare'
-      scale = 3
+      scale = 3.5
       break
   }
 

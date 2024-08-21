@@ -11,6 +11,8 @@ const options = ref([
   { checked: false, describe: 'Info' },
   { checked: false, describe: 'Bank/Card details' },
   { checked: false, describe: 'Social media profile' },
+  { checked: false, describe: 'Personal preferences' },
+  { checked: false, describe: 'Personal details' },
 ])
 
 function onSelect(index: number, checked: boolean) {
