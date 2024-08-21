@@ -7,15 +7,13 @@ import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/stores/game'
 import type { Asset, State } from '@/utils/types'
 import { SCALE_MODES } from '@/utils/types'
-import StationCloud from '@/components/Animation/StationCloud.vue'
+import Cloud from '@/components/Animation/Cloud.vue'
 import StationTram from '@/components/Animation/StationTram.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import Pigeon from '@/components/Animation/Pigeon.vue'
 import Scene1 from '@/components/Scene/Scene-2-1.vue'
 import Scene2 from '@/components/Scene/Scene-2-2.vue'
-
-const props = defineProps<{}>()
 
 const emit = defineEmits<{
   (event: 'close', nextSceneIndex: number): void
@@ -42,15 +40,15 @@ const sky = reactive<Asset>({
 
 const clouds = ref<
   {
-    size: '1' | '2' | '3'
+    size: 'lg' | 'md' | 'sm'
     x: number
     y: number
     direction: number
   }[]
 >([
-  { size: '2', x: -screenWidth.value / 2 - 200, y: 15 - 350, direction: 1 },
-  { size: '1', x: -screenWidth.value / 2 - 150, y: 95 - 350, direction: 1 },
-  { size: '3', x: -screenWidth.value / 2 - 100, y: 150 - 350, direction: 1 },
+  { size: 'md', x: -screenWidth.value / 2 - 200, y: 15 - 350, direction: 1 },
+  { size: 'lg', x: -screenWidth.value / 2 - 150, y: 95 - 350, direction: 1 },
+  { size: 'sm', x: -screenWidth.value / 2 - 100, y: 150 - 350, direction: 1 },
 ])
 
 const tram = reactive({ x: -screenWidth.value - 800, y: -25 })
@@ -91,7 +89,7 @@ onMounted(() => setTimeout(() => gameStore.nextScene(), 2000))
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Sprite :texture="sky.alias" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="sky.state.x" :y="sky.state.y" :scale="sky.state.scale" :anchor="0.5" />
-    <StationCloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" :width-range="screenWidth" :size="size" :x="x" :y="y" :direction="direction" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="station" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
     <Sprite :texture="platform.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200" :scale="1" :anchor="0.5" />
     <CharacterGeneric :states="charactersGeneric" :animation="true" place="station" />
     <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0.5" />

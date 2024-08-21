@@ -54,9 +54,9 @@ import waveTexture3 from '@/assets/waves/3.png'
 import waveTexture4 from '@/assets/waves/4.png'
 import waveTexture5 from '@/assets/waves/5.png'
 //
-import cloudLargeTexture from '@/assets/clouds/large.png'
-import cloudMediumTexture from '@/assets/clouds/medium.png'
-import cloudSmallTexture from '@/assets/clouds/small.png'
+import mapCloudLargeTexture from '@/assets/clouds/map-large.png'
+import mapCloudMediumTexture from '@/assets/clouds/map-medium.png'
+import mapCloudSmallTexture from '@/assets/clouds/map-small.png'
 //
 import tramFrontTexture from '@/assets/tram/front.png'
 import tramBackTexture from '@/assets/tram/back.png'
@@ -65,7 +65,24 @@ import tramRightTexture from '@/assets/tram/right.png'
 //
 import baloon1Texture from '@/assets/baloon-stand/1.png'
 import baloon2Texture from '@/assets/baloon-stand/2.png'
+//
+import appSign1Texture from '@/assets/store-app-sign/1.png'
+import appSign2Texture from '@/assets/store-app-sign/2.png'
+//
+import mapCarTexture from '@/assets/car.png'
 // Charcters
+import characterPanicGreenMapLeftTexture from '@/assets/character/panic/green/map-left.png'
+import characterPanicGreenMapRightTexture from '@/assets/character/panic/green/map-right.png'
+import characterPanicGreenMapStandTexture from '@/assets/character/panic/green/map-stand.png'
+import characterPanicGreenBankLeftTexture from '@/assets/character/panic/green/bank-left.png'
+import characterPanicGreenBankRightTexture from '@/assets/character/panic/green/bank-right.png'
+//
+import characterPanicPurpleMapLeftTexture from '@/assets/character/panic/purple/map-left.png'
+import characterPanicPurpleMapRightTexture from '@/assets/character/panic/purple/map-right.png'
+import characterPanicPurpleMapStandTexture from '@/assets/character/panic/purple/map-stand.png'
+import characterPanicPurpleBankLeftTexture from '@/assets/character/panic/purple/bank-left.png'
+import characterPanicPurpleBankRightTexture from '@/assets/character/panic/purple/bank-right.png'
+//
 import characterGenericFrontStillTexture from '@/assets/character/generic/front-still.png'
 import characterGenericFrontWalk1Texture from '@/assets/character/generic/front-walk-1.png'
 import characterGenericFrontWalk2Texture from '@/assets/character/generic/front-walk-2.png'
@@ -136,12 +153,12 @@ import dataTrailSide3Texture from '@/assets/trail/trail-side-3.png'
 import dataTrailSide4Texture from '@/assets/trail/trail-side-4.png'
 //
 import stationSkyTexture from '@/assets/station/sky.png'
-import stationCloud1Texture from '@/assets/station/cloud-1.png'
-import stationCloud2Texture from '@/assets/station/cloud-2.png'
-import stationCloud3Texture from '@/assets/station/cloud-3.png'
-//
 import stationPlatformBackgroundTexture from '@/assets/station/platform-background.png'
 import stationPlatformForegroundTexture from '@/assets/station/platform-foreground.png'
+//
+import stationCloudLargeTexture from '@/assets/clouds/station-large.png'
+import stationCloudMediumTexture from '@/assets/clouds/station-medium.png'
+import stationCloudSmallTexture from '@/assets/clouds/station-small.png'
 //
 import stationTramTexture from '@/assets/station/tram.png'
 import stationTramWireTexture from '@/assets/station/tram-wire.png'
@@ -152,12 +169,20 @@ import stationCharacterStationMaster2Texture from '@/assets/character/station-ma
 import parkBackgroundTexture from '@/assets/park/park-background.png'
 import parkForegroundTexture from '@/assets/park/park-foreground.png'
 //
+import parkCloudLargeTexture from '@/assets/clouds/park-large.png'
+import parkCloudMediumTexture from '@/assets/clouds/park-medium.png'
+import parkCloudSmallTexture from '@/assets/clouds/park-small.png'
+//
 import parkCharacterIcecreamVendorWave1Texture from '@/assets/character/icecream-vendor/park-wave-1.png'
 import parkCharacterIcecreamVendorWave2Texture from '@/assets/character/icecream-vendor/park-wave-2.png'
 import parkCharacterIcecreamVendorHandoutTexture from '@/assets/character/icecream-vendor/park-handout.png'
 //
 import bankSkyTexture from '@/assets/bank/sky.png'
 import bankBackgroundTexture from '@/assets/bank/background.png'
+//
+import bankCloudLargeTexture from '@/assets/clouds/bank-large.png'
+import bankCloudMediumTexture from '@/assets/clouds/bank-medium.png'
+import bankCloudSmallTexture from '@/assets/clouds/bank-small.png'
 
 export const resources = reactive({
   frontINET,
@@ -212,9 +237,9 @@ export const resources = reactive({
   wave4: waveTexture4,
   wave5: waveTexture5,
   //
-  cloudLarge: cloudLargeTexture,
-  cloudMedium: cloudMediumTexture,
-  cloudSmall: cloudSmallTexture,
+  mapCloudLarge: mapCloudLargeTexture,
+  mapCloudMedium: mapCloudMediumTexture,
+  mapCloudSmall: mapCloudSmallTexture,
   //
   tramFront: tramFrontTexture,
   tramBack: tramBackTexture,
@@ -222,7 +247,24 @@ export const resources = reactive({
   //
   baloon1: baloon1Texture,
   baloon2: baloon2Texture,
+  //
+  appSign1: appSign1Texture,
+  appSign2: appSign2Texture,
+  //
+  mapCar: mapCarTexture,
   // Characters
+  characterPanicGreenMapLeft: characterPanicGreenMapLeftTexture,
+  characterPanicGreenMapRight: characterPanicGreenMapRightTexture,
+  characterPanicGreenMapStand: characterPanicGreenMapStandTexture,
+  characterPanicGreenBankLeft: characterPanicGreenBankLeftTexture,
+  characterPanicGreenBankRight: characterPanicGreenBankRightTexture,
+  //
+  characterPanicPurpleMapLeft: characterPanicPurpleMapLeftTexture,
+  characterPanicPurpleMapRight: characterPanicPurpleMapRightTexture,
+  characterPanicPurpleMapStand: characterPanicPurpleMapStandTexture,
+  characterPanicPurpleBankLeft: characterPanicPurpleBankLeftTexture,
+  characterPanicPurpleBankRight: characterPanicPurpleBankRightTexture,
+  //
   characterGenericFrontStill: characterGenericFrontStillTexture,
   characterGenericFrontWalk1: characterGenericFrontWalk1Texture,
   characterGenericFrontWalk2: characterGenericFrontWalk2Texture,
@@ -303,9 +345,9 @@ export const resources = reactive({
   //
   sky: stationSkyTexture,
   //
-  cloud1: stationCloud1Texture,
-  cloud2: stationCloud2Texture,
-  cloud3: stationCloud3Texture,
+  stationCloudSmall: stationCloudSmallTexture,
+  stationCloudMedium: stationCloudMediumTexture,
+  stationCloudLarge: stationCloudLargeTexture,
   //
   platformBackground: stationPlatformBackgroundTexture,
   platformForeground: stationPlatformForegroundTexture,
@@ -319,12 +361,21 @@ export const resources = reactive({
   parkBackground: parkBackgroundTexture,
   parkForeground: parkForegroundTexture,
   //
+  parkCloudSmall: parkCloudSmallTexture,
+  parkCloudMedium: parkCloudMediumTexture,
+  parkCloudLarge: parkCloudLargeTexture,
+  //
   parkCharacterIcecreamVendorWave1: parkCharacterIcecreamVendorWave1Texture,
   parkCharacterIcecreamVendorWave2: parkCharacterIcecreamVendorWave2Texture,
   parkCharacterIcecreamVendorHandout: parkCharacterIcecreamVendorHandoutTexture,
   //
   bankSky: bankSkyTexture,
   bankBackground: bankBackgroundTexture,
+  //
+  bankCloudSmall: bankCloudSmallTexture,
+  bankCloudMedium: bankCloudMediumTexture,
+  bankCloudLarge: bankCloudLargeTexture,
+  //
 })
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
@@ -340,9 +391,11 @@ export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
-  const currentSceneIndex = ref(0)
-  const currentStateIndex = ref(0)
-  const currentScreenIndex = ref(0)
+  const currentSceneIndex = ref(14)
+  const currentStateIndex = ref(7)
+  const currentScreenIndex = ref(5)
+  /* currentSceneIndex 9 currentStateIndex 6 currentScreenIndex 2 currentScreenAnimation finished */
+
   const currentScreenAnimation = ref<'init' | 'started' | 'finished'>('init')
   const $currentScreenState = reactive({ x: 0, y: 0, scale: 1, alpha: 1, time: 0 })
 
@@ -377,8 +430,6 @@ export const useGameStore = defineStore('game', () => {
 
   watch(activeCharacter, (value) => {
     if (!value) return
-
-    console.log({ activeCharacter: value })
     // @ts-ignore
     resources.characterMainFrontStill = resources[`characterMain${capitalizeFirstLetter(value)}FrontStill`]
     // @ts-ignore

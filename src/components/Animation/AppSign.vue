@@ -10,7 +10,7 @@ const props = defineProps<{
   scale: number
 }>()
 
-const imgs = ['baloon1', 'baloon2']
+const imgs = ['appSign1', 'appSign2']
 const playing = useTimeout(getRandomInteger(100, 2000))
 const speed = ref(getRandomInteger(1000, 2000) / 50000)
 </script>
