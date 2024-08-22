@@ -19,7 +19,7 @@ useTimeoutFn(handleMove, 4000)
 
 <style lang="css" scoped>
 .active-btn {
-  @apply flex aspect-[8/3] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
+  @apply flex aspect-[7/9] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
 }
 
 .active-btn.checked {

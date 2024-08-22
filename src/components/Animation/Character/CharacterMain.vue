@@ -132,13 +132,28 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AnimatedSprite :textures="activeTrail.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5"
-      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="true" :animation-speed="0.08" />
-    <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="animation === 'started'" :animation-speed="0.08" />
+    <AnimatedSprite
+      :textures="activeTrail.aliases"
+      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5"
+      :x="activeTrail.x"
+      :y="activeTrail.y"
+      :scale="1"
+      :alpha="1"
+      :playing="true"
+      :animation-speed="0.08" />
+    <AnimatedSprite
+      :textures="activeCharacter.aliases"
+      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5"
+      :x="0"
+      :y="0"
+      :scale="1"
+      :alpha="1"
+      :playing="animation === 'started'"
+      :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <!--  <External>

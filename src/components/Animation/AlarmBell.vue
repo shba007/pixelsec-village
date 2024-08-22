@@ -13,6 +13,5 @@ const speed = 0.05
 </script>
 
 <template>
-  <AnimatedSprite :textures="imgs" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5" :x="x" :y="y"
-    :scale="scale" :playing="playing" :animation-speed="speed" />
+  <AnimatedSprite :textures="imgs" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5" :x="x" :y="y" :scale="scale" :playing="playing" :animation-speed="speed" />
 </template>

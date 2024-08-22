@@ -35,8 +35,9 @@ const zoomFactor = computed(() => {
 const screen = reactive<any>({
   loaded: false,
   alias: { bg: 'bankSky', fg: 'bankBackground' },
-  states: [{ x: -140, y: 200, scale: 1, alpha: 1, time: 0 },
-  { x: -1160, y: 200, scale: 1, alpha: 1, time: 6 }
+  states: [
+    { x: -140, y: 200, scale: 1, alpha: 1, time: 0 },
+    { x: -1160, y: 200, scale: 1, alpha: 1, time: 6 },
   ],
   state: { x: -140, y: 200, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -58,10 +59,9 @@ const clouds = ref<
 const door = reactive({ x: 1170, y: 60, scale: 1 })
 const alarmBell = reactive({ x: 550, y: -10, scale: 0.95 })
 const alarmLight = ref([
-  { type: 'left' as const, x: 560, y: -90, scale: 1, },
-  { type: 'right' as const, x: 1230, y: -90, scale: 1, },
+  { type: 'left' as const, x: 560, y: -90, scale: 1 },
+  { type: 'right' as const, x: 1230, y: -90, scale: 1 },
 ])
-
 
 const charactersPanic = ref([
   {
@@ -85,7 +85,11 @@ const charactersPanic = ref([
 ])
 
 const characterGuard = reactive({
-  x: 3220, y: 170, scale: 1, alpha: 0, time: 0
+  x: 3220,
+  y: 170,
+  scale: 1,
+  alpha: 0,
+  time: 0,
 })
 
 // onBeforeMount(onLoad)
@@ -121,24 +125,19 @@ onTick((delta) => {
 })
 
 watch(currentSceneIndex, (value) => {
-  if (value === 19)
-    screen.animation = 'started'
+  if (value === 19) screen.animation = 'started'
 })
 </script>
 
 <template>
   <Container :x="screen.state.x" :y="screen.state.y" :scale="1 * zoomFactor">
-    <Sprite :texture="screen.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200"
-      :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
-    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth"
-      :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="screen.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0"
-      :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
+    <Sprite :texture="screen.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200" :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+    <Sprite :texture="screen.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
     <Door :x="door.x" :y="door.y" :scale="door.scale" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" />
     <AlarmLight v-for="{ type, x, y, scale } of alarmLight" :type="type" :x="x" :y="y" :scale="scale" />
-    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank"
-      :type="(type as 'purple' | 'green')" />
+    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
     <CharacterGuard :state="characterGuard" place="bank" />
   </Container>
   <Container v-if="!rotationStop">

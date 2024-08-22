@@ -29,7 +29,7 @@ function onComplete() {
         <SmartPhone @select="onSelect" />
         <!-- SMARTPHONE -->
         <div class="popup-bg relative flex aspect-[143/130] h-full items-center justify-center overflow-hidden">
-          <p class="flex h-fit flex-col justify-between gap-4 px-8 py-4 text-left text-3xl lg:px-10 lg:py-6 lg:text-5xl lg:leading-[3rem]">
+          <p class="flex h-fit flex-col justify-between gap-4 px-8 py-4 text-left text-3xl lg:px-16 lg:py-6 lg:text-5xl lg:leading-[3rem]">
             <span>How will you spend your time on the tram?</span>
             <span>Pick more than one.</span>
           </p>

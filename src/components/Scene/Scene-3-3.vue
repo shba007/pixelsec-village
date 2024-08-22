@@ -22,10 +22,10 @@ function onClick(value: boolean) {
 </script>
 
 <template>
-  <Modal type="mid" title="" description="Would you like to collect all your data from one place for convenience?">
+  <Modal type="mid" title="" description="Would you like to collect all your data from one place for convenience?" container-class="text-left">
     <div class="flex w-full justify-end px-16">
       <ul class="flex flex-col gap-2">
-        <li class="flex" v-for="({ title, value }, index) of options" :key="index">
+        <li class="flex items-center gap-4" v-for="({ title, value }, index) of options" :key="index">
           <button class="active-btn" :class="selectedOption === value ? 'checked' : 'unchecked'" @click="onClick(value)" />
           <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]">
             {{ title }}
@@ -38,7 +38,7 @@ function onClick(value: boolean) {
 
 <style lang="css" scoped>
 .active-btn {
-  @apply flex aspect-[8/3] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
+  @apply flex aspect-[7/9] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
 }
 
 .active-btn.checked {

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { External } from 'vue3-pixi'
-import { storeToRefs } from 'pinia'
-
 import { useGameStore } from '@/stores/game'
 import ModalProtip from '@/components/ModalProtip.vue'
 

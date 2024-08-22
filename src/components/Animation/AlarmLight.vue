@@ -18,6 +18,5 @@ const speed = 0.05
 </script>
 
 <template>
-  <AnimatedSprite :blend-mode="1" :textures="imgs[type]" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-    :anchor="0.5" :x="x" :y="y" :scale="scale" :playing="playing" :animation-speed="speed" />
+  <AnimatedSprite :blend-mode="1" :textures="imgs[type]" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5" :x="x" :y="y" :scale="scale" :playing="playing" :animation-speed="speed" />
 </template>
