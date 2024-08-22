@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
+import { computed, onBeforeMount, onMounted, reactive, ref, watch, watchEffect } from 'vue'
 import { External } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -60,13 +60,13 @@ const characterIcecreamVendor = reactive({
   state: { x: -90, y: 170, scale: 1, alpha: 1, time: 0 },
 })
 
-function onLoad() {}
+function onLoad() { }
 
 onBeforeMount(onLoad)
 onMounted(() => setTimeout(() => gameStore.nextScene(), 2000))
 
-watchEffect(() => {
-  if (currentSceneIndex.value === 13) {
+watch(currentSceneIndex, (value) => {
+  if (value === 13) {
     emit('close', 4)
     gameStore.nextMapState()
   }
@@ -75,9 +75,12 @@ watchEffect(() => {
 
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <Sprite :texture="park.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
-    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="park" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="park.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
+    <Sprite :texture="park.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="park.state.x"
+      :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="park" :width-range="screenWidth"
+      :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+    <Sprite :texture="park.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="park.state.x"
+      :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container v-if="!rotationStop" :z-order="0">

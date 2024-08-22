@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Modal from '@/components/Modal.vue'
 import { useGameStore } from '@/stores/game'
+import Modal from '@/components/Modal.vue'
 
 const gameStore = useGameStore()
 

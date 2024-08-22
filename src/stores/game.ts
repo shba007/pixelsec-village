@@ -4,6 +4,7 @@ import { useFullscreen, useScreenOrientation, useWindowSize } from '@vueuse/core
 
 import frontINET from '/fonts/INET.ttf'
 import frontLAN from '/fonts/LAN.ttf'
+import frontUNI from '/fonts/UNI.ttf'
 //
 import popupBarTexture from '@/assets/popup/bg-bar.png'
 import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
@@ -183,10 +184,27 @@ import bankBackgroundTexture from '@/assets/bank/background.png'
 import bankCloudLargeTexture from '@/assets/clouds/bank-large.png'
 import bankCloudMediumTexture from '@/assets/clouds/bank-medium.png'
 import bankCloudSmallTexture from '@/assets/clouds/bank-small.png'
+//
+import bankDoorOpenTexture from '@/assets/bank/door-open.png'
+import bankDoorCloseTexture from '@/assets/bank/door-close.png'
+//
+import bankAlarmBell1Texture from '@/assets/bank/bank-alarm-bell-1.png'
+import bankAlarmBell2Texture from '@/assets/bank/bank-alarm-bell-2.png'
+//
+import bankAlarmLightLeft1Texture from '@/assets/bank/bank-alarm-light-left-1.png'
+import bankAlarmLightLeft2Texture from '@/assets/bank/bank-alarm-light-left-2.png'
+import bankAlarmLightRight1Texture from '@/assets/bank/bank-alarm-light-right-1.png'
+import bankAlarmLightRight2Texture from '@/assets/bank/bank-alarm-light-right-2.png'
+//
+import mapCharacterGuard1Texture from '@/assets/character/guard/map-1.png'
+import mapCharacterGuard2Texture from '@/assets/character/guard/map-2.png'
+import bankCharacterGuard1Texture from '@/assets/character/guard/bank-1.png'
+import bankCharacterGuard2Texture from '@/assets/character/guard/bank-2.png'
 
 export const resources = reactive({
   frontINET,
   frontLAN,
+  frontUNI,
   //
   popupBar: popupBarTexture,
   popupSquare: popupSquareTexture,
@@ -376,6 +394,21 @@ export const resources = reactive({
   bankCloudMedium: bankCloudMediumTexture,
   bankCloudLarge: bankCloudLargeTexture,
   //
+  bankDoorClose: bankDoorCloseTexture,
+  bankDoorOpen: bankDoorOpenTexture,
+  //
+  bankAlarmBell1: bankAlarmBell1Texture,
+  bankAlarmBell2: bankAlarmBell2Texture,
+  //
+  bankAlarmLightLeft1: bankAlarmLightLeft1Texture,
+  bankAlarmLightLeft2: bankAlarmLightLeft2Texture,
+  bankAlarmLightRight1: bankAlarmLightRight1Texture,
+  bankAlarmLightRight2: bankAlarmLightRight2Texture,
+  //
+  mapCharacterGuard1: mapCharacterGuard1Texture,
+  mapCharacterGuard2: mapCharacterGuard2Texture,
+  bankCharacterGuard1: bankCharacterGuard1Texture,
+  bankCharacterGuard2: bankCharacterGuard2Texture,
 })
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
@@ -391,9 +424,9 @@ export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
-  const currentSceneIndex = ref(14)
-  const currentStateIndex = ref(7)
-  const currentScreenIndex = ref(5)
+  const currentSceneIndex = ref(0)
+  const currentStateIndex = ref(0)
+  const currentScreenIndex = ref(0)
   /* currentSceneIndex 9 currentStateIndex 6 currentScreenIndex 2 currentScreenAnimation finished */
 
   const currentScreenAnimation = ref<'init' | 'started' | 'finished'>('init')
