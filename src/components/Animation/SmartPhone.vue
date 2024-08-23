@@ -36,6 +36,6 @@ function toggleSelect(topic: string) {
 }
 
 .smartphone-bg {
-  @apply bg-[url('@/assets/station/smartphone.png')] bg-cover bg-center bg-no-repeat;
+  @apply bg-[url('/images/smartphone/bg.png')] bg-cover bg-center bg-no-repeat;
 }
 </style>

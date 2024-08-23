@@ -41,7 +41,8 @@ function onClick() {
       <!-- <span class="text-4xl">00: 08 : 99</span> -->
       <span class="font-uni text-4xl">{{ timer }}</span>
       <div class="grid w-fit grid-cols-5 grid-rows-2 gap-y-2">
-        <button class="active-btn short unchecked col-span-2 col-start-1 row-start-1" @click="onClick">Do nothing</button>
+        <button class="active-btn short unchecked col-span-2 col-start-1 row-start-1" @click="onClick">Do
+          nothing</button>
         <button class="active-btn long unchecked col-span-3 col-start-3 row-start-1" @click="onClick">
           Take action only<br />
           when prompted
@@ -50,7 +51,8 @@ function onClick() {
           Alert the authority,<br />
           change login details
         </button>
-        <button class="active-btn short unchecked col-span-2 col-start-4 row-start-2" @click="onClick">Delete <br />the app</button>
+        <button class="active-btn short unchecked col-span-2 col-start-4 row-start-2" @click="onClick">Delete <br />the
+          app</button>
       </div>
     </div>
   </Modal>
@@ -62,10 +64,10 @@ function onClick() {
 }
 
 .active-btn.short {
-  @apply aspect-[5/3] bg-[url(@/assets/buttons/short.png)] active:bg-[url(@/assets/buttons/short-pressed.png)];
+  @apply aspect-[5/3] bg-[url(@/assets/buttons/short/unpressed.png)] active:bg-[url(@/assets/buttons/short/pressed.png)];
 }
 
 .active-btn.long {
-  @apply aspect-[8/3] bg-[url(@/assets/buttons/long.png)] active:bg-[url(@/assets/buttons/long-pressed.png)];
+  @apply aspect-[8/3] bg-[url(@/assets/buttons/long/unpressed.png)] active:bg-[url(@/assets/buttons/long/pressed.png)];
 }
 </style>

@@ -42,10 +42,10 @@ function onClick(value: boolean) {
 }
 
 .active-btn.checked {
-  @apply bg-[url(@/assets/buttons/square-pressed.png)];
+  @apply bg-[url(@/assets/buttons/square/pressed.png)];
 }
 
 .active-btn.unchecked {
-  @apply bg-[url(@/assets/buttons/square.png)];
+  @apply bg-[url(@/assets/buttons/square/unpressed.png)];
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { watchDebounced } from '@vueuse/core'
 import { useGameStore } from '@/stores/game'
 import Modal from '@/components/Modal.vue'
@@ -42,14 +42,14 @@ function onComplete() {
 
 <style lang="css" scoped>
 .active-btn {
-  @apply aspect-[14/18] h-[32px] bg-contain bg-bottom bg-no-repeat lg:h-[80px];
+  @apply flex items-center justify-center aspect-[7/9] h-[32px] bg-contain bg-bottom bg-no-repeat lg:h-[80px];
 }
 
 .active-btn.checked {
-  @apply bg-[url(@/assets/buttons/square-pressed.png)];
+  @apply bg-[url(@/assets/buttons/square/pressed.png)];
 }
 
 .active-btn.unchecked {
-  @apply bg-[url(@/assets/buttons/square.png)];
+  @apply bg-[url(@/assets/buttons/square/unpressed.png)];
 }
 </style>

@@ -2,76 +2,94 @@ import { computed, reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useFullscreen, useScreenOrientation, useWindowSize } from '@vueuse/core'
 
+// public
+// fonts
 import frontINET from '/fonts/INET.ttf'
 import frontLAN from '/fonts/LAN.ttf'
 import frontUNI from '/fonts/UNI.ttf'
-//
+// images
+import smartphone from '/images/smartphone/bg.png'
+import smartphoneBankingHighlighted from '/images/smartphone/banking-highlighted.png'
+import smartphoneBanking from '/images/smartphone/banking.png'
+import smartphoneEmailHighlighted from '/images/smartphone/email-highlighted.png'
+import smartphoneEmail from '/images/smartphone/email.png'
+import smartphoneGameHighlighted from '/images/smartphone/game-highlighted.png'
+import smartphoneGame from '/images/smartphone/game.png'
+import smartphoneHealthHighlighted from '/images/smartphone/health-highlighted.png'
+import smartphoneHealth from '/images/smartphone/health.png'
+import smartphoneMovieHighlighted from '/images/smartphone/movie-highlighted.png'
+import smartphoneMovie from '/images/smartphone/movie.png'
+import smartphoneMusicHighlighted from '/images/smartphone/movie-highlighted.png'
+import smartphoneMusic from '/images/smartphone/movie.png'
+import smartphoneShoppingHighlighted from '/images/smartphone/shopping-highlighted.png'
+import smartphoneShopping from '/images/smartphone/shopping.png'
+import smartphoneSocialHighlighted from '/images/smartphone/social-highlighted.png'
+import smartphoneSocial from '/images/smartphone/social.png'
+// asset
 import popupBarTexture from '@/assets/popup/bg-bar.png'
 import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
 import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
 import popupSquareTexture from '@/assets/popup/bg-square.png'
 //
-import fountainTexture1 from '@/assets/fountain/1.png'
-import fountainTexture2 from '@/assets/fountain/2.png'
-import fountainTexture3 from '@/assets/fountain/3.png'
-import fountainTexture4 from '@/assets/fountain/4.png'
-import fountainTexture5 from '@/assets/fountain/5.png'
+import buttonLongTexture from '@/assets/buttons/long/pressed.png'
+import buttonLongPressedTexture from '@/assets/buttons/long/unpressed.png'
+import buttonShortTexture from '@/assets/buttons/short/pressed.png'
+import buttonShortPressedTexture from '@/assets/buttons/short/unpressed.png'
+import buttonSquareTexture from '@/assets/buttons/square/pressed.png'
+import buttonSquarePressedTexture from '@/assets/buttons/square/unpressed.png'
 //
-import buttonLongTexture from '@/assets/buttons/long.png'
-import buttonLongPressedTexture from '@/assets/buttons/long-pressed.png'
-import buttonShortTexture from '@/assets/buttons/short.png'
-import buttonShortPressedTexture from '@/assets/buttons/short-pressed.png'
-import buttonSquareTexture from '@/assets/buttons/square.png'
-import buttonSquarePressedTexture from '@/assets/buttons/square-pressed.png'
-//
-import map1xTexture from '@/assets/map-1x.jpg'
-//
-import stationBgTexture from '@/assets/station-bg.png'
-import stationFgTexture from '@/assets/station-fg.png'
+import mapCloudLargeTexture from '@/assets/clouds/map-large.png'
+import mapCloudMediumTexture from '@/assets/clouds/map-medium.png'
+import mapCloudSmallTexture from '@/assets/clouds/map-small.png'
+import stationCloudLargeTexture from '@/assets/clouds/station-large.png'
+import stationCloudMediumTexture from '@/assets/clouds/station-medium.png'
+import stationCloudSmallTexture from '@/assets/clouds/station-small.png'
+import parkCloudLargeTexture from '@/assets/clouds/park-large.png'
+import parkCloudMediumTexture from '@/assets/clouds/park-medium.png'
+import parkCloudSmallTexture from '@/assets/clouds/park-small.png'
+import bankCloudLargeTexture from '@/assets/clouds/bank-large.png'
+import bankCloudMediumTexture from '@/assets/clouds/bank-medium.png'
+import bankCloudSmallTexture from '@/assets/clouds/bank-small.png'
 //
 import pigeonLeftPeckTexture from '@/assets/pigeon/left-peck.png'
 import pigeonLeftStandTexture from '@/assets/pigeon/left-stand.png'
 import pigeonRightPeckTexture from '@/assets/pigeon/right-peck.png'
 import pigeonRightStandTexture from '@/assets/pigeon/right-stand.png'
-//
-import streetLampTexture1 from '@/assets/street-lamp/lamp-1.png'
-import streetLampTexture2 from '@/assets/street-lamp/lamp-2.png'
-import streetLampTexture3 from '@/assets/street-lamp/lamp-3.png'
-import streetLampTexture4 from '@/assets/street-lamp/lamp-4.png'
-import streetLampTexture5 from '@/assets/street-lamp/lamp-5.png'
-//
-import flagPinkTexture1 from '@/assets/flags/pink/flag-1.png'
-import flagPinkTexture2 from '@/assets/flags/pink/flag-2.png'
-import flagSchoolBlueTexture1 from '@/assets/flags/school/blue-1.png'
-import flagSchoolBlueTexture2 from '@/assets/flags/school/blue-2.png'
-import flagSchoolRedTexture1 from '@/assets/flags/school/red-1.png'
-import flagSchoolRedTexture2 from '@/assets/flags/school/red-2.png'
-import flagStationTexture1 from '@/assets/flags/station/flag-1.png'
-import flagStationTexture2 from '@/assets/flags/station/flag-2.png'
-//
-import waveTexture1 from '@/assets/waves/1.png'
-import waveTexture2 from '@/assets/waves/2.png'
-import waveTexture3 from '@/assets/waves/3.png'
-import waveTexture4 from '@/assets/waves/4.png'
-import waveTexture5 from '@/assets/waves/5.png'
-//
-import mapCloudLargeTexture from '@/assets/clouds/map-large.png'
-import mapCloudMediumTexture from '@/assets/clouds/map-medium.png'
-import mapCloudSmallTexture from '@/assets/clouds/map-small.png'
-//
-import tramFrontTexture from '@/assets/tram/front.png'
-import tramBackTexture from '@/assets/tram/back.png'
-// import tramLeftTexture from '@/assets/tram/left.png'
-import tramRightTexture from '@/assets/tram/right.png'
-//
-import baloon1Texture from '@/assets/baloon-stand/1.png'
-import baloon2Texture from '@/assets/baloon-stand/2.png'
-//
-import appSign1Texture from '@/assets/store-app-sign/1.png'
-import appSign2Texture from '@/assets/store-app-sign/2.png'
-//
-import mapCarTexture from '@/assets/car.png'
-// Charcters
+// Characters
+// Generaic
+import characterGenericFrontStillTexture from '@/assets/character/generic/front-still.png'
+import characterGenericFrontWalk1Texture from '@/assets/character/generic/front-walk-1.png'
+import characterGenericFrontWalk2Texture from '@/assets/character/generic/front-walk-2.png'
+import characterGenericBackWalk1Texture from '@/assets/character/generic/back-walk-1.png'
+import characterGenericBackWalk2Texture from '@/assets/character/generic/back-walk-2.png'
+import characterGenericLeftWalk1Texture from '@/assets/character/generic/left-walk-1.png'
+import characterGenericLeftWalk2Texture from '@/assets/character/generic/left-walk-2.png'
+import characterGenericRightWalk1Texture from '@/assets/character/generic/right-walk-1.png'
+import characterGenericRightWalk2Texture from '@/assets/character/generic/right-walk-2.png'
+import characterGenericLeftWalk1SideTexture from '@/assets/character/generic/left-walk-1-side.png'
+import characterGenericLeftWalk2SideTexture from '@/assets/character/generic/left-walk-2-side.png'
+// Station Master
+import characterStationMasterMap1Texture from '@/assets/character/station-master/map-1.png'
+import characterStationMasterMap2Texture from '@/assets/character/station-master/map-2.png'
+import characterStationMasterMap3Texture from '@/assets/character/station-master/map-3.png'
+import characterStationMasterStation1Texture from '@/assets/character/station-master/station-1.png'
+import characterStationMasterStation2Texture from '@/assets/character/station-master/station-2.png'
+// Guard
+import characterMapGuard1Texture from '@/assets/character/guard/map-1.png'
+import characterMapGuard2Texture from '@/assets/character/guard/map-2.png'
+import characterMapGuard3Texture from '@/assets/character/guard/map-3.png'
+import characterBankGuard1Texture from '@/assets/character/guard/bank-1.png'
+import characterBankGuard2Texture from '@/assets/character/guard/bank-2.png'
+// Baloon Vendor
+import characterBaloonVendor1Texture from '@/assets/character/ballon-vendor/1.png'
+import characterBaloonVendor2Texture from '@/assets/character/ballon-vendor/2.png'
+// Icecream Vendor
+import characterMapIcecreamVendor1Texture from '@/assets/character/icecream-vendor/map-1.png'
+import characterMapIcecreamVendor2Texture from '@/assets/character/icecream-vendor/map-2.png'
+import characterParkIcecreamVendorHandoutTexture from '@/assets/character/icecream-vendor/park-handout.png'
+import characterParkIcecreamVendorWave1Texture from '@/assets/character/icecream-vendor/park-wave-1.png'
+import characterParkIcecreamVendorWave2Texture from '@/assets/character/icecream-vendor/park-wave-2.png'
+// Panic Character
 import characterPanicGreenMapLeftTexture from '@/assets/character/panic/green/map-left.png'
 import characterPanicGreenMapRightTexture from '@/assets/character/panic/green/map-right.png'
 import characterPanicGreenMapStandTexture from '@/assets/character/panic/green/map-stand.png'
@@ -83,26 +101,17 @@ import characterPanicPurpleMapRightTexture from '@/assets/character/panic/purple
 import characterPanicPurpleMapStandTexture from '@/assets/character/panic/purple/map-stand.png'
 import characterPanicPurpleBankLeftTexture from '@/assets/character/panic/purple/bank-left.png'
 import characterPanicPurpleBankRightTexture from '@/assets/character/panic/purple/bank-right.png'
-//
-import characterGenericFrontStillTexture from '@/assets/character/generic/front-still.png'
-import characterGenericFrontWalk1Texture from '@/assets/character/generic/front-walk-1.png'
-import characterGenericFrontWalk2Texture from '@/assets/character/generic/front-walk-2.png'
-import characterGenericBackWalk1Texture from '@/assets/character/generic/back-walk-1.png'
-import characterGenericBackWalk2Texture from '@/assets/character/generic/back-walk-2.png'
-import characterGenericLeftWalk1Texture from '@/assets/character/generic/left-walk-1.png'
-import characterGenericLeftWalk2Texture from '@/assets/character/generic/left-walk-2.png'
-import characterGenericRightWalk1Texture from '@/assets/character/generic/right-walk-1.png'
-import characterGenericRightWalk2Texture from '@/assets/character/generic/right-walk-2.png'
-//
-import mapCharacterStationMaster1Texture from '@/assets/character/station-master/map-1.png'
-import mapCharacterStationMaster2Texture from '@/assets/character/station-master/map-2.png'
-import mapCharacterStationMaster3Texture from '@/assets/character/station-master/map-3.png'
-//
-import mapCharacterIcecreamVendor1Texture from '@/assets/character/icecream-vendor/map-1.png'
-import mapCharacterIcecreamVendor2Texture from '@/assets/character/icecream-vendor/map-2.png'
-//
-import characterGenericLeftWalk1SideTexture from '@/assets/character/generic/left-walk-1-side.png'
-import characterGenericLeftWalk2SideTexture from '@/assets/character/generic/left-walk-2-side.png'
+// Sus Guy
+import characterSusGuyFishing1Texture from '@/assets/character/sus-guy/fishing-1.png'
+import characterSusGuyFishing2Texture from '@/assets/character/sus-guy/fishing-2.png'
+import characterSusGuyWalkBack1Texture from '@/assets/character/sus-guy/walk-back-1.png'
+import characterSusGuyWalkBack2Texture from '@/assets/character/sus-guy/walk-back-2.png'
+import characterSusGuyWalkFront1Texture from '@/assets/character/sus-guy/walk-front-1.png'
+import characterSusGuyWalkFront2Texture from '@/assets/character/sus-guy/walk-front-2.png'
+import characterSusGuyWalkLeft1Texture from '@/assets/character/sus-guy/walk-left-1.png'
+import characterSusGuyWalkLeft2Texture from '@/assets/character/sus-guy/walk-left-2.png'
+import characterSusGuyWalkRight1Texture from '@/assets/character/sus-guy/walk-right-1.png'
+import characterSusGuyWalkRight2Texture from '@/assets/character/sus-guy/walk-right-2.png'
 // Main Character
 import characterMainBlackFrontStillTexture from '@/assets/character/main/black/front-still.png'
 import characterMainBlackFrontWalk1Texture from '@/assets/character/main/black/front-walk-1.png'
@@ -143,69 +152,122 @@ import characterMainBlueLeftWalk1Texture from '@/assets/character/main/blue/left
 import characterMainBlueLeftWalk2Texture from '@/assets/character/main/blue/left-walk-2.png'
 import characterMainBlueRightWalk1Texture from '@/assets/character/main/blue/right-walk-1.png'
 import characterMainBlueRightWalk2Texture from '@/assets/character/main/blue/right-walk-2.png'
+// Data Trail
+import dataTrailBack1Texture from '@/assets/character/trail/back-1.png'
+import dataTrailBack2Texture from '@/assets/character/trail/back-2.png'
+import dataTrailBack3Texture from '@/assets/character/trail/back-3.png'
+import dataTrailBack4Texture from '@/assets/character/trail/back-4.png'
+import dataTrailSide1Texture from '@/assets/character/trail/side-1.png'
+import dataTrailSide2Texture from '@/assets/character/trail/side-2.png'
+import dataTrailSide3Texture from '@/assets/character/trail/side-3.png'
+import dataTrailSide4Texture from '@/assets/character/trail/side-4.png'
+// Map
+import map1xBgTexture from '@/assets/map/1x-bg.png'
+import map1xFgTexture from '@/assets/map/1x-fg.png'
+import mapPlamTreesTexture from '@/assets/map/palm-trees.png'
+import mapCarTexture from '@/assets/map/car.png'
+import mapFenceTexture from '@/assets/map/fence.png'
+// Fountain
+import mapFountain1Texture from '@/assets/map/fountain/1.png'
+import mapFountain2Texture from '@/assets/map/fountain/2.png'
+import mapFountain3Texture from '@/assets/map/fountain/3.png'
+import mapFountain4Texture from '@/assets/map/fountain/4.png'
+import mapFountain5Texture from '@/assets/map/fountain/5.png'
+// Street Lamp
+import streetLamp1Texture from '@/assets/map/street-lamp/1.png'
+import streetLamp2Texture from '@/assets/map/street-lamp/2.png'
+import streetLamp3Texture from '@/assets/map/street-lamp/3.png'
+import streetLamp4Texture from '@/assets/map/street-lamp/4.png'
+import streetLamp5Texture from '@/assets/map/street-lamp/5.png'
+// Flag
+import flagPink1Texture from '@/assets/map/flags/pink-1.png'
+import flagPink2Texture from '@/assets/map/flags/pink-2.png'
+import flagSchoolBlue1Texture from '@/assets/map/flags/school-blue-1.png'
+import flagSchoolBlue2Texture from '@/assets/map/flags/school-blue-2.png'
+import flagSchoolRed1Texture from '@/assets/map/flags/school-red-1.png'
+import flagSchoolRed2Texture from '@/assets/map/flags/school-red-2.png'
+import flagStation1Texture from '@/assets/map/flags/station-1.png'
+import flagStation2Texture from '@/assets/map/flags/station-2.png'
+// Wave
+import wave1Texture from '@/assets/map/waves/1.png'
+import wave2Texture from '@/assets/map/waves/2.png'
+import wave3Texture from '@/assets/map/waves/3.png'
+import wave4Texture from '@/assets/map/waves/4.png'
+import wave5Texture from '@/assets/map/waves/5.png'
+// Baloon Stand
+import baloonStand1Texture from '@/assets/map/baloon-stand/1.png'
+import baloonStand2Texture from '@/assets/map/baloon-stand/2.png'
+// Store App Sign
+import appSign1Texture from '@/assets/map/app-sign/1.png'
+import appSign2Texture from '@/assets/map/app-sign/2.png'
+// Dog
+import dog1Texture from '@/assets/map/dog/1.png'
+import dog2Texture from '@/assets/map/dog/2.png'
+// Wolf
+import wolf1Texture from '@/assets/map/wolf/1.png'
+import wolf2Texture from '@/assets/map/wolf/2.png'
+// Map Tram
+import tramFrontTexture from '@/assets/map/tram/front.png'
+import tramBackTexture from '@/assets/map/tram/back.png'
+import tramRightTexture from '@/assets/map/tram/right.png'
+// import tramLeftTexture from '@/assets/map/tram/left.png'
 //
-import dataTrailBack1Texture from '@/assets/trail/trail-back-1.png'
-import dataTrailBack2Texture from '@/assets/trail/trail-back-2.png'
-import dataTrailBack3Texture from '@/assets/trail/trail-back-3.png'
-import dataTrailBack4Texture from '@/assets/trail/trail-back-4.png'
-import dataTrailSide1Texture from '@/assets/trail/trail-side-1.png'
-import dataTrailSide2Texture from '@/assets/trail/trail-side-2.png'
-import dataTrailSide3Texture from '@/assets/trail/trail-side-3.png'
-import dataTrailSide4Texture from '@/assets/trail/trail-side-4.png'
+import mapBoat1Texture from '@/assets/map/boat/1.png'
+import mapBoat2Texture from '@/assets/map/boat/2.png'
 //
+import mapStationBgTexture from '@/assets/map/station-bg.png'
+import mapStationFgTexture from '@/assets/map/station-fg.png'
+/////
+// Station
 import stationSkyTexture from '@/assets/station/sky.png'
-import stationPlatformBackgroundTexture from '@/assets/station/platform-background.png'
-import stationPlatformForegroundTexture from '@/assets/station/platform-foreground.png'
-//
-import stationCloudLargeTexture from '@/assets/clouds/station-large.png'
-import stationCloudMediumTexture from '@/assets/clouds/station-medium.png'
-import stationCloudSmallTexture from '@/assets/clouds/station-small.png'
-//
-import stationTramTexture from '@/assets/station/tram.png'
+import stationPlatformBgTexture from '@/assets/station/platform-bg.png'
+import stationPlatformFgTexture from '@/assets/station/platform-fg.png'
 import stationTramWireTexture from '@/assets/station/tram-wire.png'
-//
-import stationCharacterStationMaster1Texture from '@/assets/character/station-master/station-1.png'
-import stationCharacterStationMaster2Texture from '@/assets/character/station-master/station-2.png'
-//
-import parkBackgroundTexture from '@/assets/park/park-background.png'
-import parkForegroundTexture from '@/assets/park/park-foreground.png'
-//
-import parkCloudLargeTexture from '@/assets/clouds/park-large.png'
-import parkCloudMediumTexture from '@/assets/clouds/park-medium.png'
-import parkCloudSmallTexture from '@/assets/clouds/park-small.png'
-//
-import parkCharacterIcecreamVendorWave1Texture from '@/assets/character/icecream-vendor/park-wave-1.png'
-import parkCharacterIcecreamVendorWave2Texture from '@/assets/character/icecream-vendor/park-wave-2.png'
-import parkCharacterIcecreamVendorHandoutTexture from '@/assets/character/icecream-vendor/park-handout.png'
-//
+import stationTramTexture from '@/assets/station/tram.png'
+//////
+// Park
+import parkBgTexture from '@/assets/park/bg.png'
+import parkFgTexture from '@/assets/park/fg.png'
+// Bank
 import bankSkyTexture from '@/assets/bank/sky.png'
-import bankBackgroundTexture from '@/assets/bank/background.png'
+import bankBgTexture from '@/assets/bank/bg.png'
 //
-import bankCloudLargeTexture from '@/assets/clouds/bank-large.png'
-import bankCloudMediumTexture from '@/assets/clouds/bank-medium.png'
-import bankCloudSmallTexture from '@/assets/clouds/bank-small.png'
+import bankDoorOpenTexture from '@/assets/bank/door/open.png'
+import bankDoorCloseTexture from '@/assets/bank/door/close.png'
 //
-import bankDoorOpenTexture from '@/assets/bank/door-open.png'
-import bankDoorCloseTexture from '@/assets/bank/door-close.png'
+import bankAlarmBell1Texture from '@/assets/bank/alarm-bell/1.png'
+import bankAlarmBell2Texture from '@/assets/bank/alarm-bell/2.png'
 //
-import bankAlarmBell1Texture from '@/assets/bank/bank-alarm-bell-1.png'
-import bankAlarmBell2Texture from '@/assets/bank/bank-alarm-bell-2.png'
+import bankAlarmLightLeft1Texture from '@/assets/bank/alarm-light/left-1.png'
+import bankAlarmLightLeft2Texture from '@/assets/bank/alarm-light/left-2.png'
+import bankAlarmLightRight1Texture from '@/assets/bank/alarm-light/right-1.png'
+import bankAlarmLightRight2Texture from '@/assets/bank/alarm-light/right-2.png'
 //
-import bankAlarmLightLeft1Texture from '@/assets/bank/bank-alarm-light-left-1.png'
-import bankAlarmLightLeft2Texture from '@/assets/bank/bank-alarm-light-left-2.png'
-import bankAlarmLightRight1Texture from '@/assets/bank/bank-alarm-light-right-1.png'
-import bankAlarmLightRight2Texture from '@/assets/bank/bank-alarm-light-right-2.png'
-//
-import mapCharacterGuard1Texture from '@/assets/character/guard/map-1.png'
-import mapCharacterGuard2Texture from '@/assets/character/guard/map-2.png'
-import bankCharacterGuard1Texture from '@/assets/character/guard/bank-1.png'
-import bankCharacterGuard2Texture from '@/assets/character/guard/bank-2.png'
 
 export const resources = reactive({
+  // fonts
   frontINET,
   frontLAN,
   frontUNI,
-  //
+  // images
+  smartphone,
+  smartphoneBankingHighlighted,
+  smartphoneBanking,
+  smartphoneEmailHighlighted,
+  smartphoneEmail,
+  smartphoneGameHighlighted,
+  smartphoneGame,
+  smartphoneHealthHighlighted,
+  smartphoneHealth,
+  smartphoneMovieHighlighted,
+  smartphoneMovie,
+  smartphoneMusicHighlighted,
+  smartphoneMusic,
+  smartphoneShoppingHighlighted,
+  smartphoneShopping,
+  smartphoneSocialHighlighted,
+  smartphoneSocial,
+  // asset
   popupBar: popupBarTexture,
   popupSquare: popupSquareTexture,
   popupLandscape: popupLandscapeTexture,
@@ -223,37 +285,41 @@ export const resources = reactive({
   pigeonRightPeck: pigeonRightPeckTexture,
   pigeonRightStand: pigeonRightStandTexture,
   //
-  fountain1: fountainTexture1,
-  fountain2: fountainTexture2,
-  fountain3: fountainTexture3,
-  fountain4: fountainTexture4,
-  fountain5: fountainTexture5,
+  mapBg: map1xBgTexture,
+  mapFg: map1xFgTexture,
+  mapCar: mapCarTexture,
+  mapFence: mapFenceTexture,
+  mapPlamTrees: mapPlamTreesTexture,
   //
-  map: map1xTexture,
+  fountain1: mapFountain1Texture,
+  fountain2: mapFountain2Texture,
+  fountain3: mapFountain3Texture,
+  fountain4: mapFountain4Texture,
+  fountain5: mapFountain5Texture,
   //
-  stationBg: stationBgTexture,
-  stationFg: stationFgTexture,
+  mapStationBg: mapStationBgTexture,
+  mapStationFg: mapStationFgTexture,
   //
-  streetLamp1: streetLampTexture1,
-  streetLamp2: streetLampTexture2,
-  streetLamp3: streetLampTexture3,
-  streetLamp4: streetLampTexture4,
-  streetLamp5: streetLampTexture5,
+  streetLamp1: streetLamp1Texture,
+  streetLamp2: streetLamp2Texture,
+  streetLamp3: streetLamp3Texture,
+  streetLamp4: streetLamp4Texture,
+  streetLamp5: streetLamp5Texture,
   //
-  flagPink1: flagPinkTexture1,
-  flagPink2: flagPinkTexture2,
-  flagSchoolBlue1: flagSchoolBlueTexture1,
-  flagSchoolBlue2: flagSchoolBlueTexture2,
-  flagSchoolRed1: flagSchoolRedTexture1,
-  flagSchoolRed2: flagSchoolRedTexture2,
-  flagStation1: flagStationTexture1,
-  flagStation2: flagStationTexture2,
+  flagPink1: flagPink1Texture,
+  flagPink2: flagPink2Texture,
+  flagSchoolBlue1: flagSchoolBlue1Texture,
+  flagSchoolBlue2: flagSchoolBlue2Texture,
+  flagSchoolRed1: flagSchoolRed1Texture,
+  flagSchoolRed2: flagSchoolRed2Texture,
+  flagStation1: flagStation1Texture,
+  flagStation2: flagStation2Texture,
   //
-  wave1: waveTexture1,
-  wave2: waveTexture2,
-  wave3: waveTexture3,
-  wave4: waveTexture4,
-  wave5: waveTexture5,
+  wave1: wave1Texture,
+  wave2: wave2Texture,
+  wave3: wave3Texture,
+  wave4: wave4Texture,
+  wave5: wave5Texture,
   //
   mapCloudLarge: mapCloudLargeTexture,
   mapCloudMedium: mapCloudMediumTexture,
@@ -263,14 +329,35 @@ export const resources = reactive({
   tramBack: tramBackTexture,
   tramRight: tramRightTexture,
   //
-  baloon1: baloon1Texture,
-  baloon2: baloon2Texture,
+  mapBoat1: mapBoat1Texture,
+  mapBoat2: mapBoat2Texture,
+  //
+  mapStationBgTexture: mapStationBgTexture,
+  mapStationFgTexture: mapStationBgTexture,
+  //
+  baloon1: baloonStand1Texture,
+  baloon2: baloonStand2Texture,
   //
   appSign1: appSign1Texture,
   appSign2: appSign2Texture,
   //
-  mapCar: mapCarTexture,
+  dog1: dog1Texture,
+  dog2: dog2Texture,
+  //
+  wolf1: wolf1Texture,
+  wolf2: wolf2Texture,
   // Characters
+  characterSusGuyFishing1: characterSusGuyFishing1Texture,
+  characterSusGuyFishing2: characterSusGuyFishing2Texture,
+  characterSusGuyWalkBack1: characterSusGuyWalkBack1Texture,
+  characterSusGuyWalkBack2: characterSusGuyWalkBack2Texture,
+  characterSusGuyWalkFront1: characterSusGuyWalkFront1Texture,
+  characterSusGuyWalkFront2: characterSusGuyWalkFront2Texture,
+  characterSusGuyWalkLeft1: characterSusGuyWalkLeft1Texture,
+  characterSusGuyWalkLeft2: characterSusGuyWalkLeft2Texture,
+  characterSusGuyWalkRight1: characterSusGuyWalkRight1Texture,
+  characterSusGuyWalkRight2: characterSusGuyWalkRight2Texture,
+  //
   characterPanicGreenMapLeft: characterPanicGreenMapLeftTexture,
   characterPanicGreenMapRight: characterPanicGreenMapRightTexture,
   characterPanicGreenMapStand: characterPanicGreenMapStandTexture,
@@ -295,12 +382,12 @@ export const resources = reactive({
   characterGenericLeftWalk1Side: characterGenericLeftWalk1SideTexture,
   characterGenericLeftWalk2Side: characterGenericLeftWalk2SideTexture,
   //
-  mapCharacterStationMaster1: mapCharacterStationMaster1Texture,
-  mapCharacterStationMaster2: mapCharacterStationMaster2Texture,
-  mapCharacterStationMaster3: mapCharacterStationMaster3Texture,
+  mapCharacterStationMaster1: characterStationMasterMap1Texture,
+  mapCharacterStationMaster2: characterStationMasterMap2Texture,
+  mapCharacterStationMaster3: characterStationMasterMap3Texture,
   //
-  mapCharacterIcecreamVendor1: mapCharacterIcecreamVendor1Texture,
-  mapCharacterIcecreamVendor2: mapCharacterIcecreamVendor2Texture,
+  mapCharacterIcecreamVendor1: characterMapIcecreamVendor1Texture,
+  mapCharacterIcecreamVendor2: characterMapIcecreamVendor2Texture,
   // Main Character
   characterMainFrontStill: characterMainBlackFrontStillTexture,
   characterMainFrontWalk1: characterMainBlackFrontWalk1Texture,
@@ -367,28 +454,31 @@ export const resources = reactive({
   stationCloudMedium: stationCloudMediumTexture,
   stationCloudLarge: stationCloudLargeTexture,
   //
-  platformBackground: stationPlatformBackgroundTexture,
-  platformForeground: stationPlatformForegroundTexture,
+  platformBackground: stationPlatformBgTexture,
+  platformForeground: stationPlatformFgTexture,
   //
   stationTram: stationTramTexture,
   stationTramWire: stationTramWireTexture,
   //
-  stationCharacterStationMaster1: stationCharacterStationMaster1Texture,
-  stationCharacterStationMaster2: stationCharacterStationMaster2Texture,
+  stationCharacterStationMaster1: characterStationMasterStation1Texture,
+  stationCharacterStationMaster2: characterStationMasterStation2Texture,
   //
-  parkBackground: parkBackgroundTexture,
-  parkForeground: parkForegroundTexture,
+  parkBackground: parkBgTexture,
+  parkForeground: parkFgTexture,
   //
   parkCloudSmall: parkCloudSmallTexture,
   parkCloudMedium: parkCloudMediumTexture,
   parkCloudLarge: parkCloudLargeTexture,
   //
-  parkCharacterIcecreamVendorWave1: parkCharacterIcecreamVendorWave1Texture,
-  parkCharacterIcecreamVendorWave2: parkCharacterIcecreamVendorWave2Texture,
-  parkCharacterIcecreamVendorHandout: parkCharacterIcecreamVendorHandoutTexture,
+  parkCharacterIcecreamVendorWave1: characterParkIcecreamVendorWave1Texture,
+  parkCharacterIcecreamVendorWave2: characterParkIcecreamVendorWave2Texture,
+  parkCharacterIcecreamVendorHandout: characterParkIcecreamVendorHandoutTexture,
+  //
+  characterBaloonVendor1: characterBaloonVendor1Texture,
+  characterBaloonVendor2: characterBaloonVendor2Texture,
   //
   bankSky: bankSkyTexture,
-  bankBackground: bankBackgroundTexture,
+  bankBackground: bankBgTexture,
   //
   bankCloudSmall: bankCloudSmallTexture,
   bankCloudMedium: bankCloudMediumTexture,
@@ -405,10 +495,11 @@ export const resources = reactive({
   bankAlarmLightRight1: bankAlarmLightRight1Texture,
   bankAlarmLightRight2: bankAlarmLightRight2Texture,
   //
-  mapCharacterGuard1: mapCharacterGuard1Texture,
-  mapCharacterGuard2: mapCharacterGuard2Texture,
-  bankCharacterGuard1: bankCharacterGuard1Texture,
-  bankCharacterGuard2: bankCharacterGuard2Texture,
+  mapCharacterGuard1: characterMapGuard1Texture,
+  mapCharacterGuard2: characterMapGuard2Texture,
+  mapCharacterGuard3: characterMapGuard3Texture,
+  bankCharacterGuard1: characterBankGuard1Texture,
+  bankCharacterGuard2: characterBankGuard2Texture,
 })
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'

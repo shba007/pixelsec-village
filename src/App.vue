@@ -41,9 +41,7 @@ const mainWindow = window
     </Loader>
   </Application>
   <!-- DEBUG -->
-  <!-- <button class="fixed right-0 top-0 z-[99999] bg-white p-2" @click="gameStore.toggleHardStop(!hardStop)">
-    HardStop {{ hardStop }}
-  </button> -->
+  <button class="fixed right-0 top-0 z-[99999] bg-white p-2" @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
 </template>
 
 <style lang="css">

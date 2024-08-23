@@ -27,6 +27,6 @@ function onClick(value: boolean) {
 
 <style lang="css" scoped>
 .active-btn {
-  @apply flex aspect-[8/3] h-[64px] items-center justify-center bg-[url(@/assets/buttons/long.png)] bg-contain bg-bottom bg-no-repeat font-inet text-3xl active:bg-[url(@/assets/buttons/long-pressed.png)] active:text-[#89ab2c] lg:h-[80px] lg:text-[2.5rem] lg:leading-[3rem];
+  @apply flex aspect-[8/3] h-[64px] items-center justify-center bg-[url(@/assets/buttons/long/unpressed.png)] bg-contain bg-bottom bg-no-repeat font-inet text-3xl active:bg-[url(@/assets/buttons/long/pressed.png)] active:text-[#89ab2c] lg:h-[80px] lg:text-[2.5rem] lg:leading-[3rem];
 }
 </style>

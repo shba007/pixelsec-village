@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 
 const imgs = {
-  map: ['mapCharacterGuard1', 'mapCharacterGuard2'],
+  map: ['mapCharacterGuard1', 'mapCharacterGuard2', 'mapCharacterGuard3'],
   bank: ['bankCharacterGuard1', 'bankCharacterGuard2'],
 }
 </script>

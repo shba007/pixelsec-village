@@ -15,14 +15,5 @@ const imgs = {
 </script>
 
 <template>
-  <AnimatedSprite
-    :textures="imgs[place]"
-    :texture-options="{ scaleMode: SCALE_MODES.LINEAR }"
-    :anchor="0.5"
-    :scale="state.scale"
-    :x="state.x"
-    :y="state.y"
-    z-index="10"
-    :playing="true"
-    :animation-speed="0.03" />
+  <AnimatedSprite :textures="imgs[place]" :texture-options="{ scaleMode: SCALE_MODES.LINEAR }" :anchor="0.5" :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
 </template>

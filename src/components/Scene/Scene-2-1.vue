@@ -23,14 +23,16 @@ function onClick(value: string) {
         <p class="text-left text-3xl lg:text-[3rem] lg:leading-[3rem]">Please verify your age for tram ticket purchase</p>
       </div>
       <div class="flex gap-2 lg:gap-4">
-        <button
-          v-for="age of ages"
-          :key="age"
-          class="flex aspect-[5/3] h-[64px] items-center justify-center whitespace-nowrap bg-[url(@/assets/buttons/short.png)] bg-contain bg-bottom bg-no-repeat px-4 font-inet text-3xl active:bg-[url(@/assets/buttons/short-pressed.png)] active:text-[#89ab2c] lg:h-[80px] lg:text-[2.5rem] lg:leading-[3rem]"
-          @click="onClick(age)">
+        <button v-for="age of ages" :key="age" class="active-btn" @click="onClick(age)">
           {{ age }}
         </button>
       </div>
     </div>
   </Modal>
 </template>
+
+<style lang="css" scoped>
+.active-btn {
+  @apply flex aspect-[5/3] h-[64px] items-center justify-center whitespace-nowrap bg-[url(@/assets/buttons/short/unpressed.png)] bg-contain bg-bottom bg-no-repeat px-4 font-inet text-3xl active:bg-[url(@/assets/buttons/short/pressed.png)] active:text-[#89ab2c] lg:h-[80px] lg:text-[2.5rem] lg:leading-[3rem];
+}
+</style>

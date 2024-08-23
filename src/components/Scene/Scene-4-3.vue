@@ -30,11 +30,14 @@ function onComplete() {
 <template>
   <Modal type="mid" title="">
     <div class="flex w-full flex-col items-start gap-8">
-      <p class="text-left text-3xl lg:px-10 lg:py-6 lg:text-5xl lg:leading-[3rem]">Your data could be compromised. Who do you think should protect your data?</p>
+      <p class="text-left text-3xl lg:px-10 lg:py-6 lg:text-5xl lg:leading-[3rem]">Your data could be compromised. Who
+        do you think should protect your data?</p>
       <ul class="grid w-full grid-cols-2 grid-rows-2 gap-2">
         <li class="flex items-center gap-4" v-for="({ title, value }, index) of options" :key="index">
-          <button class="active-btn" :class="selectedOptions.includes(value) ? 'checked' : 'unchecked'" @click="onSelect(value)" />
-          <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]" v-html="title" />
+          <button class="active-btn" :class="selectedOptions.includes(value) ? 'checked' : 'unchecked'"
+            @click="onSelect(value)" />
+          <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]"
+            v-html="title" />
         </li>
       </ul>
     </div>
@@ -47,10 +50,10 @@ function onComplete() {
 }
 
 .active-btn.checked {
-  @apply bg-[url(@/assets/buttons/square-pressed.png)];
+  @apply bg-[url(@/assets/buttons/square/pressed.png)];
 }
 
 .active-btn.unchecked {
-  @apply bg-[url(@/assets/buttons/square.png)];
+  @apply bg-[url(@/assets/buttons/square/unpressed.png)];
 }
 </style>

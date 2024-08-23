@@ -18,11 +18,14 @@ import Fountain from '@/components/Animation/Fountain.vue'
 import BaloonStand from '@/components/Animation/BaloonStand.vue'
 import AppSign from '@/components/Animation/AppSign.vue'
 import Car from '@/components/Animation/Car.vue'
+import Boat from '@/components/Animation/Boat.vue'
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
-import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 import CharacterIcecreamVendor from '@/components/Animation/Character/CharacterIcecreamVendor.vue'
 import CharacterPanic from '@/components/Animation/Character/CharacterPanic.vue'
+import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
+import CharacterGuard from '@/components/Animation/Character/CharacterGuard.vue'
+import CharacterBaloonVendor from '@/components/Animation/Character/CharacterBaloonVendor.vue'
 
 import Scene1 from '@/components/Scene/Scene-1-1.vue'
 import Scene2 from '@/components/Scene/Scene-1-2.vue'
@@ -31,7 +34,6 @@ import Scene4 from '@/components/Scene/Scene-1-4.vue'
 import Scene5 from '@/components/Scene/Scene-1-5.vue'
 import Scene6 from '@/components/Scene/Scene-1-6.vue'
 import Scene7 from '@/components/Scene/Scene-1-7.vue'
-import CharacterGuard from '../Animation/Character/CharacterGuard.vue'
 
 const props = defineProps<{
   currentScreenIndex: number
@@ -49,7 +51,7 @@ const { currentSceneIndex, currentStateIndex, currentScreenAnimation, isMobile, 
 const zoomFactor = computed(() => screenWidth.value / 1280)
 const screen = reactive<Asset>({
   loaded: false,
-  alias: 'map',
+  alias: 'mapBg',
   states: [
     { x: -380, y: -260, scale: 0.94, alpha: 1, time: 0 },
     { x: -540, y: -250, scale: 1.64, alpha: 1, time: 2 },
@@ -66,7 +68,10 @@ const screen = reactive<Asset>({
   animation: 'init',
 })
 
-const station = reactive({ bg: { x: 725, y: 265, scale: 0.5 }, fg: { x: 867, y: 259.5, scale: 0.5 } })
+const station = reactive({
+  bg: { x: 725, y: 265, scale: 1 },
+  fg: { x: 725, y: 265, scale: 1 },
+})
 
 const wave = reactive({
   x: 240,
@@ -143,10 +148,32 @@ const appSign = reactive({
 const car = reactive({
   x: 770,
   y: 1500,
-  scale: 0.525,
+  scale: 1,
   widthRange: 50,
   direction: -1,
 })
+
+const fence = reactive({
+  alias: 'mapFence',
+  x: 348,
+  y: 2820,
+  scale: 1,
+})
+
+const plamTrees = reactive({
+  alias: 'mapPlamTrees',
+  x: 1690,
+  y: 2610,
+  scale: 1,
+})
+
+const boats = ref([
+  { x: 510, y: 3000, scale: 1 },
+  { x: 627, y: 3000, scale: 1 },
+  { x: 747, y: 3000, scale: 1 },
+  { x: 870, y: 3000, scale: 1 },
+  { x: 990, y: 3000, scale: 1 },
+])
 
 const charactersGeneric = ref<State[][]>([
   [
@@ -224,8 +251,13 @@ const characterIcecreamVendor = reactive({
 })
 
 const characterGuard = reactive({
-  states: [{ x: 1470, y: 1740, scale: 0.25, alpha: 1, time: 0 }],
-  state: { x: 1470, y: 1740, scale: 0.25, alpha: 1, time: 0 },
+  states: [{ x: 1470, y: 1740, scale: 0.5, alpha: 1, time: 0 }],
+  state: { x: 1470, y: 1740, scale: 0.5, alpha: 1, time: 0 },
+})
+
+const characterBaloonVendor = reactive({
+  states: [{ x: 1230, y: 2750, scale: 0.5, alpha: 1, time: 0 }],
+  state: { x: 1230, y: 2750, scale: 0.5, alpha: 1, time: 0 },
 })
 
 const characterMain = reactive<Asset>({
@@ -256,9 +288,33 @@ const characterMain = reactive<Asset>({
     { x: 1140, y: 1780, scale: 1.5, alpha: 1, time: 37 },
     { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 37 + 3 },
     { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 37 + 5 },
-    { x: 1270, y: 2060, scale: 1.5, alpha: 1, time: 37 + 8 },
+    { x: 1220, y: 2150, scale: 1.5, alpha: 1, time: 37 + 8 },
+    // in the pond
+    { x: 1100, y: 2150, scale: 1.5, alpha: 1, time: 37 + 10 },
+    { x: 1020, y: 2090, scale: 1.5, alpha: 1, time: 37 + 12 },
+    { x: 1020, y: 1960, scale: 1.5, alpha: 1, time: 37 + 14 },
+    { x: 1110, y: 1910, scale: 1.5, alpha: 1, time: 37 + 16 },
+    { x: 1230, y: 1910, scale: 1.5, alpha: 1, time: 37 + 18 },
+    { x: 1290, y: 2030, scale: 1.5, alpha: 1, time: 37 + 20 },
+    // loop starts
+    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 37 + 22 },
+    { x: 1030, y: 2150, scale: 1.5, alpha: 1, time: 37 + 24 },
+    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 37 + 26 },
+    // loop ends
+    { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 37 + 28 },
+    //
+    { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 37 + 34 },
+    { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 37 + 36 },
+    { x: 1170, y: 2550, scale: 1.5, alpha: 1, time: 37 + 38 },
+    { x: 410, y: 2550, scale: 1.5, alpha: 1, time: 37 + 44 },
+    { x: 410, y: 2790, scale: 1.5, alpha: 1, time: 37 + 46 },
+    { x: 1670, y: 2790, scale: 1.5, alpha: 1, time: 37 + 52 },
+    { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 37 + 54 },
+    { x: 2370, y: 2590, scale: 1.5, alpha: 1, time: 37 + 56 },
+    { x: 2370, y: 2960, scale: 1.5, alpha: 1, time: 37 + 58 },
+    { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 37 + 56 },
   ],
-  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
+  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0, index: 0 },
   animation: 'init',
 })
 
@@ -328,6 +384,7 @@ function onLoad() {
   currentScreenAnimation.value = 'started'
   characterStationMaster.state = characterStationMaster.states[0]
   characterIcecreamVendor.state = characterIcecreamVendor.states[0]
+  // characterMain.state.index = 37
 }
 
 onBeforeMount(onLoad)
@@ -359,10 +416,13 @@ onTick((delta) => {
         tram.animation = 'started'
         characterStationMaster.state = characterStationMaster.states[1]
         characterMain.animation = 'started'
+        characterMain.state.index = 0
       } else if (props.currentScreenIndex === 4 && currentScreenAnimation.value === 'finished') {
         characterMain.animation = 'started'
+        characterMain.state.index = 14
       } else if (props.currentScreenIndex === 6 && currentScreenAnimation.value === 'finished') {
         characterMain.animation = 'started'
+        characterMain.state.index = 21
       }
 
       console.log(
@@ -397,42 +457,46 @@ function handleMCState(stateIndex: number) {
 
 <template>
   <Container :renderable="isLoad">
-    <Container :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <Sprite :texture="screen.alias" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="isMobile ? 1 : 1" :anchor="0" />
-      <Sprite texture="stationBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
+    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
+      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+      <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+        :x="0" :y="0" :scale="1" :anchor="0" />
+      <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+        :x="0" :y="0" :scale="1" :anchor="0" />
+      <Sprite texture="mapStationBg"
+        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
+        :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
+      <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
+      <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale"
+        :flip="flip" />
+      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
+        :motion-blur="motionBlur" initalOrientation="right" />
+      <Sprite texture="mapStationFg"
+        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
+        :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
       <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
       <!-- @vue-ignore -->
       <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-      <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-      <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
       <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
+      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
+        place="map" />
       <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
+        :type="type as 'purple' | 'green'" place="map" />
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <CharacterGuard place="map" :state="characterGuard.state" />
-      <CharacterMain
-        :states="characterMain.states"
-        :animation="rotationStop ? 'finished' : characterMain.animation"
-        initalOrientation="front"
-        @move="lockCharacterToMapCenter"
-        @updateStateIndex="handleMCState" />
-      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur" initalOrientation="right" />
-      <Sprite texture="stationFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
+      <CharacterBaloonVendor :state="characterBaloonVendor.state" />
+      <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : characterMain.animation"
+        :currentCharacterStateIndex="characterMain.state.index" initalOrientation="front"
+        @move="lockCharacterToMapCenter" @updateStateIndex="handleMCState" />
+      <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
+      <Sprite :texture="plamTrees.alias" :x="plamTrees.x" :y="plamTrees.y" :scale="plamTrees.scale" />
       <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
       <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
-      <!-- @vue-ignore -->
       <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction" />
-      <Cloud
-        v-for="({ size, x, y, direction }, index) in clouds"
-        :key="index"
-        place="map"
-        :size="size"
-        :x="x"
-        :y="mapHeight * screen.state.scale * y"
-        :scale="0.5"
-        :direction="direction"
-        :width-range="mapWidth" />
+      <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
+      <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
+        :y="mapHeight * screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" />
     </Container>
     <Container v-if="!rotationStop">
       <Scene1 v-if="currentSceneIndex === 0 && currentScreenAnimation === 'finished'" />
@@ -452,12 +516,13 @@ function handleMCState(stateIndex: number) {
           <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
           <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
         </div>
-         <div class="flex flex-col gap-2">
-          <input v-model="car.x" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="car.y" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="car.scale" type="number" min="0" max="5" step="0.1" />
-          <input v-model="car.widthRange" type="number" min="0" max="10000" step="10" />
-          <input v-model="car.direction" type="number" min="-1" max="1" step="1" />
+        <div class="flex flex-col gap-2">
+          <input v-model="fence.x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="fence.y" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="fence.scale" type="number" min="0" max="5" step="0.1" />
+          <input v-model="plamTrees.x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="plamTrees.y" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="plamTrees.scale" type="number" min="0" max="5" step="0.1" />
         </div>
       </div>
     </External> -->
