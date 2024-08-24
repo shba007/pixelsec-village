@@ -559,7 +559,7 @@ function handleMCAnimation(state: string) {
       <Scene7 v-else-if="currentSceneIndex === 9" />
     </Container>
     <!-- DEBUG -->
-    <External>
+   <!--  <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
@@ -568,14 +568,14 @@ function handleMCAnimation(state: string) {
           <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
           <input v-model="currentMapStateIndex" type="number" min="0" max="20" step="1" />
         </div>
-        <!--  <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
           <input v-model="characterSus.state.x" type="number" min="-10000" max="10000" step="10" />
           <input v-model="characterSus.state.y" type="number" min="-10000" max="10000" step="10" />
           <input v-model="characterSus.state.scale" type="number" min="0" max="5" step="0.1" />
           <input v-model="characterSus.state.alpha" type="number" min="0" max="1" step="0.1" />
           <input v-model="characterSus.state.time" type="number" min="0" max="100" step="0.1" />
-        </div> -->
+        </div>
       </div>
-    </External>
+    </External> -->
   </Container>
 </template>
