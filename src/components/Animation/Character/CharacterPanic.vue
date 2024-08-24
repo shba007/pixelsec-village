@@ -41,21 +41,21 @@ const imgs = {
 }
 
 const currentCharacterStateIndex = ref(0)
-const playing = useTimeout(getRandomInteger(100, 2000))
+const playing = true
 const speed = 0.07
 // Move Character
-let totalElaspedTime = 0
+let totalElapsedTime = 0
 let progress = 0
 
 onTick((delta) => {
   if (activeCharacter.animation === 'started') {
-    totalElaspedTime += delta / 100
+    totalElapsedTime += delta / 100
     const dt = props.states[currentCharacterStateIndex.value + 1].time - props.states[currentCharacterStateIndex.value].time
     const dx = props.states[currentCharacterStateIndex.value + 1].x - props.states[currentCharacterStateIndex.value].x
     const dy = props.states[currentCharacterStateIndex.value + 1].y - props.states[currentCharacterStateIndex.value].y
     const da = props.states[currentCharacterStateIndex.value + 1].alpha - props.states[currentCharacterStateIndex.value].alpha
     const ds = props.states[currentCharacterStateIndex.value + 1].scale - props.states[currentCharacterStateIndex.value].scale
-    progress = Math.min(totalElaspedTime / dt, 1)
+    progress = Math.min(totalElapsedTime / dt, 1)
     activeCharacter.state.x = props.states[currentCharacterStateIndex.value].x + dx * progress
     activeCharacter.state.y = props.states[currentCharacterStateIndex.value].y + dy * progress
     activeCharacter.state.scale = props.states[currentCharacterStateIndex.value].scale + ds * progress
@@ -64,7 +64,7 @@ onTick((delta) => {
 
     if (progress == 1) {
       activeCharacter.animation = 'finished'
-      totalElaspedTime = 0
+      totalElapsedTime = 0
       currentCharacterStateIndex.value = currentCharacterStateIndex.value === 0 ? 1 : 0
       activeCharacter.animation = 'started'
     }

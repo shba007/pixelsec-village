@@ -57,7 +57,7 @@ const activeCharacter = reactive<Character>({
   },
   direction: 1,
   orientation: 'front',
-  animation: 'started',
+  animation: props.animation,
 })
 
 const activeTrail = reactive({
@@ -74,19 +74,26 @@ watch(props.states, (value) => {
 })
 
 // Move Character
-let totalElaspedTime = 0
+let totalElapsedTime = 0
 let progress = 0
 const currentCharacterStateIndex = ref(props.currentCharacterStateIndex)
 
+watch(
+  () => activeCharacter.animation,
+  (value) => {
+    emit('updateAnimation', value)
+  }
+)
+
 onTick((delta) => {
-  if (props.animation && props.animation === 'started' && currentCharacterStateIndex.value < props.states.length) {
-    totalElaspedTime += delta / 100
+  if (props.animation && props.animation === 'started' && currentCharacterStateIndex.value < props.states.length - 1) {
+    totalElapsedTime += delta / 100
     const dt = props.states[currentCharacterStateIndex.value + 1].time - props.states[currentCharacterStateIndex.value].time
     const dx = props.states[currentCharacterStateIndex.value + 1].x - props.states[currentCharacterStateIndex.value].x
     const dy = props.states[currentCharacterStateIndex.value + 1].y - props.states[currentCharacterStateIndex.value].y
     const ds = props.states[currentCharacterStateIndex.value + 1].scale - props.states[currentCharacterStateIndex.value].scale
     const da = props.states[currentCharacterStateIndex.value + 1].alpha - props.states[currentCharacterStateIndex.value].alpha
-    progress = Math.min(totalElaspedTime / dt, 1)
+    progress = Math.min(totalElapsedTime / dt, 1)
     activeCharacter.state.x = props.states[currentCharacterStateIndex.value].x + dx * progress
     activeCharacter.state.y = props.states[currentCharacterStateIndex.value].y + dy * progress
     activeCharacter.state.scale = props.states[currentCharacterStateIndex.value].scale + ds * progress
@@ -118,30 +125,44 @@ onTick((delta) => {
     }
 
     if (progress == 1) {
-      totalElaspedTime = 0
+      totalElapsedTime = 0
       currentCharacterStateIndex.value++
-
-      if (!(currentCharacterStateIndex.value < props.states.length - 1)) {
-        emit('updateAnimation', 'finished')
-      }
 
       emit('updateStateIndex', currentCharacterStateIndex.value)
     }
+  } else if (!(currentCharacterStateIndex.value < props.states.length - 1)) {
+    activeCharacter.aliases = characterAnimations['frontStill']
+    activeCharacter.animation = 'finished'
   }
 })
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AnimatedSprite :textures="activeTrail.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5"
-      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="true" :animation-speed="0.08" />
-    <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="animation === 'started'" :animation-speed="0.08" />
+    <AnimatedSprite
+      :textures="activeTrail.aliases"
+      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5"
+      :x="activeTrail.x"
+      :y="activeTrail.y"
+      :scale="1"
+      :alpha="1"
+      :playing="activeCharacter.animation === 'started'"
+      :animation-speed="0.08" />
+    <AnimatedSprite
+      :textures="activeCharacter.aliases"
+      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5"
+      :x="0"
+      :y="0"
+      :scale="1"
+      :alpha="1"
+      :playing="activeCharacter.animation === 'started'"
+      :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <!-- <External>
     <div class="absolute bottom-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />

@@ -28,7 +28,7 @@
 }
 
 body {
-  @apply font-lan;
+  @apply overflow-hidden font-lan;
 }
 
 img,

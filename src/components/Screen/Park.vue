@@ -50,7 +50,7 @@ const clouds = ref<
   { size: 'sm', x: -screenWidth.value / 2 - 100, y: 150 - 350, direction: 1 },
 ])
 
-const pegions = ref([
+const pigeons = ref([
   { x: -400, y: -300, scale: 1, flip: false },
   { x: 540, y: 280, scale: 1, flip: true },
 ])
@@ -78,7 +78,7 @@ watch(currentSceneIndex, (value) => {
     <Sprite :texture="park.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
     <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="park" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
     <Sprite :texture="park.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
-    <Pigeon v-for="({ x, y, scale, flip }, index) in pegions" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+    <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container v-if="!rotationStop" :z-order="0">
     <Scene1 v-if="currentSceneIndex === 10" class="text-left" />
@@ -97,9 +97,9 @@ watch(currentSceneIndex, (value) => {
         <input v-model="park.state.scale" type="number" min="0" max="10" step="0.01" />
       </div>
       <div class="flex flex-col gap-2">
-        <input v-model="pegions[0].x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="pegions[0].y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="pegions[0].scale" type="number" min="0" max="20" step="0.01" />
+        <input v-model="pigeons[0].x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="pigeons[0].y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="pigeons[0].scale" type="number" min="0" max="20" step="0.01" />
       </div>
     </div>
   </External> -->

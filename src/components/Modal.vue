@@ -12,7 +12,7 @@ import popupPortrait from '@/assets/popup/bg-portrait.png'
 import popupSquare from '@/assets/popup/bg-square.png'
 
 const gameStore = useGameStore()
-const { isLandscape, currentScreenState } = storeToRefs(gameStore)
+const { isLandscape } = storeToRefs(gameStore)
 
 const props = withDefaults(
   defineProps<{
@@ -49,7 +49,7 @@ const modal = computed(() => {
     case 'mid':
       if (isLandscape.value) {
         image = 'popupLandscape'
-        scale = 4
+        scale = 3.5
       } else {
         image = 'popupPortrait'
         scale = 7.5

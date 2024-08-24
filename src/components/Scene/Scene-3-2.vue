@@ -42,7 +42,7 @@ function onComplete() {
 
 <style lang="css" scoped>
 .active-btn {
-  @apply flex items-center justify-center aspect-[7/9] h-[32px] bg-contain bg-bottom bg-no-repeat lg:h-[80px];
+  @apply flex aspect-[7/9] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
 }
 
 .active-btn.checked {

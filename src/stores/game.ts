@@ -164,7 +164,7 @@ import dataTrailSide4Texture from '@/assets/character/trail/side-4.png'
 // Map
 import map1xBgTexture from '@/assets/map/1x-bg.png'
 import map1xFgTexture from '@/assets/map/1x-fg.png'
-import mapPlamTreesTexture from '@/assets/map/palm-trees.png'
+import mapPalmTreesTexture from '@/assets/map/palm-trees.png'
 import mapCarTexture from '@/assets/map/car.png'
 import mapFenceTexture from '@/assets/map/fence.png'
 // Fountain
@@ -289,7 +289,7 @@ export const resources = reactive({
   mapFg: map1xFgTexture,
   mapCar: mapCarTexture,
   mapFence: mapFenceTexture,
-  mapPlamTrees: mapPlamTreesTexture,
+  mapPalmTrees: mapPalmTreesTexture,
   //
   fountain1: mapFountain1Texture,
   fountain2: mapFountain2Texture,

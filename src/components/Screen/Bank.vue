@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
+import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
 import { SCALE_MODES } from '@/utils/types'
+import { useGameStore } from '@/stores/game'
 
 import Cloud from '@/components/Animation/Cloud.vue'
 import Door from '@/components/Animation/Door.vue'
-import CharacterPanic from '@/components/Animation/Character/CharacterPanic.vue'
 import AlarmLight from '@/components/Animation/AlarmLight.vue'
 import AlarmBell from '@/components/Animation/AlarmBell.vue'
-import { useGameStore } from '@/stores/game'
-import { storeToRefs } from 'pinia'
+import CharacterPanic from '@/components/Animation/Character/CharacterPanic.vue'
+import CharacterGuard from '@/components/Animation/Character/CharacterGuard.vue'
 import Scene1 from '@/components/Scene/Scene-4-1.vue'
 import Scene2 from '@/components/Scene/Scene-4-2.vue'
 import Scene3 from '@/components/Scene/Scene-4-3.vue'
 import Scene4 from '@/components/Scene/Scene-4-4.vue'
-import CharacterGuard from '../Animation/Character/CharacterGuard.vue'
 
 const emit = defineEmits<{
   (event: 'close', nextSceneIndex: number): void
@@ -26,8 +26,6 @@ const { currentSceneIndex, rotationStop } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
-  const aspectRatio = screenWidth.value / screenHeight.value
-  // return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
   return screenHeight.value / 720
 })
 
@@ -95,26 +93,26 @@ const characterGuard = reactive({
 // onBeforeMount(onLoad)
 onMounted(() => setTimeout(() => gameStore.nextScene(), 2000))
 
-let totalElaspedTime = 0
+let totalElapsedTime = 0
 let progress = 0
 const currentStateIndex = ref(0)
 
 onTick((delta) => {
   if (!rotationStop.value && screen.animation === 'started') {
-    totalElaspedTime += delta / 100
+    totalElapsedTime += delta / 100
     const dt = screen.states[currentStateIndex.value + 1].time - screen.states[currentStateIndex.value].time
     const dx = screen.states[currentStateIndex.value + 1].x - screen.states[currentStateIndex.value].x
     const dy = screen.states[currentStateIndex.value + 1].y - screen.states[currentStateIndex.value].y
     const ds = screen.states[currentStateIndex.value + 1].scale - screen.states[currentStateIndex.value].scale
 
-    progress = Math.min(totalElaspedTime / dt, 1)
+    progress = Math.min(totalElapsedTime / dt, 1)
     screen.state.x = screen.states[currentStateIndex.value].x + dx * progress
     screen.state.y = screen.states[currentStateIndex.value].y + dy * progress
     screen.state.scale = screen.states[currentStateIndex.value].scale + ds * progress
     screen.state.time = screen.states[currentStateIndex.value].time + dt * progress
 
     if (progress == 1) {
-      totalElaspedTime = 0
+      totalElapsedTime = 0
       screen.animation = 'finished'
 
       gameStore.nextScene()
@@ -136,7 +134,7 @@ watch(currentSceneIndex, (value) => {
     <Sprite :texture="screen.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
     <Door :x="door.x" :y="door.y" :scale="door.scale" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" />
-    <AlarmLight v-for="{ type, x, y, scale } of alarmLight" :type="type" :x="x" :y="y" :scale="scale" />
+    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
     <CharacterGuard :state="characterGuard" place="bank" />
   </Container>
