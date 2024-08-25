@@ -75,6 +75,10 @@ const activeCharacter = reactive<Character>({
   animation: props.animation,
 })
 
+watch(() => props.animation, (value) => {
+  activeCharacter.animation = value
+})
+
 const activeTrail = reactive({
   aliases: trailAnimations['back'] as string[],
   x: 0,

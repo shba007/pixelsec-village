@@ -507,12 +507,12 @@ export const useGameStore = defineStore('game', () => {
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
   const currentSceneIndex = ref(0)
-  const currentStateIndex = ref(0)
+  const currentMapStateIndex = ref(0)
   const currentScreenIndex = ref(0)
   // const currentSceneIndex = ref(20)
-  // const currentStateIndex = ref(8)
+  // const currentMapStateIndex = ref(8)
   // const currentScreenIndex = ref(6)
-  /* currentSceneIndex 9 currentStateIndex 6 currentScreenIndex 2 currentScreenAnimation finished */
+  /* currentSceneIndex 9 currentMapStateIndex 6 currentScreenIndex 2 currentScreenAnimation finished */
 
   const currentScreenAnimation = ref<'init' | 'started' | 'finished'>('init')
   const $currentScreenState = reactive({ x: 0, y: 0, scale: 1, alpha: 1, time: 0 })
@@ -566,7 +566,7 @@ export const useGameStore = defineStore('game', () => {
 
   function nextMapState() {
     currentScreenAnimation.value = 'started'
-    currentStateIndex.value++
+    currentMapStateIndex.value++
   }
 
   function setCharacterSkin(value: Character) {
@@ -577,7 +577,7 @@ export const useGameStore = defineStore('game', () => {
     isLandscape,
     isMobile,
     currentSceneIndex,
-    currentStateIndex,
+    currentMapStateIndex,
     currentScreenIndex,
     currentScreenAnimation,
     currentScreenState,

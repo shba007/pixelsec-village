@@ -36,6 +36,8 @@ import Scene4 from '@/components/Scene/Scene-1-4.vue'
 import Scene5 from '@/components/Scene/Scene-1-5.vue'
 import Scene6 from '@/components/Scene/Scene-1-6.vue'
 import Scene7 from '@/components/Scene/Scene-1-7.vue'
+import Scene8 from '@/components/Scene/Scene-1-8.vue'
+import Scene9 from '@/components/Scene/Scene-1-9.vue'
 
 const props = defineProps<{
   currentScreenIndex: number
@@ -48,7 +50,7 @@ const emit = defineEmits<{
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentSceneIndex, currentStateIndex: currentMapStateIndex, currentScreenAnimation, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
+const { currentSceneIndex, currentMapStateIndex, currentScreenAnimation, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
 
 const zoomFactor = computed(() => screenWidth.value / 1280)
 const screen = reactive<Asset>({
@@ -61,13 +63,14 @@ const screen = reactive<Asset>({
     { x: -795, y: -590, scale: 2.01, alpha: 1, time: 7 },
     { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 },
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
+    // Transition
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
-    { x: -860, y: -1900, scale: 2.01, alpha: 1, time: 20 },
-    { x: -845, y: -2640, scale: 2.01, alpha: 1, time: 30 },
-    { x: -2220, y: -2760, scale: 2.01, alpha: 1, time: 40 },
+    // { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
+    // { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
+    { x: -860, y: -1900, scale: 2.01, alpha: 1, time: 13 },
+    { x: -845, y: -2640, scale: 2.01, alpha: 1, time: 14 },
+    { x: -2220, y: -2760, scale: 2.01, alpha: 1, time: 15 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -414,6 +417,10 @@ watchEffect(() => {
   if (currentSceneIndex.value === 6 && currentScreenAnimation.value === 'finished') emit('close', 1)
   else if (currentSceneIndex.value === 10) emit('close', 3)
   else if (currentSceneIndex.value === 14) emit('close', 5)
+  else if (currentSceneIndex.value === 22) {
+    characterMain.animation = 'started'
+    characterSus.animation = 'started'
+  }
 })
 
 function lockCharacterToMapCenter(x: number, y: number) {
@@ -433,7 +440,7 @@ function onLoad() {
   currentScreenAnimation.value = 'started'
   characterStationMaster.state = characterStationMaster.states[0]
   characterIcecreamVendor.state = characterIcecreamVendor.states[0]
-  characterMain.state.index = 0
+  // characterMain.state.index = 0
   // characterMain.state.index = 21
   console.log('On Map Load')
 }
@@ -504,12 +511,19 @@ function handleMCState(stateIndex: number) {
     gameStore.nextScene()
   } else if (stateIndex === 22) {
     characterSus.animation = 'started'
-  }
+  } else if (stateIndex === 31) {
+    characterMain.animation = 'finished'
+    characterSus.animation = 'finished'
+    // Show Popup
+  } /* else if (stateIndex === 39) {
+    characterMain.animation = 'finished'
+    // Show Popup
+  } */
 }
 
 function handleMCAnimation(state: string) {
   if (state === 'finished') {
-    currentMapStateIndex.value = screen.states.length - 1
+    // currentMapStateIndex.value = screen.states.length - 1
     screen.state.x = screen.states[currentMapStateIndex.value].x
     screen.state.y = screen.states[currentMapStateIndex.value].y
     screen.state.scale = screen.states[currentMapStateIndex.value].scale
@@ -552,19 +566,10 @@ function handleMCAnimation(state: string) {
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <CharacterGuard place="map" :state="characterGuard.state" />
       <CharacterBaloonVendor :state="characterBaloonVendor.state" />
-      <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : characterMain.animation"
-        :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index" @move="lockCharacterToMapCenter"
-        @updateStateIndex="handleMCState" @updateAnimation="handleMCAnimation" />
-      <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation" />
-      <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
-      <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
       <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
       <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
-      <!-- @vue-ignore -->
       <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction" />
       <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
-      <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
-        :y="mapHeight * screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" />
     </Container>
     <Container v-if="!rotationStop">
       <Scene1 v-if="currentSceneIndex === 0 && currentScreenAnimation === 'finished'" />
@@ -573,24 +578,39 @@ function handleMCAnimation(state: string) {
       <Scene4 v-else-if="currentSceneIndex === 3 && currentScreenAnimation === 'finished'" />
       <Scene5 v-else-if="currentSceneIndex === 4 && currentScreenAnimation === 'finished'" />
       <Scene6 v-else-if="currentSceneIndex === 5 && currentScreenAnimation === 'finished'" />
-      <Scene7 v-else-if="currentSceneIndex === 9" />
+      <Scene7 v-else-if="currentSceneIndex === 9 && currentScreenAnimation === 'finished'" />
+      <Scene8 v-else-if="currentSceneIndex === 20 && currentScreenAnimation === 'finished'" />
+      <Scene9 v-else-if="currentSceneIndex === 21 && currentScreenAnimation === 'finished'" />
+    </Container>
+    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
+      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+      <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : characterMain.animation"
+        :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index" @move="lockCharacterToMapCenter"
+        @updateStateIndex="handleMCState" @updateAnimation="handleMCAnimation" />
+      <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation" />
+      <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
+      <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
+      <!-- @vue-ignore -->
+      <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
+        :y="mapHeight * screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" />
     </Container>
     <!-- DEBUG -->
-    <!-- <External>
+    <!--  <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
           <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
           <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
           <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
+          <input v-model="screen.state.time" type="number" min="0" max="10" step="0.01" />
           <input v-model="currentMapStateIndex" type="number" min="0" max="20" step="1" />
         </div>
-          <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
           <input v-model="wolfs[0].x" type="number" min="-10000" max="10000" step="10" />
           <input v-model="wolfs[0].y" type="number" min="-10000" max="10000" step="10" />
           <input v-model="wolfs[0].scale" type="number" min="0" max="5" step="0.1" />
-          <input v-model="characterSus.state.alpha" type="number" min="0" max="1" step="0.1" /> 
-           <input v-model="characterSus.state.time" type="number" min="0" max="100" step="0.1" />
+          <input v-model="characterSus.state.alpha" type="number" min="0" max="1" step="0.1" />
+          <input v-model="characterSus.state.time" type="number" min="0" max="100" step="0.1" />
         </div>
       </div>
     </External> -->
