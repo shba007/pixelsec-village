@@ -505,6 +505,7 @@ function handleMCAnimation(state: string) {
       <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
       <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale"
         :flip="flip" />
+      <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
       <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
         :motion-blur="motionBlur" initialOrientation="right" />
       <Sprite texture="mapStationFg"
@@ -512,7 +513,6 @@ function handleMCAnimation(state: string) {
         :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
       <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
       <!-- @vue-ignore -->
-      <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
       <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
       <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
         place="map" />

@@ -24,15 +24,15 @@ const mainWindow = window
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
-    <Loader :resources="resources" :on-resolved="() => {}">
+    <Loader :resources="resources" :on-resolved="() => { }">
       <template #fallback="{ progress }">
-        <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :style="{ fill: 'white' }" :scale="0.5"> Loading... {{ Math.round(progress * 100) }}% </Text>
+        <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :style="{ fill: 'white' }" :scale="0.5">
+          Loading... {{ Math.round(progress * 100) }}% </Text>
       </template>
       <template #default>
         <ScreenMap
           :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6"
-          :current-screen-index="currentScreenIndex"
-          @close="updateIndex" />
+          :current-screen-index="currentScreenIndex" @close="updateIndex" />
         <ScreenStation v-if="currentScreenIndex === 1" @close="updateIndex" />
         <ScreenPark v-if="currentScreenIndex === 3" @close="updateIndex" />
         <ScreenBank v-if="currentScreenIndex === 5" @close="updateIndex" />
@@ -41,7 +41,10 @@ const mainWindow = window
     </Loader>
   </Application>
   <!-- DEBUG -->
-  <button class="fixed right-0 top-0 z-[99999] bg-white p-2" @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
+  <div class="flex gap-2 flex-col fixed right-0 top-0 z-[99999] bg-white p-2">
+    <p>v0.2.0</p>
+    <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
+  </div>
 </template>
 
 <style lang="css">
