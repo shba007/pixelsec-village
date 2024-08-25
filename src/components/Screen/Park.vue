@@ -81,9 +81,9 @@ watch(currentSceneIndex, (value) => {
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container v-if="!rotationStop" :z-order="0">
-    <Scene1 v-if="currentSceneIndex === 10" class="text-left" />
+    <Scene1 v-if="currentSceneIndex === 10" />
     <Scene2 v-else-if="currentSceneIndex === 11" />
-    <Scene3 v-else-if="currentSceneIndex === 12" class="text-left" />
+    <Scene3 v-else-if="currentSceneIndex === 12" />
   </Container>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" :z-order="10" />

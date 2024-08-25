@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, ref, watch, computed } from 'vue'
+import { reactive, ref, watch, computed, onMounted } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import type { State } from '@/utils/types'
 import { SCALE_MODES } from '@/utils/types'
@@ -20,12 +20,12 @@ const props = withDefaults(
   defineProps<{
     states: State[]
     currentCharacterStateIndex?: number
-    skin?: 'red' | 'blue' | 'violate' | 'black'
     animation: 'init' | 'started' | 'finished'
+    skin?: 'red' | 'blue' | 'violate' | 'black'
   }>(),
   {
-    skin: 'blue',
     currentCharacterStateIndex: 0,
+    skin: 'blue',
   }
 )
 
@@ -47,6 +47,13 @@ const characterAnimations = computed(() => ({
   leftWalk: [`characterMain${capitalizeFirstLetter(props.skin)}LeftWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}LeftWalk2`],
   rightWalk: [`characterMain${capitalizeFirstLetter(props.skin)}RightWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}RightWalk2`],
 }))
+
+onMounted(() => {
+  console.log({ characterAnimations: characterAnimations.value })
+})
+watch(characterAnimations, (value) => {
+  console.log({ characterAnimations: value })
+})
 
 const trailAnimations = {
   back: ['dataTrailBack1', 'dataTrailBack2', 'dataTrailBack3', 'dataTrailBack4'],
@@ -94,7 +101,7 @@ watch(
 )
 
 onTick((delta) => {
-  if (props.animation && props.animation === 'started' && currentCharacterStateIndex.value < props.states.length - 1) {
+  if (props.animation === 'started' && currentCharacterStateIndex.value < props.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = props.states[currentCharacterStateIndex.value + 1].time - props.states[currentCharacterStateIndex.value].time
     const dx = props.states[currentCharacterStateIndex.value + 1].x - props.states[currentCharacterStateIndex.value].x
@@ -146,27 +153,14 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AnimatedSprite
-      :textures="activeTrail.aliases"
-      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5"
-      :x="activeTrail.x"
-      :y="activeTrail.y"
-      :scale="1"
-      :alpha="1"
-      :playing="activeCharacter.animation === 'started'"
+    <AnimatedSprite :textures="activeTrail.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5"
+      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
-    <AnimatedSprite
-      :textures="activeCharacter.aliases"
-      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5"
-      :x="0"
-      :y="0"
-      :scale="1"
-      :alpha="1"
-      :playing="activeCharacter.animation === 'started'"
+    <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->

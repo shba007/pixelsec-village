@@ -206,8 +206,10 @@ import appSign2Texture from '@/assets/map/app-sign/2.png'
 import dog1Texture from '@/assets/map/dog/1.png'
 import dog2Texture from '@/assets/map/dog/2.png'
 // Wolf
-import wolf1Texture from '@/assets/map/wolf/1.png'
-import wolf2Texture from '@/assets/map/wolf/2.png'
+import wolfLeft1Texture from '@/assets/map/wolf/left-1.png'
+import wolfLeft2Texture from '@/assets/map/wolf/left-2.png'
+import wolfRight1Texture from '@/assets/map/wolf/right-1.png'
+import wolfRight2Texture from '@/assets/map/wolf/right-2.png'
 // Map Tram
 import tramFrontTexture from '@/assets/map/tram/front.png'
 import tramBackTexture from '@/assets/map/tram/back.png'
@@ -287,8 +289,8 @@ export const resources = reactive({
   pigeonRightPeck: pigeonRightPeckTexture,
   pigeonRightStand: pigeonRightStandTexture,
   //
-  mapBg: map_5xBgTexture, //map1xBgTexture,
-  mapFg: map_5xFgTexture, //map1xFgTexture,
+  mapBg: map1xBgTexture,
+  mapFg: map1xFgTexture,
   mapCar: mapCarTexture,
   mapFence: mapFenceTexture,
   mapPalmTrees: mapPalmTreesTexture,
@@ -346,8 +348,10 @@ export const resources = reactive({
   dog1: dog1Texture,
   dog2: dog2Texture,
   //
-  wolf1: wolf1Texture,
-  wolf2: wolf2Texture,
+  wolfLeft1: wolfLeft1Texture,
+  wolfLeft2: wolfLeft2Texture,
+  wolfRight1: wolfRight1Texture,
+  wolfRight2: wolfRight2Texture,
   // Characters
   characterSusGuyFishing1: characterSusGuyFishing1Texture,
   characterSusGuyFishing2: characterSusGuyFishing2Texture,
@@ -505,12 +509,15 @@ export const useGameStore = defineStore('game', () => {
   const currentSceneIndex = ref(0)
   const currentStateIndex = ref(0)
   const currentScreenIndex = ref(0)
+  // const currentSceneIndex = ref(20)
+  // const currentStateIndex = ref(8)
+  // const currentScreenIndex = ref(6)
   /* currentSceneIndex 9 currentStateIndex 6 currentScreenIndex 2 currentScreenAnimation finished */
 
   const currentScreenAnimation = ref<'init' | 'started' | 'finished'>('init')
   const $currentScreenState = reactive({ x: 0, y: 0, scale: 1, alpha: 1, time: 0 })
 
-  const characterSkin = ref<Character | null>(null)
+  const characterSkin = ref<Character>()
   const $hardStop = ref(false)
   const $motionBlur = ref(false)
 
