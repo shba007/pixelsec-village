@@ -16,7 +16,7 @@ const gameStore = useGameStore()
 function onCharcterSet(type: Character) {
   gameStore.nextScene()
   gameStore.nextMapState()
-  gameStore.setActiveCharacter(type)
+  gameStore.setCharacterSkin(type)
 }
 </script>
 

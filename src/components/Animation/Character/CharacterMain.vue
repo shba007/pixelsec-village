@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref, watch, computed } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import type { State } from '@/utils/types'
 import { SCALE_MODES } from '@/utils/types'
@@ -12,6 +12,7 @@ interface Character {
   state: State
   direction: number
   orientation: string
+  skin: 'red' | 'blue' | 'violate' | 'black'
   animation: 'init' | 'started' | 'finished'
 }
 
@@ -19,9 +20,11 @@ const props = withDefaults(
   defineProps<{
     states: State[]
     currentCharacterStateIndex?: number
+    skin?: 'red' | 'blue' | 'violate' | 'black'
     animation: 'init' | 'started' | 'finished'
   }>(),
   {
+    skin: 'blue',
     currentCharacterStateIndex: 0,
   }
 )
@@ -32,13 +35,18 @@ const emit = defineEmits<{
   (e: 'updateAnimation', state: 'init' | 'started' | 'finished'): void
 }>()
 
-const characterAnimations = {
-  frontStill: ['characterMainFrontStill'],
-  frontWalk: ['characterMainFrontWalk1', 'characterMainFrontWalk2'],
-  backWalk: ['characterMainBackWalk1', 'characterMainBackWalk2'],
-  leftWalk: ['characterMainLeftWalk1', 'characterMainLeftWalk2'],
-  rightWalk: ['characterMainRightWalk1', 'characterMainRightWalk2'],
+function capitalizeFirstLetter(word: string): string {
+  if (!word) return word
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
 }
+
+const characterAnimations = computed(() => ({
+  frontStill: [`characterMain${capitalizeFirstLetter(props.skin)}FrontStill`],
+  frontWalk: [`characterMain${capitalizeFirstLetter(props.skin)}FrontWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}FrontWalk2`],
+  backWalk: [`characterMain${capitalizeFirstLetter(props.skin)}BackWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}BackWalk2`],
+  leftWalk: [`characterMain${capitalizeFirstLetter(props.skin)}LeftWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}LeftWalk2`],
+  rightWalk: [`characterMain${capitalizeFirstLetter(props.skin)}RightWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}RightWalk2`],
+}))
 
 const trailAnimations = {
   back: ['dataTrailBack1', 'dataTrailBack2', 'dataTrailBack3', 'dataTrailBack4'],
@@ -47,7 +55,7 @@ const trailAnimations = {
 
 const activeCharacter = reactive<Character>({
   loaded: false,
-  aliases: characterAnimations.frontStill,
+  aliases: characterAnimations.value['frontStill'],
   state: {
     x: props.states[0].x,
     y: props.states[0].y,
@@ -103,22 +111,22 @@ onTick((delta) => {
     emit('move', activeCharacter.state.x, activeCharacter.state.y)
 
     if (dy > 0) {
-      activeCharacter.aliases = characterAnimations['frontWalk']
+      activeCharacter.aliases = characterAnimations.value['frontWalk']
       activeTrail.aliases = trailAnimations['back']
       activeTrail.x = 0
       activeTrail.y = 0
     } else if (dy < 0) {
-      activeCharacter.aliases = characterAnimations['backWalk']
+      activeCharacter.aliases = characterAnimations.value['backWalk']
       activeTrail.aliases = trailAnimations['back']
       activeTrail.x = 0
       activeTrail.y = 30
     } else if (dx > 0) {
-      activeCharacter.aliases = characterAnimations['rightWalk']
+      activeCharacter.aliases = characterAnimations.value['rightWalk']
       activeTrail.aliases = trailAnimations['side']
       activeTrail.x = -1 * 15
       activeTrail.y = 1 * 15
     } else if (dx < 0) {
-      activeCharacter.aliases = characterAnimations['leftWalk']
+      activeCharacter.aliases = characterAnimations.value['leftWalk']
       activeTrail.aliases = trailAnimations['side']
       activeTrail.x = 1 * 25
       activeTrail.y = 1 * 15
@@ -131,7 +139,7 @@ onTick((delta) => {
       emit('updateStateIndex', currentCharacterStateIndex.value)
     }
   } else if (!(currentCharacterStateIndex.value < props.states.length - 1)) {
-    activeCharacter.aliases = characterAnimations['frontStill']
+    activeCharacter.aliases = characterAnimations.value['frontStill']
     activeCharacter.animation = 'finished'
   }
 })

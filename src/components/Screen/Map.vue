@@ -47,7 +47,7 @@ const emit = defineEmits<{
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentSceneIndex, currentStateIndex: currentMapStateIndex, currentScreenAnimation, rotationStop, motionBlur } = storeToRefs(gameStore)
+const { currentSceneIndex, currentStateIndex: currentMapStateIndex, currentScreenAnimation, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
 
 const zoomFactor = computed(() => screenWidth.value / 1280)
 const screen = reactive<Asset>({
@@ -493,39 +493,45 @@ function handleMCAnimation(state: string) {
 
 <template>
   <Container :renderable="isLoad">
-    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
-      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-        :x="0" :y="0" :scale="2" :anchor="0" />
-      <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-        :x="0" :y="0" :scale="2" :anchor="0" />
-      <Sprite texture="mapStationBg"
-        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
-        :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
+    <Container :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+      <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="2" :anchor="0" />
+      <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="2" :anchor="0" />
+      <Sprite
+        texture="mapStationBg"
+        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+        :x="station.bg.x"
+        :y="station.bg.y"
+        :scale="station.bg.scale"
+        :anchor="0" />
       <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-      <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale"
-        :flip="flip" />
+      <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
       <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
-        :motion-blur="motionBlur" initialOrientation="right" />
-      <Sprite texture="mapStationFg"
-        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
-        :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
-      <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
+      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur" initialOrientation="right" />
+      <Sprite
+        texture="mapStationFg"
+        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+        :x="station.fg.x"
+        :y="station.fg.y"
+        :scale="station.fg.scale"
+        :anchor="0" />
+      <!-- <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" /> -->
       <!-- @vue-ignore -->
       <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
-        place="map" />
+      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
       <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
-        :type="type as 'purple' | 'green'" place="map" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <CharacterGuard place="map" :state="characterGuard.state" />
       <CharacterBaloonVendor :state="characterBaloonVendor.state" />
       <CharacterSus :states="characterSus.states" />
-      <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : characterMain.animation"
-        :currentCharacterStateIndex="characterMain.state.index" @move="lockCharacterToMapCenter"
-        @updateStateIndex="handleMCState" @updateAnimation="handleMCAnimation" />
+      <CharacterMain
+        :states="characterMain.states"
+        :animation="rotationStop ? 'finished' : characterMain.animation"
+        :skin="characterSkin"
+        :currentCharacterStateIndex="characterMain.state.index"
+        @move="lockCharacterToMapCenter"
+        @updateStateIndex="handleMCState"
+        @updateAnimation="handleMCAnimation" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
       <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
@@ -533,8 +539,16 @@ function handleMCAnimation(state: string) {
       <!-- @vue-ignore -->
       <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction" />
       <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
-      <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
-        :y="mapHeight * screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" />
+      <Cloud
+        v-for="({ size, x, y, direction }, index) in clouds"
+        :key="index"
+        place="map"
+        :size="size"
+        :x="x"
+        :y="mapHeight * screen.state.scale * y"
+        :scale="0.5"
+        :direction="direction"
+        :width-range="mapWidth" />
     </Container>
     <Container v-if="!rotationStop">
       <Scene1 v-if="currentSceneIndex === 0 && currentScreenAnimation === 'finished'" />

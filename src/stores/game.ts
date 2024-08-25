@@ -287,8 +287,8 @@ export const resources = reactive({
   pigeonRightPeck: pigeonRightPeckTexture,
   pigeonRightStand: pigeonRightStandTexture,
   //
-  mapBg: map_5xBgTexture,//map1xBgTexture,
-  mapFg: map_5xFgTexture,//map1xFgTexture,
+  mapBg: map_5xBgTexture, //map1xBgTexture,
+  mapFg: map_5xFgTexture, //map1xFgTexture,
   mapCar: mapCarTexture,
   mapFence: mapFenceTexture,
   mapPalmTrees: mapPalmTreesTexture,
@@ -391,16 +391,6 @@ export const resources = reactive({
   mapCharacterIcecreamVendor1: characterMapIcecreamVendor1Texture,
   mapCharacterIcecreamVendor2: characterMapIcecreamVendor2Texture,
   // Main Character
-  characterMainFrontStill: characterMainBlackFrontStillTexture,
-  characterMainFrontWalk1: characterMainBlackFrontWalk1Texture,
-  characterMainFrontWalk2: characterMainBlackFrontWalk2Texture,
-  characterMainBackWalk1: characterMainBlackBackWalk1Texture,
-  characterMainBackWalk2: characterMainBlackBackWalk2Texture,
-  characterMainLeftWalk1: characterMainBlackLeftWalk1Texture,
-  characterMainLeftWalk2: characterMainBlackLeftWalk2Texture,
-  characterMainRightWalk1: characterMainBlackRightWalk1Texture,
-  characterMainRightWalk2: characterMainBlackRightWalk2Texture,
-  //
   characterMainBlackFrontStill: characterMainBlackFrontStillTexture,
   characterMainBlackFrontWalk1: characterMainBlackFrontWalk1Texture,
   characterMainBlackFrontWalk2: characterMainBlackFrontWalk2Texture,
@@ -508,11 +498,6 @@ export type Character = 'black' | 'blue' | 'red' | 'violate'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
-function capitalizeFirstLetter(word: string): string {
-  if (!word) return word
-  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-}
-
 export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
@@ -525,7 +510,7 @@ export const useGameStore = defineStore('game', () => {
   const currentScreenAnimation = ref<'init' | 'started' | 'finished'>('init')
   const $currentScreenState = reactive({ x: 0, y: 0, scale: 1, alpha: 1, time: 0 })
 
-  const activeCharacter = ref<Character | null>(null)
+  const characterSkin = ref<Character | null>(null)
   const $hardStop = ref(false)
   const $motionBlur = ref(false)
 
@@ -554,30 +539,6 @@ export const useGameStore = defineStore('game', () => {
     $motionBlur.value = value
   }
 
-  watch(activeCharacter, (value) => {
-    if (!value) return
-    // @ts-ignore
-    resources.characterMainFrontStill = resources[`characterMain${capitalizeFirstLetter(value)}FrontStill`]
-    // @ts-ignore
-    resources.characterMainFrontWalk1 = resources[`characterMain${capitalizeFirstLetter(value)}FrontWalk1`]
-    // @ts-ignore
-    resources.characterMainFrontWalk2 = resources[`characterMain${capitalizeFirstLetter(value)}FrontWalk2`]
-    // @ts-ignore
-    resources.characterMainBackWalk1 = resources[`characterMain${capitalizeFirstLetter(value)}BackWalk1`]
-    // @ts-ignore
-    resources.characterMainBackWalk2 = resources[`characterMain${capitalizeFirstLetter(value)}BackWalk2`]
-    // @ts-ignore
-    resources.characterMainLeftWalk1 = resources[`characterMain${capitalizeFirstLetter(value)}LeftWalk1`]
-    // @ts-ignore
-    resources.characterMainLeftWalk2 = resources[`characterMain${capitalizeFirstLetter(value)}LeftWalk2`]
-    // @ts-ignore
-    resources.characterMainRightWalk1 = resources[`characterMain${capitalizeFirstLetter(value)}RightWalk1`]
-    // @ts-ignore
-    resources.characterMainRightWalk1 = resources[`characterMain${capitalizeFirstLetter(value)}RightWalk1`]
-    // @ts-ignore
-    resources.characterMainRightWalk2 = resources[`characterMain${capitalizeFirstLetter(value)}RightWalk2`]
-  })
-
   async function toggleGameMode(value: boolean) {
     try {
       if (value) {
@@ -601,8 +562,8 @@ export const useGameStore = defineStore('game', () => {
     currentStateIndex.value++
   }
 
-  function setActiveCharacter(value: Character) {
-    activeCharacter.value = value
+  function setCharacterSkin(value: Character) {
+    characterSkin.value = value
   }
 
   return {
@@ -613,16 +574,16 @@ export const useGameStore = defineStore('game', () => {
     currentScreenIndex,
     currentScreenAnimation,
     currentScreenState,
-    activeCharacter,
     rotationStop,
     motionBlur,
     hardStop,
+    characterSkin,
     updateScreen,
     toggleHardStop,
     toggleMotionBlur,
     toggleGameMode,
     nextScene,
     nextMapState,
-    setActiveCharacter,
+    setCharacterSkin,
   }
 })
