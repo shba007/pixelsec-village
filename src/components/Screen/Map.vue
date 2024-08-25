@@ -513,7 +513,7 @@ function handleMCAnimation(state: string) {
         :y="station.fg.y"
         :scale="station.fg.scale"
         :anchor="0" />
-      <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" />
+      <!-- <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" /> -->
       <!-- @vue-ignore -->
       <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
       <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
