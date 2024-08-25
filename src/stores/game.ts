@@ -162,6 +162,8 @@ import dataTrailSide2Texture from '@/assets/character/trail/side-2.png'
 import dataTrailSide3Texture from '@/assets/character/trail/side-3.png'
 import dataTrailSide4Texture from '@/assets/character/trail/side-4.png'
 // Map
+import map_5xBgTexture from '@/assets/map/0.5x-bg.png'
+import map_5xFgTexture from '@/assets/map/0.5x-fg.png'
 import map1xBgTexture from '@/assets/map/1x-bg.png'
 import map1xFgTexture from '@/assets/map/1x-fg.png'
 import mapPalmTreesTexture from '@/assets/map/palm-trees.png'
@@ -285,8 +287,8 @@ export const resources = reactive({
   pigeonRightPeck: pigeonRightPeckTexture,
   pigeonRightStand: pigeonRightStandTexture,
   //
-  mapBg: map1xBgTexture,
-  mapFg: map1xFgTexture,
+  mapBg: map_5xBgTexture,//map1xBgTexture,
+  mapFg: map_5xFgTexture,//map1xFgTexture,
   mapCar: mapCarTexture,
   mapFence: mapFenceTexture,
   mapPalmTrees: mapPalmTreesTexture,
