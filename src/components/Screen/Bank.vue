@@ -156,7 +156,7 @@ const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
     <Scene4 v-else-if="currentSceneIndex === 18" />
   </Container>
   <!-- DEBUG -->
-  <External>
+  <!-- <External>
     <div class="absolute bottom-0 left-0 right-0 z-50 flex w-fit items-center gap-8">
       <div>{{ currentSceneIndex }}</div>
       <div class="flex flex-col gap-2">
@@ -170,5 +170,5 @@ const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
         <input v-model="protip.scale" type="number" min="0" max="20" step="0.01" />
       </div>
     </div>
-  </External>
+  </External> -->
 </template>
