@@ -36,7 +36,6 @@ import Scene3 from '@/components/Scene/Scene-1-3.vue'
 import Scene4 from '@/components/Scene/Scene-1-4.vue'
 import Scene5 from '@/components/Scene/Scene-1-5.vue'
 import Scene6 from '@/components/Scene/Scene-1-6.vue'
-// import Scene7 from '@/components/Scene/Scene-1-7.vue'
 import Scene8 from '@/components/Scene/Scene-1-8.vue'
 import Scene9 from '@/components/Scene/Scene-1-9.vue'
 import Scene10 from '@/components/Scene/Scene-1-10.vue'
@@ -229,6 +228,11 @@ const charactersGeneric = ref<State[][]>([
     { x: 1060, y: 1520, scale: 0.425, alpha: 1, time: 0 },
     { x: 1220, y: 1520, scale: 0.425, alpha: 1, time: 2.2 },
     { x: 1060, y: 1520, scale: 0.425, alpha: 1, time: 4.4 },
+  ],
+  [
+    { x: 870, y: 2290, scale: 0.425, alpha: 1, time: 0 },
+    { x: 1030, y: 2290, scale: 0.425, alpha: 1, time: 2.2 },
+    { x: 870, y: 2290, scale: 0.425, alpha: 1, time: 4.4 },
   ],
 ])
 
@@ -507,6 +511,7 @@ function handleMCState(stateIndex: number) {
   } else if (stateIndex === 22) {
     characterSus.animation = 'started'
   } else if (stateIndex === 31) {
+    // MC in Loop
     characterMain.animation = 'finished'
     characterSus.animation = 'finished'
     // Show Popup
@@ -602,7 +607,7 @@ function handleMCAnimation(state: string) {
         :y="mapHeight * screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
     </Container>
     <!-- DEBUG -->
-    <!-- <External>
+    <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
@@ -613,13 +618,13 @@ function handleMCAnimation(state: string) {
           <input v-model="currentMapStateIndex" type="number" min="0" max="20" step="1" />
         </div>
         <div class="flex flex-col gap-2">
-          <input v-model="wolfs[0].x" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="wolfs[0].y" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
           <input v-model="wolfs[0].scale" type="number" min="0" max="5" step="0.1" />
           <input v-model="characterSus.state.alpha" type="number" min="0" max="1" step="0.1" />
           <input v-model="characterSus.state.time" type="number" min="0" max="100" step="0.1" />
         </div>
       </div>
-    </External> -->
+    </External>
   </Container>
 </template>
