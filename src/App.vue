@@ -41,10 +41,10 @@ const mainWindow = window
     </Loader>
   </Application>
   <!-- DEBUG -->
-  <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.2.4</p>
+ <!--  <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
+    <p>v0.2.5</p>
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
-  </div>
+  </div> -->
 </template>
 
 <style lang="css">
