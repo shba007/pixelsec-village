@@ -96,11 +96,11 @@ const modal = computed(() => {
 </script>
 
 <template>
-  <Sprite :texture="modal.image" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
+  <Sprite :texture="modal.image" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="modal.state.x"
+    :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
   <External class="absolute left-0 top-0 h-dvh w-dvw">
     <div class="fixed size-full" :class="{ 'bg-white/55': overlay }">
-      <div
-        class="absolute max-h-[80vh] -translate-x-1/2 -translate-y-1/2"
+      <div class="absolute max-h-[80vh] -translate-x-1/2 -translate-y-1/2"
         :class="[{ 'aspect-[263/73] w-4/5': type === 'long', 'aspect-[65/106] w-3/4 sm:aspect-[106/65] md:w-3/5': type === 'mid', 'aspect-[143/130] h-full': type === 'short' }]"
         :style="{ left: modal.xFactor, top: modal.yFactor }">
         <img v-if="type === 'long'" :src="popupBar" alt="popupBar" class="invisible absolute left-0 top-0 size-full" />
@@ -109,9 +109,14 @@ const modal = computed(() => {
           <img :src="popupPortrait" alt="popupPortrait" class="size-full" />
         </picture>
         <img v-else :src="popupSquare" alt="popupSquare" class="invisible absolute left-0 top-0 size-full" />
-        <div class="relative z-10 mx-auto flex size-full max-w-[820px] flex-col items-center justify-center gap-10 overflow-hidden px-6 py-0" :class="containerClass">
-          <h1 v-if="title" class="text-[1.75rem] font-semibold uppercase leading-[2rem] lg:text-[2.5rem] lg:leading-[3rem]" v-html="title" />
-          <p v-if="description" class="text-[1.75rem] leading-[2rem] lg:text-[2.5rem] lg:leading-[3rem]" v-html="description" />
+        <div
+          class="relative z-10 mx-auto flex size-full max-w-[820px] flex-col items-center justify-center gap-10 overflow-hidden px-12 py-0"
+          :class="containerClass">
+          <h1 v-if="title"
+            class="text-[1.75rem] font-semibold uppercase leading-[2rem] lg:text-[2.5rem] lg:leading-[3rem]"
+            v-html="title" />
+          <p v-if="description" class="text-[1.75rem] leading-[2rem] lg:text-[2.5rem] lg:leading-[3rem]"
+            v-html="description" />
           <slot />
         </div>
       </div>

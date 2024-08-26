@@ -9,14 +9,15 @@ function handleMove() {
   gameStore.nextScene()
 }
 
-useTimeoutFn(handleMove, 3000)
+useTimeoutFn(handleMove, 5000)
 </script>
 
 <template>
   <Modal type="long" title="" y="bottom">
     <div class="flex items-center">
       <img src="/images/alarm-bell.gif" class="h-full" />
-      <p class="pl-4 pr-32 text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]" v-html="'Your go-to app has a data breach. You have 8 seconds to decide what to do.'" />
+      <p class="pl-4 pr-32 text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]"
+        v-html="'Your go-to app has a data breach. You have 8 seconds to decide what to do.'" />
     </div>
   </Modal>
 </template>
