@@ -32,7 +32,7 @@ function onComplete() {
     <ul class="flex flex-col items-start gap-4">
       <li class="flex items-center gap-4" v-for="({ checked, describe }, index) of options" :key="index">
         <button class="active-btn" :class="checked ? 'checked' : 'unchecked'" @click="onSelect(index, !checked)" />
-        <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]">
+        <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2rem] lg:leading-[2.25rem]">
           {{ describe }}
         </span>
       </li>
@@ -42,7 +42,7 @@ function onComplete() {
 
 <style lang="css" scoped>
 .active-btn {
-  @apply flex aspect-[7/9] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
+  @apply flex aspect-[7/9] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[64px];
 }
 
 .active-btn.checked {

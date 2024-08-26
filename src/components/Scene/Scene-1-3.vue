@@ -11,7 +11,7 @@ function handleMove() {
   gameStore.nextMapState()
 }
 
-useTimeoutFn(handleMove, 2000)
+useTimeoutFn(handleMove, 3000)
 </script>
 
 <template>

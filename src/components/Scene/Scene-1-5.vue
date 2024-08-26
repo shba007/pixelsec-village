@@ -10,14 +10,14 @@ function onClick(value: boolean) {
   // DATA-COLLECT
   setTimeout(() => {
     gameStore.nextScene(value ? 1 : 2)
-    gameStore.nextMapState()
   }, 300)
 }
 </script>
 
 <template>
   <Modal title="" description="">
-    <p class="text-center text-3xl lg:text-[2.5rem] lg:leading-[3rem]" v-html="'Before we begin, <br/> let’s go through the T&Cs.'" />
+    <p class="text-center text-3xl lg:text-[2.5rem] lg:leading-[3rem]"
+      v-html="'Before we begin, <br/> let’s go through the T&Cs.'" />
     <div class="flex gap-8">
       <button class="active-btn" @click="onClick(false)">Skip T&Cs</button>
       <button class="active-btn" @click="onClick(true)">Read T&Cs</button>

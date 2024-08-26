@@ -561,7 +561,6 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function toggleMotionBlur(value: boolean) {
-    console.log({ toggleMotionBlur: value })
     $motionBlur.value = value
   }
 
@@ -581,12 +580,13 @@ export const useGameStore = defineStore('game', () => {
 
   function nextScene(screen = 1) {
     currentSceneIndex.value += screen
+    console.log({ currentSceneIndex: currentSceneIndex.value })
   }
 
   function nextMapState(animate = true) {
     if (animate) currentScreenAnimation.value = 'started'
     currentMapStateIndex.value++
-    console.log('Next Map State', currentMapStateIndex.value)
+    console.log({ currentMapStateIndex: currentMapStateIndex.value })
   }
 
   function setCharacterSkin(value: Character) {

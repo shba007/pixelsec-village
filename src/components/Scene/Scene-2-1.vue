@@ -20,7 +20,8 @@ function onClick(value: string) {
     <div class="relative flex flex-col items-center justify-center">
       <div class="flex items-center">
         <img src="/images/character-station-master.gif" class="aspect-square h-[180px] object-contain lg:h-[256px]" />
-        <p class="text-left text-3xl lg:text-[3rem] lg:leading-[3rem]">Please verify your age for tram ticket purchase</p>
+        <p class="text-left text-3xl lg:text-[3rem] lg:leading-[3rem]">Please verify your age for tram ticket purchase
+        </p>
       </div>
       <div class="flex gap-2 lg:gap-4">
         <button v-for="age of ages" :key="age" class="active-btn" @click="onClick(age)">

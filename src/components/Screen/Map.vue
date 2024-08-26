@@ -36,7 +36,7 @@ import Scene3 from '@/components/Scene/Scene-1-3.vue'
 import Scene4 from '@/components/Scene/Scene-1-4.vue'
 import Scene5 from '@/components/Scene/Scene-1-5.vue'
 import Scene6 from '@/components/Scene/Scene-1-6.vue'
-import Scene7 from '@/components/Scene/Scene-1-7.vue'
+// import Scene7 from '@/components/Scene/Scene-1-7.vue'
 import Scene8 from '@/components/Scene/Scene-1-8.vue'
 import Scene9 from '@/components/Scene/Scene-1-9.vue'
 import Scene10 from '@/components/Scene/Scene-1-10.vue'
@@ -478,17 +478,6 @@ onTick((delta) => {
         characterMain.animation = 'started'
         characterMain.state.index = 21
       }
-
-      console.log(
-        'currentSceneIndex',
-        currentSceneIndex.value,
-        'currentMapStateIndex',
-        currentMapStateIndex.value,
-        'currentScreenIndex',
-        props.currentScreenIndex,
-        'currentScreenAnimation',
-        currentScreenAnimation.value
-      )
     }
   }
 })
@@ -544,34 +533,33 @@ function handleMCAnimation(state: string) {
 
 <template>
   <Container :renderable="isLoad">
-    <Container :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" />
+    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
+      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+      <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+        :x="0" :y="0" :scale="1" :anchor="0" />
       <Wolf v-for="({ x, y, scale, flip }, index) of wolfs" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
-      <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" />
-      <Sprite
-        texture="mapStationBg"
-        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-        :x="station.bg.x"
-        :y="station.bg.y"
-        :scale="station.bg.scale"
-        :anchor="0" />
+      <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+        :x="0" :y="0" :scale="1" :anchor="0" />
+      <Sprite texture="mapStationBg"
+        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
+        :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
       <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-      <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+      <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale"
+        :flip="flip" />
       <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur" initialOrientation="right" />
-      <Sprite
-        texture="mapStationFg"
-        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-        :x="station.fg.x"
-        :y="station.fg.y"
-        :scale="station.fg.scale"
-        :anchor="0" />
+      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
+        :motion-blur="motionBlur" initialOrientation="right" />
+      <Sprite texture="mapStationFg"
+        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
+        :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
       <!-- <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" /> -->
       <!-- @vue-ignore -->
       <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
+      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
+        place="map" />
       <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
+        :type="type as 'purple' | 'green'" place="map" />
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <CharacterGuard place="map" :state="characterGuard.state" />
       <CharacterBaloonVendor :state="characterBaloonVendor.state" />
@@ -587,7 +575,7 @@ function handleMCAnimation(state: string) {
       <Scene4 v-else-if="currentSceneIndex === 3 && currentScreenAnimation === 'finished'" />
       <Scene5 v-else-if="currentSceneIndex === 4 && currentScreenAnimation === 'finished'" />
       <Scene6 v-else-if="currentSceneIndex === 5 && currentScreenAnimation === 'finished'" />
-      <Scene7 v-else-if="currentSceneIndex === 9 && currentScreenAnimation === 'finished'" />
+      <!-- <Scene7 v-else-if="currentSceneIndex === 9 && currentScreenAnimation === 'finished'" /> -->
       <Scene8 v-else-if="currentSceneIndex === 20 && currentScreenAnimation === 'finished'" />
       <Scene9 v-else-if="currentSceneIndex === 21 && currentScreenAnimation === 'finished'" />
       <Scene10 v-else-if="currentSceneIndex === 22 && currentScreenAnimation === 'finished'" />
@@ -601,15 +589,11 @@ function handleMCAnimation(state: string) {
       <ModalProtip v-else-if="mcStateIndex === 36" title="4" y="top" />
       <ModalProtip v-else-if="mcStateIndex === 40" title="5" x="left" />
     </Container>
-    <Container :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <CharacterMain
-        :states="characterMain.states"
-        :animation="rotationStop ? 'finished' : characterMain.animation"
-        :skin="characterSkin"
-        :currentCharacterStateIndex="characterMain.state.index"
-        @move="lockCharacterToMapCenter"
-        @updateStateIndex="handleMCState"
-        @updateAnimation="handleMCAnimation" />
+    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
+      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+      <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : characterMain.animation"
+        :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index" @move="lockCharacterToMapCenter"
+        @updateStateIndex="handleMCState" @updateAnimation="handleMCAnimation" />
       <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />

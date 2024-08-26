@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, watch } from 'vue'
-import { External } from 'vue3-pixi'
 import { useTimeoutFn } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
