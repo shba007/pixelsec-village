@@ -517,9 +517,11 @@ function handleMCState(stateIndex: number) {
     // Show Popup
   } else if (stateIndex === 38) {
     characterMain.animation = 'finished'
+    characterSus.animation = 'finished'
     // Show Popup
   } else if (stateIndex === 39) {
     characterMain.animation = 'finished'
+    characterSus.animation = 'finished'
     // Show Popup
   }
 }
@@ -590,7 +592,7 @@ function handleMCAnimation(state: string) {
     <Container v-if="!rotationStop">
       <ModalProtip v-if="mcStateIndex === 1 || mcStateIndex === 2 || mcStateIndex === 3" title="1" y="top" />
       <ModalProtip v-else-if="mcStateIndex === 14" title="2" y="top" />
-      <!-- <ModalProtip title="3" x="left" /> -->
+
       <ModalProtip v-else-if="mcStateIndex === 36" title="4" y="top" />
       <ModalProtip v-else-if="mcStateIndex === 40" title="5" x="left" />
     </Container>

@@ -16,6 +16,7 @@ import Scene1 from '@/components/Scene/Scene-4-1.vue'
 import Scene2 from '@/components/Scene/Scene-4-2.vue'
 import Scene3 from '@/components/Scene/Scene-4-3.vue'
 import Scene4 from '@/components/Scene/Scene-4-4.vue'
+import ModalProtip from '../ModalProtip.vue'
 
 const emit = defineEmits<{
   (event: 'close', nextSceneIndex: number): void
@@ -125,18 +126,28 @@ onTick((delta) => {
 watch(currentSceneIndex, (value) => {
   if (value === 19) screen.animation = 'started'
 })
+
+const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
 </script>
 
 <template>
   <Container :x="screen.state.x" :y="screen.state.y" :scale="1 * zoomFactor">
-    <Sprite :texture="screen.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200" :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
-    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="screen.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
+    <Sprite :texture="screen.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200"
+      :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth"
+      :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+    <Sprite :texture="screen.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0"
+      :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
     <Door :x="door.x" :y="door.y" :scale="door.scale" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" />
-    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
+    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y"
+      :scale="scale" />
+    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank"
+      :type="type as 'purple' | 'green'" />
     <CharacterGuard :state="characterGuard" place="bank" />
+    <Container :x="protip.x" :y="protip.y" :scale="protip.scale">
+      <ModalProtip title="3" x="left" />
+    </Container>
   </Container>
   <Container v-if="!rotationStop">
     <Scene1 v-if="currentSceneIndex === 15" />
@@ -145,7 +156,7 @@ watch(currentSceneIndex, (value) => {
     <Scene4 v-else-if="currentSceneIndex === 18" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <External>
     <div class="absolute bottom-0 left-0 right-0 z-50 flex w-fit items-center gap-8">
       <div>{{ currentSceneIndex }}</div>
       <div class="flex flex-col gap-2">
@@ -154,10 +165,10 @@ watch(currentSceneIndex, (value) => {
         <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
       </div>
       <div class="flex flex-col gap-2">
-        <input v-model="characterGuard.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="characterGuard.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="characterGuard.scale" type="number" min="0" max="20" step="0.01" />
+        <input v-model="protip.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="protip.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="protip.scale" type="number" min="0" max="20" step="0.01" />
       </div>
     </div>
-  </External> -->
+  </External>
 </template>

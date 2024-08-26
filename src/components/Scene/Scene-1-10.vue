@@ -17,7 +17,7 @@ function onClick(value: boolean) {
 
 <template>
   <Modal title="" description="" type="short" x="right">
-    <p class="text-left text-3xl lg:text-[2.5rem] lg:leading-[3rem]"
+    <p class="text-left text-[26px] lg:text-[2rem] lg:leading-[3rem]"
       v-html="'Would you store your<br/>multiple online profiles<br/>and data securely in a<br/>single vault?'" />
     <div class="flex gap-4">
       <button class="active-btn" @click="onClick(false)">YES</button>
