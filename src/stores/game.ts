@@ -247,12 +247,32 @@ import bankAlarmLightLeft2Texture from '@/assets/bank/alarm-light/left-2.png'
 import bankAlarmLightRight1Texture from '@/assets/bank/alarm-light/right-1.png'
 import bankAlarmLightRight2Texture from '@/assets/bank/alarm-light/right-2.png'
 //
+import popupProtip11Texture from '@/assets/popup/protip/1/1.png'
+import popupProtip12Texture from '@/assets/popup/protip/1/2.png'
+import popupProtip21Texture from '@/assets/popup/protip/2/1.png'
+import popupProtip22Texture from '@/assets/popup/protip/2/2.png'
+import popupProtip31Texture from '@/assets/popup/protip/3/1.png'
+import popupProtip32Texture from '@/assets/popup/protip/3/2.png'
+import popupProtip41Texture from '@/assets/popup/protip/4/1.png'
+import popupProtip42Texture from '@/assets/popup/protip/4/2.png'
+import popupProtip51Texture from '@/assets/popup/protip/5/1.png'
+import popupProtip52Texture from '@/assets/popup/protip/5/2.png'
 
 export const resources = reactive({
   // fonts
   frontINET,
   frontLAN,
   frontUNI,
+  popupProtip11: popupProtip11Texture,
+  popupProtip12: popupProtip12Texture,
+  popupProtip21: popupProtip21Texture,
+  popupProtip22: popupProtip22Texture,
+  popupProtip31: popupProtip31Texture,
+  popupProtip32: popupProtip32Texture,
+  popupProtip41: popupProtip41Texture,
+  popupProtip42: popupProtip42Texture,
+  popupProtip51: popupProtip51Texture,
+  popupProtip52: popupProtip52Texture,
   // images
   smartphone,
   smartphoneBankingHighlighted,

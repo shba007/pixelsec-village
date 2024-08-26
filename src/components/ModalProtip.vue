@@ -1,32 +1,79 @@
 <script setup lang="ts">
-import popup from '@/assets/popup/bg-bar.png'
-import { External } from 'vue3-pixi'
+import { computed } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 
-const props = defineProps<{
-  title: string
-  containerClass?: string
-}>()
+import { SCALE_MODES } from '@/utils/types'
+
+const props = withDefaults(
+  defineProps<{
+    title: string
+    x?: 'left' | 'center' | 'right'
+    y?: 'top' | 'center' | 'bottom'
+  }>(),
+  {
+    x: 'center',
+    y: 'center',
+  }
+)
+
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => screenWidth.value / 1280)
+
+const modal = computed(() => {
+  let image = ['popupProtip11', 'popupProtip12']
+  let scale = 0.8
+  switch (props.title) {
+    case '1':
+      image = ['popupProtip11', 'popupProtip12']
+      break
+    case '2':
+      image = ['popupProtip21', 'popupProtip22']
+      break
+    case '3':
+      image = ['popupProtip31', 'popupProtip32']
+      break
+    case '4':
+      image = ['popupProtip41', 'popupProtip42']
+      break
+    case '5':
+      image = ['popupProtip51', 'popupProtip52']
+      break
+  }
+
+  let xFactor = 2 / 4,
+    yFactor = 2 / 4
+  switch (props.x) {
+    case 'left':
+      xFactor = 1 / 4
+      break
+    case 'center':
+      xFactor = 2 / 4
+      break
+    case 'right':
+      xFactor = 3 / 4
+      break
+  }
+  switch (props.y) {
+    case 'top':
+      yFactor = 1 / 4
+      break
+    case 'center':
+      yFactor = 2 / 4
+      break
+    case 'bottom':
+      yFactor = 3 / 4
+      break
+  }
+
+  return {
+    image,
+    state: { x: screenWidth.value * xFactor, y: screenHeight.value * yFactor, scale: scale * zoomFactor.value },
+    xFactor: xFactor * 100 + '%',
+    yFactor: yFactor * 100 + '%',
+  }
+})
 </script>
 
 <template>
-  <External>
-    <div class="fixed z-10 size-full">
-      <div class="absolute left-1/2 top-1/4 flex aspect-[263/73] max-h-[80vh] w-3/4 -translate-x-1/2 -translate-y-1/2 gap-1 md:w-3/5">
-        <img :src="popup" alt="popupPortrait" class="absolute left-0 top-0 -z-10 size-full" />
-        <div class="relative mx-4 my-3 flex aspect-[27/32] w-fit flex-col items-center justify-center">
-          <h6 class="text-2xl text-[26px] text-purple-600 lg:text-[2.5rem] lg:leading-[3rem]">Pro Tip</h6>
-          <img src="/images/protip.gif" class="h-[60%]" />
-        </div>
-        <div class="protip relative mx-auto flex size-full max-w-[820px] flex-col items-center justify-center gap-10 overflow-hidden pr-4" :class="containerClass">
-          <p v-if="title" class="text-left text-2xl text-[26px] font-semibold lg:text-[2.5rem] lg:leading-[3rem]" v-html="title" />
-        </div>
-      </div>
-    </div>
-  </External>
+  <AnimatedSprite :playing="true" :animation-speed="0.1" :textures="modal.image" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
 </template>
-
-<style lang="css">
-p.protip > strong {
-  @apply uppercase text-blue-600;
-}
-</style>
