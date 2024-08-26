@@ -509,8 +509,8 @@ export const useGameStore = defineStore('game', () => {
   const currentSceneIndex = ref(0)
   const currentMapStateIndex = ref(0)
   const currentScreenIndex = ref(0)
-  // const currentSceneIndex = ref(20)
-  // const currentMapStateIndex = ref(8)
+  // const currentSceneIndex = ref(23)
+  // const currentMapStateIndex = ref(10)
   // const currentScreenIndex = ref(6)
   /* currentSceneIndex 9 currentMapStateIndex 6 currentScreenIndex 2 currentScreenAnimation finished */
 

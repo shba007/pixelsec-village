@@ -48,13 +48,6 @@ const characterAnimations = computed(() => ({
   rightWalk: [`characterMain${capitalizeFirstLetter(props.skin)}RightWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}RightWalk2`],
 }))
 
-onMounted(() => {
-  console.log({ characterAnimations: characterAnimations.value })
-})
-watch(characterAnimations, (value) => {
-  console.log({ characterAnimations: value })
-})
-
 const trailAnimations = {
   back: ['dataTrailBack1', 'dataTrailBack2', 'dataTrailBack3', 'dataTrailBack4'],
   side: ['dataTrailSide1', 'dataTrailSide2', 'dataTrailSide3', 'dataTrailSide4'],
@@ -75,13 +68,6 @@ const activeCharacter = reactive<Character>({
   animation: props.animation,
 })
 
-watch(
-  () => props.animation,
-  (value) => {
-    activeCharacter.animation = value
-  }
-)
-
 const activeTrail = reactive({
   aliases: trailAnimations['back'] as string[],
   x: 0,
@@ -95,24 +81,26 @@ watch(props.states, (value) => {
   activeCharacter.state.time = value[0].time
 })
 
+watch(
+  () => props.animation,
+  (value) => {
+    activeCharacter.animation = value
+  }
+)
+
+watch(
+  () => activeCharacter.animation,
+  (value) => {
+    console.log('updateAnimation', value)
+    emit('updateAnimation', value)
+  }
+)
+
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
 const currentCharacterStateIndex = ref(props.currentCharacterStateIndex)
 
-watch(
-  () => activeCharacter.animation,
-  (value) => {
-    emit('updateAnimation', value)
-  }
-)
-
-watch(
-  () => props.animation,
-  () => {
-    console.log('Props Animation', props.animation)
-  }
-)
 
 onTick((delta) => {
   if (props.animation === 'started' && currentCharacterStateIndex.value < props.states.length - 1) {
@@ -167,27 +155,14 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AnimatedSprite
-      :textures="activeTrail.aliases"
-      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5"
-      :x="activeTrail.x"
-      :y="activeTrail.y"
-      :scale="1"
-      :alpha="1"
-      :playing="activeCharacter.animation === 'started'"
+    <AnimatedSprite :textures="activeTrail.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5"
+      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
-    <AnimatedSprite
-      :textures="activeCharacter.aliases"
-      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5"
-      :x="0"
-      :y="0"
-      :scale="1"
-      :alpha="1"
-      :playing="activeCharacter.animation === 'started'"
+    <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
