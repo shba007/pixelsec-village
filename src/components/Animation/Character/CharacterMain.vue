@@ -75,9 +75,12 @@ const activeCharacter = reactive<Character>({
   animation: props.animation,
 })
 
-watch(() => props.animation, (value) => {
-  activeCharacter.animation = value
-})
+watch(
+  () => props.animation,
+  (value) => {
+    activeCharacter.animation = value
+  }
+)
 
 const activeTrail = reactive({
   aliases: trailAnimations['back'] as string[],
@@ -101,6 +104,13 @@ watch(
   () => activeCharacter.animation,
   (value) => {
     emit('updateAnimation', value)
+  }
+)
+
+watch(
+  () => props.animation,
+  () => {
+    console.log('Props Animation', props.animation)
   }
 )
 
@@ -157,14 +167,27 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AnimatedSprite :textures="activeTrail.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5"
-      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
+    <AnimatedSprite
+      :textures="activeTrail.aliases"
+      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5"
+      :x="activeTrail.x"
+      :y="activeTrail.y"
+      :scale="1"
+      :alpha="1"
+      :playing="activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
-    <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
+    <AnimatedSprite
+      :textures="activeCharacter.aliases"
+      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5"
+      :x="0"
+      :y="0"
+      :scale="1"
+      :alpha="1"
+      :playing="activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->

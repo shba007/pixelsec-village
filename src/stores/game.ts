@@ -520,7 +520,6 @@ export const useGameStore = defineStore('game', () => {
   const characterSkin = ref<Character>()
   const $hardStop = ref(false)
   const $motionBlur = ref(false)
-
   const currentScreenState = computed(() => $currentScreenState)
   const rotationStop = computed(() => $hardStop.value || (currentSceneIndex.value > 0 && !isLandscape.value))
   const hardStop = computed(() => $hardStop.value)
@@ -564,9 +563,10 @@ export const useGameStore = defineStore('game', () => {
     currentSceneIndex.value += screen
   }
 
-  function nextMapState() {
-    currentScreenAnimation.value = 'started'
+  function nextMapState(animate = true) {
+    if (animate) currentScreenAnimation.value = 'started'
     currentMapStateIndex.value++
+    console.log('Next Map State', currentMapStateIndex.value)
   }
 
   function setCharacterSkin(value: Character) {

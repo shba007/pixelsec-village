@@ -22,6 +22,7 @@ watchDebounced(options, onComplete, { debounce: 2000, deep: true })
 
 function onComplete() {
   gameStore.nextScene()
+  gameStore.nextMapState()
 }
 </script>
 
@@ -30,8 +31,7 @@ function onComplete() {
     <ul class="flex flex-col items-start gap-4">
       <li class="flex items-center gap-4" v-for="({ checked, describe }, index) of options" :key="index">
         <button class="active-btn" :class="checked ? 'checked' : 'unchecked'" @click="onSelect(index, !checked)" />
-        <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]"
-          v-html="describe" />
+        <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]" v-html="describe" />
       </li>
     </ul>
   </Modal>

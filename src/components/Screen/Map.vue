@@ -38,6 +38,8 @@ import Scene6 from '@/components/Scene/Scene-1-6.vue'
 import Scene7 from '@/components/Scene/Scene-1-7.vue'
 import Scene8 from '@/components/Scene/Scene-1-8.vue'
 import Scene9 from '@/components/Scene/Scene-1-9.vue'
+import Scene10 from '@/components/Scene/Scene-1-10.vue'
+import Scene11 from '@/components/Scene/Scene-1-11.vue'
 
 const props = defineProps<{
   currentScreenIndex: number
@@ -64,13 +66,12 @@ const screen = reactive<Asset>({
     { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 },
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
     // Transition
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
-    // { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
-    // { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
-    { x: -860, y: -1900, scale: 2.01, alpha: 1, time: 13 },
-    { x: -845, y: -2640, scale: 2.01, alpha: 1, time: 14 },
-    { x: -2220, y: -2760, scale: 2.01, alpha: 1, time: 15 },
+    { x: -610, y: -1170, scale: 2.01, alpha: 1, time: 10 },
+    { x: -890, y: -1630, scale: 2.01, alpha: 1, time: 10 },
+    { x: -860, y: -1900, scale: 2.01, alpha: 1, time: 10 },
+    { x: -90, y: -2550, scale: 2.01, alpha: 1, time: 10 },
+    { x: -845, y: -2640, scale: 2.01, alpha: 1, time: 10 },
+    { x: -2220, y: -2760, scale: 2.01, alpha: 1, time: 10 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -329,16 +330,15 @@ const characterMain = reactive<Asset>({
     { x: 1165, y: 2789, scale: 1.5, alpha: 1, time: 20 + 225.33 * speedFactor },
     { x: 1165, y: 2790, scale: 1.5, alpha: 1, time: 20 + 225.37 * speedFactor },
     // stop for the ballon
-    { x: 1165, y: 2790, scale: 1.5, alpha: 1, time: 20 + 2 + 225.37 * speedFactor },
-    { x: 1670, y: 2790, scale: 1.5, alpha: 1, time: 20 + 2 + 245.57 * speedFactor },
-    { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 20 + 2 + 253.57 * speedFactor },
-    { x: 2300, y: 2590, scale: 1.5, alpha: 1, time: 20 + 2 + 278.77 * speedFactor },
-    { x: 2300, y: 2960, scale: 1.5, alpha: 1, time: 20 + 2 + 293.57 * speedFactor },
+    { x: 1670, y: 2790, scale: 1.5, alpha: 1, time: 20 + 245.57 * speedFactor },
+    { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 20 + 253.57 * speedFactor },
+    { x: 2300, y: 2590, scale: 1.5, alpha: 1, time: 20 + 278.77 * speedFactor },
+    { x: 2300, y: 2960, scale: 1.5, alpha: 1, time: 20 + 293.57 * speedFactor },
     // loop starts
-    { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 20 + 2 + 308.77 * speedFactor },
-    { x: 2680, y: 3000, scale: 1.5, alpha: 1, time: 20 + 2 + 310.37 * speedFactor },
-    { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 20 + 2 + 311.97 * speedFactor },
-    { x: 2680, y: 3000, scale: 1.5, alpha: 1, time: 20 + 2 + 313.57 * speedFactor },
+    { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 20 + 308.77 * speedFactor },
+    { x: 2680, y: 3000, scale: 1.5, alpha: 1, time: 20 + 310.37 * speedFactor },
+    { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 20 + 311.97 * speedFactor },
+    { x: 2680, y: 3000, scale: 1.5, alpha: 1, time: 20 + 313.57 * speedFactor },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0, index: 0 },
   animation: 'init',
@@ -420,6 +420,8 @@ watchEffect(() => {
   else if (currentSceneIndex.value === 22) {
     characterMain.animation = 'started'
     characterSus.animation = 'started'
+  } else if (currentSceneIndex.value === 24) {
+    characterMain.animation = 'started'
   }
 })
 
@@ -427,7 +429,7 @@ function lockCharacterToMapCenter(x: number, y: number) {
   const offset = { x: 320, y: screenHeight.value / 2 / (zoomFactor.value * screen.state.scale) }
   screen.state.x = -x + offset.x
   screen.state.y = -y + offset.y
-  currentScreenAnimation.value = 'started'
+  currentScreenAnimation.value = 'init'
   gameStore.updateScreen(screen.state)
 }
 
@@ -457,6 +459,9 @@ onTick((delta) => {
     const dx = screen.states[currentMapStateIndex.value + 1].x - screen.states[currentMapStateIndex.value].x
     const dy = screen.states[currentMapStateIndex.value + 1].y - screen.states[currentMapStateIndex.value].y
     const ds = screen.states[currentMapStateIndex.value + 1].scale - screen.states[currentMapStateIndex.value].scale
+
+    /*     if (dx || dy || ds)
+          console.log({ dx, dy, ds }) */
 
     progress = Math.min(totalElapsedTime / dt, 1)
     screen.state.x = screen.states[currentMapStateIndex.value].x + dx * progress
@@ -515,10 +520,13 @@ function handleMCState(stateIndex: number) {
     characterMain.animation = 'finished'
     characterSus.animation = 'finished'
     // Show Popup
-  } /* else if (stateIndex === 39) {
+  } else if (stateIndex === 38) {
     characterMain.animation = 'finished'
     // Show Popup
-  } */
+  } else if (stateIndex === 39) {
+    characterMain.animation = 'finished'
+    // Show Popup
+  }
 }
 
 function handleMCAnimation(state: string) {
@@ -529,40 +537,40 @@ function handleMCAnimation(state: string) {
     screen.state.scale = screen.states[currentMapStateIndex.value].scale
     screen.state.time = screen.states[currentMapStateIndex.value].time
     currentScreenAnimation.value = 'finished'
-    console.log('Character Animation Finished')
   }
 }
 </script>
 
 <template>
   <Container :renderable="isLoad">
-    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
-      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-        :x="0" :y="0" :scale="1" :anchor="0" />
+    <Container :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+      <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" />
       <Wolf v-for="({ x, y, scale, flip }, index) of wolfs" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
-      <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-        :x="0" :y="0" :scale="1" :anchor="0" />
-      <Sprite texture="mapStationBg"
-        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
-        :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
+      <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" />
+      <Sprite
+        texture="mapStationBg"
+        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+        :x="station.bg.x"
+        :y="station.bg.y"
+        :scale="station.bg.scale"
+        :anchor="0" />
       <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-      <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale"
-        :flip="flip" />
+      <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
       <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
-        :motion-blur="motionBlur" initialOrientation="right" />
-      <Sprite texture="mapStationFg"
-        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
-        :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
+      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur" initialOrientation="right" />
+      <Sprite
+        texture="mapStationFg"
+        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+        :x="station.fg.x"
+        :y="station.fg.y"
+        :scale="station.fg.scale"
+        :anchor="0" />
       <!-- <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" /> -->
       <!-- @vue-ignore -->
       <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
-        place="map" />
+      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
       <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
-        :type="(type as 'purple' | 'green')" place="map" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <CharacterGuard place="map" :state="characterGuard.state" />
       <CharacterBaloonVendor :state="characterBaloonVendor.state" />
@@ -581,21 +589,35 @@ function handleMCAnimation(state: string) {
       <Scene7 v-else-if="currentSceneIndex === 9 && currentScreenAnimation === 'finished'" />
       <Scene8 v-else-if="currentSceneIndex === 20 && currentScreenAnimation === 'finished'" />
       <Scene9 v-else-if="currentSceneIndex === 21 && currentScreenAnimation === 'finished'" />
+      <Scene10 v-else-if="currentSceneIndex === 22 && currentScreenAnimation === 'finished'" />
+      <Scene11 v-else-if="currentSceneIndex === 23 && currentScreenAnimation === 'finished'" />
     </Container>
-    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
-      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : characterMain.animation"
-        :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index" @move="lockCharacterToMapCenter"
-        @updateStateIndex="handleMCState" @updateAnimation="handleMCAnimation" />
+    <Container :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+      <CharacterMain
+        :states="characterMain.states"
+        :animation="rotationStop ? 'finished' : characterMain.animation"
+        :skin="characterSkin"
+        :currentCharacterStateIndex="characterMain.state.index"
+        @move="lockCharacterToMapCenter"
+        @updateStateIndex="handleMCState"
+        @updateAnimation="handleMCAnimation" />
       <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
       <!-- @vue-ignore -->
-      <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
-        :y="mapHeight * screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" />
+      <Cloud
+        v-for="({ size, x, y, direction }, index) in clouds"
+        :key="index"
+        place="map"
+        :size="size"
+        :x="x"
+        :y="mapHeight * screen.state.scale * y"
+        :scale="0.5"
+        :direction="direction"
+        :width-range="mapWidth" />
     </Container>
     <!-- DEBUG -->
-    <!--  <External>
+    <!-- <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
