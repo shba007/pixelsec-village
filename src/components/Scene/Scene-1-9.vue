@@ -29,9 +29,11 @@ function onComplete() {
 <template>
   <Modal type="mid" title="">
     <ul class="flex flex-col items-start gap-4">
-      <li class="flex items-center gap-4" v-for="({ checked, describe }, index) of options" :key="index">
-        <button class="active-btn" :class="checked ? 'checked' : 'unchecked'" @click="onSelect(index, !checked)" />
-        <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]" v-html="describe" />
+      <li class="flex items-center gap-4" v-for="({ checked, describe }, index) of options" :key="index"
+        @click="onSelect(index, !checked)">
+        <div class="active-btn" :class="checked ? 'checked' : 'unchecked'" />
+        <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]"
+          v-html="describe" />
       </li>
     </ul>
   </Modal>
