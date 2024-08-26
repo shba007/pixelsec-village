@@ -110,7 +110,7 @@ const modal = computed(() => {
         </picture>
         <img v-else :src="popupSquare" alt="popupSquare" class="invisible absolute left-0 top-0 size-full" />
         <div
-          class="relative z-10 mx-auto flex size-full max-w-[820px] flex-col items-center justify-center gap-10 overflow-hidden px-12 py-0"
+          class="relative z-10 mx-auto flex size-full max-w-[820px] flex-col items-center justify-center gap-4 overflow-hidden px-12 py-0"
           :class="containerClass">
           <h1 v-if="title"
             class="text-[1.75rem] font-semibold uppercase leading-[2rem] lg:text-[2.5rem] lg:leading-[3rem]"
