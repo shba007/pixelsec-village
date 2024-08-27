@@ -40,6 +40,7 @@ import Scene8 from '@/components/Scene/Scene-1-8.vue'
 import Scene9 from '@/components/Scene/Scene-1-9.vue'
 import Scene10 from '@/components/Scene/Scene-1-10.vue'
 import Scene11 from '@/components/Scene/Scene-1-11.vue'
+import Scene12 from '@/components/Scene/Scene-1-12.vue'
 import SceneResult from '@/components/Scene/Scene-Result.vue'
 
 const props = defineProps<{
@@ -425,9 +426,9 @@ function onLoad() {
   currentScreenAnimation.value = 'started'
   characterStationMaster.state = characterStationMaster.states[0]
   characterIcecreamVendor.state = characterIcecreamVendor.states[0]
-  characterMain.state.index = 0
-  // characterMain.state.index = 39
-  // characterMain.animation = 'started'
+  // characterMain.state.index = 0
+  characterMain.state.index = 37
+  characterMain.animation = 'started'
 }
 
 onBeforeMount(onLoad)
@@ -549,13 +550,6 @@ function handleMCState(stateIndex: number) {
 }
 
 function handleMCAnimation(state: string) {
-  // if (state === 'finished') {
-  // screen.state.x = screen.states[currentMapStateIndex.value].x
-  // screen.state.y = screen.states[currentMapStateIndex.value].y
-  // screen.state.scale = screen.states[currentMapStateIndex.value].scale
-  // screen.state.time = screen.states[currentMapStateIndex.value].time
-  // currentScreenAnimation.value = 'finished'
-  // }
 }
 </script>
 
@@ -623,13 +617,14 @@ function handleMCAnimation(state: string) {
       <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
-      <SceneResult v-if="currentSceneIndex === 29 && currentScreenAnimation === 'finished'" />
+      <Scene12 v-if="currentSceneIndex === 28 && currentScreenAnimation === 'finished'" />
+      <SceneResult v-else-if="currentSceneIndex === 29 && currentScreenAnimation === 'finished'" />
       <!-- @vue-ignore -->
       <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
         :y="mapHeight * currentScreenState.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
     </Container>
     <!-- DEBUG -->
-    <!-- <External>
+    <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
@@ -640,6 +635,6 @@ function handleMCAnimation(state: string) {
           <input v-model="currentMapStateIndex" type="number" min="0" max="20" step="1" />
         </div>
       </div>
-    </External> -->
+    </External>
   </Container>
 </template>

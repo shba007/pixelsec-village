@@ -172,7 +172,7 @@ onTick((delta) => {
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
+  <External>
     <div class="absolute bottom-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />
@@ -184,5 +184,5 @@ onTick((delta) => {
         <input v-model="currentCharacterStateIndex" type="number" min="0" max="50" step="1" />
       </div>
     </div>
-  </External> -->
+  </External>
 </template>
