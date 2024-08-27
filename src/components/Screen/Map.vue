@@ -335,6 +335,7 @@ const characterMain = reactive<Asset>({
     { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 20 + 253.57 * speedFactor },
     { x: 2300, y: 2590, scale: 1.5, alpha: 1, time: 20 + 278.77 * speedFactor },
     { x: 2300, y: 2960, scale: 1.5, alpha: 1, time: 20 + 293.57 * speedFactor },
+    { x: 2490, y: 2960, scale: 1.5, alpha: 1, time: 20 + 301.17 * speedFactor },
     // loop starts 42
     { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 20 + 308.77 * speedFactor },
     { x: 2680, y: 3000, scale: 1.5, alpha: 1, time: 20 + 310.37 * speedFactor },
@@ -424,8 +425,8 @@ function onLoad() {
   currentScreenAnimation.value = 'started'
   characterStationMaster.state = characterStationMaster.states[0]
   characterIcecreamVendor.state = characterIcecreamVendor.states[0]
-  // characterMain.state.index = 0
-  // characterMain.state.index = 40
+  characterMain.state.index = 0
+  // characterMain.state.index = 39
   // characterMain.animation = 'started'
 }
 
@@ -434,7 +435,7 @@ onBeforeMount(onLoad)
 const isCharacterMapLocked = ref(true)
 
 function lockCharacterToMapCenter(x: number, y: number) {
-  if (!isCharacterMapLocked)
+  if (!isCharacterMapLocked.value)
     return
 
   const offset = { x: 320, y: screenHeight.value / 2 / (zoomFactor.value * currentScreenState.value.scale) }
@@ -540,6 +541,9 @@ function handleMCState(stateIndex: number) {
     console.log("*****Triggered Show Popup*****")
     gameStore.nextScene()
   } else if (stateIndex === 41) {
+    isCharacterMapLocked.value = false
+    console.log("isCharacterMapLocked", isCharacterMapLocked.value)
+  } else if (stateIndex === 42) {
     gameStore.nextScene()
   }
 }
@@ -625,7 +629,7 @@ function handleMCAnimation(state: string) {
         :y="mapHeight * currentScreenState.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
     </Container>
     <!-- DEBUG -->
-    <!--   <External>
+    <!-- <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">

@@ -6,7 +6,7 @@ import { useTimeoutFn } from '@vueuse/core';
 
 const modal = reactive({
   image: 'popupCutSceneResult1',
-  state: { x: 2380, y: 2880, scale: 0.47 },
+  state: { x: 2380, y: 2880 + 80, scale: 0.47 },
 })
 
 useTimeoutFn(() => {
