@@ -10,7 +10,6 @@ function onClick(value: boolean) {
   // DATA-COLLECT
   setTimeout(() => {
     gameStore.nextScene()
-    gameStore.nextMapState()
   }, 300)
 }
 </script>

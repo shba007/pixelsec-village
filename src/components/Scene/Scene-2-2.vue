@@ -17,7 +17,6 @@ watchDebounced(selectedTopics, onComplete, { debounce: 2000 })
 
 function onComplete() {
   gameStore.nextScene()
-  gameStore.nextMapState()
 }
 </script>
 

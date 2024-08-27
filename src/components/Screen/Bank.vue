@@ -117,7 +117,6 @@ onTick((delta) => {
       screen.animation = 'finished'
 
       gameStore.nextScene()
-      gameStore.nextMapState()
       emit('close', 6)
     }
   }

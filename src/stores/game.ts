@@ -522,6 +522,11 @@ export type Character = 'black' | 'blue' | 'red' | 'violate'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
+const timeline = [
+  { screen: 0, scene: 0 },
+  { screen: 0, scene: 0 },
+]
+
 export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))

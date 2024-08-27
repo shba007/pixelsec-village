@@ -62,10 +62,31 @@ watch(props.states, (value) => {
   activeCharacter.state.time = value[0].time
 })
 
+watch(
+  () => props.animation,
+  (value) => {
+    activeCharacter.animation = value
+  }
+)
+watch(
+  () => activeCharacter.animation,
+  (value) => {
+    emit('updateAnimation', value)
+  }
+)
+
+const currentCharacterStateIndex = ref(props.currentCharacterStateIndex)
+
+watch(
+  () => props.currentCharacterStateIndex,
+  (value) => {
+    currentCharacterStateIndex.value = value
+  }
+)
+
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
-const currentCharacterStateIndex = ref(props.currentCharacterStateIndex)
 
 onTick((delta) => {
   if (props.animation === 'started' && currentCharacterStateIndex.value < props.states.length - 1) {
@@ -108,16 +129,10 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
-    <AnimatedSprite
-      :textures="activeCharacter.aliases"
-      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5"
-      :x="0"
-      :y="0"
-      :scale="1"
-      :alpha="1"
-      :playing="activeCharacter.animation === 'started'"
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :alpha="activeCharacter.state.alpha">
+    <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
+      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->

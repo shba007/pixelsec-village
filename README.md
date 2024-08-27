@@ -1,45 +1,35 @@
 # affinidi-dataville
 
-This template should help get you started developing with Vue 3 in Vite.
+Screen -> 0
+    Scene:
+        0 -> Welcome To DataVille
+        1 -> Flouris Shop (No Popup)
+        2 -> Let the Adventure Begin
+        3 -> Select Your Avatar
+        4 -> Read Terms and Conditions
+        5 -> Terms and Conditions
+        if Scene index 6 make Screen 1
+        // Need Transition
+Screen -> 1
+    Scene:
+        // Need Pause
+        7 -> Verify age
+        8 -> Spend Your Time
+Screen -> 2
+        // Need Transition
+        9 -> 
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+| Screen   | Scene   | Describtion                               |
+| -------- | ------- | ----------------------------------------- |
+| 0        | 0       | Welcome To DataVille                      |
+| 0        | 1       | Flouris Shop (No Popup)                   |
+| 0        | 2       | Let the Adventure Begin                   |
+| 0        | 3       | Select Your Avatar                        |
+| 0        | 4       | Read Terms and Conditions                 |
+| 0        | 5       | (Conditional) Terms and Conditions        |
+| 0        | 6       | (Need Transition)                         |
+| 1        | 7       | (Need Pause)                              |
+| 1        | 8       | Verify age                                |
+| 1        | 9       | Spend Your Time                           |
+| 2        | 10      | Need Transition                           |
+| 2        | 10      | Need Transition                           |

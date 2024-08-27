@@ -74,7 +74,6 @@ const charactersGeneric = ref<State[]>([
 watchEffect(() => {
   if (currentSceneIndex.value === 9) {
     emit('close', 2)
-    gameStore.nextMapState()
   }
 })
 
@@ -88,13 +87,18 @@ onMounted(() => setTimeout(() => gameStore.nextScene(), 2000))
 
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <Sprite :texture="sky.alias" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="sky.state.x" :y="sky.state.y" :scale="sky.state.scale" :anchor="0.5" />
-    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="station" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="platform.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200" :scale="1" :anchor="0.5" />
+    <Sprite :texture="sky.alias" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="sky.state.x" :y="sky.state.y"
+      :scale="sky.state.scale" :anchor="0.5" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="station" :width-range="screenWidth"
+      :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+    <Sprite :texture="platform.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200" :scale="1"
+      :anchor="0.5" />
     <CharacterGeneric :states="charactersGeneric" :animation="true" place="station" />
-    <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0.5" />
+    <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1"
+      :anchor="0.5" />
     <StationTram :x="tram.x" :y="tram.y" :width-range="screenWidth" />
-    <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0.5" />
+    <Sprite :texture="platform.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1"
+      :anchor="0.5" />
     <CharacterStationMaster :state="characterStationMaster.state" place="station" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>

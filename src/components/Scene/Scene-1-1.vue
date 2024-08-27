@@ -27,8 +27,7 @@ watch(isLandscape, (value) => {
 </script>
 
 <template>
-  <Modal
-    title="welcome to dataville"
+  <Modal title="welcome to dataville"
     :container-class="(!isLandscape ? 'justify-between gap-0 !pt-9 ' : '!pt-9') + ' text-center'"
     description="Where your online habits and choices will shape the kind of house you live in.<br/>Let’s go!">
     <button v-if="!isLandscape" class="flex flex-col items-center justify-center gap-1 pb-3" @click="handleStart">

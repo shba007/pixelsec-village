@@ -7,7 +7,6 @@ const gameStore = useGameStore()
 
 function handleMove() {
   gameStore.nextScene()
-  gameStore.nextMapState()
 }
 
 useTimeoutFn(handleMove, 10000)

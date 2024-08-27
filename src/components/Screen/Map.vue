@@ -53,7 +53,7 @@ const emit = defineEmits<{
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentSceneIndex, currentMapStateIndex, currentScreenAnimation, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
+const { currentSceneIndex, currentMapStateIndex, currentScreenAnimation, currentScreenState, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
 
 const zoomFactor = computed(() => screenWidth.value / 1280)
 const screen = reactive<Asset>({
@@ -299,21 +299,17 @@ const characterMain = reactive<Asset>({
     { x: 1670, y: 1190, scale: 1.5, alpha: 0, time: 14.25 }, // leaving the tram
     { x: 1620, y: 1190, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
     { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 16.5 }, // leaving the tram
-    //
     { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
     { x: 1020, y: 1237, scale: 1.75, alpha: 1, time: 20 + 1.72 * speedFactor },
+    // at park 13
     { x: 885, y: 1237, scale: 1.75, alpha: 1, time: 20 + 7.12 * speedFactor },
     { x: 885, y: 1238, scale: 1.75, alpha: 1, time: 20 + 7.16 * speedFactor },
-    // after park
     { x: 930, y: 1238, scale: 1.5, alpha: 1, time: 20 + 8.96 * speedFactor },
     { x: 930, y: 1780, scale: 1.5, alpha: 1, time: 20 + 30.64 * speedFactor },
-    { x: 1140, y: 1780, scale: 1.5, alpha: 1, time: 20 + 39.04 * speedFactor },
-    { x: 1140, y: 1780, scale: 1.5, alpha: 1, time: 20 + 39.04 * speedFactor },
-    // after bank
-    { x: 1140, y: 1780, scale: 1.5, alpha: 1, time: 20 + 39.04 * speedFactor },
+    // at bank 18
     { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 20 + 49.84 * speedFactor },
-    // in the pond
     { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 20 + 59.44 * speedFactor },
+    // at park 20
     { x: 1315, y: 2085, scale: 1.5, alpha: 1, time: 20 + 64.06 * speedFactor },
     { x: 1220, y: 2150, scale: 1.5, alpha: 1, time: 20 + 68.65 * speedFactor },
     { x: 1100, y: 2150, scale: 1.5, alpha: 1, time: 20 + 73.45 * speedFactor },
@@ -322,25 +318,24 @@ const characterMain = reactive<Asset>({
     { x: 1110, y: 1910, scale: 1.5, alpha: 1, time: 20 + 86.77 * speedFactor },
     { x: 1230, y: 1910, scale: 1.5, alpha: 1, time: 20 + 91.57 * speedFactor },
     { x: 1290, y: 2030, scale: 1.5, alpha: 1, time: 20 + 96.93 * speedFactor },
-    // loop starts
+    // loop starts 28
     { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 20 + 101.99 * speedFactor },
     { x: 1030, y: 2150, scale: 1.5, alpha: 1, time: 20 + 110.79 * speedFactor },
     { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 20 + 119.59 * speedFactor },
-    // loop ends
+    // loop ends 31
     { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 20 + 126.57 * speedFactor },
     { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 20 + 136.17 * speedFactor },
     { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 20 + 145.57 * speedFactor },
     { x: 1170, y: 2550, scale: 1.5, alpha: 1, time: 20 + 155.17 * speedFactor },
     { x: 410, y: 2550, scale: 1.5, alpha: 1, time: 20 + 185.57 * speedFactor },
-    { x: 410, y: 2789, scale: 1.5, alpha: 1, time: 20 + 195.13 * speedFactor },
-    { x: 1165, y: 2789, scale: 1.5, alpha: 1, time: 20 + 225.33 * speedFactor },
-    { x: 1165, y: 2790, scale: 1.5, alpha: 1, time: 20 + 225.37 * speedFactor },
-    // stop for the ballon
+    // stop for the ballon 36
+    { x: 410, y: 2790, scale: 1.5, alpha: 1, time: 20 + 195.13 * speedFactor },
+    { x: 1165, y: 2790, scale: 1.5, alpha: 1, time: 20 + 225.33 * speedFactor },
     { x: 1670, y: 2790, scale: 1.5, alpha: 1, time: 20 + 245.57 * speedFactor },
     { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 20 + 253.57 * speedFactor },
     { x: 2300, y: 2590, scale: 1.5, alpha: 1, time: 20 + 278.77 * speedFactor },
     { x: 2300, y: 2960, scale: 1.5, alpha: 1, time: 20 + 293.57 * speedFactor },
-    // loop starts
+    // loop starts 42
     { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 20 + 308.77 * speedFactor },
     { x: 2680, y: 3000, scale: 1.5, alpha: 1, time: 20 + 310.37 * speedFactor },
     { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 20 + 311.97 * speedFactor },
@@ -443,8 +438,9 @@ function lockCharacterToMapCenter(x: number, y: number) {
   const offset = { x: 320, y: screenHeight.value / 2 / (zoomFactor.value * screen.state.scale) }
   screen.state.x = -x + offset.x
   screen.state.y = -y + offset.y
-  currentScreenAnimation.value = 'init'
+  screen.state.scale = 2.01
   gameStore.updateScreen(screen.state)
+  // currentScreenAnimation.value = 'started'
 }
 
 let totalElapsedTime = 0
@@ -459,89 +455,103 @@ onTick((delta) => {
     const ds = screen.states[currentMapStateIndex.value + 1].scale - screen.states[currentMapStateIndex.value].scale
 
     progress = Math.min(totalElapsedTime / dt, 1)
-    screen.state.x = screen.states[currentMapStateIndex.value].x + dx * progress
-    screen.state.y = screen.states[currentMapStateIndex.value].y + dy * progress
-    screen.state.scale = screen.states[currentMapStateIndex.value].scale + ds * progress
-    screen.state.time = screen.states[currentMapStateIndex.value].time + dt * progress
-
-    gameStore.updateScreen(screen.state)
+    gameStore.updateScreen({
+      x: screen.states[currentMapStateIndex.value].x + dx * progress,
+      y: screen.states[currentMapStateIndex.value].y + dy * progress,
+      scale: screen.states[currentMapStateIndex.value].scale + ds * progress,
+      time: screen.states[currentMapStateIndex.value].time + dt * progress,
+      alpha: 1
+    })
 
     if (progress == 1) {
       totalElapsedTime = 0
       currentScreenAnimation.value = 'finished'
-
-      if (props.currentScreenIndex === 2 && currentScreenAnimation.value === 'finished') {
-        tram.animation = 'started'
-        characterStationMaster.state = characterStationMaster.states[1]
-        characterMain.animation = 'started'
-        characterMain.state.index = 0
-      } else if (props.currentScreenIndex === 4 && currentScreenAnimation.value === 'finished') {
-        characterMain.animation = 'started'
-        characterMain.state.index = 14
-      } else if (props.currentScreenIndex === 6 && currentScreenAnimation.value === 'finished') {
-        characterMain.animation = 'started'
-        characterMain.state.index = 21
-      }
     }
   }
 })
 
+
 watchEffect(() => {
-  if (currentSceneIndex.value === 6 && currentScreenAnimation.value === 'finished') emit('close', 1)
-  else if (currentSceneIndex.value === 10) emit('close', 3)
-  else if (currentSceneIndex.value === 14) emit('close', 5)
-  else if (currentSceneIndex.value === 22) {
+  if (props.currentScreenIndex === 2 && currentScreenAnimation.value === 'finished') {
+    tram.animation = 'started'
+    characterMain.animation = 'started'
+    characterStationMaster.state = characterStationMaster.states[1]
+  } else if (props.currentScreenIndex === 4 && currentScreenAnimation.value === 'finished') {
+    characterMain.animation = 'started'
+  } else if (props.currentScreenIndex === 6 && currentScreenAnimation.value === 'finished') {
+    characterMain.animation = 'started'
+  }
+})
+
+watchEffect(() => {
+  if (currentSceneIndex.value === 6 && currentScreenAnimation.value === 'finished') {
+    emit('close', 1)
+  } else if (currentSceneIndex.value === 10 && currentScreenAnimation.value === 'finished') {
+    characterMain.animation = 'finished'
+    emit('close', 3)
+  } else if (currentSceneIndex.value === 14) {
+    characterMain.animation = 'finished'
+    emit('close', 5)
+  } else if (currentSceneIndex.value === 23) {
     characterMain.animation = 'started'
     characterSus.animation = 'started'
-  } else if (currentSceneIndex.value === 24) {
+  } else if (currentSceneIndex.value === 25) {
+    characterMain.animation = 'started'
+  } else if (currentSceneIndex.value === 27) {
     characterMain.animation = 'started'
   }
 })
 
 const mcStateIndex = ref(0)
 function handleMCState(stateIndex: number) {
-  console.log({ mcStateIndex: stateIndex })
   mcStateIndex.value = stateIndex
+  // in 25 character state
+
   if (stateIndex === 13) {
     characterMain.animation = 'finished'
     gameStore.nextScene()
-  } else if (stateIndex === 18) {
+  } else if (stateIndex === 16) {
     characterMain.animation = 'finished'
     gameStore.nextScene()
-  } else if (stateIndex === 22) {
+  } else if (stateIndex === 19) {
     characterSus.animation = 'started'
-  } else if (stateIndex === 31) {
+  } else if (stateIndex === 27) {
+    // Show Popup
     // MC in Loop
     characterMain.animation = 'finished'
     characterSus.animation = 'finished'
+    gameStore.nextScene()
+  } else if (stateIndex === 35) {
     // Show Popup
+    characterMain.animation = 'finished'
+    gameStore.nextScene()
+  } else if (stateIndex === 36) {
+    // Show Popup
+    characterMain.animation = 'finished'
+    gameStore.nextScene()
   } else if (stateIndex === 38) {
-    characterMain.animation = 'finished'
-    characterSus.animation = 'finished'
-    // Show Popup
-  } else if (stateIndex === 39) {
-    characterMain.animation = 'finished'
-    characterSus.animation = 'finished'
-    // Show Popup
+    console.log("*****Triggered Show Popup*****")
+    gameStore.nextScene()
+  } else if (stateIndex === 41) {
+    gameStore.nextScene()
   }
 }
 
 function handleMCAnimation(state: string) {
-  if (state === 'finished') {
-    // currentMapStateIndex.value = screen.states.length - 1
-    screen.state.x = screen.states[currentMapStateIndex.value].x
-    screen.state.y = screen.states[currentMapStateIndex.value].y
-    screen.state.scale = screen.states[currentMapStateIndex.value].scale
-    screen.state.time = screen.states[currentMapStateIndex.value].time
-    currentScreenAnimation.value = 'finished'
-  }
+  // if (state === 'finished') {
+  // screen.state.x = screen.states[currentMapStateIndex.value].x
+  // screen.state.y = screen.states[currentMapStateIndex.value].y
+  // screen.state.scale = screen.states[currentMapStateIndex.value].scale
+  // screen.state.time = screen.states[currentMapStateIndex.value].time
+  // currentScreenAnimation.value = 'finished'
+  // }
 }
 </script>
 
 <template>
   <Container :renderable="isLoad">
-    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
-      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <Container :x="currentScreenState.x * currentScreenState.scale * zoomFactor"
+      :y="currentScreenState.y * currentScreenState.scale * zoomFactor" :scale="currentScreenState.scale * zoomFactor">
       <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
         :x="0" :y="0" :scale="1" :anchor="0" />
       <Wolf v-for="({ x, y, scale, flip }, index) of wolfs" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
@@ -583,18 +593,18 @@ function handleMCAnimation(state: string) {
       <Scene5 v-else-if="currentSceneIndex === 4 && currentScreenAnimation === 'finished'" />
       <Scene6 v-else-if="currentSceneIndex === 5 && currentScreenAnimation === 'finished'" />
       <!-- <Scene7 v-else-if="currentSceneIndex === 9 && currentScreenAnimation === 'finished'" /> -->
-      <Scene8 v-else-if="currentSceneIndex === 20 && currentScreenAnimation === 'finished'" />
-      <Scene9 v-else-if="currentSceneIndex === 21 && currentScreenAnimation === 'finished'" />
-      <Scene10 v-else-if="currentSceneIndex === 22 && currentScreenAnimation === 'finished'" />
-      <Scene11 v-else-if="currentSceneIndex === 23 && currentScreenAnimation === 'finished'" />
-      <SceneResult v-else-if="currentSceneIndex === 24 && currentScreenAnimation === 'finished'" />
+      <Scene8 v-else-if="currentSceneIndex === 21 && currentScreenAnimation === 'finished'" />
+      <Scene9 v-else-if="currentSceneIndex === 22 && currentScreenAnimation === 'finished'" />
+      <Scene10 v-else-if="currentSceneIndex === 24 && currentScreenAnimation === 'finished'" />
+      <Scene11 v-else-if="currentSceneIndex === 26 && currentScreenAnimation === 'finished'" />
+      <!-- <Scene11 v-else-if="currentSceneIndex === 28 && currentScreenAnimation === 'finished'" /> -->
+      <SceneResult v-else-if="currentSceneIndex === 29 && currentScreenAnimation === 'finished'" />
     </Container>
     <Container v-if="!rotationStop">
       <ModalProtip v-if="mcStateIndex === 1 || mcStateIndex === 2 || mcStateIndex === 3" title="1" y="top" />
       <ModalProtip v-else-if="mcStateIndex === 14" title="2" y="top" />
-
-      <ModalProtip v-else-if="mcStateIndex === 36" title="4" y="top" />
-      <ModalProtip v-else-if="mcStateIndex === 40" title="5" x="left" />
+      <ModalProtip v-else-if="mcStateIndex === 33" title="4" y="top" />
+      <ModalProtip v-else-if="mcStateIndex === 37" title="5" x="left" />
     </Container>
     <Container :x="screen.state.x * screen.state.scale * zoomFactor"
       :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
@@ -609,24 +619,24 @@ function handleMCAnimation(state: string) {
         :y="mapHeight * screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
     </Container>
     <!-- DEBUG -->
-    <!-- <External>
+    <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
-          <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
-          <input v-model="screen.state.time" type="number" min="0" max="10" step="0.01" />
+          <input v-model="currentScreenState.x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="currentScreenState.y" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="currentScreenState.scale" type="number" min="0" max="10" step="0.01" />
+          <input v-model="currentScreenState.time" type="number" min="0" max="10" step="0.01" />
           <input v-model="currentMapStateIndex" type="number" min="0" max="20" step="1" />
         </div>
-        <div class="flex flex-col gap-2">
+        <!--  <div class="flex flex-col gap-2">
           <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
           <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
           <input v-model="wolfs[0].scale" type="number" min="0" max="5" step="0.1" />
           <input v-model="characterSus.state.alpha" type="number" min="0" max="1" step="0.1" />
           <input v-model="characterSus.state.time" type="number" min="0" max="100" step="0.1" />
-        </div>
+        </div> -->
       </div>
-    </External> -->
+    </External>
   </Container>
 </template>
