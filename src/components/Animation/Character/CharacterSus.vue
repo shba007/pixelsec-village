@@ -90,7 +90,7 @@ let totalElapsedTime = 0
 let progress = 0
 
 onTick((delta) => {
-  if (props.animation === 'started' && currentCharacterStateIndex.value < props.states.length - 1) {
+  if (props.animation === 'started' && currentCharacterStateIndex.value >= 0 && currentCharacterStateIndex.value < props.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = props.states[currentCharacterStateIndex.value + 1].time - props.states[currentCharacterStateIndex.value].time
     const dx = props.states[currentCharacterStateIndex.value + 1].x - props.states[currentCharacterStateIndex.value].x

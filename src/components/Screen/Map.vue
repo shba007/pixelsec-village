@@ -423,14 +423,14 @@ watch(currentScreenAnimation, (value) => {
 function onLoad() {
   gameStore.updateScreen(screen.states[0])
   screen.loaded = true
-  // currentScreenAnimation.value = 'started'
-  currentScreenAnimation.value = 'finished'
+  currentScreenAnimation.value = 'started'
+  // currentScreenAnimation.value = 'finished'
   characterStationMaster.state = characterStationMaster.states[0]
   characterIcecreamVendor.state = characterIcecreamVendor.states[0]
   // characterMain.state.index = 0
   // characterMain.state.index = 37
-  characterMain.state.index = 18
-  characterMain.animation = 'started'
+  // characterMain.state.index = 18
+  // characterMain.animation = 'started'
 }
 
 onBeforeMount(onLoad)
@@ -627,7 +627,7 @@ function handleMCAnimation(state: string) {
         :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index" @move="lockCharacterToMapCenter"
         @updateStateIndex="handleMCState" @updateAnimation="handleMCAnimation" />
       <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation"
-        :currentCharacterStateIndex="characterMain.state.index - 18" />
+        :currentCharacterStateIndex="Math.max(characterMain.state.index - 18, 0)" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
       <Scene12 v-if="currentSceneIndex === 28 && currentScreenAnimation === 'finished'" />

@@ -539,8 +539,8 @@ export const useGameStore = defineStore('game', () => {
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
   const currentMapStateIndex = ref(0)
-  const currentSceneIndex = ref(20)
-  const currentScreenIndex = ref(6)
+  const currentSceneIndex = ref(0)//ref(20)
+  const currentScreenIndex = ref(0)//ref(6)
 
   const currentScreenAnimation = ref<'init' | 'started' | 'finished'>('init')
   const $currentScreenState = reactive({ x: 0, y: 0, scale: 1, alpha: 1, time: 0 })
