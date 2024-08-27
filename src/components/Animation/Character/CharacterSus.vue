@@ -76,11 +76,12 @@ watch(
 )
 
 const currentCharacterStateIndex = ref(props.currentCharacterStateIndex)
-
+const holdedStateIndex = ref(props.currentCharacterStateIndex)
 watch(
   () => props.currentCharacterStateIndex,
   (value) => {
-    currentCharacterStateIndex.value = value
+    holdedStateIndex.value = value
+    // currentCharacterStateIndex.value = value
   }
 )
 
@@ -117,9 +118,8 @@ onTick((delta) => {
 
     if (progress == 1) {
       totalElapsedTime = 0
-      currentCharacterStateIndex.value++
-
-      emit('updateStateIndex', currentCharacterStateIndex.value)
+      currentCharacterStateIndex.value = holdedStateIndex.value
+      // currentCharacterStateIndex.value++
     }
   } else if (!(currentCharacterStateIndex.value < props.states.length - 1)) {
     activeCharacter.aliases = characterAnimations['frontStill']
@@ -136,7 +136,7 @@ onTick((delta) => {
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
+  <!--  <External>
     <div class="absolute bottom-0 left-16 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />

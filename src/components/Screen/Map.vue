@@ -423,11 +423,13 @@ watch(currentScreenAnimation, (value) => {
 function onLoad() {
   gameStore.updateScreen(screen.states[0])
   screen.loaded = true
-  currentScreenAnimation.value = 'started'
+  // currentScreenAnimation.value = 'started'
+  currentScreenAnimation.value = 'finished'
   characterStationMaster.state = characterStationMaster.states[0]
   characterIcecreamVendor.state = characterIcecreamVendor.states[0]
   // characterMain.state.index = 0
-  characterMain.state.index = 37
+  // characterMain.state.index = 37
+  characterMain.state.index = 18
   characterMain.animation = 'started'
 }
 
@@ -502,8 +504,9 @@ watchEffect(() => {
     characterMain.animation = 'finished'
     emit('close', 5)
   } else if (currentSceneIndex.value === 23) {
-    characterMain.animation = 'started'
-    characterSus.animation = 'started'
+    // characterMain.animation = 'started'
+    // characterSus.animation = 'started'
+    // isCharacterMapLocked.value = true
   } else if (currentSceneIndex.value === 25) {
     characterMain.animation = 'started'
   } else if (currentSceneIndex.value === 27) {
@@ -513,7 +516,8 @@ watchEffect(() => {
 
 const mcStateIndex = ref(0)
 function handleMCState(stateIndex: number) {
-  mcStateIndex.value = stateIndex
+  mcStateIndex.value = stateIndex // redundent
+  characterMain.state.index = stateIndex
   // in 25 character state
 
   if (stateIndex === 13) {
@@ -524,13 +528,21 @@ function handleMCState(stateIndex: number) {
     gameStore.nextScene()
   } else if (stateIndex === 19) {
     characterSus.animation = 'started'
-  } else if (stateIndex === 27) {
-    // Show Popup
+  } else if (stateIndex === 26) {
     // MC in Loop
-    characterMain.animation = 'finished'
-    characterSus.animation = 'finished'
+    // characterMain.animation = 'finished'
+    // characterSus.animation = 'finished'
+    isCharacterMapLocked.value = false
     gameStore.nextScene()
-  } else if (stateIndex === 35) {
+  } else if (stateIndex === 29) {
+    console.log("Loop Trigger")
+    // Loopback
+    if (currentSceneIndex.value === 22)
+      characterMain.state.index = 27
+  } else if (stateIndex === 30) {
+    isCharacterMapLocked.value = true
+  }
+  else if (stateIndex === 35) {
     // Show Popup
     characterMain.animation = 'finished'
     gameStore.nextScene()
@@ -539,7 +551,7 @@ function handleMCState(stateIndex: number) {
     characterMain.animation = 'finished'
     gameStore.nextScene()
   } else if (stateIndex === 38) {
-    console.log("*****Triggered Show Popup*****")
+    // console.log("*****Triggered Show Popup*****")
     gameStore.nextScene()
   } else if (stateIndex === 41) {
     isCharacterMapLocked.value = false
@@ -614,7 +626,8 @@ function handleMCAnimation(state: string) {
       <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : characterMain.animation"
         :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index" @move="lockCharacterToMapCenter"
         @updateStateIndex="handleMCState" @updateAnimation="handleMCAnimation" />
-      <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation" />
+      <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation"
+        :currentCharacterStateIndex="characterMain.state.index - 18" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
       <Scene12 v-if="currentSceneIndex === 28 && currentScreenAnimation === 'finished'" />
@@ -624,7 +637,7 @@ function handleMCAnimation(state: string) {
         :y="mapHeight * currentScreenState.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
     </Container>
     <!-- DEBUG -->
-    <External>
+    <!--  <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
@@ -635,6 +648,6 @@ function handleMCAnimation(state: string) {
           <input v-model="currentMapStateIndex" type="number" min="0" max="20" step="1" />
         </div>
       </div>
-    </External>
+    </External> -->
   </Container>
 </template>
