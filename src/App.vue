@@ -43,11 +43,10 @@ const mainWindow = window
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.2.5</p>
-    <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
+    <p>v0.2.6</p>
+    <!--   <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
-    <p>MapStateIndex: {{ gameStore.currentMapStateIndex }}</p>
-    <p>MapAnimation: {{ gameStore.currentScreenAnimation }}</p>
+    <p>MapAnimation: {{ gameStore.currentScreenAnimation }}</p> -->
   </div>
   <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>

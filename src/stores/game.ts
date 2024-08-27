@@ -30,6 +30,9 @@ import popupBarTexture from '@/assets/popup/bg-bar.png'
 import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
 import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
 import popupSquareTexture from '@/assets/popup/bg-square.png'
+import popupCutSceneHomeTimeTexture from '@/assets/popup/cutscene/home-time.png'
+import popupCutSceneResult1Texture from '@/assets/popup/cutscene/result-1.png'
+import popupCutSceneResult2Texture from '@/assets/popup/cutscene/result-2.png'
 //
 import buttonLongTexture from '@/assets/buttons/long/pressed.png'
 import buttonLongPressedTexture from '@/assets/buttons/long/unpressed.png'
@@ -162,8 +165,6 @@ import dataTrailSide2Texture from '@/assets/character/trail/side-2.png'
 import dataTrailSide3Texture from '@/assets/character/trail/side-3.png'
 import dataTrailSide4Texture from '@/assets/character/trail/side-4.png'
 // Map
-import map_5xBgTexture from '@/assets/map/0.5x-bg.png'
-import map_5xFgTexture from '@/assets/map/0.5x-fg.png'
 import map1xBgTexture from '@/assets/map/1x-bg.png'
 import map1xFgTexture from '@/assets/map/1x-fg.png'
 import mapPalmTreesTexture from '@/assets/map/palm-trees.png'
@@ -263,16 +264,7 @@ export const resources = reactive({
   frontINET,
   frontLAN,
   frontUNI,
-  popupProtip11: popupProtip11Texture,
-  popupProtip12: popupProtip12Texture,
-  popupProtip21: popupProtip21Texture,
-  popupProtip22: popupProtip22Texture,
-  popupProtip31: popupProtip31Texture,
-  popupProtip32: popupProtip32Texture,
-  popupProtip41: popupProtip41Texture,
-  popupProtip42: popupProtip42Texture,
-  popupProtip51: popupProtip51Texture,
-  popupProtip52: popupProtip52Texture,
+
   // images
   smartphone,
   smartphoneBankingHighlighted,
@@ -296,6 +288,21 @@ export const resources = reactive({
   popupSquare: popupSquareTexture,
   popupLandscape: popupLandscapeTexture,
   popupPortrait: popupPortraitTexture,
+  //
+  popupProtip11: popupProtip11Texture,
+  popupProtip12: popupProtip12Texture,
+  popupProtip21: popupProtip21Texture,
+  popupProtip22: popupProtip22Texture,
+  popupProtip31: popupProtip31Texture,
+  popupProtip32: popupProtip32Texture,
+  popupProtip41: popupProtip41Texture,
+  popupProtip42: popupProtip42Texture,
+  popupProtip51: popupProtip51Texture,
+  popupProtip52: popupProtip52Texture,
+  //
+  popupCutSceneHomeTime: popupCutSceneHomeTimeTexture,
+  popupCutSceneResult1: popupCutSceneResult1Texture,
+  popupCutSceneResult2: popupCutSceneResult2Texture,
   //
   buttonLong: buttonLongTexture,
   buttonLongPressed: buttonLongPressedTexture,
@@ -522,22 +529,18 @@ export type Character = 'black' | 'blue' | 'red' | 'violate'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
-const timeline = [
+/* const timeline = [
   { screen: 0, scene: 0 },
   { screen: 0, scene: 0 },
-]
+] */
 
 export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
-  const currentSceneIndex = ref(0)
   const currentMapStateIndex = ref(0)
-  const currentScreenIndex = ref(0)
-  // const currentSceneIndex = ref(23)
-  // const currentMapStateIndex = ref(10)
-  // const currentScreenIndex = ref(6)
-  /* currentSceneIndex 9 currentMapStateIndex 6 currentScreenIndex 2 currentScreenAnimation finished */
+  const currentSceneIndex = ref(0)//ref(28)
+  const currentScreenIndex = ref(0)//ref(6)
 
   const currentScreenAnimation = ref<'init' | 'started' | 'finished'>('init')
   const $currentScreenState = reactive({ x: 0, y: 0, scale: 1, alpha: 1, time: 0 })

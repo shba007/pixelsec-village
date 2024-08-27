@@ -1,16 +1,31 @@
 <script setup lang="ts">
-import Modal from '@/components/Modal.vue'
+import { reactive } from 'vue';
+import { External } from 'vue3-pixi';
+import { SCALE_MODES } from '@/utils/types'
+import { useTimeoutFn } from '@vueuse/core';
+
+const modal = reactive({
+  image: 'popupCutSceneResult1',
+  state: { x: 2380, y: 2880, scale: 0.47 },
+})
+
+useTimeoutFn(() => {
+  modal.image = 'popupCutSceneResult2'
+}, 4000)
 </script>
 
 <template>
-  <Modal title="" type="short" x="left" container-class="!gap-0 !pt-8 lg:!pt-16 text-left !justify-between">
-    <div class="flex flex-col items-start pl-6">
-      <h1 class="text-[1.4rem] font-semibold uppercase leading-[1.75rem] lg:text-[2.5rem] lg:leading-[3rem]"
-        v-html="'YOUR DATA LIVE<br/>IN A VULNERABLE<br/>STRAW HUT'" />
-      <p class="text-[1.25rem] leading-[1.5rem] lg:text-[2.5rem] lg:leading-[3rem]"
-        v-html="'Identity and data protection are new to you. This makes you an easy target for your valuable information to be exposed.'" />
+  <Sprite :texture="modal.image" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="modal.state.x"
+    :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
+  <!-- <input type="email" placeholder="ENTER EMAIL FOR A FULL REPORT"
+    class="w-full max-w-[320px] border-2 px-4 py-2 placeholder:text-blue-500" /> -->
+  <!--  <External>
+    <div class="fixed bottom-0 left-16 z-50 flex w-fit items-center gap-8">
+      <div class="flex flex-col gap-2">
+        <input v-model="modal.state.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="modal.state.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="modal.state.scale" type="number" min="0" max="10" step="0.01" />
+      </div>
     </div>
-    <input type="email" placeholder="ENTER EMAIL FOR A FULL REPORT"
-      class="w-full max-w-[320px] border-2 px-4 py-2 placeholder:text-blue-500" />
-  </Modal>
+  </External> -->
 </template>
