@@ -5,7 +5,8 @@ import { useTimeoutFn } from '@vueuse/core'
 const gameStore = useGameStore()
 
 function handleMove() {
-  gameStore.nextScene()
+  alert('Timeline Trigger 2')
+  gameStore.nextTimeline()
 }
 
 useTimeoutFn(handleMove, 2000)

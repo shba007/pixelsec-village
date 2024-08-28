@@ -14,7 +14,8 @@ const { arrivedState, y } = useScroll(targetElem, { behavior: 'instant' })
 let interval: any
 
 function handleMove() {
-  gameStore.nextScene()
+  alert('Timeline Trigger 6')
+  gameStore.nextTimeline()
 }
 
 function autoScroll() {

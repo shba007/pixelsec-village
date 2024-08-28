@@ -15,11 +15,6 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
 const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
 
-function updateIndex(value: number) {
-  currentScreenIndex.value = value
-  console.log({ currentScreenIndex: currentScreenIndex.value })
-}
-
 const mainWindow = window
 </script>
 
@@ -33,10 +28,10 @@ const mainWindow = window
       <template #default>
         <ScreenMap
           :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6"
-          :current-screen-index="currentScreenIndex" @close="updateIndex" />
-        <ScreenStation v-if="currentScreenIndex === 1" @close="updateIndex" />
-        <ScreenPark v-if="currentScreenIndex === 3" @close="updateIndex" />
-        <ScreenBank v-if="currentScreenIndex === 5" @close="updateIndex" />
+          :current-screen-index="currentScreenIndex" />
+        <ScreenStation v-if="currentScreenIndex === 1" />
+        <ScreenPark v-if="currentScreenIndex === 3" />
+        <ScreenBank v-if="currentScreenIndex === 5" />
         <SceneRotate v-if="!hardStop && rotationStop" :overlay="true" />
       </template>
     </Loader>
@@ -44,9 +39,10 @@ const mainWindow = window
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <p>v0.2.8</p>
+    <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
-    <p>MapAnimation: {{ gameStore.currentScreenAnimation }}</p>
+    <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p>
   </div>
   <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>

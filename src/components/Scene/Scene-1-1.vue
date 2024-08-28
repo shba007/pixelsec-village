@@ -12,7 +12,8 @@ const gameStore = useGameStore()
 const { isLandscape } = storeToRefs(gameStore)
 
 async function handleStart() {
-  gameStore.nextScene()
+  alert('Timeline Trigger 1')
+  gameStore.nextTimeline()
   await gameStore.toggleGameMode(true)
 }
 

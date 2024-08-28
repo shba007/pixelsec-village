@@ -44,7 +44,6 @@ import Scene12 from '@/components/Scene/Scene-1-12.vue'
 import SceneResult from '@/components/Scene/Scene-Result.vue'
 
 const props = defineProps<{
-  currentScreenIndex: number
   isLoad: boolean
 }>()
 
@@ -54,7 +53,7 @@ const emit = defineEmits<{
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentSceneIndex, currentScreenAnimation, currentScreenState, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
+const { currentScreenIndex, currentSceneIndex, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
 
 const zoomFactor = computed(() => screenWidth.value / 1280)
 
@@ -75,7 +74,6 @@ const screen = reactive<Asset>({
     { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 },
     { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 },
     { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 },
-    //
     // { x: -520, y: -367.8683596236825, scale: 2.01, time: 11 + 0.25, alpha: 1 },
     // { x: -530, y: -367.8683596236825, scale: 2.01, time: 11 + 0.5, alpha: 1 },
     { x: -580, y: -413.8683596236825, scale: 2.01, time: 11 + 3, alpha: 1 },
@@ -87,12 +85,12 @@ const screen = reactive<Asset>({
     { x: -1300, y: -1132.8683596236826, scale: 2.01, time: 11 + 16.5, alpha: 1 },
     { x: -700, y: -1132.8683596236826, scale: 2.01, time: 11 + 20, alpha: 1 },
     { x: -700, y: -1089.8683596236826, scale: 2.01, time: 11 + 20 + 1.72 * speedFactor, alpha: 1 },
-    // at park 18
+    // at park 20
     { x: -565, y: -1089.8683596236826, scale: 2.01, time: 11 + 20 + 7.12 * speedFactor, alpha: 1 },
     { x: -565, y: -1090.8683596236826, scale: 2.01, time: 11 + 20 + 7.16 * speedFactor, alpha: 1 },
     { x: -610, y: -1090.8683596236826, scale: 2.01, time: 11 + 20 + 8.96 * speedFactor, alpha: 1 },
     { x: -610, y: -1632.8683596236826, scale: 2.01, time: 11 + 20 + 30.64 * speedFactor, alpha: 1 },
-    // at bank 23
+    // at bank 24
     { x: -1090, y: -1632.8683596236826, scale: 2.01, time: 11 + 20 + 49.84 * speedFactor, alpha: 1 },
     { x: -1090, y: -1872.8683596236826, scale: 2.01, time: 11 + 20 + 59.44 * speedFactor, alpha: 1 },
     // at pond 25
@@ -116,6 +114,14 @@ const screen = reactive<Asset>({
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
 })
+
+function updateScreen(data: { x: number; y: number; scale: number; alpha: number; time: number }) {
+  screen.state.x = data.x
+  screen.state.y = data.y
+  screen.state.scale = data.scale
+  screen.state.alpha = data.alpha
+  screen.state.time = data.time
+}
 
 const station = reactive({
   bg: { x: 725, y: 265, scale: 1 },
@@ -183,7 +189,6 @@ const streetLamp = ref([
 ])
 
 const wolfs = ref([
-  // { x: 2480, y: 2270, scale: 0.5, flip: false },
   { x: 2050, y: 2310, scale: 0.5, flip: false },
   { x: 2770, y: 2810, scale: 0.5, flip: true },
   { x: 2510, y: 2950, scale: 0.5, flip: false },
@@ -453,55 +458,25 @@ const clouds = ref<
   { size: 'sm', x: -600, y: 0.96, direction: 1 },
 ])
 
-watch(currentScreenAnimation, (value) => {
+watch(() => screen.animation, (value) => {
   gameStore.toggleMotionBlur(value === 'started')
 })
 
 function onLoad() {
-  gameStore.updateScreen(screen.states[0])
+  updateScreen(screen.states[0])
   screen.loaded = true
-  currentScreenAnimation.value = 'started'
-  // currentScreenAnimation.value = 'finished'
+  screen.animation = 'started'
   characterStationMaster.state = characterStationMaster.states[0]
   characterIcecreamVendor.state = characterIcecreamVendor.states[0]
-  // characterMain.state.index = 0
-  // characterMain.state.index = 37
-  // characterMain.state.index = 18
-  // characterMain.animation = 'started'
 }
 
 onBeforeMount(onLoad)
 
-const isCharacterMapLocked = ref(true)
-
-function lockCharacterToMapCenter(x: number, y: number) {
-  if (!isCharacterMapLocked.value)
-    return
-
-  if (currentSceneIndex.value <= 44)
-    return
-
-  console.log("Character Lock started")
-
-  const offset = { x: 320, y: screenHeight.value / 2 / (zoomFactor.value * currentScreenState.value.scale) }
-  gameStore.updateScreen({
-    x: -x + offset.x,
-    y: -y + offset.y,
-    scale: 2.01,
-    time: 10,
-    alpha: 1
-  })
-}
-
 let totalElapsedTime = 0
 let progress = 0
 
-watch(currentSceneIndex, () => {
-  currentScreenAnimation.value = 'started'
-})
-
 onTick((delta) => {
-  if (!rotationStop.value && currentScreenAnimation.value === 'started' && currentSceneIndex.value < screen.states.length - 1) {
+  if (!rotationStop.value && screen.animation === 'started' && currentSceneIndex.value < screen.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = screen.states[currentSceneIndex.value + 1].time - screen.states[currentSceneIndex.value].time
     const dx = screen.states[currentSceneIndex.value + 1].x - screen.states[currentSceneIndex.value].x
@@ -509,7 +484,7 @@ onTick((delta) => {
     const ds = screen.states[currentSceneIndex.value + 1].scale - screen.states[currentSceneIndex.value].scale
 
     progress = Math.min(totalElapsedTime / dt, 1)
-    gameStore.updateScreen({
+    updateScreen({
       x: screen.states[currentSceneIndex.value].x + dx * progress,
       y: screen.states[currentSceneIndex.value].y + dy * progress,
       scale: screen.states[currentSceneIndex.value].scale + ds * progress,
@@ -519,103 +494,73 @@ onTick((delta) => {
 
     if (progress == 1) {
       totalElapsedTime = 0
-      currentScreenAnimation.value = 'finished'
-      gameStore.nextScene()
+      screen.animation = 'finished'
     }
   }
 })
 
-// Screen Change
-watchEffect(() => {
-  if (props.currentScreenIndex === 2 && currentScreenAnimation.value === 'finished') {
-    tram.animation = 'started'
+// Scene Index
+watch(currentSceneIndex, (value) => {
+  if (value == 1 && screen.animation === 'finished')
+    screen.animation = 'started'
+  else if (value == 2 && screen.animation === 'finished')
+    screen.animation = 'started'
+  else if (value == 3 && screen.animation === 'finished')
+    screen.animation = 'started'
+  else if (value == 4 && screen.animation === 'finished')
+    screen.animation = 'started'
+  else if (value == 6 && screen.animation === 'finished') {
+    screen.animation = 'started'
+  }
+})
+
+// Screen Animation
+watch(() => screen.animation, () => {
+  if (currentSceneIndex.value === 6 && screen.animation === 'finished') {
+    alert('Timeline Trigger 6.5')
+    gameStore.nextTimeline()
+  }
+})
+
+// Screen Index
+watch(currentScreenIndex, (value) => {
+  if (value === 2) {
+    alert('Timeline Trigger 10')
     characterMain.animation = 'started'
+    screen.animation = 'started'
+    gameStore.nextTimeline()
     characterStationMaster.state = characterStationMaster.states[1]
-  } else if (props.currentScreenIndex === 3) {
-    isCharacterMapLocked.value = true
-  } else if (props.currentScreenIndex === 4 && currentScreenAnimation.value === 'finished') {
+  } else if (value === 4) {
+    alert('Timeline Trigger 10001')
     characterMain.animation = 'started'
-  } else if (props.currentScreenIndex === 6 && currentScreenAnimation.value === 'finished') {
-    characterMain.animation = 'started'
+    // screen.animation = 'started'
   }
 })
 
-// Scene Change
-watchEffect(() => {
-  if (currentSceneIndex.value === 6 && currentScreenAnimation.value === 'finished') {
-    emit('close', 1)
-  } /*else if (currentSceneIndex.value === 10 && currentScreenAnimation.value === 'finished') {
-    characterMain.animation = 'finished'
-    emit('close', 3)
-  }  else if (currentSceneIndex.value === 14) {
-    characterMain.animation = 'finished'
-    emit('close', 5)
-  } else if (currentSceneIndex.value === 23) {
-    // characterMain.animation = 'started'
-    // characterSus.animation = 'started'
-    // isCharacterMapLocked.value = true
-  } else if (currentSceneIndex.value === 25) {
+function handleMCAnimation(state: 'init' | 'started' | 'finished') {
+  characterMain.animation = state
+
+  if (currentSceneIndex.value >= 9 && currentSceneIndex.value <= 19 && state === 'finished') {
+    alert('Timeline Trigger 201')
     characterMain.animation = 'started'
-  } else if (currentSceneIndex.value === 27) {
+    tram.animation = 'started'
+    screen.animation = 'started'
+    gameStore.nextTimeline()
+  } else if (currentSceneIndex.value === 20 && state === 'finished') {
+    alert('Timeline Trigger 202')
+    gameStore.nextTimeline()
+  } else if (currentSceneIndex.value >= 23 && state === 'finished') {
+    alert('Timeline Trigger 203')
     characterMain.animation = 'started'
-  } */
-})
-
-const mcStateIndex = ref(0)
-function handleMCState(stateIndex: number) {
-  mcStateIndex.value = stateIndex // redundent
-  characterMain.state.index = stateIndex
-  // in 25 character state
-
-  if (stateIndex === 13) {
-    characterMain.animation = 'finished'
-    gameStore.nextScene()
-  } else if (stateIndex === 16) {
-    characterMain.animation = 'finished'
-    gameStore.nextScene()
-  } else if (stateIndex === 19) {
-    characterSus.animation = 'started'
-  } else if (stateIndex === 26) {
-    // MC in Loop
-    // characterMain.animation = 'finished'
-    // characterSus.animation = 'finished'
-    isCharacterMapLocked.value = false
-    gameStore.nextScene()
-  } else if (stateIndex === 29) {
-    console.log("Loop Trigger")
-    // Loopback
-    if (currentSceneIndex.value === 22)
-      characterMain.state.index = 27
-  } else if (stateIndex === 30) {
-    isCharacterMapLocked.value = true
+    screen.animation = 'started'
   }
-  else if (stateIndex === 35) {
-    // Show Popup
-    characterMain.animation = 'finished'
-    gameStore.nextScene()
-  } else if (stateIndex === 36) {
-    // Show Popup
-    characterMain.animation = 'finished'
-    gameStore.nextScene()
-  } else if (stateIndex === 38) {
-    // console.log("*****Triggered Show Popup*****")
-    gameStore.nextScene()
-  } else if (stateIndex === 41) {
-    isCharacterMapLocked.value = false
-    console.log("isCharacterMapLocked", isCharacterMapLocked.value)
-  } else if (stateIndex === 42) {
-    gameStore.nextScene()
-  }
-}
-
-function handleMCAnimation(state: string) {
 }
 </script>
 
 <template>
   <Container :renderable="isLoad">
-    <Container :x="currentScreenState.x * currentScreenState.scale * zoomFactor"
-      :y="currentScreenState.y * currentScreenState.scale * zoomFactor" :scale="currentScreenState.scale * zoomFactor">
+    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
+      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
       <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
         :x="0" :y="0" :scale="1" :anchor="0" />
       <Wolf v-for="({ x, y, scale, flip }, index) of wolfs" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
@@ -640,7 +585,7 @@ function handleMCAnimation(state: string) {
         place="map" />
       <CharacterStationMaster place="map" :state="characterStationMaster.state" />
       <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
-        :type="type as 'purple' | 'green'" place="map" />
+        :type="(type as 'purple' | 'green')" place="map" />
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <CharacterGuard place="map" :state="characterGuard.state" />
       <CharacterBaloonVendor :state="characterBaloonVendor.state" />
@@ -651,47 +596,50 @@ function handleMCAnimation(state: string) {
       <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
     </Container>
     <Container v-if="!rotationStop">
-      <Scene1 v-if="currentSceneIndex === 0 && currentScreenAnimation === 'finished'" />
-      <Scene2 v-else-if="currentSceneIndex === 1 && currentScreenAnimation === 'finished'" />
-      <Scene3 v-else-if="currentSceneIndex === 2 && currentScreenAnimation === 'finished'" />
-      <Scene4 v-else-if="currentSceneIndex === 3 && currentScreenAnimation === 'finished'" />
-      <Scene5 v-else-if="currentSceneIndex === 4 && currentScreenAnimation === 'finished'" />
-      <Scene6 v-else-if="currentSceneIndex === 5 && currentScreenAnimation === 'finished'" />
-      <!-- <Scene7 v-else-if="currentSceneIndex === 9 && currentScreenAnimation === 'finished'" /> -->
-      <Scene8 v-else-if="currentSceneIndex === 21 && currentScreenAnimation === 'finished'" />
-      <Scene9 v-else-if="currentSceneIndex === 22 && currentScreenAnimation === 'finished'" />
-      <ModalProtip v-if="mcStateIndex === 1 || mcStateIndex === 2 || mcStateIndex === 3" title="1" y="top" />
-      <ModalProtip v-else-if="mcStateIndex === 14" title="2" y="top" />
-      <ModalProtip v-else-if="mcStateIndex === 33" title="4" y="top" />
-      <ModalProtip v-else-if="mcStateIndex === 37" title="5" x="left" />
+      <Scene1 v-if="currentSceneIndex === 0 && screen.animation === 'finished'" />
+      <Scene2 v-else-if="currentSceneIndex === 1 && screen.animation === 'finished'" />
+      <Scene3 v-else-if="currentSceneIndex === 2 && screen.animation === 'finished'" />
+      <Scene4 v-else-if="currentSceneIndex === 3 && screen.animation === 'finished'" />
+      <Scene5 v-else-if="currentSceneIndex === 4 && screen.animation === 'finished'" />
+      <Scene6 v-else-if="currentSceneIndex === 5 && screen.animation === 'finished'" />
+      <!-- <Scene7 v-else-if="currentSceneIndex === 9 && screen.animation === 'finished'" /> -->
+      <Scene8 v-else-if="currentSceneIndex === 27 && screen.animation === 'finished'" />
+      <Scene9 v-else-if="currentSceneIndex === 28 && screen.animation === 'finished'" />
+      <ModalProtip
+        v-if="characterMain.state.index === 1 || characterMain.state.index === 2 || characterMain.state.index === 3"
+        title="1" y="top" />
+      <ModalProtip v-else-if="characterMain.state.index === 14" title="2" y="top" />
+      <ModalProtip v-else-if="characterMain.state.index === 33" title="4" y="top" />
+      <ModalProtip v-else-if="characterMain.state.index === 37" title="5" x="left" />
     </Container>
-    <Container :x="currentScreenState.x * currentScreenState.scale * zoomFactor"
-      :y="currentScreenState.y * currentScreenState.scale * zoomFactor" :scale="currentScreenState.scale * zoomFactor">
+    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
+      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
       <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : characterMain.animation"
-        :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index" @move="lockCharacterToMapCenter"
-        @updateStateIndex="handleMCState" @updateAnimation="handleMCAnimation" />
+        :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index"
+        @updateAnimation="handleMCAnimation" />
       <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation"
         :currentCharacterStateIndex="Math.max(characterMain.state.index - 18, 0)" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
-      <Scene10 v-if="currentSceneIndex === 24 && currentScreenAnimation === 'finished'" />
-      <Scene11 v-else-if="currentSceneIndex === 26 && currentScreenAnimation === 'finished'" />
-      <Scene12 v-else-if="currentSceneIndex === 28 && currentScreenAnimation === 'finished'" />
-      <SceneResult v-else-if="currentSceneIndex === 29 && currentScreenAnimation === 'finished'" />
+      <Scene10 v-if="currentSceneIndex === 29 && screen.animation === 'finished'" />
+      <Scene11 v-else-if="currentSceneIndex === 30 && screen.animation === 'finished'" />
+      <Scene12 v-else-if="currentSceneIndex === 31 && screen.animation === 'finished'" />
+      <SceneResult v-else-if="currentSceneIndex === 32 && screen.animation === 'finished'" />
       <!-- @vue-ignore -->
       <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
-        :y="mapHeight * currentScreenState.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
+        :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
     </Container>
     <!-- DEBUG -->
     <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
-          <input v-model="currentScreenState.x" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="currentScreenState.y" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="currentScreenState.scale" type="number" min="0" max="10" step="0.01" />
-          <input v-model="currentScreenState.time" type="number" min="0" max="10" step="0.01" />
+          <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
+          <input v-model="screen.state.time" type="number" min="0" max="10" step="0.01" />
           <input v-model="currentSceneIndex" type="number" min="0" max="20" step="1" />
+          <span class="bg-white">{{ screen.animation }}</span>
         </div>
       </div>
     </External>

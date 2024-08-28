@@ -527,41 +527,75 @@ export const resources = reactive({
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
 
-const { width: screenWidth, height: screenHeight } = useWindowSize()
+export const timeline: {
+  screen: number;
+  scene: number;
+  character: number;
+}[] = [
+    { screen: 0, scene: 0, character: 0 },
+    { screen: 0, scene: 1, character: 0 },
+    { screen: 0, scene: 2, character: 0 },
+    { screen: 0, scene: 3, character: 0 },
+    { screen: 0, scene: 4, character: 0 },
+    { screen: 0, scene: 5, character: 0 }, // (Skipable)
+    { screen: 0, scene: 6, character: 0 }, // Zoom in enter station
+    { screen: 1, scene: 6, character: 0 }, // Into the tram station
+    { screen: 1, scene: 7, character: 0 },
+    { screen: 1, scene: 8, character: 0 },
+    { screen: 2, scene: 8, character: 0 }, // Back to map
+    // perfect 11
+    { screen: 2, scene: 9, character: 1 },
+    { screen: 2, scene: 9, character: 2 },
+    { screen: 2, scene: 10, character: 3 },
+    { screen: 2, scene: 11, character: 4 },
+    { screen: 2, scene: 12, character: 5 },
+    { screen: 2, scene: 13, character: 6 },
+    { screen: 2, scene: 14, character: 7 },
+    { screen: 2, scene: 15, character: 8 },
+    // perfect 18
+    { screen: 2, scene: 16, character: 9 },
+    { screen: 2, scene: 17, character: 10 },
+    { screen: 2, scene: 18, character: 11 },
+    { screen: 2, scene: 19, character: 12 },
+    { screen: 2, scene: 20, character: 13 },
+    // perfect 23
+    { screen: 3, scene: 21, character: 13 },
+    { screen: 3, scene: 22, character: 13 },
+    { screen: 3, scene: 23, character: 13 },
+    //
+    { screen: 4, scene: 24, character: 14 },
+    { screen: 4, scene: 25, character: 15 },
+    { screen: 4, scene: 26, character: 16 },
+    { screen: 4, scene: 27, character: 17 },
+    { screen: 4, scene: 28, character: 18 },
+    { screen: 4, scene: 29, character: 19 },
+    { screen: 4, scene: 23, character: 20 },
+    { screen: 4, scene: 23, character: 21 },
+  ]
 
-/* const timeline = [
-  { screen: 0, scene: 0 },
-  { screen: 0, scene: 0 },
-] */
+const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
-  const currentSceneIndex = ref(0)//ref(20)
-  const currentScreenIndex = ref(0)//ref(6)
+  const timelineIndex = ref(0)
 
-  const currentScreenAnimation = ref<'init' | 'started' | 'finished'>('init')
-  const $currentScreenState = reactive({ x: 0, y: 0, scale: 1, alpha: 1, time: 0 })
-
+  const currentScreenIndex = computed(() => timeline[timelineIndex.value].screen)
+  const currentSceneIndex = computed(() => timeline[timelineIndex.value].scene)
+  const currentCharacterIndex = computed(() => timeline[timelineIndex.value].character)
   const characterSkin = ref<Character>()
-  const $hardStop = ref(false)
+
   const $motionBlur = ref(false)
-  const currentScreenState = computed(() => $currentScreenState)
-  const rotationStop = computed(() => $hardStop.value || (currentSceneIndex.value > 0 && !isLandscape.value))
-  const hardStop = computed(() => $hardStop.value)
   const motionBlur = computed(() => $motionBlur.value)
+
+  const $hardStop = ref(false)
+  const hardStop = computed(() => $hardStop.value)
+
+  const rotationStop = computed(() => $hardStop.value || (currentSceneIndex.value > 0 && !isLandscape.value))
 
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
-
-  function updateScreen(data: { x: number; y: number; scale: number; alpha: number; time: number }) {
-    $currentScreenState.x = data.x
-    $currentScreenState.y = data.y
-    $currentScreenState.scale = data.scale
-    $currentScreenState.alpha = data.alpha
-    $currentScreenState.time = data.time
-  }
 
   function toggleHardStop(value: boolean) {
     $hardStop.value = value
@@ -585,32 +619,32 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
-  function nextScene(screen = 1) {
-    currentSceneIndex.value += screen
-    console.log({ currentSceneIndex: currentSceneIndex.value })
-  }
-
-
   function setCharacterSkin(value: Character) {
     characterSkin.value = value
+  }
+
+  function nextTimeline(screen = 1) {
+    timelineIndex.value += screen
+    console.log({ timelineIndex: timelineIndex.value })
+    console.timeEnd()
+    console.time()
   }
 
   return {
     isLandscape,
     isMobile,
-    currentSceneIndex,
-    currentScreenIndex,
-    currentScreenAnimation,
-    currentScreenState,
     rotationStop,
     motionBlur,
     hardStop,
+    timelineIndex,
+    currentScreenIndex,
+    currentSceneIndex,
+    currentCharacterIndex,
     characterSkin,
-    updateScreen,
     toggleHardStop,
     toggleMotionBlur,
     toggleGameMode,
-    nextScene,
     setCharacterSkin,
+    nextTimeline,
   }
 })

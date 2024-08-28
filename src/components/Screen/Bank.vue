@@ -92,7 +92,10 @@ const characterGuard = reactive({
 })
 
 // onBeforeMount(onLoad)
-onMounted(() => setTimeout(() => gameStore.nextScene(), 2000))
+onMounted(() => setTimeout(() => {
+  alert('Timeline Trigger 50')
+  gameStore.nextTimeline()
+}, 2000))
 
 let totalElapsedTime = 0
 let progress = 0
@@ -115,9 +118,9 @@ onTick((delta) => {
     if (progress == 1) {
       totalElapsedTime = 0
       screen.animation = 'finished'
-
-      gameStore.nextScene()
-      emit('close', 6)
+      alert('Timeline Trigger 17')
+      gameStore.nextTimeline()
+      // emit('close', 6)
     }
   }
 })

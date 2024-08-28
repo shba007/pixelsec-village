@@ -73,7 +73,9 @@ const charactersGeneric = ref<State[]>([
 
 watchEffect(() => {
   if (currentSceneIndex.value === 9) {
-    emit('close', 2)
+    alert('Timeline Trigger 71')
+    gameStore.nextTimeline()
+    // emit('close', 2)
   }
 })
 
@@ -82,7 +84,10 @@ function onLoad() {
 }
 
 onBeforeMount(onLoad)
-onMounted(() => setTimeout(() => gameStore.nextScene(), 2000))
+onMounted(() => setTimeout(() => {
+  alert('Timeline Trigger 7')
+  gameStore.nextTimeline()
+}, 2000))
 </script>
 
 <template>

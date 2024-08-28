@@ -7,6 +7,12 @@ import { useWindowSize } from '@vueuse/core';
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
 
+import { useGameStore } from '@/stores/game'
+import { storeToRefs } from 'pinia';
+
+const gameStore = useGameStore()
+const { currentCharacterIndex } = storeToRefs(gameStore)
+
 interface Character {
   loaded: boolean
   aliases: string[]
@@ -14,25 +20,22 @@ interface Character {
   direction: number
   orientation: string
   skin: 'red' | 'blue' | 'violate' | 'black'
-  animation: 'init' | 'started' | 'finished'
 }
 
 const props = withDefaults(
   defineProps<{
     states: State[]
-    currentCharacterStateIndex?: number
     animation: 'init' | 'started' | 'finished'
     skin?: 'red' | 'blue' | 'violate' | 'black'
   }>(),
   {
-    currentCharacterStateIndex: 0,
     skin: 'blue',
   }
 )
 
 const emit = defineEmits<{
   (e: 'move', x: number, y: number): void
-  (e: 'updateStateIndex', stateIndex: number): void
+  // (e: 'updateStateIndex', stateIndex: number): void
   (e: 'updateAnimation', state: 'init' | 'started' | 'finished'): void
 }>()
 
@@ -66,7 +69,6 @@ const activeCharacter = reactive<Character>({
   },
   direction: 1,
   orientation: 'front',
-  animation: props.animation,
   skin: props.skin
 })
 
@@ -83,49 +85,25 @@ watch(props.states, (value) => {
   activeCharacter.state.time = value[0].time
 })
 
-watch(
-  () => props.animation,
-  (value) => {
-    activeCharacter.animation = value
-  }
-)
-watch(
-  () => activeCharacter.animation,
-  (value) => {
-    emit('updateAnimation', value)
-  }
-)
-
-const currentCharacterStateIndex = ref(props.currentCharacterStateIndex)
-
-watch(
-  () => props.currentCharacterStateIndex,
-  (value) => {
-    currentCharacterStateIndex.value = value
-  }
-)
-
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
 
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => screenWidth.value / 1280)
 
 onTick((delta) => {
-  if (activeCharacter.animation === 'started' && currentCharacterStateIndex.value < props.states.length - 1) {
+  if (props.animation === 'started' && currentCharacterIndex.value < props.states.length - 1) {
     totalElapsedTime += delta / 100
-    const dt = props.states[currentCharacterStateIndex.value + 1].time - props.states[currentCharacterStateIndex.value].time
-    const dx = props.states[currentCharacterStateIndex.value + 1].x - props.states[currentCharacterStateIndex.value].x
-    const dy = props.states[currentCharacterStateIndex.value + 1].y - props.states[currentCharacterStateIndex.value].y
-    const ds = props.states[currentCharacterStateIndex.value + 1].scale - props.states[currentCharacterStateIndex.value].scale
-    const da = props.states[currentCharacterStateIndex.value + 1].alpha - props.states[currentCharacterStateIndex.value].alpha
+    const dt = props.states[currentCharacterIndex.value + 1].time - props.states[currentCharacterIndex.value].time
+    const dx = props.states[currentCharacterIndex.value + 1].x - props.states[currentCharacterIndex.value].x
+    const dy = props.states[currentCharacterIndex.value + 1].y - props.states[currentCharacterIndex.value].y
+    const ds = props.states[currentCharacterIndex.value + 1].scale - props.states[currentCharacterIndex.value].scale
+    const da = props.states[currentCharacterIndex.value + 1].alpha - props.states[currentCharacterIndex.value].alpha
     progress = Math.min(totalElapsedTime / dt, 1)
-    activeCharacter.state.x = props.states[currentCharacterStateIndex.value].x + dx * progress
-    activeCharacter.state.y = props.states[currentCharacterStateIndex.value].y + dy * progress
-    activeCharacter.state.scale = props.states[currentCharacterStateIndex.value].scale + ds * progress
-    activeCharacter.state.alpha = props.states[currentCharacterStateIndex.value].alpha + da * progress
-    activeCharacter.state.time = props.states[currentCharacterStateIndex.value].time + dt * progress
+    activeCharacter.state.x = props.states[currentCharacterIndex.value].x + dx * progress
+    activeCharacter.state.y = props.states[currentCharacterIndex.value].y + dy * progress
+    activeCharacter.state.scale = props.states[currentCharacterIndex.value].scale + ds * progress
+    activeCharacter.state.alpha = props.states[currentCharacterIndex.value].alpha + da * progress
+    activeCharacter.state.time = props.states[currentCharacterIndex.value].time + dt * progress
 
     emit('move', activeCharacter.state.x, activeCharacter.state.y)
 
@@ -153,25 +131,12 @@ onTick((delta) => {
 
     if (progress == 1) {
       totalElapsedTime = 0
-      currentCharacterStateIndex.value++
-
-      emit('updateStateIndex', currentCharacterStateIndex.value)
-
-      // DEBUG
-      const currentScreenScale = 2.01
-      const offset = { x: 320, y: screenHeight.value / 2 / (zoomFactor.value * currentScreenScale) }
-
-      console.log({
-        x: -activeCharacter.state.x + offset.x,
-        y: -activeCharacter.state.y + offset.y,
-        scale: currentScreenScale,
-        time: activeCharacter.state.time,
-        alpha: 1
-      })
+      activeCharacter.aliases = characterAnimations.value['frontStill']
+      emit('updateAnimation', 'finished')
     }
-  } else if (!(currentCharacterStateIndex.value < props.states.length - 1)) {
+  } else if (!(currentCharacterIndex.value < props.states.length - 1)) {
     activeCharacter.aliases = characterAnimations.value['frontStill']
-    activeCharacter.animation = 'finished'
+    emit('updateAnimation', 'finished')
   }
 })
 </script>
@@ -181,11 +146,10 @@ onTick((delta) => {
     :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
     <AnimatedSprite :textures="activeTrail.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5"
-      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
+      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="animation === 'started'"
       :animation-speed="0.08" />
     <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
-      :animation-speed="0.08" />
+      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="animation === 'started'" :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <External>
@@ -196,8 +160,8 @@ onTick((delta) => {
         <input v-model="activeCharacter.state.scale" type="number" min="0" max="5" step="0.01" />
         <input v-model="activeCharacter.state.alpha" type="number" min="0" max="1" step="0.1" />
         <input v-model="activeCharacter.state.time" type="number" min="0" max="100" step="0.5" />
-        <input v-model="activeCharacter.animation" type="text" />
-        <input v-model="currentCharacterStateIndex" type="number" min="0" max="50" step="1" />
+        <span class="bg-white">{{ animation }}</span>
+        <span class="bg-white">{{ currentCharacterIndex }}</span>
       </div>
     </div>
   </External>

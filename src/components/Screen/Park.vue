@@ -63,11 +63,16 @@ const characterIcecreamVendor = reactive({
 function onLoad() { }
 
 onBeforeMount(onLoad)
-onMounted(() => setTimeout(() => gameStore.nextScene(), 2000))
+onMounted(() => setTimeout(() => {
+  alert("Timeline Trigger 110")
+  gameStore.nextTimeline()
+}, 2000))
 
 watch(currentSceneIndex, (value) => {
-  if (value === 13) {
-    emit('close', 4)
+  if (value === 25) {
+    // alert("Timeline Trigger 120")
+    // gameStore.nextTimeline()
+    // emit('close', 4)
   }
 })
 </script>
@@ -82,13 +87,13 @@ watch(currentSceneIndex, (value) => {
       :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
-  <Container v-if="!rotationStop" :z-order="0">
-    <Scene1 v-if="currentSceneIndex === 10" />
-    <Scene2 v-else-if="currentSceneIndex === 11" />
-    <Scene3 v-else-if="currentSceneIndex === 12" />
+  <Container v-if="!rotationStop">
+    <Scene1 v-if="currentSceneIndex === 22" />
+    <Scene2 v-else-if="currentSceneIndex === 23" />
+    <Scene3 v-else-if="currentSceneIndex === 24" />
   </Container>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" :z-order="10" />
+    <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

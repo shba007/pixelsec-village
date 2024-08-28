@@ -10,7 +10,8 @@ const ages = ['18-25', '26-35', '36-44', '45-54']
 function onClick(value: string) {
   // DATA-COLLECT
   setTimeout(() => {
-    gameStore.nextScene()
+    alert('Timeline Trigger 8')
+    gameStore.nextTimeline()
   }, 300)
 }
 </script>

@@ -23,18 +23,22 @@ function onSelect(topic: number) {
 watchDebounced(selectedOptions, onComplete, { debounce: 2000, deep: true })
 
 function onComplete() {
-  gameStore.nextScene()
+  alert('Timeline Trigger 44')
+  gameStore.nextTimeline()
 }
 </script>
 
 <template>
   <Modal type="mid" title="">
     <div class="flex w-full flex-col items-start gap-8">
-      <p class="text-left text-2xl lg:px-10 lg:py-6 lg:text-4xl lg:leading-[3rem]">That was close! Who do you think should protect your data?</p>
+      <p class="text-left text-2xl lg:px-10 lg:py-6 lg:text-4xl lg:leading-[3rem]">That was close! Who do you think
+        should protect your data?</p>
       <ul class="grid w-full grid-cols-2 grid-rows-2 gap-2 px-4">
-        <li class="flex items-center gap-4" v-for="({ title, value }, index) of options" :key="index" @click="onSelect(value)">
+        <li class="flex items-center gap-4" v-for="({ title, value }, index) of options" :key="index"
+          @click="onSelect(value)">
           <div class="active-btn" :class="selectedOptions.includes(value) ? 'checked' : 'unchecked'" />
-          <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]" v-html="title" />
+          <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]"
+            v-html="title" />
         </li>
       </ul>
     </div>

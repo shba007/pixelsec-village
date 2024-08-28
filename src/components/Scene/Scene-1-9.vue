@@ -21,7 +21,8 @@ function onSelect(index: number, checked: boolean) {
 watchDebounced(options, onComplete, { debounce: 2000, deep: true })
 
 function onComplete() {
-  gameStore.nextScene()
+  alert('Timeline Trigger 8')
+  gameStore.nextTimeline()
 }
 </script>
 

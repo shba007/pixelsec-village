@@ -21,7 +21,10 @@ const timer = computed(() => {
   let formattedMilliseconds = milliseconds.toString().padStart(2, '0')
 
   if (number === 1) {
-    setTimeout(gameStore.nextScene, 50)
+    setTimeout(() => {
+      alert('Timeline Trigger 42')
+      gameStore.nextTimeline()
+    }, 50)
     return
   }
 
@@ -31,7 +34,8 @@ const timer = computed(() => {
 })
 
 function onClick() {
-  gameStore.nextScene(2)
+  alert('Timeline Trigger 15')
+  gameStore.nextTimeline(2)
 }
 </script>
 
@@ -42,7 +46,8 @@ function onClick() {
       <!-- <span class="text-4xl">00: 08 : 99</span> -->
       <span class="font-uni text-4xl" v-html="timer" />
       <div class="grid w-fit grid-cols-5 grid-rows-2 gap-y-2">
-        <button class="active-btn short unchecked col-span-2 col-start-1 row-start-1" @click="onClick">Do nothing</button>
+        <button class="active-btn short unchecked col-span-2 col-start-1 row-start-1" @click="onClick">Do
+          nothing</button>
         <button class="active-btn long unchecked col-span-3 col-start-3 row-start-1" @click="onClick">
           Take action only<br />
           when prompted
@@ -51,7 +56,8 @@ function onClick() {
           Alert the authority,<br />
           change login details
         </button>
-        <button class="active-btn short unchecked col-span-2 col-start-4 row-start-2" @click="onClick">Delete <br />the app</button>
+        <button class="active-btn short unchecked col-span-2 col-start-4 row-start-2" @click="onClick">Delete <br />the
+          app</button>
       </div>
     </div>
   </Modal>

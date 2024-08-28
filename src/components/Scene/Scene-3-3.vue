@@ -16,16 +16,19 @@ function onClick(value: boolean) {
   selectedOption.value = value
 
   setTimeout(() => {
-    gameStore.nextScene()
+    alert('Timeline Trigger 33')
+    gameStore.nextTimeline()
   }, 300)
 }
 </script>
 
 <template>
-  <Modal type="mid" title="" description="Would you like to collect all your data from one place for convenience?" container-class="text-left p-2">
+  <Modal type="mid" title="" description="Would you like to collect all your data from one place for convenience?"
+    container-class="text-left p-2">
     <div class="flex w-full justify-end px-16">
       <ul class="flex flex-col gap-2">
-        <li class="flex items-center gap-4" v-for="({ title, value }, index) of options" :key="index" @click="onClick(value)">
+        <li class="flex items-center gap-4" v-for="({ title, value }, index) of options" :key="index"
+          @click="onClick(value)">
           <div class="active-btn" :class="selectedOption === value ? 'checked' : 'unchecked'" />
           <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]">
             {{ title }}
