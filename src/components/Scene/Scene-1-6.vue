@@ -15,7 +15,6 @@ let interval: any
 
 function handleMove() {
   gameStore.nextScene()
-  gameStore.nextMapState()
 }
 
 function autoScroll() {

@@ -3,6 +3,7 @@ import { reactive, ref, watch, computed, onMounted } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import type { State } from '@/utils/types'
 import { SCALE_MODES } from '@/utils/types'
+import { useWindowSize } from '@vueuse/core';
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
 
@@ -108,6 +109,9 @@ watch(
 let totalElapsedTime = 0
 let progress = 0
 
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => screenWidth.value / 1280)
+
 onTick((delta) => {
   if (activeCharacter.animation === 'started' && currentCharacterStateIndex.value < props.states.length - 1) {
     totalElapsedTime += delta / 100
@@ -152,6 +156,18 @@ onTick((delta) => {
       currentCharacterStateIndex.value++
 
       emit('updateStateIndex', currentCharacterStateIndex.value)
+
+      // DEBUG
+      const currentScreenScale = 2.01
+      const offset = { x: 320, y: screenHeight.value / 2 / (zoomFactor.value * currentScreenScale) }
+
+      console.log({
+        x: -activeCharacter.state.x + offset.x,
+        y: -activeCharacter.state.y + offset.y,
+        scale: currentScreenScale,
+        time: activeCharacter.state.time,
+        alpha: 1
+      })
     }
   } else if (!(currentCharacterStateIndex.value < props.states.length - 1)) {
     activeCharacter.aliases = characterAnimations.value['frontStill']
@@ -172,7 +188,7 @@ onTick((delta) => {
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <External>
     <div class="absolute bottom-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />
@@ -184,5 +200,5 @@ onTick((delta) => {
         <input v-model="currentCharacterStateIndex" type="number" min="0" max="50" step="1" />
       </div>
     </div>
-  </External> -->
+  </External>
 </template>

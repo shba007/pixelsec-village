@@ -538,7 +538,6 @@ export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
-  const currentMapStateIndex = ref(0)
   const currentSceneIndex = ref(0)//ref(20)
   const currentScreenIndex = ref(0)//ref(6)
 
@@ -591,11 +590,6 @@ export const useGameStore = defineStore('game', () => {
     console.log({ currentSceneIndex: currentSceneIndex.value })
   }
 
-  function nextMapState(animate = true) {
-    if (animate) currentScreenAnimation.value = 'started'
-    currentMapStateIndex.value++
-    console.log({ currentMapStateIndex: currentMapStateIndex.value })
-  }
 
   function setCharacterSkin(value: Character) {
     characterSkin.value = value
@@ -605,7 +599,6 @@ export const useGameStore = defineStore('game', () => {
     isLandscape,
     isMobile,
     currentSceneIndex,
-    currentMapStateIndex,
     currentScreenIndex,
     currentScreenAnimation,
     currentScreenState,
@@ -618,7 +611,6 @@ export const useGameStore = defineStore('game', () => {
     toggleMotionBlur,
     toggleGameMode,
     nextScene,
-    nextMapState,
     setCharacterSkin,
   }
 })

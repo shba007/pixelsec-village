@@ -13,7 +13,6 @@ const { isLandscape } = storeToRefs(gameStore)
 
 async function handleStart() {
   gameStore.nextScene()
-  gameStore.nextMapState()
   await gameStore.toggleGameMode(true)
 }
 

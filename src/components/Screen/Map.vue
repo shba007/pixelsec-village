@@ -54,26 +54,64 @@ const emit = defineEmits<{
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentSceneIndex, currentMapStateIndex, currentScreenAnimation, currentScreenState, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
+const { currentSceneIndex, currentScreenAnimation, currentScreenState, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
 
 const zoomFactor = computed(() => screenWidth.value / 1280)
+
+const speedFactor = 0.25
 const screen = reactive<Asset>({
   loaded: false,
   alias: 'mapBg',
   states: [
     { x: -380, y: -260, scale: 0.94, alpha: 1, time: 0 },
-    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 2 },
+    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 2 }, // Welcome to Dataville 
     { x: -990, y: -560, scale: 1.96, alpha: 1, time: 5 },
-    { x: -795, y: -590, scale: 2.01, alpha: 1, time: 7 },
-    { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 },
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 },
-    // Transition
-    { x: -610, y: -1170, scale: 2.01, alpha: 1, time: 10 },
-    { x: -890, y: -1630, scale: 2.01, alpha: 1, time: 10 },
-    { x: -860, y: -1900, scale: 2.01, alpha: 1, time: 10 },
-    { x: -90, y: -2550, scale: 2.01, alpha: 1, time: 10 },
-    { x: -845, y: -2640, scale: 2.01, alpha: 1, time: 10 },
-    { x: -2220, y: -2760, scale: 2.01, alpha: 1, time: 10 },
+    { x: -795, y: -590, scale: 2.01, alpha: 1, time: 7 }, // let the adventure begin
+    { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 }, // choose your avater
+    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 }, // read t&c
+    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 }, // t&c
+    { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 }, // zoomin transition
+    // Station Buffer
+    { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 },
+    { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 },
+    { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 },
+    //
+    // { x: -520, y: -367.8683596236825, scale: 2.01, time: 11 + 0.25, alpha: 1 },
+    // { x: -530, y: -367.8683596236825, scale: 2.01, time: 11 + 0.5, alpha: 1 },
+    { x: -580, y: -413.8683596236825, scale: 2.01, time: 11 + 3, alpha: 1 },
+    { x: -860, y: -413.8683596236825, scale: 2.01, time: 11 + 6, alpha: 1 },
+    { x: -860, y: -860.8683596236825, scale: 2.01, time: 11 + 9, alpha: 1 },
+    { x: -1350, y: -860.8683596236825, scale: 2.01, time: 11 + 12, alpha: 1 },
+    { x: -1350, y: -1042.8683596236826, scale: 2.01, time: 11 + 14.25, alpha: 1 },
+    { x: -1300, y: -1042.8683596236826, scale: 2.01, time: 11 + 15, alpha: 1 },
+    { x: -1300, y: -1132.8683596236826, scale: 2.01, time: 11 + 16.5, alpha: 1 },
+    { x: -700, y: -1132.8683596236826, scale: 2.01, time: 11 + 20, alpha: 1 },
+    { x: -700, y: -1089.8683596236826, scale: 2.01, time: 11 + 20 + 1.72 * speedFactor, alpha: 1 },
+    // at park 18
+    { x: -565, y: -1089.8683596236826, scale: 2.01, time: 11 + 20 + 7.12 * speedFactor, alpha: 1 },
+    { x: -565, y: -1090.8683596236826, scale: 2.01, time: 11 + 20 + 7.16 * speedFactor, alpha: 1 },
+    { x: -610, y: -1090.8683596236826, scale: 2.01, time: 11 + 20 + 8.96 * speedFactor, alpha: 1 },
+    { x: -610, y: -1632.8683596236826, scale: 2.01, time: 11 + 20 + 30.64 * speedFactor, alpha: 1 },
+    // at bank 23
+    { x: -1090, y: -1632.8683596236826, scale: 2.01, time: 11 + 20 + 49.84 * speedFactor, alpha: 1 },
+    { x: -1090, y: -1872.8683596236826, scale: 2.01, time: 11 + 20 + 59.44 * speedFactor, alpha: 1 },
+    // at pond 25
+    { x: -995, y: -1937.8683596236826, scale: 2.01, time: 11 + 20 + 64.06 * speedFactor, alpha: 1 },
+    { x: -890, y: -1890, scale: 2.01, time: 11 + 20 + 68.65 * speedFactor, alpha: 1 },
+    // loop ends 28
+    { x: -1085, y: -1922.8683596236826, scale: 2.01, time: 11 + 20 + 1 + 68.65 * speedFactor, alpha: 1 },
+    { x: -1085, y: -2162.8683596236824, scale: 2.01, time: 11 + 20 + 1 + 78.25 * speedFactor, alpha: 1 },
+    // 30
+    { x: -850, y: -2162.8683596236824, scale: 2.01, time: 11 + 20 + 1 + 87.65 * speedFactor, alpha: 1 },
+    { x: -850, y: -2340, scale: 2.01, time: 11 + 20 + 1 + 97.25 * speedFactor, alpha: 1 },
+    { x: -90, y: -2340, scale: 2.01, time: 11 + 20 + 2 + 97.25 * speedFactor, alpha: 1 },
+
+    { x: -90, y: -2520, scale: 1.64, time: 11 + 20 + 2 + 127.65 * speedFactor, alpha: 1 },
+    { x: -90, y: -2555, scale: 1.64, time: 11 + 20 + 2 + 137.21 * speedFactor, alpha: 1 },
+    // stop for the ballon
+    { x: -770, y: -2555, scale: 1.64, time: 11 + 20 + 2 + 225.33 * speedFactor, alpha: 1 },
+    { x: -930, y: -2555, scale: 1.64, time: 11 + 20 + 2 + 245.57 * speedFactor, alpha: 1 },
+    { x: -1570, y: -2470, scale: 1.64, time: 11 + 20 + 2 + 253.57 * speedFactor, alpha: 1 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -91,21 +129,21 @@ const wave = reactive({
 })
 
 const flags = ref([
-  { type: 'station', x: 705, y: 380, scale: 0.5 },
-  { type: 'station', x: 1105, y: 380, scale: 0.5 },
-  { type: 'station', x: 705, y: 440, scale: 0.5 },
-  { type: 'station', x: 1105, y: 440, scale: 0.5 },
-  { type: 'station', x: 705, y: 495, scale: 0.5 },
-  { type: 'station', x: 1105, y: 495, scale: 0.5 },
-  { type: 'pink', x: 1225, y: 670, scale: 0.5 },
-  { type: 'pink', x: 1225, y: 720, scale: 0.5 },
-  { type: 'pink', x: 1225, y: 780, scale: 0.5 },
-  { type: 'school-blue', x: 789, y: 2155, scale: 0.5 },
-  { type: 'school-red', x: 819, y: 2155, scale: 0.5 },
-  { type: 'pink', x: 460, y: 2600, scale: 0.5 },
-  { type: 'pink', x: 460, y: 2660, scale: 0.5 },
-  { type: 'pink', x: 460, y: 2710, scale: 0.5 },
-  { type: 'pink', x: 460, y: 2770, scale: 0.5 },
+  { type: 'station' as const, x: 705, y: 380, scale: 0.5 },
+  { type: 'station' as const, x: 1105, y: 380, scale: 0.5 },
+  { type: 'station' as const, x: 705, y: 440, scale: 0.5 },
+  { type: 'station' as const, x: 1105, y: 440, scale: 0.5 },
+  { type: 'station' as const, x: 705, y: 495, scale: 0.5 },
+  { type: 'station' as const, x: 1105, y: 495, scale: 0.5 },
+  { type: 'pink' as const, x: 1225, y: 670, scale: 0.5 },
+  { type: 'pink' as const, x: 1225, y: 720, scale: 0.5 },
+  { type: 'pink' as const, x: 1225, y: 780, scale: 0.5 },
+  { type: 'school-blue' as const, x: 789, y: 2155, scale: 0.5 },
+  { type: 'school-red' as const, x: 819, y: 2155, scale: 0.5 },
+  { type: 'pink' as const, x: 460, y: 2600, scale: 0.5 },
+  { type: 'pink' as const, x: 460, y: 2660, scale: 0.5 },
+  { type: 'pink' as const, x: 460, y: 2710, scale: 0.5 },
+  { type: 'pink' as const, x: 460, y: 2770, scale: 0.5 },
 ])
 
 const fountain = reactive({ x: 920, y: 830, scale: 0.5 })
@@ -283,7 +321,6 @@ const characterBaloonVendor = reactive({
   states: [{ x: 1230, y: 2750, scale: 0.5, alpha: 1, time: 0 }],
   state: { x: 1230, y: 2750, scale: 0.5, alpha: 1, time: 0 },
 })
-const speedFactor = 0.25
 
 const characterMain = reactive<Asset>({
   loaded: false,
@@ -310,7 +347,7 @@ const characterMain = reactive<Asset>({
     // at bank 18
     { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 20 + 49.84 * speedFactor },
     { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 20 + 59.44 * speedFactor },
-    // at park 20
+    // at pond 20
     { x: 1315, y: 2085, scale: 1.5, alpha: 1, time: 20 + 64.06 * speedFactor },
     { x: 1220, y: 2150, scale: 1.5, alpha: 1, time: 20 + 68.65 * speedFactor },
     { x: 1100, y: 2150, scale: 1.5, alpha: 1, time: 20 + 73.45 * speedFactor },
@@ -329,8 +366,8 @@ const characterMain = reactive<Asset>({
     { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 20 + 145.57 * speedFactor },
     { x: 1170, y: 2550, scale: 1.5, alpha: 1, time: 20 + 155.17 * speedFactor },
     { x: 410, y: 2550, scale: 1.5, alpha: 1, time: 20 + 185.57 * speedFactor },
-    // stop for the ballon 36
     { x: 410, y: 2790, scale: 1.5, alpha: 1, time: 20 + 195.13 * speedFactor },
+    // stop for the ballon 36
     { x: 1165, y: 2790, scale: 1.5, alpha: 1, time: 20 + 225.33 * speedFactor },
     { x: 1670, y: 2790, scale: 1.5, alpha: 1, time: 20 + 245.57 * speedFactor },
     { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 20 + 253.57 * speedFactor },
@@ -441,6 +478,11 @@ function lockCharacterToMapCenter(x: number, y: number) {
   if (!isCharacterMapLocked.value)
     return
 
+  if (currentSceneIndex.value <= 44)
+    return
+
+  console.log("Character Lock started")
+
   const offset = { x: 320, y: screenHeight.value / 2 / (zoomFactor.value * currentScreenState.value.scale) }
   gameStore.updateScreen({
     x: -x + offset.x,
@@ -454,26 +496,31 @@ function lockCharacterToMapCenter(x: number, y: number) {
 let totalElapsedTime = 0
 let progress = 0
 
+watch(currentSceneIndex, () => {
+  currentScreenAnimation.value = 'started'
+})
+
 onTick((delta) => {
-  if (!rotationStop.value && currentScreenAnimation.value === 'started' && currentMapStateIndex.value < screen.states.length - 1) {
+  if (!rotationStop.value && currentScreenAnimation.value === 'started' && currentSceneIndex.value < screen.states.length - 1) {
     totalElapsedTime += delta / 100
-    const dt = screen.states[currentMapStateIndex.value + 1].time - screen.states[currentMapStateIndex.value].time
-    const dx = screen.states[currentMapStateIndex.value + 1].x - screen.states[currentMapStateIndex.value].x
-    const dy = screen.states[currentMapStateIndex.value + 1].y - screen.states[currentMapStateIndex.value].y
-    const ds = screen.states[currentMapStateIndex.value + 1].scale - screen.states[currentMapStateIndex.value].scale
+    const dt = screen.states[currentSceneIndex.value + 1].time - screen.states[currentSceneIndex.value].time
+    const dx = screen.states[currentSceneIndex.value + 1].x - screen.states[currentSceneIndex.value].x
+    const dy = screen.states[currentSceneIndex.value + 1].y - screen.states[currentSceneIndex.value].y
+    const ds = screen.states[currentSceneIndex.value + 1].scale - screen.states[currentSceneIndex.value].scale
 
     progress = Math.min(totalElapsedTime / dt, 1)
     gameStore.updateScreen({
-      x: screen.states[currentMapStateIndex.value].x + dx * progress,
-      y: screen.states[currentMapStateIndex.value].y + dy * progress,
-      scale: screen.states[currentMapStateIndex.value].scale + ds * progress,
-      time: screen.states[currentMapStateIndex.value].time + dt * progress,
+      x: screen.states[currentSceneIndex.value].x + dx * progress,
+      y: screen.states[currentSceneIndex.value].y + dy * progress,
+      scale: screen.states[currentSceneIndex.value].scale + ds * progress,
+      time: screen.states[currentSceneIndex.value].time + dt * progress,
       alpha: 1
     })
 
     if (progress == 1) {
       totalElapsedTime = 0
       currentScreenAnimation.value = 'finished'
+      gameStore.nextScene()
     }
   }
 })
@@ -497,10 +544,10 @@ watchEffect(() => {
 watchEffect(() => {
   if (currentSceneIndex.value === 6 && currentScreenAnimation.value === 'finished') {
     emit('close', 1)
-  } else if (currentSceneIndex.value === 10 && currentScreenAnimation.value === 'finished') {
+  } /*else if (currentSceneIndex.value === 10 && currentScreenAnimation.value === 'finished') {
     characterMain.animation = 'finished'
     emit('close', 3)
-  } else if (currentSceneIndex.value === 14) {
+  }  else if (currentSceneIndex.value === 14) {
     characterMain.animation = 'finished'
     emit('close', 5)
   } else if (currentSceneIndex.value === 23) {
@@ -511,7 +558,7 @@ watchEffect(() => {
     characterMain.animation = 'started'
   } else if (currentSceneIndex.value === 27) {
     characterMain.animation = 'started'
-  }
+  } */
 })
 
 const mcStateIndex = ref(0)
@@ -599,7 +646,8 @@ function handleMCAnimation(state: string) {
       <CharacterBaloonVendor :state="characterBaloonVendor.state" />
       <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
       <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
-      <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction" />
+      <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange"
+        :direction="(car.direction as -1 | 1)" />
       <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
     </Container>
     <Container v-if="!rotationStop">
@@ -612,10 +660,6 @@ function handleMCAnimation(state: string) {
       <!-- <Scene7 v-else-if="currentSceneIndex === 9 && currentScreenAnimation === 'finished'" /> -->
       <Scene8 v-else-if="currentSceneIndex === 21 && currentScreenAnimation === 'finished'" />
       <Scene9 v-else-if="currentSceneIndex === 22 && currentScreenAnimation === 'finished'" />
-      <Scene10 v-else-if="currentSceneIndex === 24 && currentScreenAnimation === 'finished'" />
-      <Scene11 v-else-if="currentSceneIndex === 26 && currentScreenAnimation === 'finished'" />
-      <!-- <Scene11 v-else-if="currentSceneIndex === 28 && currentScreenAnimation === 'finished'" /> -->
-      <!--  -->
       <ModalProtip v-if="mcStateIndex === 1 || mcStateIndex === 2 || mcStateIndex === 3" title="1" y="top" />
       <ModalProtip v-else-if="mcStateIndex === 14" title="2" y="top" />
       <ModalProtip v-else-if="mcStateIndex === 33" title="4" y="top" />
@@ -630,14 +674,16 @@ function handleMCAnimation(state: string) {
         :currentCharacterStateIndex="Math.max(characterMain.state.index - 18, 0)" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
-      <Scene12 v-if="currentSceneIndex === 28 && currentScreenAnimation === 'finished'" />
+      <Scene10 v-if="currentSceneIndex === 24 && currentScreenAnimation === 'finished'" />
+      <Scene11 v-else-if="currentSceneIndex === 26 && currentScreenAnimation === 'finished'" />
+      <Scene12 v-else-if="currentSceneIndex === 28 && currentScreenAnimation === 'finished'" />
       <SceneResult v-else-if="currentSceneIndex === 29 && currentScreenAnimation === 'finished'" />
       <!-- @vue-ignore -->
       <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
         :y="mapHeight * currentScreenState.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
     </Container>
     <!-- DEBUG -->
-    <!--  <External>
+    <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
@@ -645,9 +691,9 @@ function handleMCAnimation(state: string) {
           <input v-model="currentScreenState.y" type="number" min="-10000" max="10000" step="10" />
           <input v-model="currentScreenState.scale" type="number" min="0" max="10" step="0.01" />
           <input v-model="currentScreenState.time" type="number" min="0" max="10" step="0.01" />
-          <input v-model="currentMapStateIndex" type="number" min="0" max="20" step="1" />
+          <input v-model="currentSceneIndex" type="number" min="0" max="20" step="1" />
         </div>
       </div>
-    </External> -->
+    </External>
   </Container>
 </template>
