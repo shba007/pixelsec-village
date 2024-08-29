@@ -16,8 +16,7 @@ function onClick(value: boolean) {
   selectedOption.value = value
 
   setTimeout(() => {
-    alert('Timeline Trigger 33')
-    gameStore.nextTimeline()
+    gameStore.nextTimeline({ id: 33 })
   }, 300)
 }
 </script>

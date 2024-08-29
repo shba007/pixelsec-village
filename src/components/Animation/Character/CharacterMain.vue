@@ -1,17 +1,16 @@
 <script lang="ts" setup>
 import { reactive, ref, watch, computed, onMounted } from 'vue'
 import { External, onTick } from 'vue3-pixi'
+import { storeToRefs } from 'pinia';
+import { useWindowSize } from '@vueuse/core';
 import type { State } from '@/utils/types'
 import { SCALE_MODES } from '@/utils/types'
-import { useWindowSize } from '@vueuse/core';
+import { useGameStore } from '@/stores/game'
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
 
-import { useGameStore } from '@/stores/game'
-import { storeToRefs } from 'pinia';
-
 const gameStore = useGameStore()
-const { currentCharacterIndex } = storeToRefs(gameStore)
+const { currentCharacterIndex, rotationStop } = storeToRefs(gameStore)
 
 interface Character {
   loaded: boolean
@@ -19,13 +18,13 @@ interface Character {
   state: State
   direction: number
   orientation: string
+  animation: 'init' | 'started' | 'finished'
   skin: 'red' | 'blue' | 'violate' | 'black'
 }
 
 const props = withDefaults(
   defineProps<{
     states: State[]
-    animation: 'init' | 'started' | 'finished'
     skin?: 'red' | 'blue' | 'violate' | 'black'
   }>(),
   {
@@ -34,9 +33,7 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  (e: 'move', x: number, y: number): void
-  // (e: 'updateStateIndex', stateIndex: number): void
-  (e: 'updateAnimation', state: 'init' | 'started' | 'finished'): void
+  (e: 'update', stateIndex: number, state: 'init' | 'started' | 'finished'): void
 }>()
 
 function capitalizeFirstLetter(word: string): string {
@@ -69,7 +66,8 @@ const activeCharacter = reactive<Character>({
   },
   direction: 1,
   orientation: 'front',
-  skin: props.skin
+  skin: props.skin,
+  animation: 'init'
 })
 
 const activeTrail = reactive({
@@ -78,20 +76,27 @@ const activeTrail = reactive({
   y: 0,
 })
 
-watch(props.states, (value) => {
+watch(() => props.states, (value) => {
   activeCharacter.state.x = value[0].x
   activeCharacter.state.y = value[0].y
   activeCharacter.state.scale = value[0].scale
   activeCharacter.state.time = value[0].time
 })
 
+watch(rotationStop, (value) => {
+  activeCharacter.animation = value ? 'finished' : activeCharacter.animation
+})
+
+watch(currentCharacterIndex, () => {
+  activeCharacter.animation = 'started'
+})
+
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
 
-
 onTick((delta) => {
-  if (props.animation === 'started' && currentCharacterIndex.value < props.states.length - 1) {
+  if (activeCharacter.animation === 'started' && currentCharacterIndex.value < props.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = props.states[currentCharacterIndex.value + 1].time - props.states[currentCharacterIndex.value].time
     const dx = props.states[currentCharacterIndex.value + 1].x - props.states[currentCharacterIndex.value].x
@@ -104,8 +109,6 @@ onTick((delta) => {
     activeCharacter.state.scale = props.states[currentCharacterIndex.value].scale + ds * progress
     activeCharacter.state.alpha = props.states[currentCharacterIndex.value].alpha + da * progress
     activeCharacter.state.time = props.states[currentCharacterIndex.value].time + dt * progress
-
-    emit('move', activeCharacter.state.x, activeCharacter.state.y)
 
     if (dy > 0) {
       activeCharacter.aliases = characterAnimations.value['frontWalk']
@@ -132,11 +135,13 @@ onTick((delta) => {
     if (progress == 1) {
       totalElapsedTime = 0
       activeCharacter.aliases = characterAnimations.value['frontStill']
-      emit('updateAnimation', 'finished')
+      activeCharacter.animation = 'finished'
+      emit('update', currentCharacterIndex.value, 'finished')
     }
   } else if (!(currentCharacterIndex.value < props.states.length - 1)) {
     activeCharacter.aliases = characterAnimations.value['frontStill']
-    emit('updateAnimation', 'finished')
+    activeCharacter.animation = 'finished'
+    emit('update', currentCharacterIndex.value, 'finished')
   }
 })
 </script>
@@ -146,10 +151,11 @@ onTick((delta) => {
     :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
     <AnimatedSprite :textures="activeTrail.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5"
-      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="animation === 'started'"
+      :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
     <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="animation === 'started'" :animation-speed="0.08" />
+      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
+      :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <External>
@@ -160,7 +166,7 @@ onTick((delta) => {
         <input v-model="activeCharacter.state.scale" type="number" min="0" max="5" step="0.01" />
         <input v-model="activeCharacter.state.alpha" type="number" min="0" max="1" step="0.1" />
         <input v-model="activeCharacter.state.time" type="number" min="0" max="100" step="0.5" />
-        <span class="bg-white">{{ animation }}</span>
+        <span class="bg-white">{{ activeCharacter.animation }}</span>
         <span class="bg-white">{{ currentCharacterIndex }}</span>
       </div>
     </div>

@@ -8,6 +8,10 @@ import ScreenMap from '@/components/Screen/Map.vue'
 import ScreenStation from '@/components/Screen/Station.vue'
 import ScreenPark from '@/components/Screen/Park.vue'
 import ScreenBank from '@/components/Screen/Bank.vue'
+import ScreenResult1 from '@/components/Screen/Result-1.vue'
+import ScreenResult2 from '@/components/Screen/Result-1.vue'
+import ScreenResult3 from '@/components/Screen/Result-1.vue'
+import ScreenResult4 from '@/components/Screen/Result-1.vue'
 import SceneRotate from '@/components/Scene/Scene-Rotate.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -26,12 +30,15 @@ const mainWindow = window
           Loading... {{ Math.round(progress * 100) }}% </Text>
       </template>
       <template #default>
-        <ScreenMap
-          :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6"
+        <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4"
           :current-screen-index="currentScreenIndex" />
         <ScreenStation v-if="currentScreenIndex === 1" />
-        <ScreenPark v-if="currentScreenIndex === 3" />
-        <ScreenBank v-if="currentScreenIndex === 5" />
+        <ScreenPark v-else-if="currentScreenIndex === 3" />
+        <ScreenBank v-else-if="currentScreenIndex === 5" />
+        <ScreenResult1 v-else-if="currentScreenIndex === 6" />
+        <ScreenResult2 v-else-if="currentScreenIndex === 7" />
+        <ScreenResult3 v-else-if="currentScreenIndex === 8" />
+        <ScreenResult4 v-else-if="currentScreenIndex === 9" />
         <SceneRotate v-if="!hardStop && rotationStop" :overlay="true" />
       </template>
     </Loader>
@@ -41,6 +48,7 @@ const mainWindow = window
     <p>v0.2.8</p>
     <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
+    <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
     <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p>
   </div>

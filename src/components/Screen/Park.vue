@@ -19,7 +19,7 @@ const emit = defineEmits<{
 }>()
 
 const gameStore = useGameStore()
-const { currentSceneIndex, rotationStop } = storeToRefs(gameStore)
+const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
@@ -64,8 +64,7 @@ function onLoad() { }
 
 onBeforeMount(onLoad)
 onMounted(() => setTimeout(() => {
-  alert("Timeline Trigger 110")
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 110 })
 }, 2000))
 
 watch(currentSceneIndex, (value) => {
@@ -88,9 +87,9 @@ watch(currentSceneIndex, (value) => {
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container v-if="!rotationStop">
-    <Scene1 v-if="currentSceneIndex === 22" />
-    <Scene2 v-else-if="currentSceneIndex === 23" />
-    <Scene3 v-else-if="currentSceneIndex === 24" />
+    <Scene1 v-if="currentPopupIndex === 8" />
+    <Scene2 v-else-if="currentPopupIndex === 9" />
+    <Scene3 v-else-if="currentPopupIndex === 10" />
   </Container>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />

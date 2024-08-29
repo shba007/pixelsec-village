@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { computed, onMounted, reactive, watch } from 'vue'
 import { External } from 'vue3-pixi'
-import { useTimeoutFn } from '@vueuse/core'
+import { useTimeoutFn, useWindowSize } from '@vueuse/core'
+import { SCALE_MODES } from '@/utils/types'
 
 import { useGameStore } from '@/stores/game'
-import Modal from '@/components/Modal.vue'
 import rotateIndicator from '@/assets/rotate-indicator.png'
 import { storeToRefs } from 'pinia'
 
@@ -12,8 +12,7 @@ const gameStore = useGameStore()
 const { isLandscape } = storeToRefs(gameStore)
 
 async function handleStart() {
-  alert('Timeline Trigger 1')
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 1 })
   await gameStore.toggleGameMode(true)
 }
 
@@ -24,15 +23,18 @@ onMounted(() => {
 watch(isLandscape, (value) => {
   if (value) useTimeoutFn(handleStart, 3000)
 })
+
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => screenWidth.value / 1280)
+
+const modal = computed(() => ({
+  image: isLandscape.value ? 'popupScene11Landscape' : 'popupScene11Portrait',
+  state: { x: screenWidth.value * 1 / 2, y: screenHeight.value * 1 / 2, scale: (isLandscape.value ? 0.9 : 1.8) * zoomFactor.value },
+}))
 </script>
 
 <template>
-  <Modal title="welcome to dataville"
-    :container-class="(!isLandscape ? 'justify-between gap-0 !pt-9 ' : '!pt-9') + ' text-center'"
-    description="Where your online habits and choices will shape the kind of house you live in.<br/>Let’s go!">
-    <button v-if="!isLandscape" class="flex flex-col items-center justify-center gap-1 pb-3" @click="handleStart">
-      <img :src="rotateIndicator" alt="rotate-indicator" class="size-[48px] object-contain md:size-[72px]" />
-      <span class="-translate-y-3 font-inet text-2xl opacity-50 md:text-4xl">Full screen</span>
-    </button>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5" />
+  </Container>
 </template>

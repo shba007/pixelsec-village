@@ -16,8 +16,7 @@ function onSelect(topics: string[]) {
 watchDebounced(selectedTopics, onComplete, { debounce: 2000 })
 
 function onComplete() {
-  alert('Timeline Trigger 9')
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 10 })
 }
 </script>
 

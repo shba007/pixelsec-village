@@ -20,7 +20,7 @@ const emit = defineEmits<{
 }>()
 
 const gameStore = useGameStore()
-const { currentSceneIndex, rotationStop } = storeToRefs(gameStore)
+const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
 
 const canvasScreen = useScreen()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -73,8 +73,7 @@ const charactersGeneric = ref<State[]>([
 
 watchEffect(() => {
   if (currentSceneIndex.value === 9) {
-    alert('Timeline Trigger 71')
-    gameStore.nextTimeline()
+    gameStore.nextTimeline({ id: 71 })
     // emit('close', 2)
   }
 })
@@ -85,8 +84,7 @@ function onLoad() {
 
 onBeforeMount(onLoad)
 onMounted(() => setTimeout(() => {
-  alert('Timeline Trigger 7')
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 8 })
 }, 2000))
 </script>
 
@@ -108,8 +106,8 @@ onMounted(() => setTimeout(() => {
     <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container v-if="!rotationStop">
-    <Scene1 v-if="currentSceneIndex === 7" />
-    <Scene2 v-else-if="currentSceneIndex === 8" />
+    <Scene1 v-if="currentPopupIndex === 5" />
+    <Scene2 v-else-if="currentPopupIndex === 6" />
   </Container>
   <!-- DEBUG -->
   <!-- 

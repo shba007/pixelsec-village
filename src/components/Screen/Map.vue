@@ -31,7 +31,7 @@ import CharacterSus from '@/components/Animation/Character/CharacterSus.vue'
 import ModalProtip from '@/components/ModalProtip.vue'
 
 import Scene1 from '@/components/Scene/Scene-1-1.vue'
-import Scene2 from '@/components/Scene/Scene-1-2.vue'
+// import Scene2 from '@/components/Scene/Scene-1-2.vue'
 import Scene3 from '@/components/Scene/Scene-1-3.vue'
 import Scene4 from '@/components/Scene/Scene-1-4.vue'
 import Scene5 from '@/components/Scene/Scene-1-5.vue'
@@ -53,7 +53,7 @@ const emit = defineEmits<{
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentScreenIndex, currentSceneIndex, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
+const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
 
 const zoomFactor = computed(() => screenWidth.value / 1280)
 
@@ -68,48 +68,41 @@ const screen = reactive<Asset>({
     { x: -795, y: -590, scale: 2.01, alpha: 1, time: 7 }, // let the adventure begin
     { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 }, // choose your avater
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 }, // read t&c
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 }, // t&c
-    { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 }, // zoomin transition
-    // Station Buffer
-    { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 },
-    { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 },
-    { x: -650, y: -350, scale: 2.53, alpha: 0, time: 11 },
-    // { x: -520, y: -367.8683596236825, scale: 2.01, time: 11 + 0.25, alpha: 1 },
-    // { x: -530, y: -367.8683596236825, scale: 2.01, time: 11 + 0.5, alpha: 1 },
-    { x: -580, y: -413.8683596236825, scale: 2.01, time: 11 + 3, alpha: 1 },
-    { x: -860, y: -413.8683596236825, scale: 2.01, time: 11 + 6, alpha: 1 },
-    { x: -860, y: -860.8683596236825, scale: 2.01, time: 11 + 9, alpha: 1 },
-    { x: -1350, y: -860.8683596236825, scale: 2.01, time: 11 + 12, alpha: 1 },
-    { x: -1350, y: -1042.8683596236826, scale: 2.01, time: 11 + 14.25, alpha: 1 },
-    { x: -1300, y: -1042.8683596236826, scale: 2.01, time: 11 + 15, alpha: 1 },
-    { x: -1300, y: -1132.8683596236826, scale: 2.01, time: 11 + 16.5, alpha: 1 },
-    { x: -700, y: -1132.8683596236826, scale: 2.01, time: 11 + 20, alpha: 1 },
-    { x: -700, y: -1089.8683596236826, scale: 2.01, time: 11 + 20 + 1.72 * speedFactor, alpha: 1 },
-    // at park 20
-    { x: -565, y: -1089.8683596236826, scale: 2.01, time: 11 + 20 + 7.12 * speedFactor, alpha: 1 },
-    { x: -565, y: -1090.8683596236826, scale: 2.01, time: 11 + 20 + 7.16 * speedFactor, alpha: 1 },
-    { x: -610, y: -1090.8683596236826, scale: 2.01, time: 11 + 20 + 8.96 * speedFactor, alpha: 1 },
-    { x: -610, y: -1632.8683596236826, scale: 2.01, time: 11 + 20 + 30.64 * speedFactor, alpha: 1 },
-    // at bank 24
-    { x: -1090, y: -1632.8683596236826, scale: 2.01, time: 11 + 20 + 49.84 * speedFactor, alpha: 1 },
-    { x: -1090, y: -1872.8683596236826, scale: 2.01, time: 11 + 20 + 59.44 * speedFactor, alpha: 1 },
-    // at pond 25
-    { x: -995, y: -1937.8683596236826, scale: 2.01, time: 11 + 20 + 64.06 * speedFactor, alpha: 1 },
-    { x: -890, y: -1890, scale: 2.01, time: 11 + 20 + 68.65 * speedFactor, alpha: 1 },
-    // loop ends 28
-    { x: -1085, y: -1922.8683596236826, scale: 2.01, time: 11 + 20 + 1 + 68.65 * speedFactor, alpha: 1 },
-    { x: -1085, y: -2162.8683596236824, scale: 2.01, time: 11 + 20 + 1 + 78.25 * speedFactor, alpha: 1 },
-    // 30
-    { x: -850, y: -2162.8683596236824, scale: 2.01, time: 11 + 20 + 1 + 87.65 * speedFactor, alpha: 1 },
-    { x: -850, y: -2340, scale: 2.01, time: 11 + 20 + 1 + 97.25 * speedFactor, alpha: 1 },
-    { x: -90, y: -2340, scale: 2.01, time: 11 + 20 + 2 + 97.25 * speedFactor, alpha: 1 },
-
-    { x: -90, y: -2520, scale: 1.64, time: 11 + 20 + 2 + 127.65 * speedFactor, alpha: 1 },
-    { x: -90, y: -2555, scale: 1.64, time: 11 + 20 + 2 + 137.21 * speedFactor, alpha: 1 },
+    { x: -650, y: -350, scale: 2.53, alpha: 1, time: 11 }, // zoomin transition
+    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 12.25 }, // zoomin transition
+    { "x": -580, "y": -413.8683596236825, "scale": 2.01, "alpha": 1, "time": 14 },
+    { "x": -860, "y": -413.8683596236825, "scale": 2.01, "alpha": 1, "time": 17 },
+    { "x": -860, "y": -860.8683596236825, "scale": 2.01, "alpha": 1, "time": 20 },
+    { "x": -1350, "y": -860.8683596236825, "scale": 2.01, "alpha": 1, "time": 23 },
+    { "x": -1350, "y": -1042.8683596236826, "scale": 2.01, "alpha": 1, "time": 25.25 },
+    { "x": -1300, "y": -1042.8683596236826, "scale": 2.01, "alpha": 1, "time": 26 },
+    { "x": -1300, "y": -1132.8683596236826, "scale": 2.01, "alpha": 1, "time": 27.5 },
+    { "x": -700, "y": -1132.8683596236826, "scale": 2.01, "alpha": 1, "time": 31 },
+    { "x": -700, "y": -1089.8683596236826, "scale": 2.01, "alpha": 1, "time": 31.43 },
+    // at park 17 
+    { "x": -565, "y": -1089.8683596236826, "scale": 2.01, "alpha": 1, "time": 32.78 },
+    { "x": -565, "y": -1090.8683596236826, "scale": 2.01, "alpha": 1, "time": 32.79 },
+    { "x": -610, "y": -1090.8683596236826, "scale": 2.01, "alpha": 1, "time": 33.24 },
+    { "x": -610, "y": -1632.8683596236826, "scale": 2.01, "alpha": 1, "time": 38.66 },
+    // at bank 21
+    { "x": -1090, "y": -1632.8683596236826, "scale": 2.01, "alpha": 1, "time": 43.46 },
+    { "x": -1090, "y": -1872.8683596236826, "scale": 2.01, "alpha": 1, "time": 45.86 },
+    // at pond 23
+    { "x": -995, "y": -1937.8683596236826, "scale": 2.01, "alpha": 1, "time": 47.015 },
+    { "x": -890, "y": -1890, "scale": 2.01, "alpha": 1, "time": 48.1625 },
+    // loop ends 25
+    { "x": -1085, "y": -1922.8683596236826, "scale": 2.01, "time": 55.7625, "alpha": 1 },
+    { "x": -1085, "y": -2162.8683596236824, "scale": 2.01, "time": 58.1625, "alpha": 1 },
+    { "x": -850, "y": -2162.8683596236824, "scale": 2.01, "time": 60.5125, "alpha": 1 },
+    { "x": -850, "y": -2340, "scale": 2.01, "time": 62.9125, "alpha": 1 },
+    // **
+    { "x": -90, "y": -2340, "scale": 2.01, "time": 63.9125, "alpha": 1 },
+    { "x": -90, "y": -2520, "scale": 1.64, "time": 64.9125, "alpha": 1 },
+    { "x": -90, "y": -2555, "scale": 1.64, "time": 67.30250000000001, "alpha": 1 },
     // stop for the ballon
-    { x: -770, y: -2555, scale: 1.64, time: 11 + 20 + 2 + 225.33 * speedFactor, alpha: 1 },
-    { x: -930, y: -2555, scale: 1.64, time: 11 + 20 + 2 + 245.57 * speedFactor, alpha: 1 },
-    { x: -1570, y: -2470, scale: 1.64, time: 11 + 20 + 2 + 253.57 * speedFactor, alpha: 1 },
+    { "x": -770, "y": -2555, "scale": 1.64, "time": 89.33250000000001, "alpha": 1 },
+    { "x": -930, "y": -2555, "scale": 1.64, "time": 94.3925, "alpha": 1 },
+    { "x": -1570, "y": -2470, "scale": 1.64, "time": 96.3925, "alpha": 1 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -334,56 +327,58 @@ const characterMain = reactive<Asset>({
     { x: 840, y: 514, scale: 1.5, alpha: 0, time: 0 },
     { x: 840, y: 515, scale: 1.5, alpha: 1, time: 0.25 },
     { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.5 },
-    { x: 900, y: 515, scale: 1.5, alpha: 0, time: 1.25 }, // entering the tram
-    { x: 900, y: 561, scale: 1.5, alpha: 0, time: 3 },
-    { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 }, //
-    { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 }, //
-    { x: 1670, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
-    { x: 1670, y: 1190, scale: 1.5, alpha: 0, time: 14.25 }, // leaving the tram
+    { x: 900, y: 515, scale: 1.5, alpha: 1, time: 1.25 }, // entering the tram
+    { x: 900, y: 561, scale: 1.5, alpha: 1, time: 3 },
+    { x: 1180, y: 561, scale: 1.5, alpha: 1, time: 6 }, //
+    { x: 1180, y: 1008, scale: 1.5, alpha: 1, time: 9 }, //
+    { x: 1670, y: 1008, scale: 1.5, alpha: 1, time: 12 }, //
+    { x: 1670, y: 1190, scale: 1.5, alpha: 1, time: 14.25 }, // leaving the tram
     { x: 1620, y: 1190, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
     { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 16.5 }, // leaving the tram
     { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
-    { x: 1020, y: 1237, scale: 1.75, alpha: 1, time: 20 + 1.72 * speedFactor },
+    { "x": 1020, "y": 1237, "scale": 1.75, "alpha": 1, "time": 20.43 },
     // at park 13
-    { x: 885, y: 1237, scale: 1.75, alpha: 1, time: 20 + 7.12 * speedFactor },
-    { x: 885, y: 1238, scale: 1.75, alpha: 1, time: 20 + 7.16 * speedFactor },
-    { x: 930, y: 1238, scale: 1.5, alpha: 1, time: 20 + 8.96 * speedFactor },
-    { x: 930, y: 1780, scale: 1.5, alpha: 1, time: 20 + 30.64 * speedFactor },
+    //
+    { "x": 885, "y": 1237, "scale": 1.75, "alpha": 1, "time": 21.78 },
+    { "x": 885, "y": 1238, "scale": 1.75, "alpha": 1, "time": 21.79 },
+    { "x": 930, "y": 1238, "scale": 1.5, "alpha": 1, "time": 22.24 },
+    { "x": 930, "y": 1780, "scale": 1.5, "alpha": 1, "time": 27.66 },
     // at bank 18
-    { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 20 + 49.84 * speedFactor },
-    { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 20 + 59.44 * speedFactor },
+    { "x": 1410, "y": 1780, "scale": 1.5, "alpha": 1, "time": 32.46 },
+    { "x": 1410, "y": 2020, "scale": 1.5, "alpha": 1, "time": 34.86 },
     // at pond 20
-    { x: 1315, y: 2085, scale: 1.5, alpha: 1, time: 20 + 64.06 * speedFactor },
-    { x: 1220, y: 2150, scale: 1.5, alpha: 1, time: 20 + 68.65 * speedFactor },
-    { x: 1100, y: 2150, scale: 1.5, alpha: 1, time: 20 + 73.45 * speedFactor },
-    { x: 1020, y: 2090, scale: 1.5, alpha: 1, time: 20 + 77.45 * speedFactor },
-    { x: 1020, y: 1960, scale: 1.5, alpha: 1, time: 20 + 82.65 * speedFactor },
-    { x: 1110, y: 1910, scale: 1.5, alpha: 1, time: 20 + 86.77 * speedFactor },
-    { x: 1230, y: 1910, scale: 1.5, alpha: 1, time: 20 + 91.57 * speedFactor },
-    { x: 1290, y: 2030, scale: 1.5, alpha: 1, time: 20 + 96.93 * speedFactor },
+    { "x": 1315, "y": 2085, "scale": 1.5, "alpha": 1, "time": 36.015 },
+    { "x": 1220, "y": 2150, "scale": 1.5, "alpha": 1, "time": 37.1625 },
+    { "x": 1100, "y": 2150, "scale": 1.5, "alpha": 1, "time": 38.3625 },
+    { "x": 1020, "y": 2090, "scale": 1.5, "alpha": 1, "time": 39.3625 },
+    { "x": 1020, "y": 1960, "scale": 1.5, "alpha": 1, "time": 40.6625 },
+    { "x": 1110, "y": 1910, "scale": 1.5, "alpha": 1, "time": 41.6925 },
+    { "x": 1230, "y": 1910, "scale": 1.5, "alpha": 1, "time": 42.8925 },
+    { "x": 1290, "y": 2030, "scale": 1.5, "alpha": 1, "time": 44.2325 },
     // loop starts 28
-    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 20 + 101.99 * speedFactor },
-    { x: 1030, y: 2150, scale: 1.5, alpha: 1, time: 20 + 110.79 * speedFactor },
-    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 20 + 119.59 * speedFactor },
+    { "x": 1250, "y": 2150, "scale": 1.5, "alpha": 1, "time": 45.4975 },
+    { "x": 1030, "y": 2150, "scale": 1.5, "alpha": 1, "time": 47.6975 },
+    { "x": 1250, "y": 2150, "scale": 1.5, "alpha": 1, "time": 49.8975 },
     // loop ends 31
-    { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 20 + 126.57 * speedFactor },
-    { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 20 + 136.17 * speedFactor },
-    { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 20 + 145.57 * speedFactor },
-    { x: 1170, y: 2550, scale: 1.5, alpha: 1, time: 20 + 155.17 * speedFactor },
-    { x: 410, y: 2550, scale: 1.5, alpha: 1, time: 20 + 185.57 * speedFactor },
-    { x: 410, y: 2790, scale: 1.5, alpha: 1, time: 20 + 195.13 * speedFactor },
+    { "x": 1405, "y": 2070, "scale": 1.5, "alpha": 1, "time": 51.6425 },
+    { "x": 1405, "y": 2310, "scale": 1.5, "alpha": 1, "time": 54.0425 },
+    { "x": 1170, "y": 2310, "scale": 1.5, "alpha": 1, "time": 56.3925 },
+    { "x": 1170, "y": 2550, "scale": 1.5, "alpha": 1, "time": 58.7925 },
+    // **
+    { "x": 410, "y": 2550, "scale": 1.5, "alpha": 1, "time": 66.3925 },
+    { "x": 410, "y": 2790, "scale": 1.5, "alpha": 1, "time": 68.7825 },
     // stop for the ballon 36
-    { x: 1165, y: 2790, scale: 1.5, alpha: 1, time: 20 + 225.33 * speedFactor },
-    { x: 1670, y: 2790, scale: 1.5, alpha: 1, time: 20 + 245.57 * speedFactor },
-    { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 20 + 253.57 * speedFactor },
-    { x: 2300, y: 2590, scale: 1.5, alpha: 1, time: 20 + 278.77 * speedFactor },
-    { x: 2300, y: 2960, scale: 1.5, alpha: 1, time: 20 + 293.57 * speedFactor },
-    { x: 2490, y: 2960, scale: 1.5, alpha: 1, time: 20 + 301.17 * speedFactor },
+    { "x": 1165, "y": 2790, "scale": 1.5, "alpha": 1, "time": 76.3325 },
+    { "x": 1670, "y": 2790, "scale": 1.5, "alpha": 1, "time": 81.3925 },
+    { "x": 1670, "y": 2590, "scale": 1.5, "alpha": 1, "time": 83.3925 },
+    { "x": 2300, "y": 2590, "scale": 1.5, "alpha": 1, "time": 89.6925 },
+    { "x": 2300, "y": 2960, "scale": 1.5, "alpha": 1, "time": 93.3925 },
+    { "x": 2490, "y": 2960, "scale": 1.5, "alpha": 1, "time": 95.2925 },
     // loop starts 42
-    { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 20 + 308.77 * speedFactor },
-    { x: 2680, y: 3000, scale: 1.5, alpha: 1, time: 20 + 310.37 * speedFactor },
-    { x: 2680, y: 2960, scale: 1.5, alpha: 1, time: 20 + 311.97 * speedFactor },
-    { x: 2680, y: 3000, scale: 1.5, alpha: 1, time: 20 + 313.57 * speedFactor },
+    { "x": 2680, "y": 2960, "scale": 1.5, "alpha": 1, "time": 97.1925 },
+    { "x": 2680, "y": 3000, "scale": 1.5, "alpha": 1, "time": 97.5925 },
+    { "x": 2680, "y": 2960, "scale": 1.5, "alpha": 1, "time": 97.9925 },
+    { "x": 2680, "y": 3000, "scale": 1.5, "alpha": 1, "time": 98.3925 }
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0, index: 0 },
   animation: 'init',
@@ -472,6 +467,11 @@ function onLoad() {
 
 onBeforeMount(onLoad)
 
+watch(currentSceneIndex, () => {
+  screen.animation = 'started'
+  console.log({ animation: screen.animation, currentSceneIndex: currentSceneIndex.value })
+})
+
 let totalElapsedTime = 0
 let progress = 0
 
@@ -499,60 +499,23 @@ onTick((delta) => {
   }
 })
 
-// Scene Index
-watch(currentSceneIndex, (value) => {
-  if (value == 1 && screen.animation === 'finished')
-    screen.animation = 'started'
-  else if (value == 2 && screen.animation === 'finished')
-    screen.animation = 'started'
-  else if (value == 3 && screen.animation === 'finished')
-    screen.animation = 'started'
-  else if (value == 4 && screen.animation === 'finished')
-    screen.animation = 'started'
-  else if (value == 6 && screen.animation === 'finished') {
-    screen.animation = 'started'
-  }
-})
-
-// Screen Animation
 watch(() => screen.animation, () => {
-  if (currentSceneIndex.value === 6 && screen.animation === 'finished') {
-    alert('Timeline Trigger 6.5')
-    gameStore.nextTimeline()
+  if (currentSceneIndex.value === 5 && screen.animation === 'finished') {
+    gameStore.nextTimeline({ id: 7 })
   }
 })
 
-// Screen Index
 watch(currentScreenIndex, (value) => {
   if (value === 2) {
-    alert('Timeline Trigger 10')
-    characterMain.animation = 'started'
-    screen.animation = 'started'
-    gameStore.nextTimeline()
+    gameStore.nextTimeline({ id: 11 })
+    // tram.animation = 'started'
     characterStationMaster.state = characterStationMaster.states[1]
-  } else if (value === 4) {
-    alert('Timeline Trigger 10001')
-    characterMain.animation = 'started'
-    // screen.animation = 'started'
   }
 })
 
-function handleMCAnimation(state: 'init' | 'started' | 'finished') {
-  characterMain.animation = state
-
-  if (currentSceneIndex.value >= 9 && currentSceneIndex.value <= 19 && state === 'finished') {
-    alert('Timeline Trigger 201')
-    characterMain.animation = 'started'
-    tram.animation = 'started'
-    screen.animation = 'started'
+function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finished') {
+  if (state === 'finished') {
     gameStore.nextTimeline()
-  } else if (currentSceneIndex.value === 20 && state === 'finished') {
-    alert('Timeline Trigger 202')
-    gameStore.nextTimeline()
-  } else if (currentSceneIndex.value >= 23 && state === 'finished') {
-    alert('Timeline Trigger 203')
-    characterMain.animation = 'started'
-    screen.animation = 'started'
   }
 }
 </script>
@@ -578,7 +541,6 @@ function handleMCAnimation(state: 'init' | 'started' | 'finished') {
       <Sprite texture="mapStationFg"
         :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
         :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
-      <!-- <Wave :x="wave.x" :y="wave.y" :scale="wave.scale" /> -->
       <!-- @vue-ignore -->
       <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
       <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
@@ -596,35 +558,32 @@ function handleMCAnimation(state: 'init' | 'started' | 'finished') {
       <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
     </Container>
     <Container v-if="!rotationStop">
-      <Scene1 v-if="currentSceneIndex === 0 && screen.animation === 'finished'" />
-      <Scene2 v-else-if="currentSceneIndex === 1 && screen.animation === 'finished'" />
-      <Scene3 v-else-if="currentSceneIndex === 2 && screen.animation === 'finished'" />
-      <Scene4 v-else-if="currentSceneIndex === 3 && screen.animation === 'finished'" />
-      <Scene5 v-else-if="currentSceneIndex === 4 && screen.animation === 'finished'" />
-      <Scene6 v-else-if="currentSceneIndex === 5 && screen.animation === 'finished'" />
+      <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
+      <!-- <Scene2 v-else-if="currentSceneIndex === 1 && screen.animation === 'finished'" /> -->
+      <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" />
+      <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" />
+      <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
+      <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
+      <ModalProtip v-else-if="currentPopupIndex === 7" title="1" y="top" />
+      <ModalProtip v-else-if="currentPopupIndex === 11" title="2" y="top" />
       <!-- <Scene7 v-else-if="currentSceneIndex === 9 && screen.animation === 'finished'" /> -->
-      <Scene8 v-else-if="currentSceneIndex === 27 && screen.animation === 'finished'" />
-      <Scene9 v-else-if="currentSceneIndex === 28 && screen.animation === 'finished'" />
-      <ModalProtip
-        v-if="characterMain.state.index === 1 || characterMain.state.index === 2 || characterMain.state.index === 3"
-        title="1" y="top" />
-      <ModalProtip v-else-if="characterMain.state.index === 14" title="2" y="top" />
-      <ModalProtip v-else-if="characterMain.state.index === 33" title="4" y="top" />
-      <ModalProtip v-else-if="characterMain.state.index === 37" title="5" x="left" />
+      <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" />
+      <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" />
+      <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" />
     </Container>
     <Container :x="screen.state.x * screen.state.scale * zoomFactor"
       :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : characterMain.animation"
-        :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index"
-        @updateAnimation="handleMCAnimation" />
+      <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : 'started'"
+        :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index" @update="handleMCUpdate" />
       <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation"
         :currentCharacterStateIndex="Math.max(characterMain.state.index - 18, 0)" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
-      <Scene10 v-if="currentSceneIndex === 29 && screen.animation === 'finished'" />
-      <Scene11 v-else-if="currentSceneIndex === 30 && screen.animation === 'finished'" />
-      <Scene12 v-else-if="currentSceneIndex === 31 && screen.animation === 'finished'" />
-      <SceneResult v-else-if="currentSceneIndex === 32 && screen.animation === 'finished'" />
+      <Scene10 v-if="currentPopupIndex === 20 && screen.animation === 'finished'" />
+      <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
+      <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
+      <Scene12 v-else-if="currentPopupIndex === 23 && screen.animation === 'finished'" />
+      <!-- <SceneResult v-else-if="currentSceneIndex === 24 && screen.animation === 'finished'" /> -->
       <!-- @vue-ignore -->
       <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
@@ -638,8 +597,8 @@ function handleMCAnimation(state: 'init' | 'started' | 'finished') {
           <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
           <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
           <input v-model="screen.state.time" type="number" min="0" max="10" step="0.01" />
-          <input v-model="currentSceneIndex" type="number" min="0" max="20" step="1" />
           <span class="bg-white">{{ screen.animation }}</span>
+          <span class="bg-white">{{ currentSceneIndex }}</span>
         </div>
       </div>
     </External>

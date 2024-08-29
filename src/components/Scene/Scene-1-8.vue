@@ -11,8 +11,7 @@ const gameStore = useGameStore()
 const { isLandscape } = storeToRefs(gameStore)
 
 async function handleStart() {
-  alert('Timeline Trigger 90')
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 90 })
 }
 
 onMounted(() => {

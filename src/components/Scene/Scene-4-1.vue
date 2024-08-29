@@ -6,8 +6,7 @@ import { useTimeoutFn } from '@vueuse/core'
 const gameStore = useGameStore()
 
 function handleMove() {
-  alert('Timeline Trigger 41')
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 41 })
 }
 
 useTimeoutFn(handleMove, 5000)

@@ -7,8 +7,7 @@ import Modal from '@/components/Modal.vue'
 const gameStore = useGameStore()
 
 function handleMove() {
-  alert('Timeline Trigger 3')
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 3 })
 }
 
 useTimeoutFn(handleMove, 3000)

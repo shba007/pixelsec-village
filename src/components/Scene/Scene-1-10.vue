@@ -9,8 +9,7 @@ const gameStore = useGameStore()
 function onClick(value: boolean) {
   // DATA-COLLECT
   setTimeout(() => {
-    alert('Timeline Trigger 9')
-    gameStore.nextTimeline()
+    gameStore.nextTimeline({ id: -9 })
   }, 300)
 }
 </script>

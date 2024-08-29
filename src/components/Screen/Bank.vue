@@ -23,7 +23,7 @@ const emit = defineEmits<{
 }>()
 
 const gameStore = useGameStore()
-const { currentSceneIndex, rotationStop } = storeToRefs(gameStore)
+const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
@@ -93,8 +93,7 @@ const characterGuard = reactive({
 
 // onBeforeMount(onLoad)
 onMounted(() => setTimeout(() => {
-  alert('Timeline Trigger 50')
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 50 })
 }, 2000))
 
 let totalElapsedTime = 0
@@ -118,8 +117,7 @@ onTick((delta) => {
     if (progress == 1) {
       totalElapsedTime = 0
       screen.animation = 'finished'
-      alert('Timeline Trigger 17')
-      gameStore.nextTimeline()
+      gameStore.nextTimeline({ id: 17 })
       // emit('close', 6)
     }
   }
@@ -148,14 +146,14 @@ const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
       :type="type as 'purple' | 'green'" />
     <CharacterGuard :state="characterGuard" place="bank" />
     <Container :x="protip.x" :y="protip.y" :scale="protip.scale">
-      <ModalProtip title="3" x="left" />
+      <ModalProtip v-if="currentPopupIndex === 16" title="3" x="left" />
     </Container>
   </Container>
   <Container v-if="!rotationStop">
-    <Scene1 v-if="currentSceneIndex === 15" />
-    <Scene2 v-else-if="currentSceneIndex === 16" />
-    <Scene3 v-else-if="currentSceneIndex === 17" />
-    <Scene4 v-else-if="currentSceneIndex === 18" />
+    <Scene1 v-if="currentPopupIndex === 12" />
+    <Scene2 v-else-if="currentPopupIndex === 13" />
+    <Scene3 v-else-if="currentPopupIndex === 14" />
+    <Scene4 v-else-if="currentPopupIndex === 15" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

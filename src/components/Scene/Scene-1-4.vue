@@ -14,8 +14,7 @@ const characters = [
 const gameStore = useGameStore()
 
 function onCharcterSet(type: Character) {
-  alert('Timeline Trigger 4')
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 4 })
   gameStore.setCharacterSkin(type)
 }
 </script>

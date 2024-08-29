@@ -23,8 +23,7 @@ function onSelect(topic: number) {
 watchDebounced(selectedOptions, onComplete, { debounce: 2000, deep: true })
 
 function onComplete() {
-  alert('Timeline Trigger 44')
-  gameStore.nextTimeline()
+  gameStore.nextTimeline({ id: 44 })
 }
 </script>
 

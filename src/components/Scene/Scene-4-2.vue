@@ -22,8 +22,7 @@ const timer = computed(() => {
 
   if (number === 1) {
     setTimeout(() => {
-      alert('Timeline Trigger 42')
-      gameStore.nextTimeline()
+      gameStore.nextTimeline({ id: 42 })
     }, 50)
     return
   }
@@ -34,8 +33,7 @@ const timer = computed(() => {
 })
 
 function onClick() {
-  alert('Timeline Trigger 15')
-  gameStore.nextTimeline(2)
+  gameStore.nextTimeline({ screen: 2, id: 15 })
 }
 </script>
 
