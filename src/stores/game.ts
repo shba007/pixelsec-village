@@ -563,7 +563,6 @@ export const timeline: {
     { screen: 2, popup: -1, scene: 15, character: 11, time: 16.5 },
     { screen: 2, popup: -1, scene: 16, character: 12, time: 20 },
     //
-    //
     { screen: 4, popup: 11, scene: 17, character: 13, time: 20.43 },
     { screen: 4, popup: 11, scene: 18, character: 14, time: 21.78 },
     { screen: 4, popup: 11, scene: 19, character: 15, time: 21.79 },
@@ -581,7 +580,9 @@ export const timeline: {
     { screen: 4, popup: -1, scene: 23, character: 26 },
     { screen: 4, popup: -1, scene: 23, character: 27 },
     { screen: 4, popup: -1, scene: 23, character: 28 },
+
     { screen: 4, popup: -1, scene: 24, character: 29 },
+    //
     { screen: 4, popup: -1, scene: 25, character: 30 },
     { screen: 4, popup: -1, scene: 26, character: 31 },
     { screen: 4, popup: -1, scene: 27, character: 32 },
@@ -598,7 +599,7 @@ export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
-  const timelineIndex = ref(10)
+  const timelineIndex = ref(25)
 
   const currentScreenIndex = computed(() => timeline[timelineIndex.value].screen)
   const currentPopupIndex = computed(() => timeline[timelineIndex.value].popup)

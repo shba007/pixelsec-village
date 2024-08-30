@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { reactive, ref, watch, computed, onMounted } from 'vue'
+import { reactive, watch, computed } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia';
-import { useWindowSize } from '@vueuse/core';
 import type { State } from '@/utils/types'
 import { SCALE_MODES } from '@/utils/types'
 import { useGameStore } from '@/stores/game'
@@ -67,7 +66,7 @@ const activeCharacter = reactive<Character>({
   direction: 1,
   orientation: 'front',
   skin: props.skin,
-  animation: 'init'
+  animation: 'started' //init'
 })
 
 const activeTrail = reactive({

@@ -90,15 +90,16 @@ const screen = reactive<Asset>({
     // at pond 23
     { "x": -995, "y": -1937.8683596236826, "scale": 2.01, "alpha": 1, "time": 47.015 },
     { "x": -890, "y": -1890, "scale": 2.01, "alpha": 1, "time": 48.1625 },
+    // **
     // loop ends 25
-    { "x": -1085, "y": -1922.8683596236826, "scale": 2.01, "time": 55.7625, "alpha": 1 },
-    { "x": -1085, "y": -2162.8683596236824, "scale": 2.01, "time": 58.1625, "alpha": 1 },
+    { "x": -1085, "y": -1922.8683596236826, "scale": 2.01, "alpha": 1, "time": 55.7625 },
+    { "x": -1085, "y": -2162.8683596236824, "scale": 2.01, "alpha": 1, "time": 58.1625 },
     { "x": -850, "y": -2162.8683596236824, "scale": 2.01, "time": 60.5125, "alpha": 1 },
     { "x": -850, "y": -2340, "scale": 2.01, "time": 62.9125, "alpha": 1 },
     // **
-    { "x": -90, "y": -2340, "scale": 2.01, "time": 63.9125, "alpha": 1 },
-    { "x": -90, "y": -2520, "scale": 1.64, "time": 64.9125, "alpha": 1 },
-    { "x": -90, "y": -2555, "scale": 1.64, "time": 67.30250000000001, "alpha": 1 },
+    { "x": -90, "y": -2340, "scale": 2.01, "time": 70.5125, "alpha": 1 },
+    { "x": -90, "y": -2520, "scale": 1.64, "time": 71.5125, "alpha": 1 },
+    { "x": -90, "y": -2555, "scale": 1.64, "time": 73.9025, "alpha": 1 },
     // stop for the ballon
     { "x": -770, "y": -2555, "scale": 1.64, "time": 89.33250000000001, "alpha": 1 },
     { "x": -930, "y": -2555, "scale": 1.64, "time": 94.3925, "alpha": 1 },
@@ -361,6 +362,7 @@ const characterMain = reactive<Asset>({
     { "x": 1250, "y": 2150, "scale": 1.5, "alpha": 1, "time": 49.8975 },
     // loop ends 31
     { "x": 1405, "y": 2070, "scale": 1.5, "alpha": 1, "time": 51.6425 },
+    //** */
     { "x": 1405, "y": 2310, "scale": 1.5, "alpha": 1, "time": 54.0425 },
     { "x": 1170, "y": 2310, "scale": 1.5, "alpha": 1, "time": 56.3925 },
     { "x": 1170, "y": 2550, "scale": 1.5, "alpha": 1, "time": 58.7925 },
@@ -573,10 +575,8 @@ function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finishe
     </Container>
     <Container :x="screen.state.x * screen.state.scale * zoomFactor"
       :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <CharacterMain :states="characterMain.states" :animation="rotationStop ? 'finished' : 'started'"
-        :skin="characterSkin" :currentCharacterStateIndex="characterMain.state.index" @update="handleMCUpdate" />
-      <CharacterSus :states="characterSus.states" :animation="rotationStop ? 'finished' : characterSus.animation"
-        :currentCharacterStateIndex="Math.max(characterMain.state.index - 18, 0)" />
+      <CharacterMain :states="characterMain.states" :skin="characterSkin" @update="handleMCUpdate" />
+      <CharacterSus :states="characterSus.states" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
       <Scene10 v-if="currentPopupIndex === 20 && screen.animation === 'finished'" />
