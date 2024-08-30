@@ -23,7 +23,7 @@ function onSelect(topic: number) {
 watchDebounced(selectedOptions, onComplete, { debounce: 2000, deep: true })
 
 function onComplete() {
-  gameStore.nextTimeline({ id: 44 })
+  gameStore.nextTimeline({ id: 32 })
 }
 </script>
 

@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, watch } from 'vue'
-import { External } from 'vue3-pixi'
+import { storeToRefs } from 'pinia'
 import { useTimeoutFn, useWindowSize } from '@vueuse/core'
-import { SCALE_MODES } from '@/utils/types'
 
 import { useGameStore } from '@/stores/game'
+import { SCALE_MODES } from '@/utils/types'
 import rotateIndicator from '@/assets/rotate-indicator.png'
-import { storeToRefs } from 'pinia'
 
 const gameStore = useGameStore()
 const { isLandscape } = storeToRefs(gameStore)
+
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => screenWidth.value / 1280)
+
+const modal = computed(() => ({
+  image: isLandscape.value ? 'popupScene11Landscape' : 'popupScene11Portrait',
+  state: { x: screenWidth.value * 1 / 2, y: screenHeight.value * 1 / 2, scale: (isLandscape.value ? 0.9 : 1.8) * zoomFactor.value },
+}))
 
 async function handleStart() {
   gameStore.nextTimeline({ id: 1 })
@@ -23,14 +30,6 @@ onMounted(() => {
 watch(isLandscape, (value) => {
   if (value) useTimeoutFn(handleStart, 3000)
 })
-
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => screenWidth.value / 1280)
-
-const modal = computed(() => ({
-  image: isLandscape.value ? 'popupScene11Landscape' : 'popupScene11Portrait',
-  state: { x: screenWidth.value * 1 / 2, y: screenHeight.value * 1 / 2, scale: (isLandscape.value ? 0.9 : 1.8) * zoomFactor.value },
-}))
 </script>
 
 <template>

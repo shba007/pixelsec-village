@@ -33,7 +33,7 @@ const timer = computed(() => {
 })
 
 function onClick() {
-  gameStore.nextTimeline({ screen: 2, id: 15 })
+  gameStore.nextTimeline({ screen: 2, id: 31 })
 }
 </script>
 

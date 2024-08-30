@@ -16,7 +16,7 @@ function onClick(value: boolean) {
   selectedOption.value = value
 
   setTimeout(() => {
-    gameStore.nextTimeline({ id: 33 })
+    gameStore.nextTimeline({ id: 25 })
   }, 300)
 }
 </script>

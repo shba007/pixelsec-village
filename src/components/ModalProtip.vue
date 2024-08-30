@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { SCALE_MODES } from '@/utils/types'
@@ -65,6 +65,8 @@ const modal = computed(() => {
       break
   }
 
+  console.log("Protip Modal Popup", props.title)
+
   return {
     image,
     state: { x: screenWidth.value * xFactor, y: screenHeight.value * yFactor, scale: scale * zoomFactor.value },
@@ -72,8 +74,10 @@ const modal = computed(() => {
     yFactor: yFactor * 100 + '%',
   }
 })
+
 </script>
 
 <template>
-  <AnimatedSprite :playing="true" :animation-speed="0.1" :textures="modal.image" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
+  <Sprite :texture="modal.image[0]" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="modal.state.x"
+    :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
 </template>

@@ -93,7 +93,7 @@ const characterGuard = reactive({
 
 // onBeforeMount(onLoad)
 onMounted(() => setTimeout(() => {
-  gameStore.nextTimeline({ id: 50 })
+  gameStore.nextTimeline({ id: 29 })
 }, 2000))
 
 let totalElapsedTime = 0
@@ -117,14 +117,15 @@ onTick((delta) => {
     if (progress == 1) {
       totalElapsedTime = 0
       screen.animation = 'finished'
-      gameStore.nextTimeline({ id: 17 })
-      // emit('close', 6)
+      gameStore.nextTimeline({ id: 34 })
     }
   }
 })
 
 watch(currentSceneIndex, (value) => {
-  if (value === 19) screen.animation = 'started'
+  if (value === 20) {
+    screen.animation = 'started'
+  }
 })
 
 const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
@@ -156,18 +157,13 @@ const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
     <Scene4 v-else-if="currentPopupIndex === 15" />
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
-    <div class="absolute bottom-0 left-0 right-0 z-50 flex w-fit items-center gap-8">
-      <div>{{ currentSceneIndex }}</div>
+  <!--  <External>
+    <div class="absolute bottom-0 right-16 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
         <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
         <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <input v-model="protip.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="protip.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="protip.scale" type="number" min="0" max="20" step="0.01" />
+        <span class="bg-white">{{ screen.animation }}</span>
       </div>
     </div>
   </External> -->

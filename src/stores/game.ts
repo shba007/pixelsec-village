@@ -30,12 +30,14 @@ import popupBarTexture from '@/assets/popup/bg-bar.png'
 import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
 import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
 import popupSquareTexture from '@/assets/popup/bg-square.png'
-import popupCutSceneHomeTimeTexture from '@/assets/popup/cutscene/home-time.png'
-import popupCutSceneResult1Texture from '@/assets/popup/cutscene/result-1.png'
-import popupCutSceneResult2Texture from '@/assets/popup/cutscene/result-2.png'
+
+import popupCutSceneHomeTimeTexture from '@/assets/popup/scene/home-time.png'
+import popupCutSceneResult1Texture from '@/assets/popup/scene/result-1.png'
+import popupCutSceneResult2Texture from '@/assets/popup/scene/result-2.png'
 //
-import popupScene11LandscapeTexture from '@/assets/popup/scene/1-1-Landscape.svg'
-import popupScene11PortraitTexture from '@/assets/popup/scene/1-1-Portrait.svg'
+import popupScene11LandscapeTexture from '@/assets/popup/scene/1-1-Landscape.png'
+import popupScene11PortraitTexture from '@/assets/popup/scene/1-1-Portrait.png'
+import popupScene12Texture from '@/assets/popup/scene/1-2.svg'
 //
 import buttonLongTexture from '@/assets/buttons/long/pressed.png'
 import buttonLongPressedTexture from '@/assets/buttons/long/unpressed.png'
@@ -251,16 +253,19 @@ import bankAlarmLightLeft2Texture from '@/assets/bank/alarm-light/left-2.png'
 import bankAlarmLightRight1Texture from '@/assets/bank/alarm-light/right-1.png'
 import bankAlarmLightRight2Texture from '@/assets/bank/alarm-light/right-2.png'
 //
-import popupProtip11Texture from '@/assets/popup/protip/1/1.png'
-import popupProtip12Texture from '@/assets/popup/protip/1/2.png'
-import popupProtip21Texture from '@/assets/popup/protip/2/1.png'
-import popupProtip22Texture from '@/assets/popup/protip/2/2.png'
-import popupProtip31Texture from '@/assets/popup/protip/3/1.png'
-import popupProtip32Texture from '@/assets/popup/protip/3/2.png'
-import popupProtip41Texture from '@/assets/popup/protip/4/1.png'
-import popupProtip42Texture from '@/assets/popup/protip/4/2.png'
-import popupProtip51Texture from '@/assets/popup/protip/5/1.png'
-import popupProtip52Texture from '@/assets/popup/protip/5/2.png'
+import popupProtip11Texture from '@/assets/popup/protip/1-1.svg'
+import popupProtip12Texture from '@/assets/popup/protip/1-1.svg'
+import popupProtip21Texture from '@/assets/popup/protip/2-1.svg'
+import popupProtip22Texture from '@/assets/popup/protip/2-1.svg'
+import popupProtip31Texture from '@/assets/popup/protip/3-1.svg'
+import popupProtip32Texture from '@/assets/popup/protip/3-1.svg'
+import popupProtip41Texture from '@/assets/popup/protip/4-1.svg'
+import popupProtip42Texture from '@/assets/popup/protip/4-1.svg'
+import popupProtip51Texture from '@/assets/popup/protip/5-1.svg'
+import popupProtip52Texture from '@/assets/popup/protip/5-1.svg'
+//
+import resultStrawHutBgTexture from '@/assets/strawhut/bg.png'
+import resultStrawHutFgTexture from '@/assets/strawhut/palm-trees.png'
 
 export const resources = reactive({
   // fonts
@@ -305,6 +310,7 @@ export const resources = reactive({
   //
   popupScene11Landscape: popupScene11LandscapeTexture,
   popupScene11Portrait: popupScene11PortraitTexture,
+  popupScene12: popupScene12Texture,
   //
   popupCutSceneHomeTime: popupCutSceneHomeTimeTexture,
   popupCutSceneResult1: popupCutSceneResult1Texture,
@@ -492,8 +498,8 @@ export const resources = reactive({
   stationCharacterStationMaster1: characterStationMasterStation1Texture,
   stationCharacterStationMaster2: characterStationMasterStation2Texture,
   //
-  parkBackground: parkBgTexture,
-  parkForeground: parkFgTexture,
+  parkBg: parkBgTexture,
+  parkFg: parkFgTexture,
   //
   parkCloudSmall: parkCloudSmallTexture,
   parkCloudMedium: parkCloudMediumTexture,
@@ -529,6 +535,9 @@ export const resources = reactive({
   mapCharacterGuard3: characterMapGuard3Texture,
   bankCharacterGuard1: characterBankGuard1Texture,
   bankCharacterGuard2: characterBankGuard2Texture,
+  //
+  resultStrawHutBg: resultStrawHutBgTexture,
+  resultStrawHutFg: resultStrawHutFgTexture,
 })
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
@@ -541,7 +550,7 @@ export const timeline: {
   time?: number;
 }[] = [
     { screen: 0, popup: 0, scene: 0, character: 0, time: 0 }, // welcome 
-    { screen: 0, popup: 1, scene: 1, character: 0, time: 0 }, //
+    { screen: 0, popup: 0.5, scene: 1, character: 0, time: 0 }, //
     { screen: 0, popup: 1, scene: 2, character: 0, time: 0 }, // lets start
     { screen: 0, popup: 2, scene: 3, character: 0, time: 0 }, // choose avatar
     { screen: 0, popup: 3, scene: 4, character: 0, time: 0 }, // read t&c
@@ -561,36 +570,50 @@ export const timeline: {
     { screen: 2, popup: -1, scene: 13, character: 9, time: 14.25 },
     { screen: 2, popup: -1, scene: 14, character: 10, time: 15 },
     { screen: 2, popup: -1, scene: 15, character: 11, time: 16.5 },
-    { screen: 2, popup: -1, scene: 16, character: 12, time: 20 },
+    { screen: 2, popup: -1, scene: 16, character: 12 },
+    { screen: 3, popup: 8, scene: 16, character: 12 },
+    { screen: 3, popup: 9, scene: 16, character: 12 },
+    { screen: 3, popup: 10, scene: 16, character: 12 },
+    { screen: 4, popup: 11, scene: 17, character: 13 },
+    { screen: 4, popup: 11, scene: 18, character: 14 },
+    { screen: 4, popup: 11, scene: 19, character: 15 },
+    //  
+    { screen: 5, popup: 12, scene: 19, character: 15 },
+    { screen: 5, popup: 13, scene: 19, character: 15 },
+    { screen: 5, popup: 14, scene: 19, character: 15 },
+    { screen: 5, popup: 15, scene: 19, character: 15 },
+    { screen: 5, popup: 16, scene: 20, character: 16 },
+    { screen: 5, popup: 16, scene: 20, character: 16 },
     //
-    { screen: 4, popup: 11, scene: 17, character: 13, time: 20.43 },
-    { screen: 4, popup: 11, scene: 18, character: 14, time: 21.78 },
-    { screen: 4, popup: 11, scene: 19, character: 15, time: 21.79 },
-    { screen: 4, popup: -1, scene: 20, character: 16, time: 22.24 },
-    { screen: 4, popup: -1, scene: 21, character: 17 },
-    { screen: 4, popup: -1, scene: 22, character: 18 },
-    { screen: 4, popup: -1, scene: 23, character: 19 },
-    //
-    { screen: 4, popup: -1, scene: 23, character: 20 },
-    { screen: 4, popup: -1, scene: 23, character: 21 },
-    { screen: 4, popup: -1, scene: 23, character: 22 },
-    { screen: 4, popup: -1, scene: 23, character: 23 },
-    { screen: 4, popup: -1, scene: 23, character: 24 },
-    { screen: 4, popup: -1, scene: 23, character: 25 },
-    { screen: 4, popup: -1, scene: 23, character: 26 },
-    { screen: 4, popup: -1, scene: 23, character: 27 },
-    { screen: 4, popup: -1, scene: 23, character: 28 },
-
-    { screen: 4, popup: -1, scene: 24, character: 29 },
-    //
-    { screen: 4, popup: -1, scene: 25, character: 30 },
-    { screen: 4, popup: -1, scene: 26, character: 31 },
-    { screen: 4, popup: -1, scene: 27, character: 32 },
+    { screen: 6, popup: -1, scene: 21, character: 17 },
+    { screen: 6, popup: -1, scene: 22, character: 18 },
+    { screen: 6, popup: -1, scene: 23, character: 19 },
+    { screen: 6, popup: -1, scene: 23, character: 20 },
+    { screen: 6, popup: -1, scene: 23, character: 21 },
+    { screen: 6, popup: -1, scene: 23, character: 22 },
+    { screen: 6, popup: -1, scene: 23, character: 23 },
+    { screen: 6, popup: -1, scene: 23, character: 24 },
+    { screen: 6, popup: -1, scene: 23, character: 25 },
+    { screen: 6, popup: 17, scene: 23, character: 26 },
+    { screen: 6, popup: 18, scene: 23, character: 27 },
+    { screen: 6, popup: 18, scene: 23, character: 28 },
+    { screen: 6, popup: -1, scene: 24, character: 29 },
+    // loop start
+    { screen: 6, popup: -1, scene: 25, character: 30 },
+    { screen: 6, popup: -1, scene: 26, character: 31 },
+    { screen: 6, popup: -1, scene: 27, character: 32 },
+    { screen: 6, popup: 19, scene: 28, character: 33 },
+    { screen: 6, popup: 20, scene: 29, character: 34 },
+    { screen: 6, popup: 20, scene: 29, character: 34 },
+    { screen: 6, popup: -1, scene: 30, character: 35 },
+    { screen: 6, popup: 21, scene: 30, character: 35 },
     // **
-    { screen: 4, popup: -1, scene: 28, character: 33 },
-    { screen: 4, popup: -1, scene: 29, character: 34 },
-    { screen: 4, popup: -1, scene: 30, character: 35 },
-    { screen: 4, popup: -1, scene: 31, character: 36 },
+    { screen: 6, popup: 22, scene: 31, character: 36 },
+    { screen: 6, popup: -1, scene: 32, character: 37 },
+    { screen: 6, popup: 23, scene: 33, character: 38 },
+    //
+    { screen: 7, popup: -1, scene: 33, character: 39 },
+    { screen: 7, popup: -1, scene: 33, character: 39 },
   ]
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -599,7 +622,7 @@ export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
-  const timelineIndex = ref(25)
+  const timelineIndex = ref(0)
 
   const currentScreenIndex = computed(() => timeline[timelineIndex.value].screen)
   const currentPopupIndex = computed(() => timeline[timelineIndex.value].popup)
@@ -649,12 +672,12 @@ export const useGameStore = defineStore('game', () => {
     id: number;
   }) {
     const { screen = 1, id } = data ?? { screen: 1, id: -1 }
-    alert(`Timeline Trigger ${id}`)
+    // alert(`Timeline Trigger ${id}`)
 
     timelineIndex.value += screen
-    console.log({ timelineIndex: timelineIndex.value })
-    console.timeEnd()
-    console.time()
+    console.log({ id: id })
+    // console.timeEnd()
+    // console.time()
   }
 
   return {

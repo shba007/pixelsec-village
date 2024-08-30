@@ -31,7 +31,7 @@ const zoomFactor = computed(() => {
 // Asset
 const park = reactive<any>({
   loaded: false,
-  alias: { bg: 'parkBackground', fg: 'parkForeground' },
+  alias: { bg: 'parkBg', fg: 'parkFg' },
   states: [{ x: 0, y: 0, scale: 1, alpha: 1, time: 0 }],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -64,7 +64,7 @@ function onLoad() { }
 
 onBeforeMount(onLoad)
 onMounted(() => setTimeout(() => {
-  gameStore.nextTimeline({ id: 110 })
+  gameStore.nextTimeline({ id: 23 })
 }, 2000))
 
 watch(currentSceneIndex, (value) => {

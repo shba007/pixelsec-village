@@ -9,7 +9,7 @@ const gameStore = useGameStore()
 function onClick(value: boolean) {
   // DATA-COLLECT
   setTimeout(() => {
-    gameStore.nextTimeline({ screen: value ? 1 : 2, id: 5 })
+    gameStore.nextTimeline(value ? { screen: 1, id: 5 } : { screen: 2, id: 6 })
   }, 300)
 }
 </script>

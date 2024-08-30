@@ -31,7 +31,7 @@ import CharacterSus from '@/components/Animation/Character/CharacterSus.vue'
 import ModalProtip from '@/components/ModalProtip.vue'
 
 import Scene1 from '@/components/Scene/Scene-1-1.vue'
-// import Scene2 from '@/components/Scene/Scene-1-2.vue'
+import Scene2 from '@/components/Scene/Scene-1-2.vue'
 import Scene3 from '@/components/Scene/Scene-1-3.vue'
 import Scene4 from '@/components/Scene/Scene-1-4.vue'
 import Scene5 from '@/components/Scene/Scene-1-5.vue'
@@ -41,7 +41,7 @@ import Scene9 from '@/components/Scene/Scene-1-9.vue'
 import Scene10 from '@/components/Scene/Scene-1-10.vue'
 import Scene11 from '@/components/Scene/Scene-1-11.vue'
 import Scene12 from '@/components/Scene/Scene-1-12.vue'
-import SceneResult from '@/components/Scene/Scene-Result.vue'
+
 
 const props = defineProps<{
   isLoad: boolean
@@ -89,21 +89,17 @@ const screen = reactive<Asset>({
     { "x": -1090, "y": -1872.8683596236826, "scale": 2.01, "alpha": 1, "time": 45.86 },
     // at pond 23
     { "x": -995, "y": -1937.8683596236826, "scale": 2.01, "alpha": 1, "time": 47.015 },
-    { "x": -890, "y": -1890, "scale": 2.01, "alpha": 1, "time": 48.1625 },
-    // **
+    { "x": -890, "y": -1890, "scale": 2.01, "alpha": 1, "time": 54.0175 },
     // loop ends 25
     { "x": -1085, "y": -1922.8683596236826, "scale": 2.01, "alpha": 1, "time": 55.7625 },
     { "x": -1085, "y": -2162.8683596236824, "scale": 2.01, "alpha": 1, "time": 58.1625 },
     { "x": -850, "y": -2162.8683596236824, "scale": 2.01, "time": 60.5125, "alpha": 1 },
     { "x": -850, "y": -2340, "scale": 2.01, "time": 62.9125, "alpha": 1 },
-    // **
     { "x": -90, "y": -2340, "scale": 2.01, "time": 70.5125, "alpha": 1 },
     { "x": -90, "y": -2520, "scale": 1.64, "time": 71.5125, "alpha": 1 },
-    { "x": -90, "y": -2555, "scale": 1.64, "time": 73.9025, "alpha": 1 },
-    // stop for the ballon
-    { "x": -770, "y": -2555, "scale": 1.64, "time": 89.33250000000001, "alpha": 1 },
-    { "x": -930, "y": -2555, "scale": 1.64, "time": 94.3925, "alpha": 1 },
-    { "x": -1570, "y": -2470, "scale": 1.64, "time": 96.3925, "alpha": 1 },
+    // stop for the ballon 31
+    { "x": -770, "y": -2555, "scale": 1.64, "time": 79.0625, "alpha": 1 },
+    { "x": -1570, "y": -2470, "scale": 1.64, "time": 84.2125, "alpha": 1 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -328,26 +324,25 @@ const characterMain = reactive<Asset>({
     { x: 840, y: 514, scale: 1.5, alpha: 0, time: 0 },
     { x: 840, y: 515, scale: 1.5, alpha: 1, time: 0.25 },
     { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.5 },
-    { x: 900, y: 515, scale: 1.5, alpha: 1, time: 1.25 }, // entering the tram
-    { x: 900, y: 561, scale: 1.5, alpha: 1, time: 3 },
-    { x: 1180, y: 561, scale: 1.5, alpha: 1, time: 6 }, //
-    { x: 1180, y: 1008, scale: 1.5, alpha: 1, time: 9 }, //
-    { x: 1670, y: 1008, scale: 1.5, alpha: 1, time: 12 }, //
-    { x: 1670, y: 1190, scale: 1.5, alpha: 1, time: 14.25 }, // leaving the tram
+    { x: 900, y: 515, scale: 1.5, alpha: 0, time: 1.25 }, // entering the tram
+    { x: 900, y: 561, scale: 1.5, alpha: 0, time: 3 },
+    { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 }, //
+    { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 }, //
+    { x: 1670, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
+    { x: 1670, y: 1190, scale: 1.5, alpha: 0, time: 14.25 }, // leaving the tram
     { x: 1620, y: 1190, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
     { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 16.5 }, // leaving the tram
     { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
     { "x": 1020, "y": 1237, "scale": 1.75, "alpha": 1, "time": 20.43 },
     // at park 13
-    //
     { "x": 885, "y": 1237, "scale": 1.75, "alpha": 1, "time": 21.78 },
     { "x": 885, "y": 1238, "scale": 1.75, "alpha": 1, "time": 21.79 },
     { "x": 930, "y": 1238, "scale": 1.5, "alpha": 1, "time": 22.24 },
     { "x": 930, "y": 1780, "scale": 1.5, "alpha": 1, "time": 27.66 },
-    // at bank 18
+    // at bank 17
     { "x": 1410, "y": 1780, "scale": 1.5, "alpha": 1, "time": 32.46 },
     { "x": 1410, "y": 2020, "scale": 1.5, "alpha": 1, "time": 34.86 },
-    // at pond 20
+    // at pond 19
     { "x": 1315, "y": 2085, "scale": 1.5, "alpha": 1, "time": 36.015 },
     { "x": 1220, "y": 2150, "scale": 1.5, "alpha": 1, "time": 37.1625 },
     { "x": 1100, "y": 2150, "scale": 1.5, "alpha": 1, "time": 38.3625 },
@@ -356,33 +351,25 @@ const characterMain = reactive<Asset>({
     { "x": 1110, "y": 1910, "scale": 1.5, "alpha": 1, "time": 41.6925 },
     { "x": 1230, "y": 1910, "scale": 1.5, "alpha": 1, "time": 42.8925 },
     { "x": 1290, "y": 2030, "scale": 1.5, "alpha": 1, "time": 44.2325 },
-    // loop starts 28
+    // loop starts 27
     { "x": 1250, "y": 2150, "scale": 1.5, "alpha": 1, "time": 45.4975 },
     { "x": 1030, "y": 2150, "scale": 1.5, "alpha": 1, "time": 47.6975 },
     { "x": 1250, "y": 2150, "scale": 1.5, "alpha": 1, "time": 49.8975 },
-    // loop ends 31
+    // loop ends 30
     { "x": 1405, "y": 2070, "scale": 1.5, "alpha": 1, "time": 51.6425 },
-    //** */
     { "x": 1405, "y": 2310, "scale": 1.5, "alpha": 1, "time": 54.0425 },
     { "x": 1170, "y": 2310, "scale": 1.5, "alpha": 1, "time": 56.3925 },
     { "x": 1170, "y": 2550, "scale": 1.5, "alpha": 1, "time": 58.7925 },
-    // **
     { "x": 410, "y": 2550, "scale": 1.5, "alpha": 1, "time": 66.3925 },
-    { "x": 410, "y": 2790, "scale": 1.5, "alpha": 1, "time": 68.7825 },
-    // stop for the ballon 36
-    { "x": 1165, "y": 2790, "scale": 1.5, "alpha": 1, "time": 76.3325 },
-    { "x": 1670, "y": 2790, "scale": 1.5, "alpha": 1, "time": 81.3925 },
+    { "x": 410, "y": 2777, "scale": 1.85, "alpha": 1, "time": 68.7825 },
+    // stop for the ballon 35
+    { "x": 1165, "y": 2777, "scale": 1.85, "alpha": 1, "time": 76.3325 },
+    { "x": 1670, "y": 2777, "scale": 1.85, "alpha": 1, "time": 81.3925 },
     { "x": 1670, "y": 2590, "scale": 1.5, "alpha": 1, "time": 83.3925 },
-    { "x": 2300, "y": 2590, "scale": 1.5, "alpha": 1, "time": 89.6925 },
-    { "x": 2300, "y": 2960, "scale": 1.5, "alpha": 1, "time": 93.3925 },
-    { "x": 2490, "y": 2960, "scale": 1.5, "alpha": 1, "time": 95.2925 },
-    // loop starts 42
-    { "x": 2680, "y": 2960, "scale": 1.5, "alpha": 1, "time": 97.1925 },
-    { "x": 2680, "y": 3000, "scale": 1.5, "alpha": 1, "time": 97.5925 },
-    { "x": 2680, "y": 2960, "scale": 1.5, "alpha": 1, "time": 97.9925 },
-    { "x": 2680, "y": 3000, "scale": 1.5, "alpha": 1, "time": 98.3925 }
+    // **
+    { "x": 1985, "y": 2590, "scale": 1.5, "alpha": 1, "time": 86.5425 },
   ],
-  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0, index: 0 },
+  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'init',
 })
 
@@ -471,7 +458,6 @@ onBeforeMount(onLoad)
 
 watch(currentSceneIndex, () => {
   screen.animation = 'started'
-  console.log({ animation: screen.animation, currentSceneIndex: currentSceneIndex.value })
 })
 
 let totalElapsedTime = 0
@@ -509,14 +495,26 @@ watch(() => screen.animation, () => {
 
 watch(currentScreenIndex, (value) => {
   if (value === 2) {
+    tram.animation = 'started'
     gameStore.nextTimeline({ id: 11 })
-    // tram.animation = 'started'
     characterStationMaster.state = characterStationMaster.states[1]
   }
 })
 
 function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finished') {
   if (state === 'finished') {
+    if (stateIndex === 28 && respondedSceneIndex.value !== 18) {
+      gameStore.nextTimeline({ screen: -1, id: 46 })
+    } else
+      gameStore.nextTimeline()
+  }
+}
+
+const respondedSceneIndex = ref(0)
+function handleResponse(value: number) {
+  respondedSceneIndex.value = value
+
+  if (value === 0) {
     gameStore.nextTimeline()
   }
 }
@@ -538,8 +536,6 @@ function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finishe
       <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale"
         :flip="flip" />
       <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
-        :motion-blur="motionBlur" initialOrientation="right" />
       <Sprite texture="mapStationFg"
         :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
         :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
@@ -561,35 +557,36 @@ function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finishe
     </Container>
     <Container v-if="!rotationStop">
       <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
-      <!-- <Scene2 v-else-if="currentSceneIndex === 1 && screen.animation === 'finished'" /> -->
+      <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
       <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" />
       <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" />
       <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
       <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
-      <ModalProtip v-else-if="currentPopupIndex === 7" title="1" y="top" />
       <ModalProtip v-else-if="currentPopupIndex === 11" title="2" y="top" />
-      <!-- <Scene7 v-else-if="currentSceneIndex === 9 && screen.animation === 'finished'" /> -->
+      <!-- <Scene7 v-else-if="currentPopupIndex === 9 && screen.animation === 'finished'" /> -->
       <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" />
-      <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" />
+      <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" @update="handleResponse(18)" />
       <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" />
+      <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" />
+      <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
+      <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
     </Container>
     <Container :x="screen.state.x * screen.state.scale * zoomFactor"
       :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
       <CharacterMain :states="characterMain.states" :skin="characterSkin" @update="handleMCUpdate" />
       <CharacterSus :states="characterSus.states" />
+      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
+        :motion-blur="motionBlur" initialOrientation="right" />
       <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
       <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
-      <Scene10 v-if="currentPopupIndex === 20 && screen.animation === 'finished'" />
-      <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
-      <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
-      <Scene12 v-else-if="currentPopupIndex === 23 && screen.animation === 'finished'" />
-      <!-- <SceneResult v-else-if="currentSceneIndex === 24 && screen.animation === 'finished'" /> -->
+      <ModalProtip v-if="currentPopupIndex === 7" title="1" y="top" />
+      <Scene12 v-else-if="currentPopupIndex === 23" />
       <!-- @vue-ignore -->
       <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
     </Container>
     <!-- DEBUG -->
-    <External>
+    <!--  <External>
       <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
       <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
@@ -601,6 +598,6 @@ function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finishe
           <span class="bg-white">{{ currentSceneIndex }}</span>
         </div>
       </div>
-    </External>
+    </External> -->
   </Container>
 </template>

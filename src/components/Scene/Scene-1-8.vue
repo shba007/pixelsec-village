@@ -10,7 +10,7 @@ import { storeToRefs } from 'pinia'
 const gameStore = useGameStore()
 const { isLandscape } = storeToRefs(gameStore)
 
-async function handleStart() {
+/* async function handleStart() {
   gameStore.nextTimeline({ id: 90 })
 }
 
@@ -20,7 +20,7 @@ onMounted(() => {
 
 watch(isLandscape, (value) => {
   if (value) useTimeoutFn(handleStart, 3000)
-})
+}) */
 </script>
 
 <template>

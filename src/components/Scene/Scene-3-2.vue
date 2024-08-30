@@ -7,8 +7,7 @@ import Modal from '@/components/Modal.vue'
 const gameStore = useGameStore()
 
 const options = ref([
-  { checked: false, describe: 'Past online shopping' },
-  { checked: false, describe: 'Info' },
+  { checked: false, describe: 'Past online shopping Info' },
   { checked: false, describe: 'Bank/Card details' },
   { checked: false, describe: 'Social media profile' },
   { checked: false, describe: 'Personal preferences' },
@@ -23,7 +22,7 @@ function onSelect(index: number, checked: boolean) {
 watchDebounced(options, onComplete, { debounce: 2000, deep: true })
 
 function onComplete() {
-  gameStore.nextTimeline({ id: 32 })
+  gameStore.nextTimeline({ id: 24 })
 }
 </script>
 

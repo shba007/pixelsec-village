@@ -30,15 +30,16 @@ const mainWindow = window
           Loading... {{ Math.round(progress * 100) }}% </Text>
       </template>
       <template #default>
-        <ScreenMap :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4"
+        <ScreenMap
+          :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6"
           :current-screen-index="currentScreenIndex" />
         <ScreenStation v-if="currentScreenIndex === 1" />
         <ScreenPark v-else-if="currentScreenIndex === 3" />
         <ScreenBank v-else-if="currentScreenIndex === 5" />
-        <ScreenResult1 v-else-if="currentScreenIndex === 6" />
-        <ScreenResult2 v-else-if="currentScreenIndex === 7" />
-        <ScreenResult3 v-else-if="currentScreenIndex === 8" />
-        <ScreenResult4 v-else-if="currentScreenIndex === 9" />
+        <ScreenResult1 v-else-if="currentScreenIndex === 7" />
+        <ScreenResult2 v-else-if="currentScreenIndex === 8" />
+        <ScreenResult3 v-else-if="currentScreenIndex === 9" />
+        <ScreenResult4 v-else-if="currentScreenIndex === 10" />
         <SceneRotate v-if="!hardStop && rotationStop" :overlay="true" />
       </template>
     </Loader>
@@ -46,11 +47,11 @@ const mainWindow = window
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <p>v0.2.8</p>
-    <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+    <!--   <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
-    <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p>
+    <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
   </div>
   <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
