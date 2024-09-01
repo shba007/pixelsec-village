@@ -3,8 +3,8 @@ import { computed, reactive } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 import { External } from 'vue3-pixi'
 
-import { SCALE_MODES } from '@/utils/types'
 import SceneResult from '@/components/Scene/Scene-Result.vue'
+import { textureOptions } from '@/components/Settings.vue'
 
 const emit = defineEmits<{
   (event: 'close', nextSceneIndex: number): void
@@ -29,8 +29,8 @@ const map = reactive<any>({
 
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <Sprite :texture="map.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="map.state.x"
-      :y="map.state.y" :scale="map.state.scale" :anchor="0.5" />
+    <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :x="map.state.x" :y="map.state.y"
+      :scale="map.state.scale" :anchor="0.5" />
     <SceneResult />
     <!-- DEBUG -->
     <!--  <External>

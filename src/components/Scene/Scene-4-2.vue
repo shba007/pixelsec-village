@@ -1,12 +1,33 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useInterval, useWindowSize } from '@vueuse/core'
+
 import { useGameStore } from '@/stores/game'
-import Modal from '@/components/Modal.vue'
-import { useInterval } from '@vueuse/core'
-import { computed } from 'vue'
+import { textureOptions } from '@/components/Settings.vue'
+import { reactive } from 'vue';
 
 const gameStore = useGameStore()
 
-// useTimeoutFn(handleMove, 2000)
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => {
+  return screenHeight.value / 720
+})
+
+const modal = computed(() => ({
+  image: 'popupScene52',
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+}))
+
+const options = ref([
+  { type: 'do-nothing', frames: ['popupScene52Button11', 'popupScene52Button12'], state: { x: -175, y: -45, scale: 1 } },
+  { type: 'take-action-only-when-prompted', frames: ['popupScene52Button21', 'popupScene52Button22'], state: { x: 130, y: -45, scale: 1 } },
+  { type: 'alert-the-authority-change-login-details', frames: ['popupScene52Button31', 'popupScene52Button32'], state: { x: -120, y: 125, scale: 1 } },
+  { type: 'delete-the-app', frames: ['popupScene52Button41', 'popupScene52Button42'], state: { x: 185, y: 125, scale: 1 } },
+])
+
+const selectedOption = ref<string>()
+
+const timerText = reactive({ x: -50, y: -220, scale: 3.5 })
 const counter = useInterval(10)
 const timer = computed(() => {
   const number = Math.max(8 * 100 - counter.value, 0)
@@ -24,57 +45,33 @@ const timer = computed(() => {
     setTimeout(() => {
       gameStore.nextTimeline({ id: 42 })
     }, 50)
-    return
+    return []
   }
 
   // Return the formatted timer string
   const digits = formattedSeconds.split('')
-  return `${formattedMinutes} : ${digits[0]}<span class="timer-digit">${digits[1]}</span> : ${formattedMilliseconds}`
+  return [`${formattedMinutes}`, `${digits[0]}`, `${digits[1]}`, `${formattedMilliseconds}`]
 })
 
-function onClick() {
+function onClick(value: string) {
+  // DATA-COLLECT
   gameStore.nextTimeline({ screen: 2, id: 31 })
 }
 </script>
 
 <template>
-  <Modal type="mid" title="">
-    <div class="flex w-full flex-col items-center gap-2 text-xl">
-      <p class="">Countdown timer:</p>
-      <!-- <span class="text-4xl">00: 08 : 99</span> -->
-      <span class="font-uni text-4xl" v-html="timer" />
-      <div class="grid w-fit grid-cols-5 grid-rows-2 gap-y-2">
-        <button class="active-btn short unchecked col-span-2 col-start-1 row-start-1" @click="onClick">Do
-          nothing</button>
-        <button class="active-btn long unchecked col-span-3 col-start-3 row-start-1" @click="onClick">
-          Take action only<br />
-          when prompted
-        </button>
-        <button class="active-btn long unchecked col-span-3 col-start-1 row-start-2" @click="onClick">
-          Alert the authority,<br />
-          change login details
-        </button>
-        <button class="active-btn short unchecked col-span-2 col-start-4 row-start-2" @click="onClick">Delete <br />the
-          app</button>
-      </div>
-    </div>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Container :x="timerText.x" :y="timerText.y" :scale="timerText.scale">
+      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45">
+        {{ timer[0] }}:{{ timer[1] }}</Text>
+      <Text :style="{ fill: 'red', fontFamily: 'INET' }" :texture-options="textureOptions" :x="22">
+        {{ timer[2] }}
+      </Text>
+      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="45">:{{ timer[3] }}</Text>
+    </Container>
+    <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :anchor="0.5" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+      @click="onClick(type)" @touchstart="onClick(type)" />
+  </Container>
 </template>
-
-<style lang="css" scoped>
-.active-btn {
-  @apply flex h-[80px] items-center justify-center bg-contain bg-bottom bg-no-repeat active:text-[#89ab2c];
-}
-
-.active-btn.short {
-  @apply aspect-[5/3] bg-[url(@/assets/buttons/short/unpressed.png)] active:bg-[url(@/assets/buttons/short/pressed.png)];
-}
-
-.active-btn.long {
-  @apply aspect-[8/3] bg-[url(@/assets/buttons/long/unpressed.png)] active:bg-[url(@/assets/buttons/long/pressed.png)];
-}
-
-:deep(.timer-digit) {
-  @apply text-red-500;
-}
-</style>

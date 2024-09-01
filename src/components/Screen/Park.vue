@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, onMounted, reactive, ref, watch, watchEffect } from 'vue'
 import { External } from 'vue3-pixi'
-import { useWindowSize } from '@vueuse/core'
+import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
-import { SCALE_MODES, type Asset } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
 
 import CharacterIcecreamVendor from '@/components/Animation/Character/CharacterIcecreamVendor.vue'
 import Cloud from '@/components/Animation/Cloud.vue'
@@ -32,8 +32,8 @@ const zoomFactor = computed(() => {
 const park = reactive<any>({
   loaded: false,
   alias: { bg: 'parkBg', fg: 'parkFg' },
-  states: [{ x: 0, y: 0, scale: 1, alpha: 1, time: 0 }],
-  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
+  states: [{ x: 0, y: 0, scale: 1.05, alpha: 1, time: 0 }],
+  state: { x: 0, y: 10, scale: 1.05, alpha: 1, time: 0 },
   animation: 'init',
 })
 
@@ -63,27 +63,16 @@ const characterIcecreamVendor = reactive({
 function onLoad() { }
 
 onBeforeMount(onLoad)
-onMounted(() => setTimeout(() => {
-  gameStore.nextTimeline({ id: 23 })
-}, 2000))
-
-watch(currentSceneIndex, (value) => {
-  if (value === 25) {
-    // alert("Timeline Trigger 120")
-    // gameStore.nextTimeline()
-    // emit('close', 4)
-  }
-})
 </script>
 
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <Sprite :texture="park.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="park.state.x"
-      :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
+    <Sprite :texture="park.alias.bg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y"
+      :scale="park.state.scale" :anchor="0.5" />
     <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="park" :width-range="screenWidth"
       :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="park.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="park.state.x"
-      :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
+    <Sprite :texture="park.alias.fg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y"
+      :scale="park.state.scale" :anchor="0.5" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container v-if="!rotationStop">

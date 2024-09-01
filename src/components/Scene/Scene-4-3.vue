@@ -1,59 +1,53 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useWindowSize, watchDebounced } from '@vueuse/core'
+import { storeToRefs } from 'pinia';
+
 import { useGameStore } from '@/stores/game'
-import { watchDebounced } from '@vueuse/core'
-import Modal from '@/components/Modal.vue'
+import { textureOptions } from '@/components/Settings.vue'
 
 const gameStore = useGameStore()
+const { currentPopupIndex } = storeToRefs(gameStore)
+
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => {
+  return screenHeight.value / 720
+})
+
+const modal = computed(() => ({
+  image: currentPopupIndex.value == 14 ? 'popupScene53' : 'popupScene54',
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+}))
 
 const options = ref([
-  { title: 'Me, myself,<br/> and I', value: 1 },
-  { title: 'Government', value: 2 },
-  { title: 'Companies', value: 3 },
-  { title: 'Not sure', value: 4 },
+  { type: 'me-myself-i', state: { x: -375, y: -40, scale: 5.5 } },
+  { type: 'government', state: { x: 0, y: -40, scale: 5.5 } },
+  { type: 'companies', state: { x: -375, y: 110, scale: 5.5 } },
+  { type: 'not-sure', state: { x: 0, y: 110, scale: 5.5 } },
 ])
-const selectedOptions = ref<number[]>([])
 
-function onSelect(topic: number) {
-  // DATA-COLLECT
-  console.log({ topic })
-  selectedOptions.value.push(topic)
+const selectedOptions = ref<Set<string>>(new Set())
+
+function onClick(topic: string) {
+  if (selectedOptions.value.has(topic)) selectedOptions.value.delete(topic)
+  else selectedOptions.value.add(topic)
 }
 
-watchDebounced(selectedOptions, onComplete, { debounce: 2000, deep: true })
+watchDebounced(() => [...selectedOptions.value.values()], onComplete, { debounce: 2000 })
 
 function onComplete() {
+  // DATA-COLLECT
   gameStore.nextTimeline({ screen: 2, id: 43 })
 }
+
+const frames = ['buttonSquare', 'buttonSquarePressed']
 </script>
 
 <template>
-  <Modal type="mid" title="">
-    <div class="flex w-full flex-col items-start gap-8">
-      <p class="text-left text-2xl lg:px-10 lg:py-6 lg:text-4xl lg:leading-[3rem]">Your data could be compromised. Who
-        do you think should protect your data?</p>
-      <ul class="grid w-full grid-cols-2 grid-rows-2 gap-2 px-4">
-        <li class="flex items-center gap-4" v-for="({ title, value }, index) of options" :key="index"
-          @click="onSelect(value)">
-          <div class="active-btn" :class="selectedOptions.includes(value) ? 'checked' : 'unchecked'" />
-          <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]"
-            v-html="title" />
-        </li>
-      </ul>
-    </div>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite v-for="{ type, state } of options" :key="type" :texture="frames[Number(selectedOptions.has(type))]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+      @click="onClick(type)" @touchstart="onClick(type)" />
+  </Container>
 </template>
-
-<style lang="css" scoped>
-.active-btn {
-  @apply flex aspect-[7/9] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
-}
-
-.active-btn.checked {
-  @apply bg-[url(@/assets/buttons/square/pressed.png)];
-}
-
-.active-btn.unchecked {
-  @apply bg-[url(@/assets/buttons/square/unpressed.png)];
-}
-</style>

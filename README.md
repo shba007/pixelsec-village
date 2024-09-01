@@ -1,23 +1,5 @@
 # affinidi-dataville
 
-Screen -> 0
-    Scene:
-        0 -> Welcome To DataVille
-        1 -> Flouris Shop (No Popup)
-        2 -> Let the Adventure Begin
-        3 -> Select Your Avatar
-        4 -> Read Terms and Conditions
-        5 -> Terms and Conditions
-        if Scene index 6 make Screen 1
-        // Need Transition
-Screen -> 1
-    Scene:
-        // Need Pause
-        7 -> Verify age
-        8 -> Spend Your Time
-Screen -> 2
-        // Need Transition
-        9 -> 
 
 | Screen   | Scene   | Describtion                               |
 | -------- | ------- | ----------------------------------------- |

@@ -1,32 +1,42 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 import { External } from 'vue3-pixi'
+import { useWindowSize } from '@vueuse/core';
 
 import { useGameStore } from '@/stores/game'
-import Modal from '@/components/Modal.vue'
+import { textureOptions } from '@/components/Settings.vue'
 
 const gameStore = useGameStore()
 
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => screenWidth.value / 1280)
+
+const modal = computed(() => ({
+  image: 'popupScene64',
+  state: { x: (screenWidth.value * 3) / 4, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+}))
+
+const options = [
+  { type: true, frames: ['popupScene63Button11', 'popupScene63Button12'], state: { x: -200, y: 80, scale: 1 } },
+  { type: false, frames: ['popupScene63Button21', 'popupScene63Button22'], state: { x: 10, y: 80, scale: 1 } }
+]
+
+const selectedOption = ref<boolean>()
+
 function onClick(value: boolean) {
+  selectedOption.value = value
   // DATA-COLLECT
   setTimeout(() => {
-    gameStore.nextTimeline({ id: 10000001 })
+    gameStore.nextTimeline({ id: 55 })
   }, 300)
 }
 </script>
 
 <template>
-  <Modal title="" description="" type="short" x="right">
-    <p class="text-left text-3xl lg:text-[2.5rem] lg:leading-[3rem]"
-      v-html="'Are you willing to<br/>exchange your data<br/>for rebates or<br/>rewards?'" />
-    <div class="flex gap-4">
-      <button class="active-btn" @click="onClick(false)">YES</button>
-      <button class="active-btn" @click="onClick(true)">NO</button>
-    </div>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite v-for="{ type, frames, state } of options" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+      @click="onClick(type)" @touchstart="onClick(type)" />
+  </Container>
 </template>
-
-<style lang="css" scoped>
-.active-btn {
-  @apply flex aspect-[5/3] h-[64px] items-center justify-center bg-[url(@/assets/buttons/short/unpressed.png)] bg-contain bg-bottom bg-no-repeat font-inet text-3xl active:bg-[url(@/assets/buttons/short/pressed.png)] active:text-[#89ab2c] lg:h-[80px] lg:text-[2.5rem] lg:leading-[3rem];
-}
-</style>

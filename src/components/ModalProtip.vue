@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useWindowSize } from '@vueuse/core'
-
-import { SCALE_MODES } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -20,23 +19,23 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
 
 const modal = computed(() => {
-  let image = ['popupProtip11', 'popupProtip12']
+  let image = ['popupProtip1', 'popupProtip1']
   let scale = 0.8
   switch (props.title) {
     case '1':
-      image = ['popupProtip11', 'popupProtip12']
+      image = ['popupProtip1', 'popupProtip1']
       break
     case '2':
-      image = ['popupProtip21', 'popupProtip22']
+      image = ['popupProtip2', 'popupProtip2']
       break
     case '3':
-      image = ['popupProtip31', 'popupProtip32']
+      image = ['popupProtip3', 'popupProtip3']
       break
     case '4':
-      image = ['popupProtip41', 'popupProtip42']
+      image = ['popupProtip4', 'popupProtip4']
       break
     case '5':
-      image = ['popupProtip51', 'popupProtip52']
+      image = ['popupProtip5', 'popupProtip5']
       break
   }
 
@@ -65,7 +64,7 @@ const modal = computed(() => {
       break
   }
 
-  console.log("Protip Modal Popup", props.title)
+  console.log('Protip Modal Popup', props.title)
 
   return {
     image,
@@ -74,10 +73,9 @@ const modal = computed(() => {
     yFactor: yFactor * 100 + '%',
   }
 })
-
 </script>
 
 <template>
-  <Sprite :texture="modal.image[0]" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="modal.state.x"
-    :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
+  <Sprite :texture="modal.image[0]" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
+    :scale="modal.state.scale" :anchor="0.5" />
 </template>

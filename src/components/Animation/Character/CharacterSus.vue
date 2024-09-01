@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
+import { storeToRefs } from 'pinia'
 import type { State } from '@/utils/types'
-import { SCALE_MODES } from '@/utils/types'
-import { useGameStore } from '@/stores/game';
-import { storeToRefs } from 'pinia';
+import { useGameStore } from '@/stores/game'
+import { textureOptions } from '@/components/Settings.vue'
+import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
 
@@ -27,7 +28,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'update', stateIndex: number, state: 'init' | 'started' | 'finished'): void
 }>()
-
 
 const characterAnimations = {
   frontStill: ['characterSusGuyFishing1', 'characterSusGuyFishing2'],
@@ -61,27 +61,27 @@ watch(props.states, (value) => {
 
 const currentCharacterIndex = ref(0)
 const holdedCharacterIndex = ref(0)
-watch(currentMCCharacterIndex,
-  (value) => {
-    // holdedStateIndex.value = value
-    if (value === 19) {
-      holdedCharacterIndex.value = value - 18
-      currentCharacterIndex.value = value - 19
-      activeCharacter.animation = 'started'
-    } else if (value > 19) {
-      holdedCharacterIndex.value = value - 18
-    }
+watch(currentMCCharacterIndex, (value) => {
+  // holdedStateIndex.value = value
+  if (value === 19) {
+    holdedCharacterIndex.value = value - 18
+    currentCharacterIndex.value = value - 19
+    activeCharacter.animation = 'started'
+  } else if (value > 19) {
+    holdedCharacterIndex.value = value - 18
   }
-)
+})
 
 watch(rotationStop, (value) => {
   activeCharacter.animation = value ? 'finished' : activeCharacter.animation
 })
 
-
-watch(() => activeCharacter.animation, () => {
-  console.log("activeCharacterAnimation", activeCharacter.animation)
-})
+watch(
+  () => activeCharacter.animation,
+  () => {
+    console.log('activeCharacterAnimation', activeCharacter.animation)
+  }
+)
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
@@ -116,7 +116,6 @@ onTick((delta) => {
       currentCharacterIndex.value = holdedCharacterIndex.value
       activeCharacter.animation = 'finished'
       activeCharacter.animation = 'started'
-
     }
   } else if (!(currentCharacterIndex.value < props.states.length - 1)) {
     activeCharacter.aliases = characterAnimations['frontStill']
@@ -128,8 +127,8 @@ onTick((delta) => {
 <template>
   <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
     :alpha="activeCharacter.state.alpha">
-    <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1"
+    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0"
+      :scale="1" :alpha="1"
       :playing="activeCharacter.animation === 'stationary' || activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
   </Container>

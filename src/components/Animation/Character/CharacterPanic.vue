@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { getRandomInteger } from '@/utils/helper'
-import { useTimeout } from '@vueuse/core'
-import { SCALE_MODES } from '@/utils/types'
 import { reactive, ref } from 'vue'
 import { onTick } from 'vue3-pixi'
+import { useTimeout } from '@vueuse/core'
+
+import { getRandomInteger } from '@/utils/helper'
+import { textureOptions } from '@/components/Settings.vue'
+import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
 
 const props = defineProps<{
   place: 'map' | 'bank'
@@ -73,14 +75,7 @@ onTick((delta) => {
 </script>
 
 <template>
-  <AnimatedSprite
-    :textures="imgs[place]"
-    :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-    :anchor="0.5"
-    :x="activeCharacter.state.x"
-    :y="activeCharacter.state.y"
-    :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha"
-    :playing="playing"
-    :animation-speed="speed" />
+  <AppAnimatedSprite :textures="imgs[place]" :texture-options="textureOptions" :anchor="0.5"
+    :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :alpha="activeCharacter.state.alpha" :playing="playing" :animation-speed="speed" />
 </template>

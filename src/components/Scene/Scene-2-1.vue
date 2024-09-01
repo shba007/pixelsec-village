@@ -1,13 +1,32 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 import { External } from 'vue3-pixi'
+import { useWindowSize } from '@vueuse/core';
+
 import { useGameStore } from '@/stores/game'
-import Modal from '@/components/Modal.vue'
+import { textureOptions } from '@/components/Settings.vue'
 
 const gameStore = useGameStore()
 
-const ages = ['18-25', '26-35', '36-44', '45-54']
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => screenWidth.value / 1280)
+
+const modal = computed(() => ({
+  image: 'popupScene11',
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+}))
+
+const options = [
+  { type: '18-25', frames: ['popupScene11Button11', 'popupScene11Button12'], state: { x: -385, y: 50, scale: 1 } },
+  { type: '26-35', frames: ['popupScene11Button21', 'popupScene11Button22'], state: { x: -192.5, y: 50, scale: 1 } },
+  { type: '36-44', frames: ['popupScene11Button31', 'popupScene11Button32'], state: { x: 0, y: 50, scale: 1 } },
+  { type: '45-54', frames: ['popupScene11Button41', 'popupScene11Button42'], state: { x: 192.5, y: 50, scale: 1 } },
+]
+
+const selectedOption = ref<string>()
 
 function onClick(value: string) {
+  selectedOption.value = value
   // DATA-COLLECT
   setTimeout(() => {
     gameStore.nextTimeline({ id: 9 })
@@ -16,24 +35,10 @@ function onClick(value: string) {
 </script>
 
 <template>
-  <Modal title="" description="">
-    <div class="relative flex flex-col items-center justify-center">
-      <div class="flex items-center">
-        <img src="/images/character-station-master.gif" class="aspect-square h-[180px] object-contain lg:h-[256px]" />
-        <p class="text-left text-3xl lg:text-[3rem] lg:leading-[3rem]">Please verify your age for tram ticket purchase
-        </p>
-      </div>
-      <div class="flex gap-2 lg:gap-4">
-        <button v-for="age of ages" :key="age" class="active-btn" @click="onClick(age)">
-          {{ age }}
-        </button>
-      </div>
-    </div>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+      @click="onClick(type)" @touchstart="onClick(type)" />
+  </Container>
 </template>
-
-<style lang="css" scoped>
-.active-btn {
-  @apply flex aspect-[5/3] h-[64px] items-center justify-center whitespace-nowrap bg-[url(@/assets/buttons/short/unpressed.png)] bg-contain bg-bottom bg-no-repeat px-4 font-inet text-3xl active:bg-[url(@/assets/buttons/short/pressed.png)] active:text-[#89ab2c] lg:h-[80px] lg:text-[2.5rem] lg:leading-[3rem];
-}
-</style>

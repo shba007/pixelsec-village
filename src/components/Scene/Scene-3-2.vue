@@ -1,54 +1,53 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { watchDebounced } from '@vueuse/core'
+import { computed, ref } from 'vue'
+import { useWindowSize, watchDebounced } from '@vueuse/core'
+
 import { useGameStore } from '@/stores/game'
-import Modal from '@/components/Modal.vue'
+import { textureOptions } from '@/components/Settings.vue'
 
 const gameStore = useGameStore()
 
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => {
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
+})
+
+const modal = computed(() => ({
+  image: 'popupScene33',
+  state: { x: (screenWidth.value * 3) / 4, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+}))
+
 const options = ref([
-  { checked: false, describe: 'Past online shopping Info' },
-  { checked: false, describe: 'Bank/Card details' },
-  { checked: false, describe: 'Social media profile' },
-  { checked: false, describe: 'Personal preferences' },
-  { checked: false, describe: 'Personal details' },
+  { type: 'shopping-info', state: { x: -255, y: -245, scale: 5.5 } },
+  { type: 'bank-card-details', state: { x: -255, y: -151.25, scale: 5.5 } },
+  { type: 'social-media-profile', state: { x: -255, y: -57.5, scale: 5.5 } },
+  { type: 'personal-preferences', state: { x: -255, y: 36.25, scale: 5.5 } },
+  { type: 'personal-details', state: { x: -255, y: 130, scale: 5.5 } },
 ])
 
-function onSelect(index: number, checked: boolean) {
-  // DATA-COLLECT
-  options.value[index].checked = checked
+const selectedOptions = ref<Set<string>>(new Set())
+
+function onClick(option: string) {
+  if (selectedOptions.value.has(option)) selectedOptions.value.delete(option)
+  else selectedOptions.value.add(option)
 }
 
-watchDebounced(options, onComplete, { debounce: 2000, deep: true })
+watchDebounced(() => [...selectedOptions.value.values()], onComplete, { debounce: 2000 })
 
 function onComplete() {
+  // DATA-COLLECT
   gameStore.nextTimeline({ id: 24 })
 }
+
+const frames = ['buttonSquare', 'buttonSquarePressed']
 </script>
 
 <template>
-  <Modal type="short" title="" x="right">
-    <ul class="flex flex-col items-start gap-4">
-      <li class="flex items-center gap-4" v-for="({ checked, describe }, index) of options" :key="index">
-        <button class="active-btn" :class="checked ? 'checked' : 'unchecked'" @click="onSelect(index, !checked)" />
-        <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2rem] lg:leading-[2.25rem]">
-          {{ describe }}
-        </span>
-      </li>
-    </ul>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite v-for="{ type, state } of options" :key="type" :texture="frames[Number(selectedOptions.has(type))]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+      @click="onClick(type)" @touchstart="onClick(type)" />
+  </Container>
 </template>
-
-<style lang="css" scoped>
-.active-btn {
-  @apply flex aspect-[7/9] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[64px];
-}
-
-.active-btn.checked {
-  @apply bg-[url(@/assets/buttons/square/pressed.png)];
-}
-
-.active-btn.unchecked {
-  @apply bg-[url(@/assets/buttons/square/unpressed.png)];
-}
-</style>

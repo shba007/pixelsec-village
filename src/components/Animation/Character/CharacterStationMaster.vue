@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { State } from '@/utils/types'
-import { SCALE_MODES } from '@/utils/types'
-import { onMounted } from 'vue'
+import { textureOptions } from '@/components/Settings.vue'
+import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
 
 const props = defineProps<{
   state: State
@@ -12,10 +12,9 @@ const imgs = {
   map: ['mapCharacterStationMaster1', 'mapCharacterStationMaster2', 'mapCharacterStationMaster3'],
   station: ['stationCharacterStationMaster1', 'stationCharacterStationMaster2'],
 }
-
-onMounted(() => {})
 </script>
 
 <template>
-  <AnimatedSprite :textures="imgs[place]" :texture-options="{ scaleMode: SCALE_MODES.LINEAR }" :anchor="0.5" :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
+  <AppAnimatedSprite :textures="imgs[place]" :texture-options="textureOptions" :anchor="0.5" :scale="state.scale"
+    :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
 </template>

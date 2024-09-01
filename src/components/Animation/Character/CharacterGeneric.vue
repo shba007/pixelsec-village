@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
 import { onTick } from 'vue3-pixi'
-import { SCALE_MODES } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
+import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
 
 interface Route {
   x: number
@@ -96,13 +97,7 @@ onTick((delta) => {
 </script>
 
 <template>
-  <AnimatedSprite
-    :textures="activeCharacter.aliases"
-    :texture-options="{ scaleMode: SCALE_MODES.LINEAR }"
-    :anchor="0.5"
-    :x="activeCharacter.state.x"
-    :y="activeCharacter.state.y"
-    :scale="activeCharacter.state.scale"
-    :playing="animation && activeCharacter.animation === 'started'"
-    :animation-speed="0.08" />
+  <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions" :anchor="0.5"
+    :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :playing="animation && activeCharacter.animation === 'started'" :animation-speed="0.08" />
 </template>

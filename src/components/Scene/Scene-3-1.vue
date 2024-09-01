@@ -1,19 +1,38 @@
 <script setup lang="ts">
-import { useTimeoutFn } from '@vueuse/core'
+import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 import { useGameStore } from '@/stores/game'
-import Modal from '@/components/Modal.vue'
+
+import { textureOptions } from '@/components/Settings.vue'
+import { computed, ref } from 'vue';
 
 const gameStore = useGameStore()
+
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => {
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
+})
+
+const image = ref('popupScene31')
+const modal = computed(() => ({
+  image: image.value,
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 4, scale: 0.9 * zoomFactor.value },
+}))
 
 function handleMove() {
   gameStore.nextTimeline({ id: 31 })
 }
 
-useTimeoutFn(handleMove, 10000)
+const { start } = useTimeoutFn(handleMove, 4000, { immediate: false })
+
+useTimeoutFn(() => {
+  image.value = 'popupScene32'
+  start()
+}, 10000)
 </script>
 
 <template>
-  <Modal type="long" title=""
-    description="It’s a hot day and you need to cool off. How about a free ice-cream in exchange for your personal data? What are you willing to share?"
-    y="top" container-class="text-left" />
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+  </Container>
 </template>

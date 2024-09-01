@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import { Application, Loader } from 'vue3-pixi'
-import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
+import { Application, Loader, } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 
 import { resources, useGameStore } from '@/stores/game'
+import SceneRotate from '@/components/Scene/Scene-Rotate.vue'
 import ScreenMap from '@/components/Screen/Map.vue'
 import ScreenStation from '@/components/Screen/Station.vue'
 import ScreenPark from '@/components/Screen/Park.vue'
@@ -12,18 +14,16 @@ import ScreenResult1 from '@/components/Screen/Result-1.vue'
 import ScreenResult2 from '@/components/Screen/Result-1.vue'
 import ScreenResult3 from '@/components/Screen/Result-1.vue'
 import ScreenResult4 from '@/components/Screen/Result-1.vue'
-import SceneRotate from '@/components/Scene/Scene-Rotate.vue'
+import Settings from '@/components/Settings.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const gameStore = useGameStore()
 const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
-
-const mainWindow = window
 </script>
 
 <template>
-  <Application :resize-to="mainWindow" :antialias="false">
+  <Application>
     <Loader :resources="resources" :on-resolved="() => { }">
       <template #fallback="{ progress }">
         <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :style="{ fill: 'white' }" :scale="0.75">
@@ -31,8 +31,7 @@ const mainWindow = window
       </template>
       <template #default>
         <ScreenMap
-          :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6"
-          :current-screen-index="currentScreenIndex" />
+          :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
         <ScreenStation v-if="currentScreenIndex === 1" />
         <ScreenPark v-else-if="currentScreenIndex === 3" />
         <ScreenBank v-else-if="currentScreenIndex === 5" />
@@ -41,17 +40,18 @@ const mainWindow = window
         <ScreenResult3 v-else-if="currentScreenIndex === 9" />
         <ScreenResult4 v-else-if="currentScreenIndex === 10" />
         <SceneRotate v-if="!hardStop && rotationStop" :overlay="true" />
+        <Settings />
       </template>
     </Loader>
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <p>v0.2.8</p>
-    <!--   <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+    <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
-    <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
+    <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p>
   </div>
   <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>

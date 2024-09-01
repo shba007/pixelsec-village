@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
 import { onTick } from 'vue3-pixi'
-import { SCALE_MODES } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
 import { reverseSawTooth, sawTooth } from '@/utils/helper'
 
 const props = defineProps<{
@@ -57,5 +57,6 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Sprite :texture="img" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="cloud.x" :y="cloud.y" :anchor="0.5" :scale="cloud.scale" />
+  <Sprite :texture="img" :texture-options="textureOptions" :x="cloud.x" :y="cloud.y" :anchor="0.5"
+    :scale="cloud.scale" />
 </template>

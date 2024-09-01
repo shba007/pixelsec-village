@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { SCALE_MODES } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
+import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
 
 defineProps<{
   x: number
@@ -13,5 +14,6 @@ const speed = 0.09
 </script>
 
 <template>
-  <AnimatedSprite :textures="imgs" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y"
+    :playing="playing" :animation-speed="speed" />
 </template>

@@ -1,53 +1,47 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useWindowSize } from '@vueuse/core'
+
 import { useGameStore } from '@/stores/game'
-import Modal from '@/components/Modal.vue'
+import { textureOptions } from '@/components/Settings.vue'
 
 const gameStore = useGameStore()
 
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => {
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
+})
+
+const modal = computed(() => ({
+  image: 'popupScene34',
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+}))
+
 const options = ref([
-  { title: 'Yes', value: true },
-  { title: 'No', value: false },
+  { type: true, state: { x: 65, y: -30, scale: 5.5 } },
+  { type: false, state: { x: 65, y: 80, scale: 5.5 } },
 ])
+
 const selectedOption = ref<boolean | null>(null)
 
-function onClick(value: boolean) {
+function onClick(option: boolean) {
   // DATA-COLLECT
-  selectedOption.value = value
+  selectedOption.value = option
 
   setTimeout(() => {
     gameStore.nextTimeline({ id: 25 })
   }, 300)
 }
+
+const frames = ['buttonSquare', 'buttonSquarePressed']
 </script>
 
 <template>
-  <Modal type="mid" title="" description="Would you like to collect all your data from one place for convenience?"
-    container-class="text-left p-2">
-    <div class="flex w-full justify-end px-16">
-      <ul class="flex flex-col gap-2">
-        <li class="flex items-center gap-4" v-for="({ title, value }, index) of options" :key="index"
-          @click="onClick(value)">
-          <div class="active-btn" :class="selectedOption === value ? 'checked' : 'unchecked'" />
-          <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]">
-            {{ title }}
-          </span>
-        </li>
-      </ul>
-    </div>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite v-for="{ type, state } of options" :key="String(type)" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+      @click="onClick(type)" @touchstart="onClick(type)" />
+  </Container>
 </template>
-
-<style lang="css" scoped>
-.active-btn {
-  @apply flex aspect-[7/9] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
-}
-
-.active-btn.checked {
-  @apply bg-[url(@/assets/buttons/square/pressed.png)];
-}
-
-.active-btn.unchecked {
-  @apply bg-[url(@/assets/buttons/square/unpressed.png)];
-}
-</style>

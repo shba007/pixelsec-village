@@ -2,7 +2,8 @@
 import { computed, ref } from 'vue'
 import { useTimeout } from '@vueuse/core'
 import { getRandomInteger } from '@/utils/helper'
-import { SCALE_MODES } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
+import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
 
 const props = defineProps<{
   x: number
@@ -24,5 +25,6 @@ const speed = ref(getRandomInteger(1000, 2000) / 20000)
 </script>
 
 <template>
-  <AnimatedSprite :textures="imgs" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y"
+    :playing="playing" :animation-speed="speed" />
 </template>

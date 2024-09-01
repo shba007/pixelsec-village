@@ -98,7 +98,7 @@ const screen = reactive<Asset>({
     { "x": -90, "y": -2340, "scale": 2.01, "time": 70.5125, "alpha": 1 },
     { "x": -90, "y": -2520, "scale": 1.64, "time": 71.5125, "alpha": 1 },
     // stop for the ballon 31
-    { "x": -770, "y": -2555, "scale": 1.64, "time": 79.0625, "alpha": 1 },
+    { "x": -930, "y": -2555, "scale": 1.64, "time": 79.0625, "alpha": 1 },
     { "x": -1570, "y": -2470, "scale": 1.64, "time": 84.2125, "alpha": 1 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
@@ -178,11 +178,11 @@ const streetLamp = ref([
   { x: 370, y: 2800, scale: 0.5 },
 ])
 
-const wolfs = ref([
+/* const wolfs = ref([
   { x: 2050, y: 2310, scale: 0.5, flip: false },
   { x: 2770, y: 2810, scale: 0.5, flip: true },
   { x: 2510, y: 2950, scale: 0.5, flip: false },
-])
+]) */
 
 const baloonStand = reactive({
   x: 755,
@@ -467,8 +467,8 @@ onTick((delta) => {
   if (!rotationStop.value && screen.animation === 'started' && currentSceneIndex.value < screen.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = screen.states[currentSceneIndex.value + 1].time - screen.states[currentSceneIndex.value].time
-    const dx = screen.states[currentSceneIndex.value + 1].x - screen.states[currentSceneIndex.value].x
-    const dy = screen.states[currentSceneIndex.value + 1].y - screen.states[currentSceneIndex.value].y
+    const dx = Math.round(screen.states[currentSceneIndex.value + 1].x - screen.states[currentSceneIndex.value].x)
+    const dy = Math.round(screen.states[currentSceneIndex.value + 1].y - screen.states[currentSceneIndex.value].y)
     const ds = screen.states[currentSceneIndex.value + 1].scale - screen.states[currentSceneIndex.value].scale
 
     progress = Math.min(totalElapsedTime / dt, 1)
@@ -505,8 +505,9 @@ function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finishe
   if (state === 'finished') {
     if (stateIndex === 28 && respondedSceneIndex.value !== 18) {
       gameStore.nextTimeline({ screen: -1, id: 46 })
-    } else
+    } else {
       gameStore.nextTimeline()
+    }
   }
 }
 
@@ -521,83 +522,84 @@ function handleResponse(value: number) {
 </script>
 
 <template>
-  <Container :renderable="isLoad">
-    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
-      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-        :x="0" :y="0" :scale="1" :anchor="0" />
-      <Wolf v-for="({ x, y, scale, flip }, index) of wolfs" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
-      <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-        :x="0" :y="0" :scale="1" :anchor="0" />
-      <Sprite texture="mapStationBg"
-        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
-        :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
-      <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
-      <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale"
-        :flip="flip" />
-      <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-      <Sprite texture="mapStationFg"
-        :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
-        :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
-      <!-- @vue-ignore -->
-      <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
-        place="map" />
-      <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
-        :type="(type as 'purple' | 'green')" place="map" />
-      <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
-      <CharacterGuard place="map" :state="characterGuard.state" />
-      <CharacterBaloonVendor :state="characterBaloonVendor.state" />
-      <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
-      <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
-      <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange"
-        :direction="(car.direction as -1 | 1)" />
-      <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
-    </Container>
-    <Container v-if="!rotationStop">
-      <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
-      <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
-      <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" />
-      <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" />
-      <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
-      <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
-      <ModalProtip v-else-if="currentPopupIndex === 11" title="2" y="top" />
-      <!-- <Scene7 v-else-if="currentPopupIndex === 9 && screen.animation === 'finished'" /> -->
-      <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" />
-      <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" @update="handleResponse(18)" />
-      <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" />
-      <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" />
-      <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
-      <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
-    </Container>
-    <Container :x="screen.state.x * screen.state.scale * zoomFactor"
-      :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-      <CharacterMain :states="characterMain.states" :skin="characterSkin" @update="handleMCUpdate" />
-      <CharacterSus :states="characterSus.states" />
-      <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'"
-        :motion-blur="motionBlur" initialOrientation="right" />
-      <Sprite :texture="fence.alias" :x="fence.x" :y="fence.y" :scale="fence.scale" />
-      <Sprite :texture="palmTrees.alias" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
-      <ModalProtip v-if="currentPopupIndex === 7" title="1" y="top" />
-      <Scene12 v-else-if="currentPopupIndex === 23" />
-      <!-- @vue-ignore -->
-      <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
-        :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
-    </Container>
-    <!-- DEBUG -->
-    <!--  <External>
-      <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
-      <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
-        <div class="flex flex-col gap-2">
-          <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
-          <input v-model="screen.state.time" type="number" min="0" max="10" step="0.01" />
-          <span class="bg-white">{{ screen.animation }}</span>
-          <span class="bg-white">{{ currentSceneIndex }}</span>
-        </div>
-      </div>
-    </External> -->
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+      :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
+    <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+      :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
+    <Sprite texture="mapStationBg"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
+      :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
+    <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
+    <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+    <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
+    <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur"
+      initialOrientation="right" />
+    <Sprite texture="mapStationFg"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
+      :y="station.fg.y" :scale="station.fg.scale" :anchor="0" :z-index="0" />
+    <!-- @vue-ignore -->
+    <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
+    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
+      place="map" />
+    <CharacterStationMaster place="map" :state="characterStationMaster.state" />
+    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
+      :type="(type as 'purple' | 'green')" place="map" />
+    <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
+    <CharacterGuard place="map" :state="characterGuard.state" />
+    <CharacterBaloonVendor :state="characterBaloonVendor.state" />
+    <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
+    <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
+
+    <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange"
+      :direction="(car.direction as -1 | 1)" />
+    <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
   </Container>
+  <Container :renderable="isLoad && !rotationStop">
+    <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
+    <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
+    <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" />
+    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" />
+    <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
+    <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
+    <ModalProtip v-if="currentPopupIndex === 7" title="1" y="top" />
+    <ModalProtip v-else-if="currentPopupIndex === 11" title="2" y="top" />
+    <!-- <Scene7 v-else-if="currentPopupIndex === 9 && screen.animation === 'finished'" /> -->
+    <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" />
+    <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" @update="handleResponse(18)" />
+    <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" />
+    <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" />
+    <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
+    <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
+  </Container>
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <CharacterMain :states="characterMain.states" :skin="characterSkin" @update="handleMCUpdate" />
+    <CharacterSus :states="characterSus.states" />
+    <Sprite :texture="fence.alias"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="fence.x" :y="fence.y"
+      :scale="fence.scale" />
+    <Sprite :texture="palmTrees.alias"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="palmTrees.x"
+      :y="palmTrees.y" :scale="palmTrees.scale" />
+    <Scene12 v-if="currentPopupIndex === 23" />
+    <!-- @vue-ignore -->
+    <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
+        :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
+  </Container>
+  <!-- DEBUG -->
+  <External>
+    <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
+    <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
+      <div class="flex flex-col gap-2">
+        <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
+        <input v-model="screen.state.time" type="number" min="0" max="10" step="0.01" />
+        <span class="bg-white">{{ screen.animation }}</span>
+        <span class="bg-white">{{ currentSceneIndex }}</span>
+      </div>
+    </div>
+  </External>
 </template>

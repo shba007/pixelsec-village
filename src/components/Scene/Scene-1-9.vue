@@ -1,57 +1,49 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useWindowSize } from '@vueuse/core'
+
 import { useGameStore } from '@/stores/game'
-import Modal from '@/components/Modal.vue'
+import { textureOptions } from '@/components/Settings.vue'
 
 const gameStore = useGameStore()
-const emit = defineEmits<{
-  (event: 'update'): void
-}>()
+
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => {
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
+})
+
+const modal = computed(() => ({
+  image: 'popupScene62',
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1 * zoomFactor.value },
+}))
 
 const options = ref([
-  { checked: false, describe: 'Being followed by third-parties' },
-  { checked: false, describe: 'Having to keep giving away info' },
-  { checked: false, describe: 'Can’t save autofill details in<br/> incognito mode' },
-  { checked: false, describe: 'Can’t store all my digital<br/> identities in one place' },
+  { type: 'begin-followed', state: { x: -340, y: -210, scale: 4 } },
+  { type: 'having-to-keep-giving-away-info', state: { x: -340, y: -120, scale: 4 } },
+  { type: 'cant-save-autofill-details-in-incognito-mode', state: { x: -340, y: -30, scale: 4 } },
+  { type: 'cant-store-all-my-digital-identities-in-one-place', state: { x: -340, y: 70, scale: 4 } },
 ])
 
-const isSubmitted = ref(false)
+const selectedOption = ref<string>()
 
-function onClick(index: number) {
-  if (isSubmitted.value)
-    return
+function onClick(option: string) {
   // DATA-COLLECT
-  options.value[index].checked = true
-  emit('update')
+  selectedOption.value = option
+
   setTimeout(() => {
-    isSubmitted.value = true
+    gameStore.nextTimeline({ id: 25 })
   }, 300)
 }
+
+const frames = ['buttonSquare', 'buttonSquarePressed']
 </script>
 
 <template>
-  <Modal v-if="!isSubmitted" type="mid" title="">
-    <ul class="flex flex-col items-start gap-4">
-      <li class="flex items-center gap-4" v-for="({ checked, describe }, index) of options" :key="index"
-        @click="onClick(index)">
-        <div class="active-btn" :class="checked ? 'checked' : 'unchecked'" />
-        <span class="whitespace-nowrap text-left text-2xl text-[26px] lg:text-[2.5rem] lg:leading-[3rem]"
-          v-html="describe" />
-      </li>
-    </ul>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite v-for="{ type, state } of options" :key="String(type)" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+      @click="onClick(type)" @touchstart="onClick(type)" />
+  </Container>
 </template>
-
-<style lang="css" scoped>
-.active-btn {
-  @apply flex aspect-[7/9] h-[32px] items-center justify-center bg-contain bg-bottom bg-no-repeat lg:h-[80px];
-}
-
-.active-btn.checked {
-  @apply bg-[url(@/assets/buttons/square/pressed.png)];
-}
-
-.active-btn.unchecked {
-  @apply bg-[url(@/assets/buttons/square/unpressed.png)];
-}
-</style>

@@ -7,44 +7,80 @@ import { useFullscreen, useScreenOrientation, useWindowSize } from '@vueuse/core
 import frontINET from '/fonts/INET.ttf'
 import frontLAN from '/fonts/LAN.ttf'
 import frontUNI from '/fonts/UNI.ttf'
-// images
-import smartphone from '/images/smartphone/bg.png'
-import smartphoneBankingHighlighted from '/images/smartphone/banking-highlighted.png'
-import smartphoneBanking from '/images/smartphone/banking.png'
-import smartphoneEmailHighlighted from '/images/smartphone/email-highlighted.png'
-import smartphoneEmail from '/images/smartphone/email.png'
-import smartphoneGameHighlighted from '/images/smartphone/game-highlighted.png'
-import smartphoneGame from '/images/smartphone/game.png'
-import smartphoneHealthHighlighted from '/images/smartphone/health-highlighted.png'
-import smartphoneHealth from '/images/smartphone/health.png'
-import smartphoneMovieHighlighted from '/images/smartphone/movie-highlighted.png'
-import smartphoneMovie from '/images/smartphone/movie.png'
-import smartphoneMusicHighlighted from '/images/smartphone/movie-highlighted.png'
-import smartphoneMusic from '/images/smartphone/movie.png'
-import smartphoneShoppingHighlighted from '/images/smartphone/shopping-highlighted.png'
-import smartphoneShopping from '/images/smartphone/shopping.png'
-import smartphoneSocialHighlighted from '/images/smartphone/social-highlighted.png'
-import smartphoneSocial from '/images/smartphone/social.png'
 // asset
-import popupBarTexture from '@/assets/popup/bg-bar.png'
-import popupLandscapeTexture from '@/assets/popup/bg-landscape.png'
-import popupPortraitTexture from '@/assets/popup/bg-portrait.png'
-import popupSquareTexture from '@/assets/popup/bg-square.png'
-
-import popupCutSceneHomeTimeTexture from '@/assets/popup/scene/home-time.png'
-import popupCutSceneResult1Texture from '@/assets/popup/scene/result-1.png'
-import popupCutSceneResult2Texture from '@/assets/popup/scene/result-2.png'
+import popupScene01LandscapeTexture from '@/assets/popup/scene-0-1-landscape.png'
+import popupScene01PortraitTexture from '@/assets/popup/scene-0-1-portrait.png'
+import popupScene02Texture from '@/assets/popup/scene-0-2.png'
+import popupScene03Texture from '@/assets/popup/scene-0-3.png'
+import popupScene04Texture from '@/assets/popup/scene-0-4.png'
+import popupScene05Texture from '@/assets/popup/scene-0-5.png'
+import popupScene04Button11Texture from '@/assets/popup/scene-0-4-button-1-1.png'
+import popupScene04Button21Texture from '@/assets/popup/scene-0-4-button-2-1.png'
+import popupScene11Button11Texture from '@/assets/popup/scene-1-1-button-1-1.png'
+import popupScene11Button21Texture from '@/assets/popup/scene-1-1-button-2-1.png'
+import popupScene11Button31Texture from '@/assets/popup/scene-1-1-button-3-1.png'
+import popupScene11Button41Texture from '@/assets/popup/scene-1-1-button-4-1.png'
+import popupScene11Texture from '@/assets/popup/scene-1-1.png'
+import popupScene12Texture from '@/assets/popup/scene-1-2.png'
+import smartphoneBankingHighlighted from '@/assets/station/smartphone/banking-highlighted.png'
+import smartphoneBanking from '@/assets/station/smartphone/banking.png'
+import smartphoneEmailHighlighted from '@/assets/station/smartphone/email-highlighted.png'
+import smartphoneEmail from '@/assets/station/smartphone/email.png'
+import smartphoneGameHighlighted from '@/assets/station/smartphone/game-highlighted.png'
+import smartphoneGame from '@/assets/station/smartphone/game.png'
+import smartphoneHealthHighlighted from '@/assets/station/smartphone/health-highlighted.png'
+import smartphoneHealth from '@/assets/station/smartphone/health.png'
+import smartphoneMovieHighlighted from '@/assets/station/smartphone/movie-highlighted.png'
+import smartphoneMovie from '@/assets/station/smartphone/movie.png'
+import smartphoneMusicHighlighted from '@/assets/station/smartphone/music-highlighted.png'
+import smartphoneMusic from '@/assets/station/smartphone/music.png'
+import smartphoneShoppingHighlighted from '@/assets/station/smartphone/shopping-highlighted.png'
+import smartphoneShopping from '@/assets/station/smartphone/shopping.png'
+import smartphoneSocialHighlighted from '@/assets/station/smartphone/social-highlighted.png'
+import smartphoneSocial from '@/assets/station/smartphone/social.png'
+import popupScene31Texture from '@/assets/popup/scene-3-1.png'
+import popupScene32Texture from '@/assets/popup/scene-3-2.png'
+import popupScene33Texture from '@/assets/popup/scene-3-3.png'
+import popupScene34Texture from '@/assets/popup/scene-3-4.png'
+import popupScene51Texture from '@/assets/popup/scene-5-1.png'
+import popupScene52Texture from '@/assets/popup/scene-5-2.png'
+import popupScene52Button11Texture from '@/assets/popup/scene-5-2-button-1-1.png'
+import popupScene52Button12Texture from '@/assets/popup/scene-5-2-button-1-2.png'
+import popupScene52Button21Texture from '@/assets/popup/scene-5-2-button-2-1.png'
+import popupScene52Button22Texture from '@/assets/popup/scene-5-2-button-2-2.png'
+import popupScene52Button31Texture from '@/assets/popup/scene-5-2-button-3-1.png'
+import popupScene52Button32Texture from '@/assets/popup/scene-5-2-button-3-2.png'
+import popupScene52Button41Texture from '@/assets/popup/scene-5-2-button-4-1.png'
+import popupScene52Button42Texture from '@/assets/popup/scene-5-2-button-4-2.png'
+import popupScene53Texture from '@/assets/popup/scene-5-3.png'
+import popupScene54Texture from '@/assets/popup/scene-5-4.png'
+import popupScene61Texture from '@/assets/popup/scene-6-1.png'
+import popupScene62Texture from '@/assets/popup/scene-6-2.png'
+import popupScene63Texture from '@/assets/popup/scene-6-3.png'
+import popupScene63Button11Texture from '@/assets/popup/scene-6-3-button-1-1.png'
+import popupScene63Button12Texture from '@/assets/popup/scene-6-3-button-1-2.png'
+import popupScene63Button21Texture from '@/assets/popup/scene-6-3-button-2-1.png'
+import popupScene63Button22Texture from '@/assets/popup/scene-6-3-button-2-2.png'
+import popupScene64Texture from '@/assets/popup/scene-6-4.png'
+import popupScene65Texture from '@/assets/popup/scene-6-5.png'
+import popupScene71Texture from '@/assets/popup/scene-7-1.png'
+import popupScene72Texture from '@/assets/popup/scene-7-2.png'
+import popupScene73Texture from '@/assets/popup/scene-7-3.png'
+import popupScene74Texture from '@/assets/popup/scene-7-4.png'
+import popupScene8Texture from '@/assets/popup/scene-8.png'
 //
-import popupScene11LandscapeTexture from '@/assets/popup/scene/1-1-Landscape.png'
-import popupScene11PortraitTexture from '@/assets/popup/scene/1-1-Portrait.png'
-import popupScene12Texture from '@/assets/popup/scene/1-2.svg'
+import popupProtip1Texture from '@/assets/popup/protip-1.png'
+import popupProtip2Texture from '@/assets/popup/protip-2.png'
+import popupProtip3Texture from '@/assets/popup/protip-3.png'
+import popupProtip4Texture from '@/assets/popup/protip-4.png'
+import popupProtip5Texture from '@/assets/popup/protip-5.png'
 //
 import buttonLongTexture from '@/assets/buttons/long/pressed.png'
 import buttonLongPressedTexture from '@/assets/buttons/long/unpressed.png'
 import buttonShortTexture from '@/assets/buttons/short/pressed.png'
 import buttonShortPressedTexture from '@/assets/buttons/short/unpressed.png'
-import buttonSquareTexture from '@/assets/buttons/square/pressed.png'
-import buttonSquarePressedTexture from '@/assets/buttons/square/unpressed.png'
+import buttonSquareTexture from '@/assets/buttons/square/unpressed.png'
+import buttonSquarePressedTexture from '@/assets/buttons/square/pressed.png'
 //
 import mapCloudLargeTexture from '@/assets/clouds/map-large.png'
 import mapCloudMediumTexture from '@/assets/clouds/map-medium.png'
@@ -221,20 +257,19 @@ import tramFrontTexture from '@/assets/map/tram/front.png'
 import tramBackTexture from '@/assets/map/tram/back.png'
 import tramRightTexture from '@/assets/map/tram/right.png'
 // import tramLeftTexture from '@/assets/map/tram/left.png'
-//
 import mapBoat1Texture from '@/assets/map/boat/1.png'
 import mapBoat2Texture from '@/assets/map/boat/2.png'
 //
 import mapStationBgTexture from '@/assets/map/station-bg.png'
 import mapStationFgTexture from '@/assets/map/station-fg.png'
-/////
+//
 // Station
 import stationSkyTexture from '@/assets/station/sky.png'
 import stationPlatformBgTexture from '@/assets/station/platform-bg.png'
 import stationPlatformFgTexture from '@/assets/station/platform-fg.png'
 import stationTramWireTexture from '@/assets/station/tram-wire.png'
 import stationTramTexture from '@/assets/station/tram.png'
-//////
+//
 // Park
 import parkBgTexture from '@/assets/park/bg.png'
 import parkFgTexture from '@/assets/park/fg.png'
@@ -253,17 +288,6 @@ import bankAlarmLightLeft2Texture from '@/assets/bank/alarm-light/left-2.png'
 import bankAlarmLightRight1Texture from '@/assets/bank/alarm-light/right-1.png'
 import bankAlarmLightRight2Texture from '@/assets/bank/alarm-light/right-2.png'
 //
-import popupProtip11Texture from '@/assets/popup/protip/1-1.svg'
-import popupProtip12Texture from '@/assets/popup/protip/1-1.svg'
-import popupProtip21Texture from '@/assets/popup/protip/2-1.svg'
-import popupProtip22Texture from '@/assets/popup/protip/2-1.svg'
-import popupProtip31Texture from '@/assets/popup/protip/3-1.svg'
-import popupProtip32Texture from '@/assets/popup/protip/3-1.svg'
-import popupProtip41Texture from '@/assets/popup/protip/4-1.svg'
-import popupProtip42Texture from '@/assets/popup/protip/4-1.svg'
-import popupProtip51Texture from '@/assets/popup/protip/5-1.svg'
-import popupProtip52Texture from '@/assets/popup/protip/5-1.svg'
-//
 import resultStrawHutBgTexture from '@/assets/strawhut/bg.png'
 import resultStrawHutFgTexture from '@/assets/strawhut/palm-trees.png'
 
@@ -272,49 +296,80 @@ export const resources = reactive({
   frontINET,
   frontLAN,
   frontUNI,
-
   // images
-  smartphone,
-  smartphoneBankingHighlighted,
-  smartphoneBanking,
-  smartphoneEmailHighlighted,
-  smartphoneEmail,
-  smartphoneGameHighlighted,
-  smartphoneGame,
-  smartphoneHealthHighlighted,
-  smartphoneHealth,
-  smartphoneMovieHighlighted,
-  smartphoneMovie,
-  smartphoneMusicHighlighted,
-  smartphoneMusic,
-  smartphoneShoppingHighlighted,
-  smartphoneShopping,
-  smartphoneSocialHighlighted,
-  smartphoneSocial,
-  // asset
-  popupBar: popupBarTexture,
-  popupSquare: popupSquareTexture,
-  popupLandscape: popupLandscapeTexture,
-  popupPortrait: popupPortraitTexture,
   //
-  popupProtip11: popupProtip11Texture,
-  popupProtip12: popupProtip12Texture,
-  popupProtip21: popupProtip21Texture,
-  popupProtip22: popupProtip22Texture,
-  popupProtip31: popupProtip31Texture,
-  popupProtip32: popupProtip32Texture,
-  popupProtip41: popupProtip41Texture,
-  popupProtip42: popupProtip42Texture,
-  popupProtip51: popupProtip51Texture,
-  popupProtip52: popupProtip52Texture,
-  //
-  popupScene11Landscape: popupScene11LandscapeTexture,
-  popupScene11Portrait: popupScene11PortraitTexture,
+  popupScene01Landscape: popupScene01LandscapeTexture,
+  popupScene01Portrait: popupScene01PortraitTexture,
+  popupScene02: popupScene02Texture,
+  popupScene03: popupScene03Texture,
+  popupScene04: popupScene04Texture,
+  popupScene04Button11: popupScene04Button11Texture,
+  popupScene04Button12: popupScene04Button11Texture,
+  popupScene04Button21: popupScene04Button21Texture,
+  popupScene04Button22: popupScene04Button21Texture,
+  popupScene05: popupScene05Texture,
+  popupScene11: popupScene11Texture,
+  popupScene11Button11: popupScene11Button11Texture,
+  popupScene11Button12: popupScene11Button11Texture,
+  popupScene11Button21: popupScene11Button21Texture,
+  popupScene11Button22: popupScene11Button21Texture,
+  popupScene11Button31: popupScene11Button31Texture,
+  popupScene11Button32: popupScene11Button31Texture,
+  popupScene11Button41: popupScene11Button41Texture,
+  popupScene11Button42: popupScene11Button41Texture,
   popupScene12: popupScene12Texture,
+  smartphoneBanking,
+  smartphoneBankingHighlighted,
+  smartphoneEmail,
+  smartphoneEmailHighlighted,
+  smartphoneGame,
+  smartphoneGameHighlighted,
+  smartphoneHealth,
+  smartphoneHealthHighlighted,
+  smartphoneMovie,
+  smartphoneMovieHighlighted,
+  smartphoneMusic,
+  smartphoneMusicHighlighted,
+  smartphoneShopping,
+  smartphoneShoppingHighlighted,
+  smartphoneSocial,
+  smartphoneSocialHighlighted,
+  popupScene31: popupScene31Texture,
+  popupScene32: popupScene32Texture,
+  popupScene33: popupScene33Texture,
+  popupScene34: popupScene34Texture,
+  popupScene51: popupScene51Texture,
+  popupScene52: popupScene52Texture,
+  popupScene52Button11: popupScene52Button11Texture,
+  popupScene52Button12: popupScene52Button12Texture,
+  popupScene52Button21: popupScene52Button21Texture,
+  popupScene52Button22: popupScene52Button22Texture,
+  popupScene52Button31: popupScene52Button31Texture,
+  popupScene52Button32: popupScene52Button32Texture,
+  popupScene52Button41: popupScene52Button41Texture,
+  popupScene52Button42: popupScene52Button42Texture,
+  popupScene53: popupScene53Texture,
+  popupScene54: popupScene54Texture,
+  popupScene61: popupScene61Texture,
+  popupScene62: popupScene62Texture,
+  popupScene63: popupScene63Texture,
+  popupScene64: popupScene64Texture,
+  popupScene63Button11: popupScene63Button11Texture,
+  popupScene63Button12: popupScene63Button12Texture,
+  popupScene63Button21: popupScene63Button21Texture,
+  popupScene63Button22: popupScene63Button22Texture,
+  popupScene65: popupScene65Texture,
+  popupScene71: popupScene71Texture,
+  popupScene72: popupScene72Texture,
+  popupScene73: popupScene73Texture,
+  popupScene74: popupScene74Texture,
+  popupScene8: popupScene8Texture,
   //
-  popupCutSceneHomeTime: popupCutSceneHomeTimeTexture,
-  popupCutSceneResult1: popupCutSceneResult1Texture,
-  popupCutSceneResult2: popupCutSceneResult2Texture,
+  popupProtip1: popupProtip1Texture,
+  popupProtip2: popupProtip2Texture,
+  popupProtip3: popupProtip3Texture,
+  popupProtip4: popupProtip4Texture,
+  popupProtip5: popupProtip5Texture,
   //
   buttonLong: buttonLongTexture,
   buttonLongPressed: buttonLongPressedTexture,
@@ -543,13 +598,13 @@ export const resources = reactive({
 export type Character = 'black' | 'blue' | 'red' | 'violate'
 
 export const timeline: {
-  screen: number;
-  popup: number;
-  scene: number;
-  character: number;
-  time?: number;
+  screen: number
+  popup: number
+  scene: number
+  character: number
+  time?: number
 }[] = [
-    { screen: 0, popup: 0, scene: 0, character: 0, time: 0 }, // welcome 
+    { screen: 0, popup: 0, scene: 0, character: 0, time: 0 }, // welcome
     { screen: 0, popup: 0.5, scene: 1, character: 0, time: 0 }, //
     { screen: 0, popup: 1, scene: 2, character: 0, time: 0 }, // lets start
     { screen: 0, popup: 2, scene: 3, character: 0, time: 0 }, // choose avatar
@@ -558,7 +613,7 @@ export const timeline: {
     { screen: 0, popup: -1, scene: 5, character: 0, time: 0 }, // zoom
     { screen: 1, popup: -1, scene: 5, character: 0, time: 0 }, // in to the station
     { screen: 1, popup: 5, scene: 5, character: 0, time: 0 }, // your age
-    { screen: 1, popup: 6, scene: 5, character: 0, time: 0 }, // your used app 
+    { screen: 1, popup: 6, scene: 5, character: 0, time: 0 }, // your used app
     { screen: 2, popup: 7, scene: 5, character: 1, time: 0.25 }, // out of the station in the map
     { screen: 2, popup: 7, scene: 6, character: 2, time: 0.5 }, //
     { screen: 2, popup: 7, scene: 7, character: 3, time: 0.5 }, //
@@ -577,7 +632,7 @@ export const timeline: {
     { screen: 4, popup: 11, scene: 17, character: 13 },
     { screen: 4, popup: 11, scene: 18, character: 14 },
     { screen: 4, popup: 11, scene: 19, character: 15 },
-    //  
+    //
     { screen: 5, popup: 12, scene: 19, character: 15 },
     { screen: 5, popup: 13, scene: 19, character: 15 },
     { screen: 5, popup: 14, scene: 19, character: 15 },
@@ -607,10 +662,11 @@ export const timeline: {
     { screen: 6, popup: 20, scene: 29, character: 34 },
     { screen: 6, popup: -1, scene: 30, character: 35 },
     { screen: 6, popup: 21, scene: 30, character: 35 },
+    { screen: 6, popup: 22, scene: 30, character: 36 },
     // **
-    { screen: 6, popup: 22, scene: 31, character: 36 },
-    { screen: 6, popup: -1, scene: 32, character: 37 },
-    { screen: 6, popup: 23, scene: 33, character: 38 },
+    { screen: 6, popup: -1, scene: 31, character: 37 },
+    { screen: 6, popup: 23, scene: 32, character: 38 },
+    { screen: 6, popup: 23, scene: 33, character: 39 },
     //
     { screen: 7, popup: -1, scene: 33, character: 39 },
     { screen: 7, popup: -1, scene: 33, character: 39 },
@@ -667,10 +723,7 @@ export const useGameStore = defineStore('game', () => {
     characterSkin.value = value
   }
 
-  function nextTimeline(data?: {
-    screen?: number;
-    id: number;
-  }) {
+  function nextTimeline(data?: { screen?: number; id: number }) {
     const { screen = 1, id } = data ?? { screen: 1, id: -1 }
     // alert(`Timeline Trigger ${id}`)
 

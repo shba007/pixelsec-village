@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { External } from 'vue3-pixi';
-import { SCALE_MODES } from '@/utils/types'
+import { reactive } from 'vue'
+import { External } from 'vue3-pixi'
+import { textureOptions } from '@/components/Settings.vue'
 
 const modal = reactive({
   image: 'popupCutSceneHomeTime',
@@ -10,8 +10,7 @@ const modal = reactive({
 </script>
 
 <template>
-  <Sprite :texture="modal.image" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="modal.state.x"
-    :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
+  <Sprite :texture="modal.image" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
   <!--   <External>
     <div class="fixed bottom-0 left-16 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">

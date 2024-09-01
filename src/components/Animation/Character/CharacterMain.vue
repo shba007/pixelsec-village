@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { reactive, watch, computed } from 'vue'
 import { External, onTick } from 'vue3-pixi'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 import type { State } from '@/utils/types'
-import { SCALE_MODES } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
 import { useGameStore } from '@/stores/game'
+import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
 
@@ -66,7 +67,7 @@ const activeCharacter = reactive<Character>({
   direction: 1,
   orientation: 'front',
   skin: props.skin,
-  animation: 'init'
+  animation: 'init',
 })
 
 const activeTrail = reactive({
@@ -75,12 +76,15 @@ const activeTrail = reactive({
   y: 0,
 })
 
-watch(() => props.states, (value) => {
-  activeCharacter.state.x = value[0].x
-  activeCharacter.state.y = value[0].y
-  activeCharacter.state.scale = value[0].scale
-  activeCharacter.state.time = value[0].time
-})
+watch(
+  () => props.states,
+  (value) => {
+    activeCharacter.state.x = value[0].x
+    activeCharacter.state.y = value[0].y
+    activeCharacter.state.scale = value[0].scale
+    activeCharacter.state.time = value[0].time
+  }
+)
 
 watch(rotationStop, (value) => {
   activeCharacter.animation = value ? 'finished' : activeCharacter.animation
@@ -149,12 +153,11 @@ onTick((delta) => {
   <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
     :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AnimatedSprite v-if="activeCharacter.animation === 'started'" :textures="activeTrail.aliases"
-      :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :anchor="0.5" :x="activeTrail.x" :y="activeTrail.y"
-      :scale="1" :alpha="1" :playing="true" :animation-speed="0.08" />
-    <AnimatedSprite :textures="activeCharacter.aliases" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }"
-      :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'"
-      :animation-speed="0.08" />
+    <AppAnimatedSprite v-if="activeCharacter.animation === 'started'" :textures="activeTrail.aliases"
+      :texture-options="textureOptions" :anchor="0.5" :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1"
+      :playing="true" :animation-speed="0.08" />
+    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0"
+      :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'" :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <!--  <External>

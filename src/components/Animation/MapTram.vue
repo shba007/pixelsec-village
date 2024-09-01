@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
 import { onTick, External } from 'vue3-pixi'
-import { SCALE_MODES } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
+import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
 
 interface Route {
   x: number
@@ -110,16 +111,9 @@ onTick((delta) => {
 </script>
 
 <template>
-  <AnimatedSprite
-    :textures="tram.aliases"
-    :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-    :anchor="0.5"
-    :x="tram.state.x"
-    :y="tram.state.y"
-    :scale="tram.state.scale"
-    :alpha="tram.state.alpha"
-    :playing="animation && tram.animation === 'started'"
-    :animation-speed="0.08" />
+  <AppAnimatedSprite :textures="tram.aliases" :texture-options="textureOptions" :anchor="0.5" :x="tram.state.x"
+    :y="tram.state.y" :scale="tram.state.scale" :alpha="tram.state.alpha"
+    :playing="animation && tram.animation === 'started'" :animation-speed="0.08" />
   <!--  <External>
     <div class="absolute bottom-0 left-16 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">

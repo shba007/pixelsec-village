@@ -1,31 +1,47 @@
 <script setup lang="ts">
-import { External } from 'vue3-pixi'
+import { computed, ref } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore, type Character } from '@/stores/game'
-import Modal from '@/components/Modal.vue'
-
-const characters = [
-  { type: 'black', image: '/images/character-main-black-walking.gif' },
-  { type: 'violate', image: '/images/character-main-violate-walking.gif' },
-  { type: 'red', image: '/images/character-main-red-walking.gif' },
-  { type: 'blue', image: '/images/character-main-blue-walking.gif' },
-] as const
+import { textureOptions } from '@/components/Settings.vue'
+import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
 
 const gameStore = useGameStore()
 
-function onCharcterSet(type: Character) {
-  gameStore.nextTimeline({ id: 4 })
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => screenWidth.value / 1280)
+
+const modal = computed(() => ({
+  image: 'popupScene03',
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+}))
+
+const characters = [
+  { type: 'black' as const, frames: ['characterMainBlackFrontWalk1', 'characterMainBlackFrontWalk2'], state: { x: -245, y: 95, scale: 5 } },
+  { type: 'violate' as const, frames: ['characterMainViolateFrontWalk1', 'characterMainViolateFrontWalk2'], state: { x: -82, y: 95, scale: 5 } },
+  { type: 'red' as const, frames: ['characterMainRedFrontWalk1', 'characterMainRedFrontWalk2'], state: { x: 81, y: 95, scale: 5 } },
+  { type: 'blue' as const, frames: ['characterMainBlueFrontWalk1', 'characterMainBlueFrontWalk2'], state: { x: 245, y: 95, scale: 5 } },
+]
+
+const selectedCharacter = ref<Character>()
+
+function setCharacter(type: Character) {
+  console.log({ type })
+  selectedCharacter.value = type
   gameStore.setCharacterSkin(type)
+
+  setTimeout(() => {
+    gameStore.nextTimeline({ id: 4 })
+  }, 300)
 }
 </script>
 
 <template>
-  <!-- description is word breaking -->
-  <Modal title="Select your Avatar" description="Choose your main character energy." containerClass="gap-6">
-    <div class="flex gap-8 md:gap-12">
-      <button v-for="{ type, image } of characters" :key="image" @click="onCharcterSet(type)">
-        <img :src="image" class="w-[48px] duration-300 hover:scale-125 lg:w-[80px]" />
-      </button>
-    </div>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <AppAnimatedSprite v-for="{ type, frames: frames, state } of characters" :key="type" :textures="frames"
+      :texture-options="textureOptions" :x="state.x" :y="state.y"
+      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)" :anchor="0.5" :playing="true"
+      :animation-speed="0.05" @click="setCharacter(type)" @touchstart="setCharacter(type)" />
+  </Container>
 </template>

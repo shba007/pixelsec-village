@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
-import { SCALE_MODES } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
 import { useGameStore } from '@/stores/game'
 
 import Cloud from '@/components/Animation/Cloud.vue'
@@ -15,8 +15,7 @@ import CharacterGuard from '@/components/Animation/Character/CharacterGuard.vue'
 import Scene1 from '@/components/Scene/Scene-4-1.vue'
 import Scene2 from '@/components/Scene/Scene-4-2.vue'
 import Scene3 from '@/components/Scene/Scene-4-3.vue'
-import Scene4 from '@/components/Scene/Scene-4-4.vue'
-import ModalProtip from '../ModalProtip.vue'
+import ModalProtip from '@/components/ModalProtip.vue'
 
 const emit = defineEmits<{
   (event: 'close', nextSceneIndex: number): void
@@ -92,9 +91,6 @@ const characterGuard = reactive({
 })
 
 // onBeforeMount(onLoad)
-onMounted(() => setTimeout(() => {
-  gameStore.nextTimeline({ id: 29 })
-}, 2000))
 
 let totalElapsedTime = 0
 let progress = 0
@@ -133,12 +129,12 @@ const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
 
 <template>
   <Container :x="screen.state.x" :y="screen.state.y" :scale="1 * zoomFactor">
-    <Sprite :texture="screen.alias.bg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="-200"
-      :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
+    <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale"
+      :anchor-x="0" :anchor-y="0.5" />
     <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth"
       :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="screen.alias.fg" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="0" :y="0"
-      :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
+    <Sprite :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale"
+      :anchor-x="0" :anchor-y="0.5" />
     <Door :x="door.x" :y="door.y" :scale="door.scale" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" />
     <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y"
@@ -153,8 +149,7 @@ const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
   <Container v-if="!rotationStop">
     <Scene1 v-if="currentPopupIndex === 12" />
     <Scene2 v-else-if="currentPopupIndex === 13" />
-    <Scene3 v-else-if="currentPopupIndex === 14" />
-    <Scene4 v-else-if="currentPopupIndex === 15" />
+    <Scene3 v-else-if="currentPopupIndex === 14 || currentPopupIndex === 15" />
   </Container>
   <!-- DEBUG -->
   <!--  <External>

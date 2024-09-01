@@ -4,7 +4,7 @@ import { External } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
 
-import { SCALE_MODES } from '@/utils/types'
+import { textureOptions } from '@/components/Settings.vue'
 import { useGameStore } from '@/stores/game'
 import popupBar from '@/assets/popup/bg-bar.png'
 import popupLandscape from '@/assets/popup/bg-landscape.png'
@@ -96,8 +96,8 @@ const modal = computed(() => {
 </script>
 
 <template>
-  <Sprite :texture="modal.image" :texture-options="{ scaleMode: SCALE_MODES.NEAREST }" :x="modal.state.x"
-    :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
+  <Sprite :texture="modal.image" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
+    :scale="modal.state.scale" :anchor="0.5" />
   <External class="absolute left-0 top-0 h-dvh w-dvw">
     <div class="fixed size-full" :class="{ 'bg-white/55': overlay }">
       <div class="absolute max-h-[80vh] -translate-x-1/2 -translate-y-1/2"
