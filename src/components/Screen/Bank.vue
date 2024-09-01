@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
@@ -125,6 +125,10 @@ watch(currentSceneIndex, (value) => {
 })
 
 const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
+
+onMounted(() => {
+  gameStore.playSound('alarmLight', true)
+})
 </script>
 
 <template>

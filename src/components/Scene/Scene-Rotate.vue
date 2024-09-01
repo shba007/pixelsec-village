@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { External } from 'vue3-pixi'
-import { useGameStore } from '@/stores/game'
-import rotateIndicator from '@/assets/rotate-indicator.png'
-import Modal from '@/components/Modal.vue'
+import { computed } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 
-const props = withDefaults(
-  defineProps<{
-    overlay?: boolean
-  }>(),
-  {
-    overlay: false,
-  }
-)
+import { useGameStore } from '@/stores/game'
+import { textureOptions } from '@/components/Settings.vue'
 
 const gameStore = useGameStore()
+
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+const zoomFactor = computed(() => screenWidth.value / 1280)
+
+const modal = computed(() => ({
+  image: 'popupSceneRotate',
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.8 * zoomFactor.value },
+}))
 
 async function handleRotate() {
   await gameStore.toggleGameMode(true)
@@ -21,10 +21,7 @@ async function handleRotate() {
 </script>
 
 <template>
-  <Modal title="Rotate your<br/> Screen" description="Rotate your Screen<br/> to move forward" :overlay="overlay">
-    <button class="flex flex-col items-center justify-center gap-1" container-class="justify-between gap-0 py-4" @click="handleRotate">
-      <img :src="rotateIndicator" alt="rotate-indicator" class="size-[48px] animate-pulse object-contain md:size-[80px]" />
-      <span class="-translate-y-3 font-inet text-2xl opacity-50 md:text-4xl">Rotate</span>
-    </button>
-  </Modal>
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" cursor="pointer" @click="handleRotate" @touchstart="handleRotate" />
+  </Container>
 </template>

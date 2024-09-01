@@ -30,6 +30,7 @@ const options = [
 const selectedOptions = ref<Set<string>>(new Set())
 
 function onClick(option: string) {
+  gameStore.playSound('buttonPressDesign')
   if (selectedOptions.value.has(option)) selectedOptions.value.delete(option)
   else selectedOptions.value.add(option)
 }

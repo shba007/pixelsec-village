@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useWindowSize } from '@vueuse/core'
+
+import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
 
 const props = withDefaults(
@@ -14,6 +16,8 @@ const props = withDefaults(
     y: 'center',
   }
 )
+
+const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
@@ -72,6 +76,10 @@ const modal = computed(() => {
     xFactor: xFactor * 100 + '%',
     yFactor: yFactor * 100 + '%',
   }
+})
+
+onMounted(() => {
+  gameStore.playSound('protip')
 })
 </script>
 

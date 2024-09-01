@@ -1,10 +1,12 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue'
 import { Application, Loader } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
-import { resources, useGameStore } from '@/stores/game'
+import { resources } from '@/utils/asset'
+import { useGameStore } from '@/stores/game'
+
+import Settings from '@/components/Settings.vue'
 import SceneRotate from '@/components/Scene/Scene-Rotate.vue'
 import ScreenMap from '@/components/Screen/Map.vue'
 import ScreenStation from '@/components/Screen/Station.vue'
@@ -14,7 +16,6 @@ import ScreenResult1 from '@/components/Screen/Result-1.vue'
 import ScreenResult2 from '@/components/Screen/Result-1.vue'
 import ScreenResult3 from '@/components/Screen/Result-1.vue'
 import ScreenResult4 from '@/components/Screen/Result-1.vue'
-import Settings from '@/components/Settings.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
@@ -24,7 +25,7 @@ const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
 
 <template>
   <Application>
-    <Loader :resources="resources" :on-resolved="() => {}">
+    <Loader :resources="{ ...resources.font, ...resources.image, ...resources.sound }" :on-resolved="() => {}">
       <template #fallback="{ progress }">
         <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :style="{ fill: 'white' }" :scale="0.75"> Loading... {{ Math.round(progress * 100) }}% </Text>
       </template>
@@ -37,15 +38,15 @@ const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
         <ScreenResult2 v-else-if="currentScreenIndex === 8" />
         <ScreenResult3 v-else-if="currentScreenIndex === 9" />
         <ScreenResult4 v-else-if="currentScreenIndex === 10" />
-        <SceneRotate v-if="!hardStop && rotationStop" :overlay="true" />
+        <SceneRotate v-if="!hardStop && rotationStop" />
         <Settings />
       </template>
     </Loader>
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.3.0</p>
-    <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+    <p>v0.3.1</p>
+   <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>

@@ -18,6 +18,7 @@ const modal = computed(() => ({
 }))
 
 async function handleStart() {
+  gameStore.gameStart()
   gameStore.nextTimeline({ id: 1 })
   await gameStore.toggleGameMode(true)
 }
@@ -33,6 +34,6 @@ watch(isLandscape, (value) => {
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" cursor="pointer" @click="handleStart" @touchstart="handleStart" />
   </Container>
 </template>

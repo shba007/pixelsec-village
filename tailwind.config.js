@@ -10,7 +10,6 @@ export default {
     fontFamily: {
       inet: ['INET', ...defaultTheme.fontFamily.sans],
       lan: ['LAN', ...defaultTheme.fontFamily.sans],
-      uni: ['UNI', ...defaultTheme.fontFamily.sans],
     },
     extend: {},
   },

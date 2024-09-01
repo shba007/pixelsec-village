@@ -25,6 +25,7 @@ const selectedOption = ref<boolean>()
 
 function onClick(value: boolean) {
   selectedOption.value = value
+  gameStore.playSound('buttonPress')
   // DATA-COLLECT
   setTimeout(() => {
     gameStore.nextTimeline(value ? { screen: 1, id: 5 } : { screen: 2, id: 6 })

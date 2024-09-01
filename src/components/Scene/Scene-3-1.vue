@@ -28,7 +28,7 @@ const { start } = useTimeoutFn(handleMove, 4000, { immediate: false })
 useTimeoutFn(() => {
   image.value = 'popupScene32'
   start()
-}, 10000)
+}, 8000)
 </script>
 
 <template>

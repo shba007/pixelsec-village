@@ -29,6 +29,7 @@ const options = ref([
 const selectedOptions = ref<Set<string>>(new Set())
 
 function onClick(topic: string) {
+  gameStore.playSound('buttonPress')
   if (selectedOptions.value.has(topic)) selectedOptions.value.delete(topic)
   else selectedOptions.value.add(topic)
 }

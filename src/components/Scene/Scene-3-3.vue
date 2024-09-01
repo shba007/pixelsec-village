@@ -26,6 +26,7 @@ const options = ref([
 const selectedOption = ref<boolean | null>(null)
 
 function onClick(option: boolean) {
+  gameStore.playSound('buttonPress')
   // DATA-COLLECT
   selectedOption.value = option
 

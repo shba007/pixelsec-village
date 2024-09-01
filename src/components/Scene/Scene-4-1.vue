@@ -4,6 +4,7 @@ import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
+import { onMounted } from 'vue'
 
 const gameStore = useGameStore()
 
@@ -22,6 +23,10 @@ function handleMove() {
 }
 
 useTimeoutFn(handleMove, 5000)
+
+onMounted(() => {
+  gameStore.playSound('alarmBell', true)
+})
 </script>
 
 <template>

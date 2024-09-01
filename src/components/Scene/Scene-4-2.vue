@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useInterval, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
@@ -54,9 +54,14 @@ const timer = computed(() => {
 })
 
 function onClick(value: string) {
+  gameStore.playSound('buttonPress')
   // DATA-COLLECT
   gameStore.nextTimeline({ screen: 2, id: 31 })
 }
+
+onMounted(() => {
+  gameStore.playSound('countdown', true)
+})
 </script>
 
 <template>

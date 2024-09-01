@@ -26,9 +26,9 @@ const characters = [
 const selectedCharacter = ref<Character>()
 
 function setCharacter(type: Character) {
-  console.log({ type })
   selectedCharacter.value = type
   gameStore.setCharacterSkin(type)
+  gameStore.playSound('buttonPressDesign')
 
   setTimeout(() => {
     gameStore.nextTimeline({ id: 4 })
