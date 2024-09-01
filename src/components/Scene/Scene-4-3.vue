@@ -26,19 +26,15 @@ const options = ref([
   { type: 'not-sure', state: { x: 0, y: 110, scale: 5.5 } },
 ])
 
-const selectedOptions = ref<Set<string>>(new Set())
+const selectedOption = ref<string>()
 
-function onClick(topic: string) {
+function onClick(value: string) {
   gameStore.playSound('buttonPress')
-  if (selectedOptions.value.has(topic)) selectedOptions.value.delete(topic)
-  else selectedOptions.value.add(topic)
-}
-
-watchDebounced(() => [...selectedOptions.value.values()], onComplete, { debounce: 2000 })
-
-function onComplete() {
   // DATA-COLLECT
-  gameStore.nextTimeline({ screen: 2, id: 43 })
+  selectedOption.value = value
+  setTimeout(() => {
+    gameStore.nextTimeline({ screen: 2, id: 32 })
+  }, 300)
 }
 
 const frames = ['buttonSquare', 'buttonSquarePressed']
@@ -50,7 +46,7 @@ const frames = ['buttonSquare', 'buttonSquarePressed']
     <Sprite
       v-for="{ type, state } of options"
       :key="type"
-      :texture="frames[Number(selectedOptions.has(type))]"
+      :texture="frames[Number(selectedOption === type)]"
       :texture-options="textureOptions"
       :x="state.x"
       :y="state.y"

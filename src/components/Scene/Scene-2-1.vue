@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { External } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
+import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
 
 const gameStore = useGameStore()
 
@@ -25,6 +26,8 @@ const options = [
 
 const selectedOption = ref<string>()
 
+const characterStationMaster = reactive({ x: -270, y: -75, scale: 1.1, alpha: 1, time: 0 })
+
 function onClick(value: string) {
   selectedOption.value = value
   gameStore.playSound('buttonPress')
@@ -38,6 +41,7 @@ function onClick(value: string) {
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <CharacterStationMaster :state="characterStationMaster" place="station" />
     <Sprite
       v-for="{ type, frames, state } of options"
       :key="type"

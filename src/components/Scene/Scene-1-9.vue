@@ -28,11 +28,12 @@ const options = ref([
 const selectedOption = ref<string>()
 
 function onClick(option: string) {
+  gameStore.playSound('buttonPress')
   // DATA-COLLECT
   selectedOption.value = option
 
   setTimeout(() => {
-    gameStore.nextTimeline({ id: 25 })
+    gameStore.nextTimeline({ id: 36 })
   }, 300)
 }
 

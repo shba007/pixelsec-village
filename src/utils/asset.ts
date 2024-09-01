@@ -11,11 +11,17 @@ import popupScene03Texture from '@/assets/image/popup/scene-0-3.png'
 import popupScene04Texture from '@/assets/image/popup/scene-0-4.png'
 import popupScene05Texture from '@/assets/image/popup/scene-0-5.png'
 import popupScene04Button11Texture from '@/assets/image/popup/scene-0-4-button-1-1.png'
+import popupScene04Button12Texture from '@/assets/image/popup/scene-0-4-button-1-2.png'
 import popupScene04Button21Texture from '@/assets/image/popup/scene-0-4-button-2-1.png'
+import popupScene04Button22Texture from '@/assets/image/popup/scene-0-4-button-2-2.png'
 import popupScene11Button11Texture from '@/assets/image/popup/scene-1-1-button-1-1.png'
+import popupScene11Button12Texture from '@/assets/image/popup/scene-1-1-button-1-2.png'
 import popupScene11Button21Texture from '@/assets/image/popup/scene-1-1-button-2-1.png'
+import popupScene11Button22Texture from '@/assets/image/popup/scene-1-1-button-2-2.png'
 import popupScene11Button31Texture from '@/assets/image/popup/scene-1-1-button-3-1.png'
+import popupScene11Button32Texture from '@/assets/image/popup/scene-1-1-button-3-2.png'
 import popupScene11Button41Texture from '@/assets/image/popup/scene-1-1-button-4-1.png'
+import popupScene11Button42Texture from '@/assets/image/popup/scene-1-1-button-4-2.png'
 import popupScene11Texture from '@/assets/image/popup/scene-1-1.png'
 import popupScene12Texture from '@/assets/image/popup/scene-1-2.png'
 import smartphoneBankingHighlighted from '@/assets/image/station/smartphone/banking-highlighted.png'
@@ -276,8 +282,10 @@ import bankBgTexture from '@/assets/image/bank/bg.png'
 import bankDoorOpenTexture from '@/assets/image/bank/door/open.png'
 import bankDoorCloseTexture from '@/assets/image/bank/door/close.png'
 //
-import bankAlarmBell1Texture from '@/assets/image/bank/alarm-bell/1.png'
-import bankAlarmBell2Texture from '@/assets/image/bank/alarm-bell/2.png'
+import bankAlarmBellScene1Texture from '@/assets/image/bank/alarm-bell/scene-1.png'
+import bankAlarmBellScene2Texture from '@/assets/image/bank/alarm-bell/scene-2.png'
+import bankAlarmBellPopup1Texture from '@/assets/image/bank/alarm-bell/popup-1.png'
+import bankAlarmBellPopup2Texture from '@/assets/image/bank/alarm-bell/popup-2.png'
 //
 import bankAlarmLightLeft1Texture from '@/assets/image/bank/alarm-light/left-1.png'
 import bankAlarmLightLeft2Texture from '@/assets/image/bank/alarm-light/left-2.png'
@@ -306,19 +314,19 @@ export const resources = {
     popupScene03: popupScene03Texture,
     popupScene04: popupScene04Texture,
     popupScene04Button11: popupScene04Button11Texture,
-    popupScene04Button12: popupScene04Button11Texture,
+    popupScene04Button12: popupScene04Button12Texture,
     popupScene04Button21: popupScene04Button21Texture,
-    popupScene04Button22: popupScene04Button21Texture,
+    popupScene04Button22: popupScene04Button22Texture,
     popupScene05: popupScene05Texture,
     popupScene11: popupScene11Texture,
     popupScene11Button11: popupScene11Button11Texture,
-    popupScene11Button12: popupScene11Button11Texture,
+    popupScene11Button12: popupScene11Button12Texture,
     popupScene11Button21: popupScene11Button21Texture,
-    popupScene11Button22: popupScene11Button21Texture,
+    popupScene11Button22: popupScene11Button22Texture,
     popupScene11Button31: popupScene11Button31Texture,
-    popupScene11Button32: popupScene11Button31Texture,
+    popupScene11Button32: popupScene11Button32Texture,
     popupScene11Button41: popupScene11Button41Texture,
-    popupScene11Button42: popupScene11Button41Texture,
+    popupScene11Button42: popupScene11Button42Texture,
     popupScene12: popupScene12Texture,
     smartphoneBanking,
     smartphoneBankingHighlighted,
@@ -579,8 +587,10 @@ export const resources = {
     bankDoorClose: bankDoorCloseTexture,
     bankDoorOpen: bankDoorOpenTexture,
     //
-    bankAlarmBell1: bankAlarmBell1Texture,
-    bankAlarmBell2: bankAlarmBell2Texture,
+    bankAlarmBellScene1: bankAlarmBellScene1Texture,
+    bankAlarmBellScene2: bankAlarmBellScene2Texture,
+    bankAlarmBellPopup1: bankAlarmBellPopup1Texture,
+    bankAlarmBellPopup2: bankAlarmBellPopup2Texture,
     //
     bankAlarmLightLeft1: bankAlarmLightLeft1Texture,
     bankAlarmLightLeft2: bankAlarmLightLeft2Texture,

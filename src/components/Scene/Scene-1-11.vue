@@ -17,15 +17,16 @@ const modal = computed(() => ({
 }))
 
 const options = [
-  { type: true, frames: ['popupScene63Button11', 'popupScene63Button12'], state: { x: -200, y: 80, scale: 1 } },
-  { type: false, frames: ['popupScene63Button21', 'popupScene63Button22'], state: { x: 10, y: 80, scale: 1 } },
+  { type: true, frames: ['popupScene63Button11', 'popupScene63Button12'], state: { x: -200, y: 80, scale: 0.8 } },
+  { type: false, frames: ['popupScene63Button21', 'popupScene63Button22'], state: { x: 10, y: 80, scale: 0.8 } },
 ]
 
 const selectedOption = ref<boolean>()
 
 function onClick(value: boolean) {
-  selectedOption.value = value
   // DATA-COLLECT
+  gameStore.playSound('buttonPress')
+  selectedOption.value = value
   setTimeout(() => {
     gameStore.nextTimeline({ id: 55 })
   }, 300)

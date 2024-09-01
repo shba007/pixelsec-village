@@ -56,7 +56,10 @@ const timer = computed(() => {
 function onClick(value: string) {
   gameStore.playSound('buttonPress')
   // DATA-COLLECT
-  gameStore.nextTimeline({ screen: 2, id: 31 })
+  selectedOption.value = value
+  setTimeout(() => {
+    gameStore.nextTimeline({ screen: 2, id: 31 })
+  }, 300)
 }
 
 onMounted(() => {
@@ -68,11 +71,11 @@ onMounted(() => {
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
     <Container :x="timerText.x" :y="timerText.y" :scale="timerText.scale">
-      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45"> {{ timer[0] }}:{{ timer[1] }}</Text>
-      <Text :style="{ fill: 'red', fontFamily: 'INET' }" :texture-options="textureOptions" :x="22">
+      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45"> {{ timer[0] }} : {{ timer[1] }} </Text>
+      <Text :style="{ fill: 'red', fontFamily: 'INET' }" :texture-options="textureOptions" :x="18">
         {{ timer[2] }}
       </Text>
-      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="45">:{{ timer[3] }}</Text>
+      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="35"> : {{ timer[3] }}</Text>
     </Container>
     <Sprite
       v-for="{ type, frames, state } of options"

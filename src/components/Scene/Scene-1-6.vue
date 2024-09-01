@@ -50,8 +50,8 @@ onBeforeUnmount(() => {
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
     <External class="absolute left-0 top-0 h-dvh w-dvw">
-      <div class="absolute left-1/2 top-[calc(58%)] max-h-[50vh] -translate-x-1/2 -translate-y-1/2 overflow-y-scroll">
-        <section ref="targetElem" class="policy-section cms-content section-legal">
+      <div class="absolute left-1/2 top-[calc(58%)] -translate-x-1/2 -translate-y-1/2">
+        <section ref="targetElem" class="policy-section cms-content section-legal h-[50vh]">
           <div class="container">
             <article>
               <!-- <h1 class="section-title">Terms and Conditions for <span class="text-blue d-block">Affinidi Services</span>
@@ -924,7 +924,6 @@ onBeforeUnmount(() => {
 @import '@/assets/css/policy.css';
 
 .policy-section {
-  height: 100%;
   overflow-y: scroll;
   background-color: #eeeeeeb2;
 }

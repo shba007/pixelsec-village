@@ -2,15 +2,16 @@
 import { textureOptions } from '@/components/Settings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
-defineProps<{
+const props = defineProps<{
   x: number
   y: number
   scale: number
+  place: 'bank' | 'popup'
 }>()
 
-const imgs = ['bankAlarmBell1', 'bankAlarmBell2']
+const imgs = props.place === 'bank' ? ['bankAlarmBellScene1', 'bankAlarmBellScene2'] : ['bankAlarmBellPopup1', 'bankAlarmBellPopup2']
 const playing = true
-const speed = 0.05
+const speed = 0.1
 </script>
 
 <template>
