@@ -129,18 +129,13 @@ const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
 
 <template>
   <Container :x="screen.state.x" :y="screen.state.y" :scale="1 * zoomFactor">
-    <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale"
-      :anchor-x="0" :anchor-y="0.5" />
-    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth"
-      :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale"
-      :anchor-x="0" :anchor-y="0.5" />
+    <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+    <Sprite :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
     <Door :x="door.x" :y="door.y" :scale="door.scale" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" />
-    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y"
-      :scale="scale" />
-    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank"
-      :type="type as 'purple' | 'green'" />
+    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
+    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
     <CharacterGuard :state="characterGuard" place="bank" />
     <Container :x="protip.x" :y="protip.y" :scale="protip.scale">
       <ModalProtip v-if="currentPopupIndex === 16" title="3" x="left" />

@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { isMobile } from "pixi.js";
-import { onMounted } from "vue";
-import { useApplication } from 'vue3-pixi';
+import { isMobile } from 'pixi.js'
+import { onMounted } from 'vue'
+import { useApplication } from 'vue3-pixi'
 
 onMounted(() => {
-	const canvas = document.querySelector<HTMLCanvasElement>('canvas')!
-	const ctx = canvas.getContext("2d");
-	if (!ctx)
-		return
-	ctx.mozImageSmoothingEnabled = false;
-	ctx.webkitImageSmoothingEnabled = false;
+  const canvas = document.querySelector<HTMLCanvasElement>('canvas')!
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+  ctx.mozImageSmoothingEnabled = false
+  ctx.webkitImageSmoothingEnabled = false
 })
 
 const app = useApplication()
@@ -28,17 +27,17 @@ export const textureOptions = { scaleMode: 0 }
 
 <style>
 canvas {
-	image-rendering: optimizeSpeed;
-	/* Older versions of FF          */
-	image-rendering: -moz-crisp-edges;
-	/* FF 6.0+                       */
-	image-rendering: -webkit-optimize-contrast;
-	/* Safari                        */
-	image-rendering: -o-crisp-edges;
-	/* OS X & Windows Opera (12.02+) */
-	image-rendering: pixelated;
-	/* Awesome future-browsers       */
-	-ms-interpolation-mode: nearest-neighbor;
-	/* IE                            */
+  image-rendering: optimizeSpeed;
+  /* Older versions of FF          */
+  image-rendering: -moz-crisp-edges;
+  /* FF 6.0+                       */
+  image-rendering: -webkit-optimize-contrast;
+  /* Safari                        */
+  image-rendering: -o-crisp-edges;
+  /* OS X & Windows Opera (12.02+) */
+  image-rendering: pixelated;
+  /* Awesome future-browsers       */
+  -ms-interpolation-mode: nearest-neighbor;
+  /* IE                            */
 }
 </style>

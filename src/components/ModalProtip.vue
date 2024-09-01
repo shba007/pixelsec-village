@@ -76,6 +76,5 @@ const modal = computed(() => {
 </script>
 
 <template>
-  <Sprite :texture="modal.image[0]" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
-    :scale="modal.state.scale" :anchor="0.5" />
+  <Sprite :texture="modal.image[0]" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
 </template>

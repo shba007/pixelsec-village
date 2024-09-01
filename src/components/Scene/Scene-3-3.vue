@@ -40,8 +40,16 @@ const frames = ['buttonSquare', 'buttonSquarePressed']
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
-    <Sprite v-for="{ type, state } of options" :key="String(type)" :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
-      @click="onClick(type)" @touchstart="onClick(type)" />
+    <Sprite
+      v-for="{ type, state } of options"
+      :key="String(type)"
+      :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions"
+      :x="state.x"
+      :y="state.y"
+      :scale="state.scale"
+      cursor="pointer"
+      @click="onClick(type)"
+      @touchstart="onClick(type)" />
   </Container>
 </template>

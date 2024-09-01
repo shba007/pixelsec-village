@@ -42,7 +42,6 @@ import Scene10 from '@/components/Scene/Scene-1-10.vue'
 import Scene11 from '@/components/Scene/Scene-1-11.vue'
 import Scene12 from '@/components/Scene/Scene-1-12.vue'
 
-
 const props = defineProps<{
   isLoad: boolean
 }>()
@@ -63,43 +62,43 @@ const screen = reactive<Asset>({
   alias: 'mapBg',
   states: [
     { x: -380, y: -260, scale: 0.94, alpha: 1, time: 0 },
-    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 2 }, // Welcome to Dataville 
+    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 2 }, // Welcome to Dataville
     { x: -990, y: -560, scale: 1.96, alpha: 1, time: 5 },
     { x: -795, y: -590, scale: 2.01, alpha: 1, time: 7 }, // let the adventure begin
     { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 }, // choose your avater
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 }, // read t&c
     { x: -650, y: -350, scale: 2.53, alpha: 1, time: 11 }, // zoomin transition
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 12.25 }, // zoomin transition
-    { "x": -580, "y": -413.8683596236825, "scale": 2.01, "alpha": 1, "time": 14 },
-    { "x": -860, "y": -413.8683596236825, "scale": 2.01, "alpha": 1, "time": 17 },
-    { "x": -860, "y": -860.8683596236825, "scale": 2.01, "alpha": 1, "time": 20 },
-    { "x": -1350, "y": -860.8683596236825, "scale": 2.01, "alpha": 1, "time": 23 },
-    { "x": -1350, "y": -1042.8683596236826, "scale": 2.01, "alpha": 1, "time": 25.25 },
-    { "x": -1300, "y": -1042.8683596236826, "scale": 2.01, "alpha": 1, "time": 26 },
-    { "x": -1300, "y": -1132.8683596236826, "scale": 2.01, "alpha": 1, "time": 27.5 },
-    { "x": -700, "y": -1132.8683596236826, "scale": 2.01, "alpha": 1, "time": 31 },
-    { "x": -700, "y": -1089.8683596236826, "scale": 2.01, "alpha": 1, "time": 31.43 },
-    // at park 17 
-    { "x": -565, "y": -1089.8683596236826, "scale": 2.01, "alpha": 1, "time": 32.78 },
-    { "x": -565, "y": -1090.8683596236826, "scale": 2.01, "alpha": 1, "time": 32.79 },
-    { "x": -610, "y": -1090.8683596236826, "scale": 2.01, "alpha": 1, "time": 33.24 },
-    { "x": -610, "y": -1632.8683596236826, "scale": 2.01, "alpha": 1, "time": 38.66 },
+    { x: -580, y: -413.8683596236825, scale: 2.01, alpha: 1, time: 14 },
+    { x: -860, y: -413.8683596236825, scale: 2.01, alpha: 1, time: 17 },
+    { x: -860, y: -860.8683596236825, scale: 2.01, alpha: 1, time: 20 },
+    { x: -1350, y: -860.8683596236825, scale: 2.01, alpha: 1, time: 23 },
+    { x: -1350, y: -1042.8683596236826, scale: 2.01, alpha: 1, time: 25.25 },
+    { x: -1300, y: -1042.8683596236826, scale: 2.01, alpha: 1, time: 26 },
+    { x: -1300, y: -1132.8683596236826, scale: 2.01, alpha: 1, time: 27.5 },
+    { x: -700, y: -1132.8683596236826, scale: 2.01, alpha: 1, time: 31 },
+    { x: -700, y: -1089.8683596236826, scale: 2.01, alpha: 1, time: 31.43 },
+    // at park 17
+    { x: -565, y: -1089.8683596236826, scale: 2.01, alpha: 1, time: 32.78 },
+    { x: -565, y: -1090.8683596236826, scale: 2.01, alpha: 1, time: 32.79 },
+    { x: -610, y: -1090.8683596236826, scale: 2.01, alpha: 1, time: 33.24 },
+    { x: -610, y: -1632.8683596236826, scale: 2.01, alpha: 1, time: 38.66 },
     // at bank 21
-    { "x": -1090, "y": -1632.8683596236826, "scale": 2.01, "alpha": 1, "time": 43.46 },
-    { "x": -1090, "y": -1872.8683596236826, "scale": 2.01, "alpha": 1, "time": 45.86 },
+    { x: -1090, y: -1632.8683596236826, scale: 2.01, alpha: 1, time: 43.46 },
+    { x: -1090, y: -1872.8683596236826, scale: 2.01, alpha: 1, time: 45.86 },
     // at pond 23
-    { "x": -995, "y": -1937.8683596236826, "scale": 2.01, "alpha": 1, "time": 47.015 },
-    { "x": -890, "y": -1890, "scale": 2.01, "alpha": 1, "time": 54.0175 },
+    { x: -995, y: -1937.8683596236826, scale: 2.01, alpha: 1, time: 47.015 },
+    { x: -890, y: -1890, scale: 2.01, alpha: 1, time: 54.0175 },
     // loop ends 25
-    { "x": -1085, "y": -1922.8683596236826, "scale": 2.01, "alpha": 1, "time": 55.7625 },
-    { "x": -1085, "y": -2162.8683596236824, "scale": 2.01, "alpha": 1, "time": 58.1625 },
-    { "x": -850, "y": -2162.8683596236824, "scale": 2.01, "time": 60.5125, "alpha": 1 },
-    { "x": -850, "y": -2340, "scale": 2.01, "time": 62.9125, "alpha": 1 },
-    { "x": -90, "y": -2340, "scale": 2.01, "time": 70.5125, "alpha": 1 },
-    { "x": -90, "y": -2520, "scale": 1.64, "time": 71.5125, "alpha": 1 },
+    { x: -1085, y: -1922.8683596236826, scale: 2.01, alpha: 1, time: 55.7625 },
+    { x: -1085, y: -2162.8683596236824, scale: 2.01, alpha: 1, time: 58.1625 },
+    { x: -850, y: -2162.8683596236824, scale: 2.01, time: 60.5125, alpha: 1 },
+    { x: -850, y: -2340, scale: 2.01, time: 62.9125, alpha: 1 },
+    { x: -90, y: -2340, scale: 2.01, time: 70.5125, alpha: 1 },
+    { x: -90, y: -2520, scale: 1.64, time: 71.5125, alpha: 1 },
     // stop for the ballon 31
-    { "x": -930, "y": -2555, "scale": 1.64, "time": 79.0625, "alpha": 1 },
-    { "x": -1570, "y": -2470, "scale": 1.64, "time": 84.2125, "alpha": 1 },
+    { x: -930, y: -2555, scale: 1.64, time: 79.0625, alpha: 1 },
+    { x: -1570, y: -2470, scale: 1.64, time: 84.2125, alpha: 1 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -333,41 +332,41 @@ const characterMain = reactive<Asset>({
     { x: 1620, y: 1190, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
     { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 16.5 }, // leaving the tram
     { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
-    { "x": 1020, "y": 1237, "scale": 1.75, "alpha": 1, "time": 20.43 },
+    { x: 1020, y: 1237, scale: 1.75, alpha: 1, time: 20.43 },
     // at park 13
-    { "x": 885, "y": 1237, "scale": 1.75, "alpha": 1, "time": 21.78 },
-    { "x": 885, "y": 1238, "scale": 1.75, "alpha": 1, "time": 21.79 },
-    { "x": 930, "y": 1238, "scale": 1.5, "alpha": 1, "time": 22.24 },
-    { "x": 930, "y": 1780, "scale": 1.5, "alpha": 1, "time": 27.66 },
+    { x: 885, y: 1237, scale: 1.75, alpha: 1, time: 21.78 },
+    { x: 885, y: 1238, scale: 1.75, alpha: 1, time: 21.79 },
+    { x: 930, y: 1238, scale: 1.5, alpha: 1, time: 22.24 },
+    { x: 930, y: 1780, scale: 1.5, alpha: 1, time: 27.66 },
     // at bank 17
-    { "x": 1410, "y": 1780, "scale": 1.5, "alpha": 1, "time": 32.46 },
-    { "x": 1410, "y": 2020, "scale": 1.5, "alpha": 1, "time": 34.86 },
+    { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 32.46 },
+    { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 34.86 },
     // at pond 19
-    { "x": 1315, "y": 2085, "scale": 1.5, "alpha": 1, "time": 36.015 },
-    { "x": 1220, "y": 2150, "scale": 1.5, "alpha": 1, "time": 37.1625 },
-    { "x": 1100, "y": 2150, "scale": 1.5, "alpha": 1, "time": 38.3625 },
-    { "x": 1020, "y": 2090, "scale": 1.5, "alpha": 1, "time": 39.3625 },
-    { "x": 1020, "y": 1960, "scale": 1.5, "alpha": 1, "time": 40.6625 },
-    { "x": 1110, "y": 1910, "scale": 1.5, "alpha": 1, "time": 41.6925 },
-    { "x": 1230, "y": 1910, "scale": 1.5, "alpha": 1, "time": 42.8925 },
-    { "x": 1290, "y": 2030, "scale": 1.5, "alpha": 1, "time": 44.2325 },
+    { x: 1315, y: 2085, scale: 1.5, alpha: 1, time: 36.015 },
+    { x: 1220, y: 2150, scale: 1.5, alpha: 1, time: 37.1625 },
+    { x: 1100, y: 2150, scale: 1.5, alpha: 1, time: 38.3625 },
+    { x: 1020, y: 2090, scale: 1.5, alpha: 1, time: 39.3625 },
+    { x: 1020, y: 1960, scale: 1.5, alpha: 1, time: 40.6625 },
+    { x: 1110, y: 1910, scale: 1.5, alpha: 1, time: 41.6925 },
+    { x: 1230, y: 1910, scale: 1.5, alpha: 1, time: 42.8925 },
+    { x: 1290, y: 2030, scale: 1.5, alpha: 1, time: 44.2325 },
     // loop starts 27
-    { "x": 1250, "y": 2150, "scale": 1.5, "alpha": 1, "time": 45.4975 },
-    { "x": 1030, "y": 2150, "scale": 1.5, "alpha": 1, "time": 47.6975 },
-    { "x": 1250, "y": 2150, "scale": 1.5, "alpha": 1, "time": 49.8975 },
+    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 45.4975 },
+    { x: 1030, y: 2150, scale: 1.5, alpha: 1, time: 47.6975 },
+    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 49.8975 },
     // loop ends 30
-    { "x": 1405, "y": 2070, "scale": 1.5, "alpha": 1, "time": 51.6425 },
-    { "x": 1405, "y": 2310, "scale": 1.5, "alpha": 1, "time": 54.0425 },
-    { "x": 1170, "y": 2310, "scale": 1.5, "alpha": 1, "time": 56.3925 },
-    { "x": 1170, "y": 2550, "scale": 1.5, "alpha": 1, "time": 58.7925 },
-    { "x": 410, "y": 2550, "scale": 1.5, "alpha": 1, "time": 66.3925 },
-    { "x": 410, "y": 2777, "scale": 1.85, "alpha": 1, "time": 68.7825 },
+    { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 51.6425 },
+    { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 54.0425 },
+    { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 56.3925 },
+    { x: 1170, y: 2550, scale: 1.5, alpha: 1, time: 58.7925 },
+    { x: 410, y: 2550, scale: 1.5, alpha: 1, time: 66.3925 },
+    { x: 410, y: 2777, scale: 1.85, alpha: 1, time: 68.7825 },
     // stop for the ballon 35
-    { "x": 1165, "y": 2777, "scale": 1.85, "alpha": 1, "time": 76.3325 },
-    { "x": 1670, "y": 2777, "scale": 1.85, "alpha": 1, "time": 81.3925 },
-    { "x": 1670, "y": 2590, "scale": 1.5, "alpha": 1, "time": 83.3925 },
+    { x: 1165, y: 2777, scale: 1.85, alpha: 1, time: 76.3325 },
+    { x: 1670, y: 2777, scale: 1.85, alpha: 1, time: 81.3925 },
+    { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 83.3925 },
     // **
-    { "x": 1985, "y": 2590, "scale": 1.5, "alpha": 1, "time": 86.5425 },
+    { x: 1985, y: 2590, scale: 1.5, alpha: 1, time: 86.5425 },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'init',
@@ -442,9 +441,12 @@ const clouds = ref<
   { size: 'sm', x: -600, y: 0.96, direction: 1 },
 ])
 
-watch(() => screen.animation, (value) => {
-  gameStore.toggleMotionBlur(value === 'started')
-})
+watch(
+  () => screen.animation,
+  (value) => {
+    gameStore.toggleMotionBlur(value === 'started')
+  }
+)
 
 function onLoad() {
   updateScreen(screen.states[0])
@@ -477,7 +479,7 @@ onTick((delta) => {
       y: screen.states[currentSceneIndex.value].y + dy * progress,
       scale: screen.states[currentSceneIndex.value].scale + ds * progress,
       time: screen.states[currentSceneIndex.value].time + dt * progress,
-      alpha: 1
+      alpha: 1,
     })
 
     if (progress == 1) {
@@ -487,11 +489,14 @@ onTick((delta) => {
   }
 })
 
-watch(() => screen.animation, () => {
-  if (currentSceneIndex.value === 5 && screen.animation === 'finished') {
-    gameStore.nextTimeline({ id: 7 })
+watch(
+  () => screen.animation,
+  () => {
+    if (currentSceneIndex.value === 5 && screen.animation === 'finished') {
+      gameStore.nextTimeline({ id: 7 })
+    }
   }
-})
+)
 
 watch(currentScreenIndex, (value) => {
   if (value === 2) {
@@ -522,38 +527,41 @@ function handleResponse(value: number) {
 </script>
 
 <template>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-      :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
-    <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-      :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
-    <Sprite texture="mapStationBg"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
-      :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
+    <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
+    <Sprite
+      texture="mapStationBg"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+      :x="station.bg.x"
+      :y="station.bg.y"
+      :scale="station.bg.scale"
+      :anchor="0"
+      :z-index="2" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
     <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-    <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur"
-      initialOrientation="right" />
-    <Sprite texture="mapStationFg"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
-      :y="station.fg.y" :scale="station.fg.scale" :anchor="0" :z-index="0" />
+    <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur" initialOrientation="right" />
+    <Sprite
+      texture="mapStationFg"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+      :x="station.fg.x"
+      :y="station.fg.y"
+      :scale="station.fg.scale"
+      :anchor="0"
+      :z-index="0" />
     <!-- @vue-ignore -->
     <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
-      place="map" />
+    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
-      :type="(type as 'purple' | 'green')" place="map" />
+    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
     <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
     <CharacterGuard place="map" :state="characterGuard.state" />
     <CharacterBaloonVendor :state="characterBaloonVendor.state" />
     <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
     <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
 
-    <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange"
-      :direction="(car.direction as -1 | 1)" />
+    <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction as -1 | 1" />
     <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
   </Container>
   <Container :renderable="isLoad && !rotationStop">
@@ -573,23 +581,18 @@ function handleResponse(value: number) {
     <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
     <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
   </Container>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
     <CharacterMain :states="characterMain.states" :skin="characterSkin" @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
-    <Sprite :texture="fence.alias"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="fence.x" :y="fence.y"
-      :scale="fence.scale" />
-    <Sprite :texture="palmTrees.alias"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="palmTrees.x"
-      :y="palmTrees.y" :scale="palmTrees.scale" />
+    <Sprite :texture="fence.alias" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="fence.x" :y="fence.y" :scale="fence.scale" />
+    <Sprite :texture="palmTrees.alias" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
     <Scene12 v-if="currentPopupIndex === 23" />
     <!-- @vue-ignore -->
     <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
   </Container>
   <!-- DEBUG -->
-  <External>
+  <!--  <External>
     <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
@@ -601,5 +604,5 @@ function handleResponse(value: number) {
         <span class="bg-white">{{ currentSceneIndex }}</span>
       </div>
     </div>
-  </External>
+  </External> -->
 </template>

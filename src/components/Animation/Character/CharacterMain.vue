@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import type { State } from '@/utils/types'
 import { textureOptions } from '@/components/Settings.vue'
 import { useGameStore } from '@/stores/game'
-import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
+import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
 
@@ -150,14 +150,29 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AppAnimatedSprite v-if="activeCharacter.animation === 'started'" :textures="activeTrail.aliases"
-      :texture-options="textureOptions" :anchor="0.5" :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1"
-      :playing="true" :animation-speed="0.08" />
-    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0"
-      :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'" :animation-speed="0.08" />
+    <AppAnimatedSprite
+      v-if="activeCharacter.animation === 'started'"
+      :textures="activeTrail.aliases"
+      :texture-options="textureOptions"
+      :anchor="0.5"
+      :x="activeTrail.x"
+      :y="activeTrail.y"
+      :scale="1"
+      :alpha="1"
+      :playing="true"
+      :animation-speed="0.08" />
+    <AppAnimatedSprite
+      :textures="activeCharacter.aliases"
+      :texture-options="textureOptions"
+      :anchor="0.5"
+      :x="0"
+      :y="0"
+      :scale="1"
+      :alpha="1"
+      :playing="activeCharacter.animation === 'started'"
+      :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <!--  <External>

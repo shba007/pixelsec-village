@@ -57,6 +57,5 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Sprite :texture="img" :texture-options="textureOptions" :x="cloud.x" :y="cloud.y" :anchor="0.5"
-    :scale="cloud.scale" />
+  <Sprite :texture="img" :texture-options="textureOptions" :x="cloud.x" :y="cloud.y" :anchor="0.5" :scale="cloud.scale" />
 </template>

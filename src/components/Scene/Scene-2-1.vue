@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref } from 'vue'
 import { External } from 'vue3-pixi'
-import { useWindowSize } from '@vueuse/core';
+import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
@@ -37,8 +37,16 @@ function onClick(value: string) {
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
-    <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
-      @click="onClick(type)" @touchstart="onClick(type)" />
+    <Sprite
+      v-for="{ type, frames, state } of options"
+      :key="type"
+      :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions"
+      :x="state.x"
+      :y="state.y"
+      :scale="state.scale"
+      cursor="pointer"
+      @click="onClick(type)"
+      @touchstart="onClick(type)" />
   </Container>
 </template>

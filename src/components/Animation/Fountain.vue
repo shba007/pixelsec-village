@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { textureOptions } from '@/components/Settings.vue'
-import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
+import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 defineProps<{
   x: number
@@ -14,6 +14,5 @@ const speed = 0.09
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y"
-    :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
 </template>

@@ -4,7 +4,7 @@ import { useInterval, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
-import { reactive } from 'vue';
+import { reactive } from 'vue'
 
 const gameStore = useGameStore()
 
@@ -63,15 +63,23 @@ function onClick(value: string) {
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
     <Container :x="timerText.x" :y="timerText.y" :scale="timerText.scale">
-      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45">
-        {{ timer[0] }}:{{ timer[1] }}</Text>
+      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45"> {{ timer[0] }}:{{ timer[1] }}</Text>
       <Text :style="{ fill: 'red', fontFamily: 'INET' }" :texture-options="textureOptions" :x="22">
         {{ timer[2] }}
       </Text>
       <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="45">:{{ timer[3] }}</Text>
     </Container>
-    <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions" :anchor="0.5" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
-      @click="onClick(type)" @touchstart="onClick(type)" />
+    <Sprite
+      v-for="{ type, frames, state } of options"
+      :key="type"
+      :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions"
+      :anchor="0.5"
+      :x="state.x"
+      :y="state.y"
+      :scale="state.scale"
+      cursor="pointer"
+      @click="onClick(type)"
+      @touchstart="onClick(type)" />
   </Container>
 </template>

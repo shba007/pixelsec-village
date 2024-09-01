@@ -3,7 +3,7 @@ import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 import { useGameStore } from '@/stores/game'
 
 import { textureOptions } from '@/components/Settings.vue'
-import { computed, ref } from 'vue';
+import { computed, ref } from 'vue'
 
 const gameStore = useGameStore()
 

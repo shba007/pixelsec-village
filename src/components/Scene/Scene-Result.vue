@@ -15,8 +15,7 @@ useTimeoutFn(() => {
 </script>
 
 <template>
-  <Sprite :texture="modal.image" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
-    :scale="modal.state.scale" :anchor="0.5" />
+  <Sprite :texture="modal.image" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
   <!-- <input type="email" placeholder="ENTER EMAIL FOR A FULL REPORT"
     class="w-full max-w-[320px] border-2 px-4 py-2 placeholder:text-blue-500" /> -->
   <!--  <External>

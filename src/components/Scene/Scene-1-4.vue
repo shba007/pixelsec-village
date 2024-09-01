@@ -4,7 +4,7 @@ import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore, type Character } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
-import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
+import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 const gameStore = useGameStore()
 
@@ -39,9 +39,18 @@ function setCharacter(type: Character) {
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
-    <AppAnimatedSprite v-for="{ type, frames: frames, state } of characters" :key="type" :textures="frames"
-      :texture-options="textureOptions" :x="state.x" :y="state.y"
-      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)" :anchor="0.5" :playing="true"
-      :animation-speed="0.05" @click="setCharacter(type)" @touchstart="setCharacter(type)" />
+    <AppAnimatedSprite
+      v-for="{ type, frames: frames, state } of characters"
+      :key="type"
+      :textures="frames"
+      :texture-options="textureOptions"
+      :x="state.x"
+      :y="state.y"
+      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)"
+      :anchor="0.5"
+      :playing="true"
+      :animation-speed="0.05"
+      @click="setCharacter(type)"
+      @touchstart="setCharacter(type)" />
   </Container>
 </template>

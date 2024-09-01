@@ -29,8 +29,7 @@ const map = reactive<any>({
 
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :x="map.state.x" :y="map.state.y"
-      :scale="map.state.scale" :anchor="0.5" />
+    <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :x="map.state.x" :y="map.state.y" :scale="map.state.scale" :anchor="0.5" />
     <SceneResult />
     <!-- DEBUG -->
     <!--  <External>

@@ -2,7 +2,7 @@
 import { getRandomInteger } from '@/utils/helper'
 import { useTimeout } from '@vueuse/core'
 import { textureOptions } from '@/components/Settings.vue'
-import AppAnimatedSprite from "@/components/AppAnimatedSprite.vue";
+import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 const props = defineProps<{
   x: number
@@ -17,6 +17,5 @@ const speed = 0.01
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y"
-    :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
 </template>
