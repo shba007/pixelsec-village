@@ -12,10 +12,7 @@ import ScreenMap from '@/components/Screen/Map.vue'
 import ScreenStation from '@/components/Screen/Station.vue'
 import ScreenPark from '@/components/Screen/Park.vue'
 import ScreenBank from '@/components/Screen/Bank.vue'
-import ScreenResult1 from '@/components/Screen/Result-1.vue'
-import ScreenResult2 from '@/components/Screen/Result-1.vue'
-import ScreenResult3 from '@/components/Screen/Result-1.vue'
-import ScreenResult4 from '@/components/Screen/Result-1.vue'
+import ScreenResult from '@/components/Screen/Result.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
@@ -36,10 +33,7 @@ const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
         <ScreenStation v-if="currentScreenIndex === 1" />
         <ScreenPark v-else-if="currentScreenIndex === 3" />
         <ScreenBank v-else-if="currentScreenIndex === 5" />
-        <ScreenResult1 v-else-if="currentScreenIndex === 7" />
-        <ScreenResult2 v-else-if="currentScreenIndex === 8" />
-        <ScreenResult3 v-else-if="currentScreenIndex === 9" />
-        <ScreenResult4 v-else-if="currentScreenIndex === 10" />
+        <ScreenResult v-else-if="currentScreenIndex === 7" />
         <SceneRotate v-if="!hardStop && rotationStop" />
         <Settings />
       </template>
@@ -47,8 +41,8 @@ const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.3.2</p>
-    <!-- <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+    <p>v0.3.3</p>
+    <!--   <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>

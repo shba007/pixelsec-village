@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, reactive, ref, watch, watchEffect } from 'vue'
+import { computed, onBeforeMount, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -19,7 +19,6 @@ import BaloonStand from '@/components/Animation/BaloonStand.vue'
 import AppSign from '@/components/Animation/AppSign.vue'
 import Car from '@/components/Animation/Car.vue'
 import Boat from '@/components/Animation/Boat.vue'
-import Wolf from '@/components/Animation/Wolf.vue'
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
 import CharacterIcecreamVendor from '@/components/Animation/Character/CharacterIcecreamVendor.vue'
@@ -42,7 +41,7 @@ import Scene10 from '@/components/Scene/Scene-1-10.vue'
 import Scene11 from '@/components/Scene/Scene-1-11.vue'
 import Scene12 from '@/components/Scene/Scene-1-12.vue'
 
-const props = defineProps<{
+defineProps<{
   isLoad: boolean
 }>()
 
@@ -52,7 +51,7 @@ const emit = defineEmits<{
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
+const { currentScreenIndex, currentPopupIndex, currentSceneIndex, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
 
 const zoomFactor = computed(() => screenWidth.value / 1280)
 
@@ -98,7 +97,9 @@ const screen = reactive<Asset>({
     { x: -90, y: -2520, scale: 1.64, time: 71.5125, alpha: 1 },
     // stop for the ballon 31
     { x: -930, y: -2555, scale: 1.64, time: 79.0625, alpha: 1 },
-    { x: -1570, y: -2470, scale: 1.64, time: 84.2125, alpha: 1 },
+    { x: -1000, y: -2555, scale: 1.64, time: 84.1225, alpha: 1 },
+    { x: -1570, y: -2480, scale: 1.64, time: 86.1225, alpha: 1 },
+    { x: -1210, y: -2210, scale: 0.76, time: 87.7475, alpha: 1 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -358,14 +359,14 @@ const characterMain = reactive<Asset>({
     { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 51.6425 },
     { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 54.0425 },
     { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 56.3925 },
-    { x: 1170, y: 2550, scale: 1.5, alpha: 1, time: 58.7925 },
-    { x: 410, y: 2550, scale: 1.5, alpha: 1, time: 66.3925 },
+    { x: 1170, y: 2545, scale: 1.5, alpha: 1, time: 58.7925 },
+    { x: 410, y: 2545, scale: 1.5, alpha: 1, time: 66.3925 },
     { x: 410, y: 2777, scale: 1.85, alpha: 1, time: 68.7825 },
-    // stop for the ballon 35
+    // stop for the ballon 36
     { x: 1165, y: 2777, scale: 1.85, alpha: 1, time: 76.3325 },
+    { x: 1291.25, y: 2777, scale: 1.85, alpha: 1, time: 77.5975 },
     { x: 1670, y: 2777, scale: 1.85, alpha: 1, time: 81.3925 },
-    { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 83.3925 },
-    // **
+    { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 83.3925 }, ///** sequence break */
     { x: 1985, y: 2590, scale: 1.5, alpha: 1, time: 86.5425 },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
@@ -520,47 +521,48 @@ const respondedSceneIndex = ref(0)
 function handleResponse(value: number) {
   respondedSceneIndex.value = value
 
-  if (value === 0) {
-    gameStore.nextTimeline()
-  }
+  /*   if (value === 0) {
+      gameStore.nextTimeline()
+    } */
 }
 </script>
 
 <template>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
-    <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
-    <Sprite
-      texture="mapStationBg"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-      :x="station.bg.x"
-      :y="station.bg.y"
-      :scale="station.bg.scale"
-      :anchor="0"
-      :z-index="2" />
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+      :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
+    <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
+      :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
+    <Sprite texture="mapStationBg"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
+      :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
     <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-    <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur" initialOrientation="right" />
-    <Sprite
-      texture="mapStationFg"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-      :x="station.fg.x"
-      :y="station.fg.y"
-      :scale="station.fg.scale"
-      :anchor="0"
-      :z-index="0" />
+    <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur"
+      initialOrientation="right" />
+    <Sprite texture="mapStationFg"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
+      :y="station.fg.y" :scale="station.fg.scale" :anchor="0" :z-index="0" />
     <!-- @vue-ignore -->
     <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
+    <Sprite :texture="fence.alias"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="fence.x" :y="fence.y"
+      :scale="fence.scale" />
+    <Sprite :texture="palmTrees.alias"
+      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="palmTrees.x"
+      :y="palmTrees.y" :scale="palmTrees.scale" />
+    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
+      place="map" />
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
+    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
+      :type="type as 'purple' | 'green'" place="map" />
     <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
     <CharacterGuard place="map" :state="characterGuard.state" />
     <CharacterBaloonVendor :state="characterBaloonVendor.state" />
     <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
     <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
-
     <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction as -1 | 1" />
     <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
   </Container>
@@ -581,18 +583,17 @@ function handleResponse(value: number) {
     <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
     <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
   </Container>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
     <CharacterMain :states="characterMain.states" :skin="characterSkin" @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
-    <Sprite :texture="fence.alias" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="fence.x" :y="fence.y" :scale="fence.scale" />
-    <Sprite :texture="palmTrees.alias" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
     <Scene12 v-if="currentPopupIndex === 23" />
     <!-- @vue-ignore -->
     <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <!-- <External>
     <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">

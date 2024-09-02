@@ -42,7 +42,7 @@ function capitalizeFirstLetter(word: string): string {
 }
 
 const characterAnimations = computed(() => ({
-  frontStill: [`characterMain${capitalizeFirstLetter(props.skin)}FrontStill`],
+  frontStill: [`characterMain${capitalizeFirstLetter(props.skin)}FrontStill`, `characterMain${capitalizeFirstLetter(props.skin)}FrontStill`],
   frontWalk: [`characterMain${capitalizeFirstLetter(props.skin)}FrontWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}FrontWalk2`],
   backWalk: [`characterMain${capitalizeFirstLetter(props.skin)}BackWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}BackWalk2`],
   leftWalk: [`characterMain${capitalizeFirstLetter(props.skin)}LeftWalk1`, `characterMain${capitalizeFirstLetter(props.skin)}LeftWalk2`],
@@ -97,6 +97,7 @@ watch(currentCharacterIndex, () => {
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
+let timer: any;
 
 onTick((delta) => {
   if (activeCharacter.animation === 'started' && currentCharacterIndex.value < props.states.length - 1) {
@@ -112,6 +113,8 @@ onTick((delta) => {
     activeCharacter.state.scale = props.states[currentCharacterIndex.value].scale + ds * progress
     activeCharacter.state.alpha = props.states[currentCharacterIndex.value].alpha + da * progress
     activeCharacter.state.time = props.states[currentCharacterIndex.value].time + dt * progress
+    if (timer)
+      clearTimeout(timer)
 
     if (dy > 0) {
       activeCharacter.aliases = characterAnimations.value['frontWalk']
@@ -137,7 +140,9 @@ onTick((delta) => {
 
     if (progress == 1) {
       totalElapsedTime = 0
-      activeCharacter.aliases = characterAnimations.value['frontStill']
+      timer = setTimeout(() => {
+        activeCharacter.aliases = characterAnimations.value['frontStill']
+      }, 100)
       activeCharacter.animation = 'finished'
       emit('update', currentCharacterIndex.value, 'finished')
     }
@@ -150,32 +155,17 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AppAnimatedSprite
-      v-if="activeCharacter.animation === 'started'"
-      :textures="activeTrail.aliases"
-      :texture-options="textureOptions"
-      :anchor="0.5"
-      :x="activeTrail.x"
-      :y="activeTrail.y"
-      :scale="1"
-      :alpha="1"
-      :playing="true"
-      :animation-speed="0.08" />
-    <AppAnimatedSprite
-      :textures="activeCharacter.aliases"
-      :texture-options="textureOptions"
-      :anchor="0.5"
-      :x="0"
-      :y="0"
-      :scale="1"
-      :alpha="1"
-      :playing="activeCharacter.animation === 'started'"
-      :animation-speed="0.08" />
+    <AppAnimatedSprite v-if="activeCharacter.animation === 'started'" :textures="activeTrail.aliases"
+      :texture-options="textureOptions" :anchor="0.5" :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1"
+      :playing="true" :animation-speed="0.08" />
+    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0"
+      :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'" :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <!-- <External>
     <div class="absolute bottom-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />

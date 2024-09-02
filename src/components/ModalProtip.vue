@@ -68,8 +68,6 @@ const modal = computed(() => {
       break
   }
 
-  console.log('Protip Modal Popup', props.title)
-
   return {
     image,
     state: { x: screenWidth.value * xFactor, y: screenHeight.value * yFactor, scale: scale * zoomFactor.value },
@@ -84,5 +82,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <Sprite :texture="modal.image[0]" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
+  <Sprite :texture="modal.image[0]" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
+    :scale="modal.state.scale" :anchor="0.5" />
 </template>
