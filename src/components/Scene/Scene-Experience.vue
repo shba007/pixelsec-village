@@ -17,8 +17,13 @@ const installPromptEvent = ref<Event | null>(null)
 
 function checkIfInstalled() {
   if (window.matchMedia('(display-mode: standalone)').matches) {
-    pwaInstalled.value = isMobile.any ? true : false
+    pwaInstalled.value = true
   }
+}
+
+function handleBeforeInstallPrompt(event: Event) {
+  event.preventDefault()
+  installPromptEvent.value = event
 }
 
 async function handleAppInstalled() {
@@ -37,18 +42,13 @@ async function handleAppInstalled() {
 onMounted(() => {
   checkIfInstalled()
 
-  function handleBeforeInstallPrompt(event: Event) {
-    event.preventDefault()
-    installPromptEvent.value = event
-  }
-
   window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
   window.addEventListener('appinstalled', handleAppInstalled)
+})
 
-  onBeforeUnmount(() => {
-    window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-    window.removeEventListener('appinstalled', handleAppInstalled)
-  })
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+  window.removeEventListener('appinstalled', handleAppInstalled)
 })
 
 const modal = computed(() => ({
@@ -78,7 +78,8 @@ onTick((delta) => {
 <template>
   <Container v-if="ready" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" cursor="pointer" @pointerdown="onClick" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" cursor="pointer"
+      @pointerdown="onClick" />
     <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" />
   </Container>
 </template>
