@@ -4,6 +4,8 @@ import { External, onTick } from 'vue3-pixi'
 import { useTimeoutFn } from '@vueuse/core'
 
 import { textureOptions } from '@/components/Settings.vue'
+import { useGameStore } from '@/stores/game';
+import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
   x: number
@@ -15,6 +17,9 @@ const props = defineProps<{
 const emit = defineEmits<{
   (event: 'update'): void
 }>()
+
+const gameStore = useGameStore()
+const { characterSkin } = storeToRefs(gameStore)
 
 const secondScreen = ref(false)
 const image = ref('popupScene71')
@@ -43,7 +48,6 @@ onMounted(() => {
 
 useTimeoutFn(() => {
   secondScreen.value = true
-  // scale.value *= 2
   emit('update')
 }, 12000)
 
@@ -55,6 +59,22 @@ const socials = ref([
 
 function onShare(type: 'facebook' | 'instagram' | 'x') {
   console.log('Shared on ', type)
+  const shareURL = 'https://affinidi-game-poc.onrender.com' + `/html/${props.place}-${characterSkin.value}.html`
+  let finalShare = ''
+
+  switch (type) {
+    case 'facebook':
+      finalShare = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareURL)
+      break;
+    case 'instagram':
+      finalShare = "https://www.instagram.com/sharer/sharer.php?u=" + encodeURIComponent(shareURL)
+      break;
+    case 'x':
+      finalShare = "https://www.x.com/sharer/sharer.php?u=" + encodeURIComponent(shareURL)
+      break
+  }
+
+  window.open(finalShare, "_blank");
 }
 
 const emailPlaceholderRef = ref<any>(null)
@@ -78,41 +98,22 @@ onTick(() => {
     emailInputBox.height = height
   }
 })
-
-watch(
-  emailInputBox,
-  () => {
-    console.log(`Email Input Box: x=${emailInputBox.x}, y=${emailInputBox.y}, width=${emailInputBox.width}, height=${emailInputBox.height}`)
-  },
-  { deep: true }
-)
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
+    <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5"
+      :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
     <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
-      <input
-        type="email"
-        placeholder="ENTER EMAIL FOR A FULL REPORT"
+      <input type="email" placeholder="ENTER EMAIL FOR A FULL REPORT"
         class="border-2 px-4 py-2 placeholder:font-bold placeholder:text-blue-500"
         :style="{ width: emailInputBox.width + 'px', height: emailInputBox.height + 'px' }" />
     </External>
     <Container v-if="secondScreen">
-      <Sprite
-        v-for="{ type, image, x, y, scale } of socials"
-        :key="type"
-        :texture="image"
-        :texture-options="textureOptions"
-        :x="x"
-        :y="y"
-        :scale="scale"
-        :anchor="0.5"
-        @click="onShare(type)"
-        @mousedown="onShare(type)"
-        @pointerdown="onShare(type)"
-        @touchstart="onShare(type)" />
+      <Sprite v-for="{ type, image, x, y, scale } of socials" :key="type" :texture="image"
+        :texture-options="textureOptions" :x="x" :y="y" :scale="scale" :anchor="0.5" cursor="pointer"
+        @click="onShare(type)" @mousedown="onShare(type)" @pointerdown="onShare(type)" @touchstart="onShare(type)" />
     </Container>
     <!-- <External>
       <div class="fixed bottom-0 left-16 z-50 flex w-fit items-center gap-8">

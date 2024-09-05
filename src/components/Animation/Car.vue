@@ -30,7 +30,7 @@ const car = reactive({
 const img = 'mapCar'
 
 onTick((delta) => {
-  car.x = Math.floor(car.x + delta * car.speed * car.direction)
+  car.x = (car.x + delta * car.speed * car.direction)
   if (!(props.x < car.x && car.x < props.x + props.widthRange)) car.direction *= -1
 })
 </script>

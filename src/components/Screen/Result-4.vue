@@ -64,8 +64,8 @@ onTick((delta) => {
   if (!rotationStop.value && map.animation === 'started' && currentSceneIndex.value < map.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = map.states[currentSceneIndex.value + 1].time - map.states[currentSceneIndex.value].time
-    const dx = Math.floor(map.states[currentSceneIndex.value + 1].x - map.states[currentSceneIndex.value].x)
-    const dy = Math.floor(map.states[currentSceneIndex.value + 1].y - map.states[currentSceneIndex.value].y)
+    const dx = (map.states[currentSceneIndex.value + 1].x - map.states[currentSceneIndex.value].x)
+    const dy = (map.states[currentSceneIndex.value + 1].y - map.states[currentSceneIndex.value].y)
     const ds = map.states[currentSceneIndex.value + 1].scale - map.states[currentSceneIndex.value].scale
 
     progress = Math.min(totalElapsedTime / dt, 1)
@@ -99,7 +99,8 @@ const characterGuard = reactive({
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container :x="map.state.x" :y="map.state.y" :scale="map.state.scale">
       <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
-      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
+      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42"
+        :skin="characterSkin" @update="handleMCUpdate" />
       <SceneResult v-if="currentPopupIndex == 24" :x="modal.x" :y="modal.y" :scale="modal.scale" :place="modal.place" />
       <Dog :x="dog.x" :y="dog.y" :scale="dog.scale" />
       <CharacterGuard place="map" :state="characterGuard.state" />

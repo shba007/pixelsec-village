@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, reactive, onBeforeUnmount } from 'vue'
 import { useInterval, useWindowSize } from '@vueuse/core'
 
+import { textureOptions } from '@/components/Settings.vue'
 import { useDataStore, type dataBreachActionChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/Settings.vue'
-import { reactive } from 'vue'
-import { onBeforeMount } from 'vue'
-import { onBeforeUnmount } from 'vue'
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
@@ -92,25 +89,17 @@ onBeforeUnmount(() => {
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="timerText.x" :y="timerText.y" :scale="timerText.scale">
-      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45"> {{ timer[0] }} : {{ timer[1] }} </Text>
+      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45"> {{ timer[0] }} : {{ timer[1] }}
+      </Text>
       <Text :style="{ fill: 'red', fontFamily: 'INET' }" :texture-options="textureOptions" :x="18">
         {{ timer[2] }}
       </Text>
       <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="35"> : {{ timer[3] }}</Text>
     </Container>
-    <Sprite
-      v-for="{ type, frames, state } of options"
-      :key="type"
-      :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions"
-      :anchor="0.5"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale"
-      cursor="pointer"
-      @click="onClick(type)"
-      @touchstart="onClick(type)" />
+    <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :anchor="0.5" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+      @click="onClick(type)" @touchstart="onClick(type)" />
   </Container>
 </template>

@@ -63,8 +63,8 @@ onTick((delta) => {
     const da = props.states[currentCharacterStateIndex.value + 1].alpha - props.states[currentCharacterStateIndex.value].alpha
     const ds = props.states[currentCharacterStateIndex.value + 1].scale - props.states[currentCharacterStateIndex.value].scale
     progress = Math.min(totalElapsedTime / dt, 1)
-    activeCharacter.state.x = Math.floor(props.states[currentCharacterStateIndex.value].x + dx * progress)
-    activeCharacter.state.y = Math.floor(props.states[currentCharacterStateIndex.value].y + dy * progress)
+    activeCharacter.state.x = (props.states[currentCharacterStateIndex.value].x + dx * progress)
+    activeCharacter.state.y = (props.states[currentCharacterStateIndex.value].y + dy * progress)
     activeCharacter.state.scale = props.states[currentCharacterStateIndex.value].scale + ds * progress
     activeCharacter.state.alpha = props.states[currentCharacterStateIndex.value].alpha + da * progress
     activeCharacter.state.time = props.states[currentCharacterStateIndex.value].time + dt * progress
@@ -101,14 +101,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <AppAnimatedSprite
-    :textures="imgs[place]"
-    :texture-options="textureOptions"
-    :anchor="0.5"
-    :x="activeCharacter.state.x"
-    :y="activeCharacter.state.y"
-    :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha"
-    :playing="playing"
-    :animation-speed="speed" />
+  <AppAnimatedSprite :textures="imgs[place]" :texture-options="textureOptions" :anchor="0.5"
+    :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :alpha="activeCharacter.state.alpha" :playing="playing" :animation-speed="speed" />
 </template>

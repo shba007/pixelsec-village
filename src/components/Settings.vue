@@ -32,7 +32,7 @@ export const textureOptions = { scaleMode: 0 }
 </script>
 
 <template>
-  <BlurFilter :blur="motionBlur ? 0.4 : 0" />
+  <!-- <BlurFilter :blur="motionBlur ? 0.4 : 0" /> -->
 </template>
 
 <style>
