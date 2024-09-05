@@ -317,6 +317,11 @@ import resultMansionDog2Texture from '@/assets/image/mansion/dog/2.png'
 import bgmSprite from '@/assets/sound/bgm-sprite.mp3'
 import sfxSprite from '@/assets/sound/sfx-sprite.mp3'
 
+import IconFacebook from '@/assets/image/popup/icon-social-facebook.png'
+import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
+import IconX from '@/assets/image/popup/icon-social-x.png'
+import PlaceholderEmail from '@/assets/image/popup/placeholder-email.png'
+
 export const resources = {
   font: {
     frontINET,
@@ -641,6 +646,11 @@ export const resources = {
     resultMansionBg: resultMansionBgTexture,
     resultMansionDog1: resultMansionDog1Texture,
     resultMansionDog2: resultMansionDog2Texture,
+    //
+    IconFacebook,
+    IconInstagram,
+    IconX,
+    PlaceholderEmail,
   },
   sound: {
     bgmSprite,

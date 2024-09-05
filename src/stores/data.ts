@@ -69,21 +69,6 @@ const scoreCard = {
   },
 }
 
-/* 
-{
-    "key": "2d82eb34-9425-4451-a471-804f99b8b8f5",
-    "data": {
-        "user_id": "2d82eb34-9425-4451-a471-804f99b8b8f5",
-        "read_tc": false,
-        "age": null,
-        "spend_time": [],
-        "annoying_points": null,
-        "add_data_tradeoff": null,
-        "latest_stage": "tc"
-    }
-}
-*/
-
 const apiBaseURL = 'https://h13p701h52.execute-api.ap-south-1.amazonaws.com/dev/affinidi-dataville-log'
 
 export const useDataStore = defineStore('data', () => {
@@ -104,7 +89,6 @@ export const useDataStore = defineStore('data', () => {
   watch(
     choices,
     async (value) => {
-      console.log('Update Choice')
       try {
         await ofetch(apiBaseURL, {
           method: 'POST',

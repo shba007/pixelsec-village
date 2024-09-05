@@ -27,7 +27,7 @@ export const timeline: {
   { screen: 2, popup: 7, scene: 5, character: 1, time: 0.25 }, // out of the station in the map
   { screen: 2, popup: 7, scene: 6, character: 2, time: 0.5 }, //
   { screen: 2, popup: 7, scene: 7, character: 3, time: 0.5 }, //
-  { screen: 2, popup: -1, scene: 8, character: 4, time: 1.25 }, // changed
+  { screen: 2, popup: 7, scene: 8, character: 4, time: 1.25 }, // changed
   { screen: 2, popup: -1, scene: 9, character: 5, time: 3 },
   { screen: 2, popup: -1, scene: 10, character: 6, time: 6 },
   { screen: 2, popup: -1, scene: 11, character: 7, time: 9 },
