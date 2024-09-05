@@ -37,7 +37,7 @@ const screen = reactive<any>({
   alias: { bg: 'bankSky', fg: 'bankBackground' },
   states: [
     { x: -140, y: 200, scale: 1, alpha: 1, time: 0 },
-    { x: -(delta + screenWidth.value) * 0.8, y: 200, scale: 1, alpha: 1, time: 6 },
+    { x: -(delta + screenWidth.value) * 0.75, y: 200, scale: 1, alpha: 1, time: 3 },
   ],
   state: { x: -140, y: 200, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -107,14 +107,15 @@ onTick((delta) => {
     const ds = screen.states[currentStateIndex.value + 1].scale - screen.states[currentStateIndex.value].scale
 
     progress = Math.min(totalElapsedTime / dt, 1)
-    screen.state.x = (screen.states[currentStateIndex.value].x + dx * progress)
-    screen.state.y = (screen.states[currentStateIndex.value].y + dy * progress)
+    screen.state.x = screen.states[currentStateIndex.value].x + dx * progress
+    screen.state.y = screen.states[currentStateIndex.value].y + dy * progress
     screen.state.scale = screen.states[currentStateIndex.value].scale + ds * progress
     screen.state.time = screen.states[currentStateIndex.value].time + dt * progress
 
     if (progress == 1) {
       totalElapsedTime = 0
       screen.animation = 'finished'
+      gameStore.nextTimeline({ id: 36 })
     }
   }
 })
@@ -130,7 +131,7 @@ watch(currentPopupIndex, (value) => {
     gameStore.stopSFXSound()
     gameStore.playBGMSound('normal')
     setTimeout(() => {
-      gameStore.nextTimeline({ id: 36 })
+      gameStore.nextTimeline({ id: 37 })
     }, 3000)
   }
 })
@@ -138,24 +139,22 @@ watch(currentPopupIndex, (value) => {
 onMounted(() => {
   gameStore.playBGMSound('panic')
   gameStore.playSFXSound('alarmLight')
+  setTimeout(() => {
+    gameStore.nextTimeline({ id: 31 })
+  }, 2000)
 })
 </script>
 
 <template>
   <Container :x="screen.state.x" :y="screen.state.y" :scale="1 * zoomFactor">
-    <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale"
-      :anchor-x="0" :anchor-y="0.5" />
-    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth"
-      :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale"
-      :anchor-x="0" :anchor-y="0.5" />
+    <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+    <Sprite :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale" :anchor-x="0" :anchor-y="0.5" />
     <Door :x="door.x" :y="door.y" :scale="door.scale" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" place="bank" />
-    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y"
-      :scale="scale" />
+    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <template v-if="!rotationStop">
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank"
-        :type="type as 'purple' | 'green'" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
     </template>
     <CharacterGuard :state="characterGuard" place="bank" />
   </Container>

@@ -47,7 +47,6 @@ function onClick(value: boolean) {
       :y="state.y"
       :scale="state.scale"
       cursor="pointer"
-      @click="onClick(type)"
-      @touchstart="onClick(type)" />
+      @pointerdown="onClick(type)" />
   </Container>
 </template>

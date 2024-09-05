@@ -66,9 +66,8 @@ function onComplete() {
       :x="state.x"
       :y="state.y"
       :scale="state.scale"
+      :alpha="1"
       cursor="pointer"
-      @click="onClick(type)"
-      @touchstart="onClick(type)"
-      :alpha="1" />
+      @pointerdown="onClick(type)" />
   </Container>
 </template>

@@ -46,7 +46,7 @@ function onClick(value: dataResponsibilityChoice) {
   gameStore.playSFXSound('buttonPress', 2)
 
   setTimeout(() => {
-    gameStore.nextTimeline({ screen: 2, id: 34 })
+    gameStore.nextTimeline(currentPopupIndex.value === 14 ? { screen: 2, id: 35 } : { screen: 1, id: 36 })
   }, 300)
 }
 
@@ -56,8 +56,15 @@ const frames = ['buttonSquare', 'buttonSquarePressed']
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite v-for="{ type, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
-      @click="onClick(type)" @touchstart="onClick(type)" />
+    <Sprite
+      v-for="{ type, state } of options"
+      :key="type"
+      :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions"
+      :x="state.x"
+      :y="state.y"
+      :scale="state.scale"
+      cursor="pointer"
+      @pointerdown="onClick(type)" />
   </Container>
 </template>

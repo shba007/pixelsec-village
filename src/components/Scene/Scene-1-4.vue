@@ -50,7 +50,7 @@ function setCharacter(type: Character) {
       :anchor="0.5"
       :playing="true"
       :animation-speed="0.05"
-      @click="setCharacter(type)"
-      @touchstart="setCharacter(type)" />
+      cursor="pointer"
+      @pointerdown="setCharacter(type)" />
   </Container>
 </template>

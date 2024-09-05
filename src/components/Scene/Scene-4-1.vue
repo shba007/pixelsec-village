@@ -21,7 +21,7 @@ const modal = computed(() => ({
 }))
 
 function handleMove() {
-  gameStore.nextTimeline({ id: 31 })
+  gameStore.nextTimeline({ id: 32 })
 }
 
 useTimeoutFn(handleMove, 5000)

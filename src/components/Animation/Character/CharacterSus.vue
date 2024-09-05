@@ -102,8 +102,8 @@ onTick((delta) => {
     const ds = props.states[currentCharacterIndex.value + 1].scale - props.states[currentCharacterIndex.value].scale
     const da = props.states[currentCharacterIndex.value + 1].alpha - props.states[currentCharacterIndex.value].alpha
     progress = Math.min(totalElapsedTime / dt, 1)
-    activeCharacter.state.x = (props.states[currentCharacterIndex.value].x + dx * progress)
-    activeCharacter.state.y = (props.states[currentCharacterIndex.value].y + dy * progress)
+    activeCharacter.state.x = props.states[currentCharacterIndex.value].x + dx * progress
+    activeCharacter.state.y = props.states[currentCharacterIndex.value].y + dy * progress
     activeCharacter.state.scale = props.states[currentCharacterIndex.value].scale + ds * progress
     activeCharacter.state.alpha = props.states[currentCharacterIndex.value].alpha + da * progress
     activeCharacter.state.time = props.states[currentCharacterIndex.value].time + dt * progress
@@ -135,10 +135,16 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha">
-    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0"
-      :scale="1" :alpha="1" :playing="activeCharacter.animation === 'init' || activeCharacter.animation === 'started'"
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
+    <AppAnimatedSprite
+      :textures="activeCharacter.aliases"
+      :texture-options="textureOptions"
+      :anchor="0.5"
+      :x="0"
+      :y="0"
+      :scale="1"
+      :alpha="1"
+      :playing="activeCharacter.animation === 'init' || activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->

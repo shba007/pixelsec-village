@@ -51,12 +51,11 @@ const speed = computed(() => {
 })
 
 onTick((delta) => {
-  cloud.x = (cloud.x + delta * speed.value)
+  cloud.x = cloud.x + delta * speed.value
   if (cloud.x > props.widthRange + cloud.width / 2) cloud.x = -(props.widthRange + cloud.width / 2)
 })
 </script>
 
 <template>
-  <Sprite :texture="img" :texture-options="textureOptions" :x="cloud.x" :y="cloud.y" :anchor="0.5"
-    :scale="cloud.scale" />
+  <Sprite :texture="img" :texture-options="textureOptions" :x="cloud.x" :y="cloud.y" :anchor="0.5" :scale="cloud.scale" />
 </template>
