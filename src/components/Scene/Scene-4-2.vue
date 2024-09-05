@@ -54,7 +54,7 @@ const timer = computed(() => {
 
   if (number === 1) {
     setTimeout(() => {
-      gameStore.nextTimeline({ id: 42 })
+      gameStore.nextTimeline({ id: 33 })
     }, 50)
     return []
   }
@@ -71,7 +71,7 @@ function onClick(value: dataBreachActionChoice) {
   gameStore.playSFXSound('buttonPress')
 
   setTimeout(() => {
-    gameStore.nextTimeline({ screen: 2, id: 31 })
+    gameStore.nextTimeline({ screen: 2, id: 32 })
   }, 300)
 }
 

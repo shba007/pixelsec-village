@@ -20,7 +20,7 @@ const modal = computed(() => ({
 }))
 
 function handleMove() {
-  gameStore.nextTimeline({ id: 31 })
+  gameStore.nextTimeline({ id: 24 })
 }
 
 const { start } = useTimeoutFn(handleMove, 4000, { immediate: false })

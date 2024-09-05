@@ -46,7 +46,7 @@ function onClick(value: dataResponsibilityChoice) {
   gameStore.playSFXSound('buttonPress', 2)
 
   setTimeout(() => {
-    gameStore.nextTimeline({ screen: 2, id: 32 })
+    gameStore.nextTimeline({ screen: 2, id: 34 })
   }, 300)
 }
 

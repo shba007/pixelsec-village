@@ -49,8 +49,8 @@ export const timeline: {
     { screen: 5, popup: 13, scene: 20, character: 16 },
     { screen: 5, popup: 14, scene: 20, character: 16 },
     { screen: 5, popup: 15, scene: 20, character: 16 },
-    { screen: 5, popup: -1, scene: 21, character: 17 },
-    { screen: 5, popup: -1, scene: 21, character: 17 },
+    { screen: 5, popup: -1, scene: 21, character: 17 }, // issue when coutdown finished
+    { screen: 5, popup: -1, scene: 21, character: 17 }, // 
     { screen: 5, popup: 16, scene: 21, character: 17 },
     //
     { screen: 6, popup: 16, scene: 22, character: 18 },
