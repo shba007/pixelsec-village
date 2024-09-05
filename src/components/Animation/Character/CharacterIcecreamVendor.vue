@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { useGameStore } from '@/stores/game';
@@ -15,19 +15,10 @@ const props = defineProps<{
   place: 'map' | 'park'
 }>()
 
-const imgs = {
-  map: { wave: ['mapCharacterIcecreamVendor1', 'mapCharacterIcecreamVendor2'] },
-  park: { wave: ['parkCharacterIcecreamVendorWave1', 'parkCharacterIcecreamVendorWave2'], handout: ['parkCharacterIcecreamVendorHandout'] },
+const images = {
+  map: ['mapCharacterIcecreamVendor1', 'mapCharacterIcecreamVendor2'],
+  park: ['parkCharacterIcecreamVendorWave1', 'parkCharacterIcecreamVendorWave2'],
 }
-
-const images = ref<string[]>(imgs.map.wave)
-
-onMounted(() => {
-  if (props.place == 'map')
-    images.value = imgs.map.wave
-  else
-    images.value = imgs.park.wave
-})
 
 watch(currentSceneIndex, (value) => {
   if (props.place !== 'map')
@@ -36,6 +27,6 @@ watch(currentSceneIndex, (value) => {
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="images" :texture-options="textureOptions" :anchor="0.5" :scale="state.scale"
+  <AppAnimatedSprite :textures="images[place]" :texture-options="textureOptions" :anchor="0.5" :scale="state.scale"
     :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
 </template>

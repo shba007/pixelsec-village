@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useTimeoutFn, useWindowSize } from '@vueuse/core'
-import { useGameStore } from '@/stores/game'
-
-import { textureOptions } from '@/components/Settings.vue'
 import { computed, ref } from 'vue'
+import { useTimeoutFn, useWindowSize } from '@vueuse/core'
+
+import { useGameStore } from '@/stores/game'
+import { textureOptions } from '@/components/Settings.vue'
 
 const gameStore = useGameStore()
 

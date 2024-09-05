@@ -36,6 +36,7 @@ export const timeline: {
     { screen: 2, popup: -1, scene: 14, character: 10, time: 15 },
     { screen: 2, popup: -1, scene: 15, character: 11, time: 16.5 },
     { screen: 2, popup: -1, scene: 16, character: 12 },
+    { screen: 3, popup: -1, scene: 16, character: 12 },
     { screen: 3, popup: 8, scene: 16, character: 12 },
     { screen: 3, popup: 9, scene: 16, character: 12 },
     { screen: 3, popup: 10, scene: 16, character: 12 },

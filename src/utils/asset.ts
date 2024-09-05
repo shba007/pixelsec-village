@@ -4,6 +4,7 @@ import frontINET from '/fonts/INET.ttf'
 import frontLAN from '/fonts/LAN.ttf'
 // asset
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
+import popupSceneInstallTexture from '@/assets/image/popup/scene-install.png'
 import popupSceneRotateTexture from '@/assets/image/popup/scene-rotate.png'
 import popupSceneRotateOverlayTexture from '@/assets/image/popup/scene-rotate-overlay.png'
 import popupScene01LandscapeTexture from '@/assets/image/popup/scene-0-1-landscape.png'
@@ -139,7 +140,6 @@ import characterBaloonVendor2Texture from '@/assets/image/character/ballon-vendo
 // Icecream Vendor
 import characterMapIcecreamVendor1Texture from '@/assets/image/character/icecream-vendor/map-1.png'
 import characterMapIcecreamVendor2Texture from '@/assets/image/character/icecream-vendor/map-2.png'
-import characterParkIcecreamVendorHandoutTexture from '@/assets/image/character/icecream-vendor/park-handout.png'
 import characterParkIcecreamVendorWave1Texture from '@/assets/image/character/icecream-vendor/park-wave-1.png'
 import characterParkIcecreamVendorWave2Texture from '@/assets/image/character/icecream-vendor/park-wave-2.png'
 // Panic Character
@@ -328,6 +328,7 @@ export const resources = {
     frontLAN,
   },
   image: {
+    popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,
     popupSceneRotate: popupSceneRotateTexture,
     popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
@@ -600,7 +601,6 @@ export const resources = {
     //
     parkCharacterIcecreamVendorWave1: characterParkIcecreamVendorWave1Texture,
     parkCharacterIcecreamVendorWave2: characterParkIcecreamVendorWave2Texture,
-    parkCharacterIcecreamVendorHandout: characterParkIcecreamVendorHandoutTexture,
     //
     characterBaloonVendor1: characterBaloonVendor1Texture,
     characterBaloonVendor2: characterBaloonVendor2Texture,

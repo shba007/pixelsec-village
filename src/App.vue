@@ -44,7 +44,7 @@ function onResolve() {
     </Loader>
   </Application>
   <!-- DEBUG -->
-  <!--  <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
+  <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <p>v0.3.16</p>
     <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
@@ -54,7 +54,7 @@ function onResolve() {
   </div>
   <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
-  </div> -->
+  </div>
 </template>
 
 <style lang="css">
