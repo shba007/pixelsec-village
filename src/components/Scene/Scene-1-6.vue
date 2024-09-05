@@ -4,7 +4,7 @@ import { External } from 'vue3-pixi'
 import { useScroll, useTimeoutFn, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import { storeToRefs } from 'pinia'
 
 const gameStore = useGameStore()

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
 import { onTick, External } from 'vue3-pixi'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 import { useGameStore } from '@/stores/game'
 import { useDebounceFn } from '@vueuse/core'

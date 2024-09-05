@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore, type Character } from '@/stores/game'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 const gameStore = useGameStore()

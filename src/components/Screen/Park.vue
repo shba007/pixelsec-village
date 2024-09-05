@@ -5,7 +5,7 @@ import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 
 import CharacterIcecreamVendor from '@/components/Animation/Character/CharacterIcecreamVendor.vue'
 import Cloud from '@/components/Animation/Cloud.vue'

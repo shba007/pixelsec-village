@@ -5,7 +5,7 @@ import { onTick } from 'vue3-pixi'
 import { isMobile } from 'pixi.js'
 
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 
 const gameStore = useGameStore()
 
@@ -15,31 +15,36 @@ const zoomFactor = computed(() => screenWidth.value / 1280)
 const pwaInstalled = ref(false)
 const installPromptEvent = ref<Event | null>(null)
 
-// Check if the app is running as a PWA
 function checkIfInstalled() {
   if (window.matchMedia('(display-mode: standalone)').matches) {
     pwaInstalled.value = isMobile.any ? true : false
   }
 }
 
-const handleAppInstalled = () => {
+async function handleAppInstalled() {
   console.log('PWA installed')
   pwaInstalled.value = true
+
+  if (!installPromptEvent.value) {
+    return
+  }
+  // @ts-ignore
+  const result = await installPromptEvent.value.prompt()
+  console.log(`Install prompt was: ${result.outcome}`)
+  installPromptEvent.value = null
 }
 
 onMounted(() => {
   checkIfInstalled()
 
-  // Listen for the 'beforeinstallprompt' event and store it
-  const handleBeforeInstallPrompt = (event: Event) => {
-    event.preventDefault() // Prevent the default mini-infobar from appearing
-    installPromptEvent.value = event // Save the event for later use
+  function handleBeforeInstallPrompt(event: Event) {
+    event.preventDefault()
+    installPromptEvent.value = event
   }
 
   window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
   window.addEventListener('appinstalled', handleAppInstalled)
 
-  // Clean up listeners
   onBeforeUnmount(() => {
     window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
     window.removeEventListener('appinstalled', handleAppInstalled)

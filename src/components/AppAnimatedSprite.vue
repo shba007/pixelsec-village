@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { useInterval } from '@vueuse/core'
-import { textureOptions as inheritedTextureOptions } from '@/components/Settings.vue'
+import { textureOptions as inheritedTextureOptions } from '@/components/AppSettings.vue'
 
 const props = withDefaults(
   defineProps<{

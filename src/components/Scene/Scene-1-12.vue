@@ -2,7 +2,7 @@
 import { reactive } from 'vue'
 import { External } from 'vue3-pixi'
 
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 
 const modal = reactive({
   image: 'popupScene65',

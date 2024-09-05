@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/stores/game'
 
 import type { Asset } from '@/utils/types'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import SceneResult from '@/components/Scene/Scene-Result.vue'
 import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useTimeout } from '@vueuse/core'
 import { getRandomInteger } from '@/utils/helper'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 defineProps<{

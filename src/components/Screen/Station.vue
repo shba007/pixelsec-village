@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
 import type { Asset, State } from '@/utils/types'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import Cloud from '@/components/Animation/Cloud.vue'
 import StationTram from '@/components/Animation/StationTram.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'

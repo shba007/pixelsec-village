@@ -4,7 +4,7 @@ import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import { onTick } from 'vue3-pixi'
 import { reactive } from 'vue'
 

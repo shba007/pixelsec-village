@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 defineProps<{

@@ -3,7 +3,7 @@ import { computed, reactive, onMounted } from 'vue'
 import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import AlarmBell from '@/components/Animation/AlarmBell.vue'
 
 const gameStore = useGameStore()

@@ -6,13 +6,13 @@ import { storeToRefs } from 'pinia'
 import { resources } from '@/utils/asset'
 import { useGameStore } from '@/stores/game'
 
-import Settings from '@/components/Settings.vue'
-import SceneRotate from '@/components/Scene/Scene-Rotate.vue'
+import AppSettings from '@/components/AppSettings.vue'
 import ScreenMap from '@/components/Screen/Map.vue'
 import ScreenStation from '@/components/Screen/Station.vue'
 import ScreenPark from '@/components/Screen/Park.vue'
 import ScreenBank from '@/components/Screen/Bank.vue'
 import ScreenResult from '@/components/Screen/Result.vue'
+import SceneExperience from '@/components/Scene/Scene-Experience.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
@@ -36,8 +36,8 @@ function onResolve() {
         <ScreenPark v-else-if="currentScreenIndex === 3" />
         <ScreenBank v-else-if="currentScreenIndex === 5" />
         <ScreenResult v-else-if="currentScreenIndex === 7" />
-        <SceneRotate v-if="!hardStop && rotationStop" />
-        <Settings />
+        <SceneExperience v-if="!hardStop && rotationStop" />
+        <AppSettings />
       </template>
     </Loader>
   </Application>

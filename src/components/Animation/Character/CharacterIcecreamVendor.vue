@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
 import type { State } from '@/utils/types'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 const gameStore = useGameStore()

@@ -3,7 +3,7 @@ import { ref, reactive, onMounted, watch, computed } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { useTimeoutFn } from '@vueuse/core'
 
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 

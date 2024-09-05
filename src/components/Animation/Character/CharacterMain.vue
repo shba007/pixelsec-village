@@ -3,7 +3,7 @@ import { reactive, watch, computed, ref } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import type { State } from '@/utils/types'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import { useGameStore } from '@/stores/game'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 

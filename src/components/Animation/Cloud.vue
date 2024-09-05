@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
 import { onTick } from 'vue3-pixi'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import { reverseSawTooth, sawTooth } from '@/utils/helper'
 
 const props = defineProps<{

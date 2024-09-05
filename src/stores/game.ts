@@ -1,8 +1,9 @@
 import { computed, reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useDocumentVisibility, useFullscreen, useScreenOrientation, useTimeoutFn, useWindowSize } from '@vueuse/core'
-import { resources } from '@/utils/asset'
 import { useSound } from '@vueuse/sound'
+
+import { resources } from '@/utils/asset'
 import { SCALE_MODES } from '@/utils/types'
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
@@ -140,7 +141,7 @@ export const useGameStore = defineStore('game', () => {
 
   async function toggleGameMode(value: boolean) {
     try {
-      if (value) {
+      if (value && isMobile.value) {
         await enterFullscreen()
         await lockOrientation('landscape')
       } else {

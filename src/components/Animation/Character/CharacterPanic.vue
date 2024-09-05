@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import { onTick } from 'vue3-pixi'
 import { useIntervalFn } from '@vueuse/core'
 
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 import { useGameStore } from '@/stores/game'
 

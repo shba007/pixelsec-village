@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, reactive, onBeforeUnmount } from 'vue'
 import { useInterval, useWindowSize } from '@vueuse/core'
 
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import { useDataStore, type dataBreachActionChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 

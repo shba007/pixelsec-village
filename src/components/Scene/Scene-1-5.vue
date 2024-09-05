@@ -5,7 +5,7 @@ import { useWindowSize } from '@vueuse/core'
 
 import { useDataStore } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()

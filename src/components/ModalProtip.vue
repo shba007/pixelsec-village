@@ -3,7 +3,7 @@ import { onMounted, computed } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/Settings.vue'
+import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from './AppAnimatedSprite.vue'
 
 const props = withDefaults(
