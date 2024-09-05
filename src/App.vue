@@ -18,18 +18,18 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const gameStore = useGameStore()
 const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
+
+function onResolve() {}
 </script>
 
 <template>
   <Application>
-    <Loader :resources="{ ...resources.font, ...resources.image, ...resources.sound }" :on-resolved="() => { }">
+    <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
       <template #fallback="{ progress }">
-        <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :style="{ fill: 'white' }" :scale="0.75">
-          Loading... {{ Math.round(progress * 100) }}% </Text>
+        <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="0.75" :style="{ fill: 'white' }"> Loading... {{ Math.floor(progress * 100) }}% </Text>
       </template>
       <template #default>
-        <ScreenMap
-          :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
+        <ScreenMap v-if="currentScreenIndex <= 6" :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
         <ScreenStation v-if="currentScreenIndex === 1" />
         <ScreenPark v-else-if="currentScreenIndex === 3" />
         <ScreenBank v-else-if="currentScreenIndex === 5" />
@@ -41,16 +41,16 @@ const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.3.3</p>
-    <!--   <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+    <p>v0.3.15</p>
+    <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
     <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
   </div>
-  <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
+  <!--  <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
-  </div>
+  </div> -->
 </template>
 
 <style lang="css">

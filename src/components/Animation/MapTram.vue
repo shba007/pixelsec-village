@@ -3,6 +3,8 @@ import { reactive, ref, watch } from 'vue'
 import { onTick, External } from 'vue3-pixi'
 import { textureOptions } from '@/components/Settings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
+import { useGameStore } from '@/stores/game'
+import { useDebounceFn } from '@vueuse/core'
 
 interface Route {
   x: number
@@ -32,14 +34,15 @@ interface Object {
 
 const props = defineProps<{
   states: Route[]
-  animation: boolean
+  animation: 'init' | 'started' | 'finished'
   initialOrientation: Orientation
-  motionBlur: boolean
 }>()
 
 const emit = defineEmits<{
   (e: 'move', x: number, y: number): void
 }>()
+
+const gameStore = useGameStore()
 
 const animations = {
   frontStill: ['tramFront'],
@@ -61,8 +64,18 @@ const tram = reactive<Object>({
   },
   direction: 1,
   orientation: props.initialOrientation,
-  animation: 'started',
+  animation: props.animation,
 })
+
+watch(
+  () => props.animation,
+  (value, oldValue) => {
+    tram.animation = value
+    /*     if (oldValue === 'init' && value === 'started') {
+          gameStore.playSFXSound('tram', 2)
+        } */
+  }
+)
 
 watch(props.states, (value) => {
   tram.state.x = value[0].x
@@ -72,13 +85,18 @@ watch(props.states, (value) => {
   tram.state.time = value[0].time
 })
 
+const currentTramStateIndex = ref(0)
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
-const currentTramStateIndex = ref(0)
+
+const debouncedPlaySFXSound = useDebounceFn(() => {
+  // console.log('Play sound tram', currentTramStateIndex.value)
+  gameStore.playSFXSound('tram', 2)
+}, 2000)
 
 onTick((delta) => {
-  if (props.animation && tram.animation === 'started') {
+  if (tram.animation === 'started' && currentTramStateIndex.value >= 0 && currentTramStateIndex.value < props.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = props.states[currentTramStateIndex.value + 1].time - props.states[currentTramStateIndex.value].time
     const dx = props.states[currentTramStateIndex.value + 1].x - props.states[currentTramStateIndex.value].x
@@ -103,7 +121,9 @@ onTick((delta) => {
       tram.animation = 'finished'
       totalElapsedTime = 0
       currentTramStateIndex.value++
-
+      if (currentTramStateIndex.value <= 7) {
+        debouncedPlaySFXSound()
+      }
       if (currentTramStateIndex.value < props.states.length - 1) tram.animation = 'started'
     }
   }

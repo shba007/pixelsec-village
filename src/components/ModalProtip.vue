@@ -4,6 +4,7 @@ import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
+import AppAnimatedSprite from './AppAnimatedSprite.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -23,23 +24,23 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
 
 const modal = computed(() => {
-  let image = ['popupProtip1', 'popupProtip1']
-  let scale = 0.8
+  let images = ['popupProtip11', 'popupProtip12']
+  let scale = 0.8 / 2
   switch (props.title) {
     case '1':
-      image = ['popupProtip1', 'popupProtip1']
+      images = ['popupProtip11', 'popupProtip12']
       break
     case '2':
-      image = ['popupProtip2', 'popupProtip2']
+      images = ['popupProtip21', 'popupProtip22']
       break
     case '3':
-      image = ['popupProtip3', 'popupProtip3']
+      images = ['popupProtip31', 'popupProtip32']
       break
     case '4':
-      image = ['popupProtip4', 'popupProtip4']
+      images = ['popupProtip41', 'popupProtip42']
       break
     case '5':
-      image = ['popupProtip5', 'popupProtip5']
+      images = ['popupProtip51', 'popupProtip52']
       break
   }
 
@@ -69,7 +70,7 @@ const modal = computed(() => {
   }
 
   return {
-    image,
+    images,
     state: { x: screenWidth.value * xFactor, y: screenHeight.value * yFactor, scale: scale * zoomFactor.value },
     xFactor: xFactor * 100 + '%',
     yFactor: yFactor * 100 + '%',
@@ -77,11 +78,18 @@ const modal = computed(() => {
 })
 
 onMounted(() => {
-  gameStore.playSound('protip')
+  gameStore.playSFXSound('protip')
 })
 </script>
 
 <template>
-  <Sprite :texture="modal.image[0]" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
-    :scale="modal.state.scale" :anchor="0.5" />
+  <AppAnimatedSprite
+    :textures="modal.images"
+    :texture-options="textureOptions"
+    :x="modal.state.x"
+    :y="modal.state.y"
+    :scale="modal.state.scale"
+    :playing="true"
+    :animation-speed="0.08"
+    :anchor="0.5" />
 </template>

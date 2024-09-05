@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import type { State } from '@/utils/types'
 import { textureOptions } from '@/components/Settings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'

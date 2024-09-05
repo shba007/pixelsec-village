@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { External } from 'vue3-pixi'
 import { useWindowSize, watchDebounced } from '@vueuse/core'
 
+import { useDataStore, type spendTimeChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
 
+const dataStore = useDataStore()
 const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -13,10 +15,20 @@ const zoomFactor = computed(() => screenWidth.value / 1280)
 
 const modal = computed(() => ({
   image: 'popupScene12',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.8 * zoomFactor.value },
 }))
 
-const options = [
+const options = reactive<
+  {
+    type: spendTimeChoice
+    frames: string[]
+    state: {
+      x: number
+      y: number
+      scale: number
+    }
+  }[]
+>([
   { type: 'banking', frames: ['smartphoneBanking', 'smartphoneBankingHighlighted'], state: { x: -445, y: -170, scale: 0.5 } },
   { type: 'email', frames: ['smartphoneEmail', 'smartphoneEmailHighlighted'], state: { x: -445, y: -320, scale: 0.5 } },
   { type: 'game', frames: ['smartphoneGame', 'smartphoneGameHighlighted'], state: { x: -290, y: 140, scale: 0.5 } },
@@ -25,12 +37,12 @@ const options = [
   { type: 'music', frames: ['smartphoneMusic', 'smartphoneMusicHighlighted'], state: { x: -445, y: -10, scale: 0.5 } },
   { type: 'shopping', frames: ['smartphoneShopping', 'smartphoneShoppingHighlighted'], state: { x: -290, y: -170, scale: 0.5 } },
   { type: 'social', frames: ['smartphoneSocial', 'smartphoneSocialHighlighted'], state: { x: -290, y: -320, scale: 0.5 } },
-]
+])
 
 const selectedOptions = ref<Set<string>>(new Set())
 
-function onClick(option: string) {
-  gameStore.playSound('buttonPressDesign')
+function onClick(option: spendTimeChoice) {
+  gameStore.playSFXSound('buttonPressDesign')
   if (selectedOptions.value.has(option)) selectedOptions.value.delete(option)
   else selectedOptions.value.add(option)
 }
@@ -39,13 +51,14 @@ watchDebounced(() => [...selectedOptions.value.values()], onComplete, { debounce
 
 function onComplete() {
   // DATA-COLLECT
+  dataStore.setSpendTime([...selectedOptions.value.values()] as spendTimeChoice[])
   gameStore.nextTimeline({ id: 10 })
 }
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Sprite
       v-for="{ type, frames, state } of options"
       :texture="frames[Number(selectedOptions.has(type))]"

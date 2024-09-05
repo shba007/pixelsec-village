@@ -28,7 +28,7 @@ const selectedCharacter = ref<Character>()
 function setCharacter(type: Character) {
   selectedCharacter.value = type
   gameStore.setCharacterSkin(type)
-  gameStore.playSound('buttonPressDesign')
+  gameStore.playSFXSound('buttonPressDesign')
 
   setTimeout(() => {
     gameStore.nextTimeline({ id: 4 })
@@ -38,7 +38,7 @@ function setCharacter(type: Character) {
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :scale="0.5" :anchor="0.5" />
     <AppAnimatedSprite
       v-for="{ type, frames: frames, state } of characters"
       :key="type"

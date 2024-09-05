@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
 import { onTick } from 'vue3-pixi'
-import { textureOptions } from '@/components/Settings.vue'
+import { useGameStore } from '@/stores/game'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
+import { storeToRefs } from 'pinia'
 
 interface Route {
   x: number
@@ -32,6 +33,9 @@ const props = defineProps<{
   animation: boolean
   place: 'map' | 'station'
 }>()
+
+const gameStore = useGameStore()
+const { textureOptions } = storeToRefs(gameStore)
 
 const animations = {
   frontStill: ['characterGenericFrontStill'],
@@ -75,8 +79,8 @@ onTick((delta) => {
     const dy = props.states[currentCharacterStateIndex.value + 1].y - props.states[currentCharacterStateIndex.value].y
     const ds = props.states[currentCharacterStateIndex.value + 1].scale - props.states[currentCharacterStateIndex.value].scale
     progress = Math.min(totalElapsedTime / dt, 1)
-    activeCharacter.state.x = props.states[currentCharacterStateIndex.value].x + dx * progress
-    activeCharacter.state.y = props.states[currentCharacterStateIndex.value].y + dy * progress
+    activeCharacter.state.x = Math.floor(props.states[currentCharacterStateIndex.value].x + dx * progress)
+    activeCharacter.state.y = Math.floor(props.states[currentCharacterStateIndex.value].y + dy * progress)
     activeCharacter.state.scale = props.states[currentCharacterStateIndex.value].scale + ds * progress
     activeCharacter.state.time = props.states[currentCharacterStateIndex.value].time + dt * progress
 
@@ -99,7 +103,7 @@ onTick((delta) => {
 <template>
   <AppAnimatedSprite
     :textures="activeCharacter.aliases"
-    :texture-options="textureOptions"
+    :texture-options="textureOptions.blur"
     :anchor="0.5"
     :x="activeCharacter.state.x"
     :y="activeCharacter.state.y"

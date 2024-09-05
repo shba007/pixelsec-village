@@ -51,7 +51,7 @@ const speed = computed(() => {
 })
 
 onTick((delta) => {
-  cloud.x = cloud.x + delta * speed.value
+  cloud.x = Math.floor(cloud.x + delta * speed.value)
   if (cloud.x > props.widthRange + cloud.width / 2) cloud.x = -(props.widthRange + cloud.width / 2)
 })
 </script>

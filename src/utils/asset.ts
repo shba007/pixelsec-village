@@ -3,7 +3,9 @@
 import frontINET from '/fonts/INET.ttf'
 import frontLAN from '/fonts/LAN.ttf'
 // asset
+import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
 import popupSceneRotateTexture from '@/assets/image/popup/scene-rotate.png'
+import popupSceneRotateOverlayTexture from '@/assets/image/popup/scene-rotate-overlay.png'
 import popupScene01LandscapeTexture from '@/assets/image/popup/scene-0-1-landscape.png'
 import popupScene01PortraitTexture from '@/assets/image/popup/scene-0-1-portrait.png'
 import popupScene02Texture from '@/assets/image/popup/scene-0-2.png'
@@ -71,11 +73,16 @@ import popupScene73Texture from '@/assets/image/popup/scene-7-3.png'
 import popupScene74Texture from '@/assets/image/popup/scene-7-4.png'
 import popupScene8Texture from '@/assets/image/popup/scene-8.png'
 //
-import popupProtip1Texture from '@/assets/image/popup/protip-1.png'
-import popupProtip2Texture from '@/assets/image/popup/protip-2.png'
-import popupProtip3Texture from '@/assets/image/popup/protip-3.png'
-import popupProtip4Texture from '@/assets/image/popup/protip-4.png'
-import popupProtip5Texture from '@/assets/image/popup/protip-5.png'
+import popupProtip11Texture from '@/assets/image/popup/protip-1-1.png'
+import popupProtip12Texture from '@/assets/image/popup/protip-1-2.png'
+import popupProtip21Texture from '@/assets/image/popup/protip-2-1.png'
+import popupProtip22Texture from '@/assets/image/popup/protip-2-2.png'
+import popupProtip31Texture from '@/assets/image/popup/protip-3-1.png'
+import popupProtip32Texture from '@/assets/image/popup/protip-3-2.png'
+import popupProtip41Texture from '@/assets/image/popup/protip-4-1.png'
+import popupProtip42Texture from '@/assets/image/popup/protip-4-2.png'
+import popupProtip51Texture from '@/assets/image/popup/protip-5-1.png'
+import popupProtip52Texture from '@/assets/image/popup/protip-5-2.png'
 //
 import buttonLongTexture from '@/assets/image/buttons/long/pressed.png'
 import buttonLongPressedTexture from '@/assets/image/buttons/long/unpressed.png'
@@ -294,12 +301,21 @@ import bankAlarmLightRight2Texture from '@/assets/image/bank/alarm-light/right-2
 //
 import resultStrawHutBgTexture from '@/assets/image/strawhut/bg.png'
 import resultStrawHutFgTexture from '@/assets/image/strawhut/palm-trees.png'
+import resultStrawHutWolve1Texture from '@/assets/image/strawhut/wolves-1.png'
+import resultStrawHutWolve2Texture from '@/assets/image/strawhut/wolves-2.png'
+import resultStrawHutWolve3Texture from '@/assets/image/strawhut/wolves-3.png'
+import resultStrawHutWolve4Texture from '@/assets/image/strawhut/wolves-4.png'
+import resultStrawHutWolve5Texture from '@/assets/image/strawhut/wolves-5.png'
 //
-import bgmDefault from '@/assets/sound/bgm-default.mp3'
-import bgmFinal from '@/assets/sound/bgm-final.mp3'
-import bgmResult from '@/assets/sound/bgm-result.mp3'
+import resultLogHouseBgTexture from '@/assets/image/log-house/bg.png'
+import resultTownHouseBgTexture from '@/assets/image/town-house/bg.png'
+import resultMansionBgTexture from '@/assets/image/mansion/bg.png'
+//
+import resultMansionDog1Texture from '@/assets/image/mansion/dog/1.png'
+import resultMansionDog2Texture from '@/assets/image/mansion/dog/2.png'
 
-import sfxSprite from '@/assets/sound/sfxSprite.mp3'
+import bgmSprite from '@/assets/sound/bgm-sprite.mp3'
+import sfxSprite from '@/assets/sound/sfx-sprite.mp3'
 
 export const resources = {
   font: {
@@ -307,7 +323,9 @@ export const resources = {
     frontLAN,
   },
   image: {
+    popupIconRotate: popupIconRotateTexture,
     popupSceneRotate: popupSceneRotateTexture,
+    popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
     popupScene01Landscape: popupScene01LandscapeTexture,
     popupScene01Portrait: popupScene01PortraitTexture,
     popupScene02: popupScene02Texture,
@@ -375,11 +393,16 @@ export const resources = {
     popupScene74: popupScene74Texture,
     popupScene8: popupScene8Texture,
     //
-    popupProtip1: popupProtip1Texture,
-    popupProtip2: popupProtip2Texture,
-    popupProtip3: popupProtip3Texture,
-    popupProtip4: popupProtip4Texture,
-    popupProtip5: popupProtip5Texture,
+    popupProtip11: popupProtip11Texture,
+    popupProtip12: popupProtip12Texture,
+    popupProtip21: popupProtip21Texture,
+    popupProtip22: popupProtip22Texture,
+    popupProtip31: popupProtip31Texture,
+    popupProtip32: popupProtip32Texture,
+    popupProtip41: popupProtip41Texture,
+    popupProtip42: popupProtip42Texture,
+    popupProtip51: popupProtip51Texture,
+    popupProtip52: popupProtip52Texture,
     //
     buttonLong: buttonLongTexture,
     buttonLongPressed: buttonLongPressedTexture,
@@ -605,12 +628,22 @@ export const resources = {
     //
     resultStrawHutBg: resultStrawHutBgTexture,
     resultStrawHutFg: resultStrawHutFgTexture,
+    resultStrawHutWolve1: resultStrawHutWolve1Texture,
+    resultStrawHutWolve2: resultStrawHutWolve2Texture,
+    resultStrawHutWolve3: resultStrawHutWolve3Texture,
+    resultStrawHutWolve4: resultStrawHutWolve4Texture,
+    resultStrawHutWolve5: resultStrawHutWolve5Texture,
+    //
+    resultLogHouseBg: resultLogHouseBgTexture,
+    //
+    resultTownHouseBg: resultTownHouseBgTexture,
+    //
+    resultMansionBg: resultMansionBgTexture,
+    resultMansionDog1: resultMansionDog1Texture,
+    resultMansionDog2: resultMansionDog2Texture,
   },
   sound: {
-    bgmDefault,
-    bgmFinal,
-    bgmResult,
-    //
+    bgmSprite,
     sfxSprite,
   },
 }

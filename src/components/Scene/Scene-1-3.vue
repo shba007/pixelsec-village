@@ -15,7 +15,7 @@ const modal = computed(() => ({
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
 }))
 
-useTimeoutFn(handleMove, 3000)
+useTimeoutFn(handleMove, 8000)
 
 function handleMove() {
   gameStore.nextTimeline({ id: 3 })
@@ -24,6 +24,6 @@ function handleMove() {
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
   </Container>
 </template>

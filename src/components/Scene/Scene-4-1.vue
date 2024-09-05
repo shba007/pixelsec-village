@@ -27,13 +27,13 @@ function handleMove() {
 useTimeoutFn(handleMove, 5000)
 
 onMounted(() => {
-  gameStore.playSound('alarmBell', true)
+  gameStore.playSFXSound('alarmBell', 2)
 })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" place="popup" />
   </Container>
 </template>

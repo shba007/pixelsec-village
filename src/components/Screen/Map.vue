@@ -3,10 +3,10 @@ import { computed, onBeforeMount, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
+import { BlurFilter } from 'pixi.js'
 
 import { useGameStore } from '@/stores/game'
 import type { Asset, State } from '@/utils/types'
-import { SCALE_MODES } from '@/utils/types'
 
 import StreetLamp from '@/components/Animation/StreetLamp.vue'
 import Pigeon from '@/components/Animation/Pigeon.vue'
@@ -49,10 +49,10 @@ const emit = defineEmits<{
   (event: 'close', nextSceneIndex: number): void
 }>()
 
-const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
-const { currentScreenIndex, currentPopupIndex, currentSceneIndex, rotationStop, motionBlur, characterSkin } = storeToRefs(gameStore)
+const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, characterSkin, textureOptions } = storeToRefs(gameStore)
 
+const { width: screenWidth } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
 
 const speedFactor = 0.25
@@ -68,8 +68,8 @@ const screen = reactive<Asset>({
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 }, // read t&c
     { x: -650, y: -350, scale: 2.53, alpha: 1, time: 11 }, // zoomin transition
     { x: -600, y: -270, scale: 2.01, alpha: 1, time: 12.25 }, // zoomin transition
-    { x: -580, y: -413.8683596236825, scale: 2.01, alpha: 1, time: 14 },
-    { x: -860, y: -413.8683596236825, scale: 2.01, alpha: 1, time: 17 },
+    { x: -580, y: -413.8683596236825 + 50, scale: 2.01, alpha: 1, time: 14.25 },
+    { x: -860, y: -413.8683596236825 + 50, scale: 2.01, alpha: 1, time: 17 },
     { x: -860, y: -860.8683596236825, scale: 2.01, alpha: 1, time: 20 },
     { x: -1350, y: -860.8683596236825, scale: 2.01, alpha: 1, time: 23 },
     { x: -1350, y: -1042.8683596236826, scale: 2.01, alpha: 1, time: 25.25 },
@@ -80,14 +80,17 @@ const screen = reactive<Asset>({
     // at park 17
     { x: -565, y: -1089.8683596236826, scale: 2.01, alpha: 1, time: 32.78 },
     { x: -565, y: -1090.8683596236826, scale: 2.01, alpha: 1, time: 32.79 },
-    { x: -610, y: -1090.8683596236826, scale: 2.01, alpha: 1, time: 33.24 },
-    { x: -610, y: -1632.8683596236826, scale: 2.01, alpha: 1, time: 38.66 },
+    { x: -610, y: -1090.8683596236826 + 50, scale: 2.01, alpha: 1, time: 33.24 - 0.1 },
+    { x: -610, y: -1632.8683596236826 + 50, scale: 2.01, alpha: 1, time: 38.66 - 0.1 },
+
+    { x: -730, y: -1632.8683596236826 + 50, scale: 2.01, alpha: 1, time: 39.86 },
+
     // at bank 21
     { x: -1090, y: -1632.8683596236826, scale: 2.01, alpha: 1, time: 43.46 },
     { x: -1090, y: -1872.8683596236826, scale: 2.01, alpha: 1, time: 45.86 },
     // at pond 23
     { x: -995, y: -1937.8683596236826, scale: 2.01, alpha: 1, time: 47.015 },
-    { x: -890, y: -1890, scale: 2.01, alpha: 1, time: 54.0175 },
+    { x: -890, y: -1890 + 15, scale: 1.92, alpha: 1, time: 54.0175 },
     // loop ends 25
     { x: -1085, y: -1922.8683596236826, scale: 2.01, alpha: 1, time: 55.7625 },
     { x: -1085, y: -2162.8683596236824, scale: 2.01, alpha: 1, time: 58.1625 },
@@ -270,26 +273,26 @@ const charactersGeneric = ref<State[][]>([
   ],
 ])
 
+const panicSpeedFactor = 0.5
 const charactersPanic = ref([
   {
     type: 'green',
     states: [
-      { x: 1040, y: 1752.5, scale: 0.425, alpha: 0, time: 0 },
-      { x: 1030, y: 1752.5, scale: 0.425, alpha: 1, time: 0.25 },
-      { x: 980, y: 1752.5, scale: 0.425, alpha: 1, time: 1.5 },
-      { x: 1030, y: 1752.5, scale: 0.425, alpha: 1, time: 2.75 },
-      { x: 1040, y: 1752.5, scale: 0.425, alpha: 0, time: 4 },
+      { x: 1040, y: 1752.5, scale: 0.425, alpha: 0, time: 0 * panicSpeedFactor },
+      { x: 1030, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: 0.25 * panicSpeedFactor },
+      { x: 950, y: 1752.5 - 5, scale: 0.425, alpha: 1, time: 2.75 * panicSpeedFactor },
+      { x: 1030, y: 1752.5 + 10, scale: 0.425, alpha: 1, time: 3.5 * panicSpeedFactor },
+      { x: 1040, y: 1752.5, scale: 0.425, alpha: 0, time: 4 * panicSpeedFactor },
     ],
   },
   {
     type: 'purple',
     states: [
-      { x: 1090, y: 1752.5, scale: 0.425, alpha: 0, time: 0 },
-      { x: 1100, y: 1752.5, scale: 0.425, alpha: 1, time: 0.25 },
-      { x: 1130, y: 1752.5, scale: 0.425, alpha: 1, time: 1.5 },
-      { x: 1100, y: 1752.5, scale: 0.425, alpha: 1, time: 2.75 },
-      { x: 1090, y: 1752.5, scale: 0.425, alpha: 0, time: 3.5 },
-      { x: 1090, y: 1752.5, scale: 0.425, alpha: 0, time: 4 },
+      { x: 1090, y: 1752.5, scale: 0.425, alpha: 0, time: 0 * panicSpeedFactor },
+      { x: 1080, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: 0.25 * panicSpeedFactor },
+      { x: 900, y: 1752.5 - 5, scale: 0.425, alpha: 1, time: 2.75 * panicSpeedFactor },
+      { x: 1080, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: 3.5 * panicSpeedFactor },
+      { x: 1090, y: 1752.5, scale: 0.425, alpha: 0, time: 4 * panicSpeedFactor },
     ],
   },
 ])
@@ -328,8 +331,8 @@ const characterMain = reactive<Asset>({
     { x: 900, y: 561, scale: 1.5, alpha: 0, time: 3 },
     { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 }, //
     { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 }, //
-    { x: 1670, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
-    { x: 1670, y: 1190, scale: 1.5, alpha: 0, time: 14.25 }, // leaving the tram
+    { x: 1665, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
+    { x: 1665, y: 1190, scale: 1.5, alpha: 0, time: 14.25 }, // leaving the tram
     { x: 1620, y: 1190, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
     { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 16.5 }, // leaving the tram
     { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
@@ -339,6 +342,8 @@ const characterMain = reactive<Asset>({
     { x: 885, y: 1238, scale: 1.75, alpha: 1, time: 21.79 },
     { x: 930, y: 1238, scale: 1.5, alpha: 1, time: 22.24 },
     { x: 930, y: 1780, scale: 1.5, alpha: 1, time: 27.66 },
+
+    { x: 1050, y: 1780, scale: 1.5, alpha: 1, time: 28.86 },
     // at bank 17
     { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 32.46 },
     { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 34.86 },
@@ -359,8 +364,8 @@ const characterMain = reactive<Asset>({
     { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 51.6425 },
     { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 54.0425 },
     { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 56.3925 },
-    { x: 1170, y: 2545, scale: 1.5, alpha: 1, time: 58.7925 },
-    { x: 410, y: 2545, scale: 1.5, alpha: 1, time: 66.3925 },
+    { x: 1170, y: 2535, scale: 1.5, alpha: 1, time: 58.7925 },
+    { x: 410, y: 2535, scale: 1.5, alpha: 1, time: 66.3925 },
     { x: 410, y: 2777, scale: 1.85, alpha: 1, time: 68.7825 },
     // stop for the ballon 36
     { x: 1165, y: 2777, scale: 1.85, alpha: 1, time: 76.3325 },
@@ -410,7 +415,7 @@ const tram = reactive<Asset>({
     { x: 1178, y: 561, scale: 0.5, alpha: 1, time: 6 }, //
     { x: 1178, y: 1008, scale: 0.5, alpha: 1, time: 9 }, //
     { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 12 }, //
-    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 14.5 }, // leaving the tram
+    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 14.5 - 1 }, // leaving the tram
     { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 15 },
     { x: 1670, y: 2040, scale: 0.5, alpha: 1, time: 23 },
     { x: 2490, y: 2040, scale: 0.5, alpha: 1, time: 32 },
@@ -470,8 +475,8 @@ onTick((delta) => {
   if (!rotationStop.value && screen.animation === 'started' && currentSceneIndex.value < screen.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = screen.states[currentSceneIndex.value + 1].time - screen.states[currentSceneIndex.value].time
-    const dx = Math.round(screen.states[currentSceneIndex.value + 1].x - screen.states[currentSceneIndex.value].x)
-    const dy = Math.round(screen.states[currentSceneIndex.value + 1].y - screen.states[currentSceneIndex.value].y)
+    const dx = Math.floor(screen.states[currentSceneIndex.value + 1].x - screen.states[currentSceneIndex.value].x)
+    const dy = Math.floor(screen.states[currentSceneIndex.value + 1].y - screen.states[currentSceneIndex.value].y)
     const ds = screen.states[currentSceneIndex.value + 1].scale - screen.states[currentSceneIndex.value].scale
 
     progress = Math.min(totalElapsedTime / dt, 1)
@@ -508,11 +513,15 @@ watch(currentScreenIndex, (value) => {
 })
 
 function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finished') {
-  if (state === 'finished') {
-    if (stateIndex === 28 && respondedSceneIndex.value !== 18) {
+  if (state === 'finished' && stateIndex < 41) {
+    if (stateIndex === 29 && respondedSceneIndex.value !== 18) {
       gameStore.nextTimeline({ screen: -1, id: 46 })
     } else {
       gameStore.nextTimeline()
+    }
+
+    if (stateIndex === 30) {
+      gameStore.playBGMSound('normal')
     }
   }
 }
@@ -520,44 +529,28 @@ function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finishe
 const respondedSceneIndex = ref(0)
 function handleResponse(value: number) {
   respondedSceneIndex.value = value
-
-  /*   if (value === 0) {
-      gameStore.nextTimeline()
-    } */
 }
 </script>
 
 <template>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <Sprite texture="mapBg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-      :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
-    <Sprite texture="mapFg" :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }"
-      :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
-    <Sprite texture="mapStationBg"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.bg.x"
-      :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
+    <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
+    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
     <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-    <MapTram :states="tram.states" :animation="!rotationStop && tram.animation === 'started'" :motion-blur="motionBlur"
-      initialOrientation="right" />
-    <Sprite texture="mapStationFg"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="station.fg.x"
-      :y="station.fg.y" :scale="station.fg.scale" :anchor="0" :z-index="0" />
+    <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" />
+    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" :z-index="0" />
     <!-- @vue-ignore -->
     <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-    <Sprite :texture="fence.alias"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="fence.x" :y="fence.y"
-      :scale="fence.scale" />
-    <Sprite :texture="palmTrees.alias"
-      :texture-options="{ scaleMode: motionBlur ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST }" :x="palmTrees.x"
-      :y="palmTrees.y" :scale="palmTrees.scale" />
-    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
-      place="map" />
+    <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y" :scale="fence.scale" />
+    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
+    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
-      :type="type as 'purple' | 'green'" place="map" />
+    <template v-if="currentCharacterIndex >= 16">
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
+    </template>
     <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
     <CharacterGuard place="map" :state="characterGuard.state" />
     <CharacterBaloonVendor :state="characterBaloonVendor.state" />
@@ -583,9 +576,8 @@ function handleResponse(value: number) {
     <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
     <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
   </Container>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <CharacterMain :states="characterMain.states" :skin="characterSkin" @update="handleMCUpdate" />
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
     <Scene12 v-if="currentPopupIndex === 23" />
     <!-- @vue-ignore -->
@@ -593,7 +585,7 @@ function handleResponse(value: number) {
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
+  <!--   <External>
     <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">

@@ -19,7 +19,7 @@ watch(
 )
 
 onTick((delta) => {
-  tram.x = tram.x + delta * tram.speed
+  tram.x = Math.floor(tram.x + delta * tram.speed)
   if (tram.x > props.widthRange + tram.width / 2) tram.x = -(props.widthRange + tram.width / 2)
 })
 </script>

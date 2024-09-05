@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, watch, computed } from 'vue'
+import { reactive, watch, computed, ref } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import type { State } from '@/utils/types'
@@ -10,7 +10,7 @@ import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 // type Orientation = 'front' | 'back' | 'left' | 'right'
 
 const gameStore = useGameStore()
-const { currentCharacterIndex, rotationStop } = storeToRefs(gameStore)
+const { rotationStop } = storeToRefs(gameStore)
 
 interface Character {
   loaded: boolean
@@ -25,6 +25,7 @@ interface Character {
 const props = withDefaults(
   defineProps<{
     states: State[]
+    currentCharacterIndex: number
     skin?: 'red' | 'blue' | 'violate' | 'black'
   }>(),
   {
@@ -40,6 +41,8 @@ function capitalizeFirstLetter(word: string): string {
   if (!word) return word
   return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
 }
+
+const currentCharacterIndex = computed(() => props.currentCharacterIndex)
 
 const characterAnimations = computed(() => ({
   frontStill: [`characterMain${capitalizeFirstLetter(props.skin)}FrontStill`, `characterMain${capitalizeFirstLetter(props.skin)}FrontStill`],
@@ -86,8 +89,14 @@ watch(
   }
 )
 
+let lastAnimationState = ref<'init' | 'started' | 'finished'>()
 watch(rotationStop, (value) => {
-  activeCharacter.animation = value ? 'finished' : activeCharacter.animation
+  if (value) {
+    lastAnimationState.value = activeCharacter.animation
+    activeCharacter.animation = 'init'
+  } else {
+    if (lastAnimationState.value) activeCharacter.animation = lastAnimationState.value
+  }
 })
 
 watch(currentCharacterIndex, () => {
@@ -97,7 +106,7 @@ watch(currentCharacterIndex, () => {
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
-let timer: any;
+let timer: any
 
 onTick((delta) => {
   if (activeCharacter.animation === 'started' && currentCharacterIndex.value < props.states.length - 1) {
@@ -113,8 +122,7 @@ onTick((delta) => {
     activeCharacter.state.scale = props.states[currentCharacterIndex.value].scale + ds * progress
     activeCharacter.state.alpha = props.states[currentCharacterIndex.value].alpha + da * progress
     activeCharacter.state.time = props.states[currentCharacterIndex.value].time + dt * progress
-    if (timer)
-      clearTimeout(timer)
+    if (timer) clearTimeout(timer)
 
     if (dy > 0) {
       activeCharacter.aliases = characterAnimations.value['frontWalk']
@@ -155,14 +163,29 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AppAnimatedSprite v-if="activeCharacter.animation === 'started'" :textures="activeTrail.aliases"
-      :texture-options="textureOptions" :anchor="0.5" :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1"
-      :playing="true" :animation-speed="0.08" />
-    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0"
-      :scale="1" :alpha="1" :playing="activeCharacter.animation === 'started'" :animation-speed="0.08" />
+    <AppAnimatedSprite
+      v-if="activeCharacter.animation === 'started'"
+      :textures="activeTrail.aliases"
+      :texture-options="textureOptions"
+      :anchor="0.5"
+      :x="activeTrail.x"
+      :y="activeTrail.y"
+      :scale="1"
+      :alpha="1"
+      :playing="true"
+      :animation-speed="0.08" />
+    <AppAnimatedSprite
+      :textures="activeCharacter.aliases"
+      :texture-options="textureOptions"
+      :anchor="0.5"
+      :x="0"
+      :y="0"
+      :scale="1"
+      :alpha="1"
+      :playing="activeCharacter.animation === 'started'"
+      :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

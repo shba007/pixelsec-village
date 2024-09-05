@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affindi Dataville</title>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Affindi Dataville">
+    <meta property="og:description"
+        content="Welcome to Affindi Dataville, your hub for data-driven insights and solutions. Explore our innovative tools and services.">
+    <meta property="og:image" content="/images/strawhut-black.png">
+    <meta property="og:url" content="https://affinidi-game-poc.onrender.com">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Affindi Dataville">
+    <meta name="twitter:description"
+        content="Welcome to Affindi Dataville, your hub for data-driven insights and solutions. Explore our innovative tools and services.">
+    <meta name="twitter:image" content="/images/strawhut-black.png">
+    <meta name="twitter:url" content="https://affinidi-game-poc.onrender.com">
+    <script>
+        // Detect bot by checking the userAgent and other conditions
+        function isBot() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const botPatterns = [
+                /bot/i,
+                /crawl/i,
+                /spider/i,
+                /slurp/i,
+                /fetch/i,
+                /mediapartners/i
+            ];
+
+            return botPatterns.some(pattern => pattern.test(userAgent)) ||
+                !navigator.userAgent || navigator.webdriver;
+        }
+
+        if (!isBot()) {
+            window.location.href = '/';
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

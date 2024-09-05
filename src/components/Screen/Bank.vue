@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import { useWindowSize } from '@vueuse/core'
@@ -29,13 +29,17 @@ const zoomFactor = computed(() => {
   return screenHeight.value / 720
 })
 
+// console.log({ zoomFactor: zoomFactor.value })
+
+const delta = (3968 * zoomFactor.value) / 3.3066
+
 // Asset
 const screen = reactive<any>({
   loaded: false,
   alias: { bg: 'bankSky', fg: 'bankBackground' },
   states: [
     { x: -140, y: 200, scale: 1, alpha: 1, time: 0 },
-    { x: -1160, y: 200, scale: 1, alpha: 1, time: 6 },
+    { x: -(delta + screenWidth.value) * 0.8, y: 200, scale: 1, alpha: 1, time: 6 },
   ],
   state: { x: -140, y: 200, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -61,23 +65,25 @@ const alarmLight = ref([
   { type: 'right' as const, x: 1230, y: -90, scale: 1 },
 ])
 
+const speedFactor = 0.7
+
 const charactersPanic = ref([
   {
     type: 'green',
     states: [
-      { x: 930, y: 120, scale: 0.75, alpha: 0, time: 0 },
-      { x: 900, y: 120, scale: 0.75, alpha: 1, time: 0.5 },
-      { x: -100, y: 120, scale: 0.75, alpha: 1, time: 3 },
-      { x: 930, y: 120, scale: 0.75, alpha: 1, time: 6 },
+      { x: 1030, y: 120, scale: 0.75, alpha: 0, time: 0 * speedFactor },
+      { x: 950, y: 130, scale: 0.75, alpha: 1, time: 0.25 * speedFactor },
+      { x: -100, y: 150, scale: 0.75, alpha: 1, time: 3 * speedFactor },
+      { x: 1030, y: 120, scale: 0.75, alpha: 1, time: 5 * speedFactor },
     ],
   },
   {
     type: 'purple',
     states: [
-      { x: 1220, y: 120, scale: 0.75, alpha: 0, time: 0 },
-      { x: 1230, y: 120, scale: 0.75, alpha: 1, time: 0.5 },
-      { x: 1800, y: 120, scale: 0.75, alpha: 1, time: 2 },
-      { x: 1220, y: 120, scale: 0.75, alpha: 1, time: 4 },
+      { x: 1220, y: 150, scale: 0.75, alpha: 0, time: 0 * speedFactor },
+      { x: 1150, y: 170, scale: 0.75, alpha: 1, time: 0.5 * speedFactor },
+      { x: 640, y: 200, scale: 0.75, alpha: 1, time: 2.5 * speedFactor },
+      { x: 1150, y: 140, scale: 0.75, alpha: 1, time: 5 * speedFactor },
     ],
   },
 ])
@@ -105,29 +111,38 @@ onTick((delta) => {
     const ds = screen.states[currentStateIndex.value + 1].scale - screen.states[currentStateIndex.value].scale
 
     progress = Math.min(totalElapsedTime / dt, 1)
-    screen.state.x = screen.states[currentStateIndex.value].x + dx * progress
-    screen.state.y = screen.states[currentStateIndex.value].y + dy * progress
+    screen.state.x = Math.floor(screen.states[currentStateIndex.value].x + dx * progress)
+    screen.state.y = Math.floor(screen.states[currentStateIndex.value].y + dy * progress)
     screen.state.scale = screen.states[currentStateIndex.value].scale + ds * progress
     screen.state.time = screen.states[currentStateIndex.value].time + dt * progress
 
     if (progress == 1) {
       totalElapsedTime = 0
       screen.animation = 'finished'
-      gameStore.nextTimeline({ id: 34 })
+
+      setTimeout(() => {
+        gameStore.nextTimeline({ id: 34 })
+      }, 3000)
     }
   }
 })
 
 watch(currentSceneIndex, (value) => {
-  if (value === 20) {
+  if (value === 21) {
     screen.animation = 'started'
   }
 })
 
-const protip = reactive({ x: 2340, y: -400, scale: 1.95 })
+watch(currentPopupIndex, (value) => {
+  if (value === 16) {
+    gameStore.stopSFXSound()
+    gameStore.playBGMSound('normal')
+  }
+})
 
 onMounted(() => {
-  gameStore.playSound('alarmLight', true)
+  gameStore.playBGMSound('panic')
+  gameStore.playSFXSound('alarmLight')
 })
 </script>
 
@@ -139,20 +154,20 @@ onMounted(() => {
     <Door :x="door.x" :y="door.y" :scale="door.scale" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" place="bank" />
     <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-    <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
+    <template v-if="!rotationStop">
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
+    </template>
     <CharacterGuard :state="characterGuard" place="bank" />
-    <Container :x="protip.x" :y="protip.y" :scale="protip.scale">
-      <ModalProtip v-if="currentPopupIndex === 16" title="3" x="left" />
-    </Container>
   </Container>
   <Container v-if="!rotationStop">
     <Scene1 v-if="currentPopupIndex === 12" />
     <Scene2 v-else-if="currentPopupIndex === 13" />
     <Scene3 v-else-if="currentPopupIndex === 14 || currentPopupIndex === 15" />
+    <ModalProtip v-if="currentPopupIndex === 16" title="3" x="left" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
-    <div class="absolute bottom-0 right-16 z-50 flex w-fit items-center gap-8">
+  <!--   <External>
+    <div class="absolute bottom-0 right-24 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
         <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />

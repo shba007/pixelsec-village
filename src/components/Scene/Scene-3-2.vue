@@ -2,9 +2,11 @@
 import { computed, ref } from 'vue'
 import { useWindowSize, watchDebounced } from '@vueuse/core'
 
+import { useDataStore, type dataExchangeChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
 
+const dataStore = useDataStore()
 const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -18,18 +20,27 @@ const modal = computed(() => ({
   state: { x: (screenWidth.value * 3) / 4, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
 }))
 
-const options = ref([
-  { type: 'shopping-info', state: { x: -255, y: -245, scale: 5.5 } },
-  { type: 'bank-card-details', state: { x: -255, y: -151.25, scale: 5.5 } },
-  { type: 'social-media-profile', state: { x: -255, y: -57.5, scale: 5.5 } },
-  { type: 'personal-preferences', state: { x: -255, y: 36.25, scale: 5.5 } },
-  { type: 'personal-details', state: { x: -255, y: 130, scale: 5.5 } },
+const options = ref<
+  {
+    type: dataExchangeChoice
+    state: {
+      x: number
+      y: number
+      scale: number
+    }
+  }[]
+>([
+  { type: 'shopping-info', state: { x: -255, y: -245, scale: 5.5 / 4 } },
+  { type: 'bank-card-details', state: { x: -255, y: -151.25, scale: 5.5 / 4 } },
+  { type: 'social-media-profile', state: { x: -255, y: -57.5, scale: 5.5 / 4 } },
+  { type: 'personal-preferences', state: { x: -255, y: 36.25, scale: 5.5 / 4 } },
+  { type: 'personal-details', state: { x: -255, y: 130, scale: 5.5 / 4 } },
 ])
 
-const selectedOptions = ref<Set<string>>(new Set())
+const selectedOptions = ref<Set<dataExchangeChoice>>(new Set())
 
-function onClick(option: string) {
-  gameStore.playSound('buttonPress')
+function onClick(option: dataExchangeChoice) {
+  gameStore.playSFXSound('buttonPress')
   if (selectedOptions.value.has(option)) selectedOptions.value.delete(option)
   else selectedOptions.value.add(option)
 }
@@ -38,6 +49,7 @@ watchDebounced(() => [...selectedOptions.value.values()], onComplete, { debounce
 
 function onComplete() {
   // DATA-COLLECT
+  dataStore.setDataExchange([...selectedOptions.value.values()])
   gameStore.nextTimeline({ id: 24 })
 }
 
@@ -46,7 +58,7 @@ const frames = ['buttonSquare', 'buttonSquarePressed']
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Sprite
       v-for="{ type, state } of options"
       :key="type"

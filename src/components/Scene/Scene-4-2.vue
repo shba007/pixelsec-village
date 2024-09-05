@@ -2,10 +2,14 @@
 import { computed, onMounted, ref } from 'vue'
 import { useInterval, useWindowSize } from '@vueuse/core'
 
+import { useDataStore, type dataBreachActionChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
 import { reactive } from 'vue'
+import { onBeforeMount } from 'vue'
+import { onBeforeUnmount } from 'vue'
 
+const dataStore = useDataStore()
 const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -18,14 +22,24 @@ const modal = computed(() => ({
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
 }))
 
-const options = ref([
-  { type: 'do-nothing', frames: ['popupScene52Button11', 'popupScene52Button12'], state: { x: -175, y: -45, scale: 1 } },
-  { type: 'take-action-only-when-prompted', frames: ['popupScene52Button21', 'popupScene52Button22'], state: { x: 130, y: -45, scale: 1 } },
-  { type: 'alert-the-authority-change-login-details', frames: ['popupScene52Button31', 'popupScene52Button32'], state: { x: -120, y: 125, scale: 1 } },
-  { type: 'delete-the-app', frames: ['popupScene52Button41', 'popupScene52Button42'], state: { x: 185, y: 125, scale: 1 } },
+const options = ref<
+  {
+    type: dataBreachActionChoice
+    frames: string[]
+    state: {
+      x: number
+      y: number
+      scale: number
+    }
+  }[]
+>([
+  { type: 'do-nothing', frames: ['popupScene52Button11', 'popupScene52Button12'], state: { x: -175, y: -45, scale: 0.5 } },
+  { type: 'take-action-only-when-prompted', frames: ['popupScene52Button21', 'popupScene52Button22'], state: { x: 130, y: -45, scale: 0.5 } },
+  { type: 'alert-the-authority-change-login-details', frames: ['popupScene52Button31', 'popupScene52Button32'], state: { x: -120, y: 125, scale: 0.5 } },
+  { type: 'delete-the-app', frames: ['popupScene52Button41', 'popupScene52Button42'], state: { x: 185, y: 125, scale: 0.5 } },
 ])
 
-const selectedOption = ref<string>()
+const selectedOption = ref<dataBreachActionChoice>()
 
 const timerText = reactive({ x: -50, y: -220, scale: 3.5 })
 const counter = useInterval(10)
@@ -53,17 +67,26 @@ const timer = computed(() => {
   return [`${formattedMinutes}`, `${digits[0]}`, `${digits[1]}`, `${formattedMilliseconds}`]
 })
 
-function onClick(value: string) {
-  gameStore.playSound('buttonPress')
+function onClick(value: dataBreachActionChoice) {
   // DATA-COLLECT
   selectedOption.value = value
+  dataStore.setDataBreachAction(value)
+  gameStore.playSFXSound('buttonPress')
+
   setTimeout(() => {
     gameStore.nextTimeline({ screen: 2, id: 31 })
   }, 300)
 }
 
 onMounted(() => {
-  gameStore.playSound('countdown', true)
+  gameStore.playBGMSound('countdown')
+  gameStore.playSFXSound('countdown', 2)
+})
+
+onBeforeUnmount(() => {
+  gameStore.stopSFXSound(2)
+  gameStore.playBGMSound('panic')
+  gameStore.playSFXSound('alarmLight')
 })
 </script>
 

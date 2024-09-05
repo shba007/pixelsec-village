@@ -5,8 +5,10 @@ import { useScroll, useTimeoutFn, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/Settings.vue'
+import { storeToRefs } from 'pinia'
 
 const gameStore = useGameStore()
+const { rotationStop } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
@@ -48,14 +50,12 @@ onBeforeUnmount(() => {
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" />
-    <External class="absolute left-0 top-0 h-dvh w-dvw">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <External v-if="!rotationStop" class="absolute left-0 top-0 h-dvh w-dvw">
       <div class="absolute left-1/2 top-[calc(58%)] -translate-x-1/2 -translate-y-1/2">
         <section ref="targetElem" class="policy-section cms-content section-legal h-[50vh]">
           <div class="container">
             <article>
-              <!-- <h1 class="section-title">Terms and Conditions for <span class="text-blue d-block">Affinidi Services</span>
-          </h1> -->
               <p>Version 2.2 - May 2024</p>
               <p class="paragraph sbold"><span class="c10">1.</span>Preamble</p>
               <p class="paragraph">
@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
                     writing between the Parties.
                   </p>
                   <p class="paragraph c78">
-                    <span class="c0">2.1.4.</span> Insofar as the Services include the provision of copyrighted or otherwise (e.g. as trade secret) legally protected content (e.g. software, software
+                    <span class="c0">2.1.4.</span> So far as the Services include the provision of copyrighted or otherwise (e.g. as trade secret) legally protected content (e.g. software, software
                     components, CLIs), We grant the Developer a worldwide, non-exclusive, non-transferable and non-sub licensable right to use the content or have it used in Developer’s interest and
                     under its commission to the extent granted in and for the term of the Agreement (unless explicitly granted differently between Us and the Devel-oper by citing the deviation to this
                     section 2.1.4 of the Terms &amp; Conditions). The Developer shall not transfer the content to third parties in particular, he/she shall not sell, lend, rent or publicly reproduce
@@ -95,8 +95,8 @@ onBeforeUnmount(() => {
                     any artificial intelligence model or application.
                   </p>
                   <p class="paragraph c111">
-                    <span class="c0">2.1.5.</span> Insofar as our Services contain open-source software (“OSS”) components, the use of these components is exclusively subject to the corresponding
-                    terms and conditions of the respective OSS. No provision of the Terms &amp; Conditions shall affect the rights or obligations of the De-veloper under the corresponding terms and
+                    <span class="c0">2.1.5.</span> So far as our Services contain open-source software (“OSS”) components, the use of these components is exclusively subject to the corresponding terms
+                    and conditions of the respective OSS. No provision of the Terms &amp; Conditions shall affect the rights or obligations of the De-veloper under the corresponding terms and
                     conditions of the OSS. In the event of contradic-tions or conflicting provisions between the license terms of the OSS and the provisions of the Terms &amp; Conditions, the license
                     terms of the OSS shall take precedence.
                   </p>
@@ -265,7 +265,7 @@ onBeforeUnmount(() => {
                     malicious software and attacks.
                   </p>
                   <p class="paragraph c12">
-                    <span class="c0">2.5.4.</span> Insofar as our Services contain components of software for which separate license conditions apply and are to be observed, We shall draw Developer's
+                    <span class="c0">2.5.4.</span> So far as our Services contain components of software for which separate license conditions apply and are to be observed, We shall draw Developer's
                     attention to this in an appropriate manner. In this regard, our Services may contain components of open-source software to which respective license terms may apply. The respective
                     open-source license terms shall prevail over the terms of this Agreement. The Developer shall be solely responsible to comply with the open-source license conditions in accordance
                     with section 2.1.5 of the Terms &amp; Conditions.
@@ -301,7 +301,7 @@ onBeforeUnmount(() => {
                   </p>
                   <p class="paragraph c80">
                     <span class="c0">2.7.2.</span> We will inform the Developer of any changes to the Terms &amp; Conditions and/or the scope of Services that go beyond the cases specified under
-                    section 2.7.1 e.g. by displaying such information as part of the log-in procedure for the respective Services at least fourteen (14) days in advance. Insofar as changes beyond
+                    section 2.7.1 e.g. by displaying such information as part of the log-in procedure for the respective Services at least fourteen (14) days in advance. So far as changes beyond
                     section 2.7.1 do not affect essential contractual provisions, Developer‘s consent to the change of the Agreement shall be deemed to have been granted unless the Developer objects
                     to the change in text form within fourteen (14) days after receipt of the change notification and continues to using our Services.
                   </p>
@@ -310,7 +310,7 @@ onBeforeUnmount(() => {
                     extraordinarily with immediate effect or rea-sonable notice period. In any case we will take into account the reasonable interest of the Developer.
                   </p>
                   <p class="paragraph c12">
-                    <span class="c0">2.7.4.</span> Furthermore, We reserve the right to make changes to the Terms &amp; Conditions insofar as these are necessary to fill regulatory gaps or serve to
+                    <span class="c0">2.7.4.</span> Furthermore, We reserve the right to make changes to the Terms &amp; Conditions So far as these are necessary to fill regulatory gaps or serve to
                     implement changes in the law, changes in court rulings or changed market conditions.
                   </p>
                 </div>
@@ -369,7 +369,7 @@ onBeforeUnmount(() => {
                     from these Terms &amp; Conditions require a contractual agreement in text form to be effective.
                   </p>
                   <p class="paragraph c24">
-                    <span class="c0">3.1.4.</span> Insofar as the Services include the provision of copyrighted or otherwise (e.g. as trade secret) legally protected content (e.g., software, software
+                    <span class="c0">3.1.4.</span> So far as the Services include the provision of copyrighted or otherwise (e.g. as trade secret) legally protected content (e.g., software, software
                     components), We grant Consumer a world-wide, non-exclusive, non-transferable and non-sublicensable right to use our Services or have it used in Consumer’s interest and under
                     his/her commission to the extent granted in and for the term of the Agreement (unless explicitly granted differently between Us and Consumer by citing the deviation to this section
                     3.1.4 of the Terms &amp; Conditions). The Consumer shall not reverse engineer, disassemble, decompile, or use it to train any artificial intelligence model or application, except
@@ -506,7 +506,7 @@ onBeforeUnmount(() => {
                   </p>
                   <p class="paragraph c24"><span class="c0">3.7.3.</span> If Consumer objects, either party shall have the right to terminate the Agreement by giving notice with immediate effect.</p>
                   <p class="paragraph c24">
-                    <span class="c0">3.7.4.</span> Furthermore, we reserve the right to make changes to the Terms &amp; Conditions insofar as these are necessary to fill regulatory gaps or serve to
+                    <span class="c0">3.7.4.</span> Furthermore, we reserve the right to make changes to the Terms &amp; Conditions So far as these are necessary to fill regulatory gaps or serve to
                     implement changes in the law, changes in court rulings or changed market conditions.
                   </p>
                 </div>

@@ -15,7 +15,7 @@ interface Character {
   state: State
   direction: number
   orientation: string
-  animation: 'init' | 'stationary' | 'started' | 'finished'
+  animation: 'init' | 'started' | 'finished'
 }
 
 const gameStore = useGameStore()
@@ -49,7 +49,7 @@ const activeCharacter = reactive<Character>({
   },
   direction: 1,
   orientation: 'front',
-  animation: 'stationary',
+  animation: 'init',
 })
 
 watch(props.states, (value) => {
@@ -63,25 +63,32 @@ const currentCharacterIndex = ref(0)
 const holdedCharacterIndex = ref(0)
 watch(currentMCCharacterIndex, (value) => {
   // holdedStateIndex.value = value
-  if (value === 19) {
-    holdedCharacterIndex.value = value - 18
-    currentCharacterIndex.value = value - 19
+  if (value === 20) {
+    holdedCharacterIndex.value = value - 19
+    currentCharacterIndex.value = value - 20
     activeCharacter.animation = 'started'
-  } else if (value > 19) {
-    holdedCharacterIndex.value = value - 18
+    gameStore.playBGMSound('susGuy')
+  } else if (value > 20) {
+    holdedCharacterIndex.value = value - 19
   }
 })
 
+let lastAnimationState = ref<'init' | 'started' | 'finished'>()
 watch(rotationStop, (value) => {
-  activeCharacter.animation = value ? 'finished' : activeCharacter.animation
+  if (value) {
+    lastAnimationState.value = activeCharacter.animation
+    activeCharacter.animation = 'init'
+  } else {
+    if (lastAnimationState.value) activeCharacter.animation = lastAnimationState.value
+  }
 })
 
-watch(
+/* watch(
   () => activeCharacter.animation,
   () => {
     console.log('activeCharacterAnimation', activeCharacter.animation)
   }
-)
+) */
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
@@ -95,8 +102,8 @@ onTick((delta) => {
     const ds = props.states[currentCharacterIndex.value + 1].scale - props.states[currentCharacterIndex.value].scale
     const da = props.states[currentCharacterIndex.value + 1].alpha - props.states[currentCharacterIndex.value].alpha
     progress = Math.min(totalElapsedTime / dt, 1)
-    activeCharacter.state.x = props.states[currentCharacterIndex.value].x + dx * progress
-    activeCharacter.state.y = props.states[currentCharacterIndex.value].y + dy * progress
+    activeCharacter.state.x = Math.floor(props.states[currentCharacterIndex.value].x + dx * progress)
+    activeCharacter.state.y = Math.floor(props.states[currentCharacterIndex.value].y + dy * progress)
     activeCharacter.state.scale = props.states[currentCharacterIndex.value].scale + ds * progress
     activeCharacter.state.alpha = props.states[currentCharacterIndex.value].alpha + da * progress
     activeCharacter.state.time = props.states[currentCharacterIndex.value].time + dt * progress
@@ -113,13 +120,16 @@ onTick((delta) => {
 
     if (progress == 1) {
       totalElapsedTime = 0
+      if (currentCharacterIndex.value === props.states.length - 2) {
+        holdedCharacterIndex.value++
+      }
       currentCharacterIndex.value = holdedCharacterIndex.value
-      activeCharacter.animation = 'finished'
       activeCharacter.animation = 'started'
+      // activeCharacter.animation = 'finished'
     }
   } else if (!(currentCharacterIndex.value < props.states.length - 1)) {
     activeCharacter.aliases = characterAnimations['frontStill']
-    activeCharacter.animation = 'finished'
+    activeCharacter.animation = 'init'
   }
 })
 </script>
@@ -134,7 +144,7 @@ onTick((delta) => {
       :y="0"
       :scale="1"
       :alpha="1"
-      :playing="activeCharacter.animation === 'stationary' || activeCharacter.animation === 'started'"
+      :playing="activeCharacter.animation === 'init' || activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->

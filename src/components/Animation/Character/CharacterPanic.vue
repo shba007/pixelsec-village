@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { onMounted, watch } from 'vue'
 import { reactive, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { onTick } from 'vue3-pixi'
-import { useTimeout } from '@vueuse/core'
+import { useIntervalFn } from '@vueuse/core'
 
-import { getRandomInteger } from '@/utils/helper'
 import { textureOptions } from '@/components/Settings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
+import { useGameStore } from '@/stores/game'
 
 const props = defineProps<{
   place: 'map' | 'bank'
@@ -18,6 +20,9 @@ const props = defineProps<{
   }[]
   type: 'green' | 'purple'
 }>()
+
+const gameStore = useGameStore()
+const { currentPopupIndex } = storeToRefs(gameStore)
 
 const activeCharacter = reactive<any>({
   loaded: false,
@@ -58,8 +63,8 @@ onTick((delta) => {
     const da = props.states[currentCharacterStateIndex.value + 1].alpha - props.states[currentCharacterStateIndex.value].alpha
     const ds = props.states[currentCharacterStateIndex.value + 1].scale - props.states[currentCharacterStateIndex.value].scale
     progress = Math.min(totalElapsedTime / dt, 1)
-    activeCharacter.state.x = props.states[currentCharacterStateIndex.value].x + dx * progress
-    activeCharacter.state.y = props.states[currentCharacterStateIndex.value].y + dy * progress
+    activeCharacter.state.x = Math.floor(props.states[currentCharacterStateIndex.value].x + dx * progress)
+    activeCharacter.state.y = Math.floor(props.states[currentCharacterStateIndex.value].y + dy * progress)
     activeCharacter.state.scale = props.states[currentCharacterStateIndex.value].scale + ds * progress
     activeCharacter.state.alpha = props.states[currentCharacterStateIndex.value].alpha + da * progress
     activeCharacter.state.time = props.states[currentCharacterStateIndex.value].time + dt * progress
@@ -70,6 +75,27 @@ onTick((delta) => {
       currentCharacterStateIndex.value = currentCharacterStateIndex.value === 0 ? 1 : 0
       activeCharacter.animation = 'started'
     }
+  }
+})
+
+watch(currentPopupIndex, (value) => {
+  if (value >= 16) {
+    pause()
+  }
+})
+
+const { resume, pause } = useIntervalFn(
+  () => {
+    gameStore.playSFXSound('panic', 3)
+  },
+  5000,
+  { immediate: false }
+)
+
+onMounted(() => {
+  if (props.type === 'purple') {
+    gameStore.playSFXSound('panic', 3)
+    resume()
   }
 })
 </script>
