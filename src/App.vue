@@ -20,7 +20,7 @@ const gameStore = useGameStore()
 const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
 
 function onResolve() {
-  gameStore.toggleHardStop(true)
+  // gameStore.toggleHardStop(true)
 }
 </script>
 
