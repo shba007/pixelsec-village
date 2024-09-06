@@ -554,7 +554,7 @@ function handleResponse(value: number) {
     <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
       place="map" />
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-    <template v-if="currentCharacterIndex >= 16">
+    <template v-if="currentCharacterIndex === 16">
       <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
         :type="type as 'purple' | 'green'" place="map" />
     </template>

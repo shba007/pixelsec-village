@@ -27,6 +27,7 @@ const { start } = useTimeoutFn(handleMove, 4000, { immediate: false })
 
 useTimeoutFn(() => {
   image.value = 'popupScene32'
+  gameStore.playSFXSound('dialogBox')
   start()
 }, 8000)
 

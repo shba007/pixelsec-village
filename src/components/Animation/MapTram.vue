@@ -93,7 +93,7 @@ let progress = 0
 const debouncedPlaySFXSound = useDebounceFn(() => {
   // console.log('Play sound tram', currentTramStateIndex.value)
   gameStore.playSFXSound('tram', 2)
-}, 2000)
+}, 500)
 
 onTick((delta) => {
   if (tram.animation === 'started' && currentTramStateIndex.value >= 0 && currentTramStateIndex.value < props.states.length - 1) {
@@ -121,9 +121,9 @@ onTick((delta) => {
       tram.animation = 'finished'
       totalElapsedTime = 0
       currentTramStateIndex.value++
-      if (currentTramStateIndex.value <= 7) {
+      if (currentTramStateIndex.value <= 7)
         debouncedPlaySFXSound()
-      }
+
       if (currentTramStateIndex.value < props.states.length - 1) tram.animation = 'started'
     }
   }
@@ -131,16 +131,9 @@ onTick((delta) => {
 </script>
 
 <template>
-  <AppAnimatedSprite
-    :textures="tram.aliases"
-    :texture-options="textureOptions"
-    :anchor="0.5"
-    :x="tram.state.x"
-    :y="tram.state.y"
-    :scale="tram.state.scale"
-    :alpha="tram.state.alpha"
-    :playing="animation && tram.animation === 'started'"
-    :animation-speed="0.08" />
+  <AppAnimatedSprite :textures="tram.aliases" :texture-options="textureOptions" :anchor="0.5" :x="tram.state.x"
+    :y="tram.state.y" :scale="tram.state.scale" :alpha="tram.state.alpha"
+    :playing="animation && tram.animation === 'started'" :animation-speed="0.08" />
   <!--  <External>
     <div class="absolute bottom-0 left-16 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
