@@ -565,7 +565,7 @@ function handleResponse(value: number) {
     <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
     <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction as -1 | 1" />
     <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
-    <BlurFilter :blur="motionBlur ? 0.9 : 0" />
+    <!-- <BlurFilter :blur="motionBlur ? 0.9 : 0" /> -->
   </Container>
   <Container :renderable="isLoad && !rotationStop">
     <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
