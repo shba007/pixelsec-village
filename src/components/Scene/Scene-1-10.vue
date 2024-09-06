@@ -44,8 +44,14 @@ onMounted(() => {
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite v-for="{ type, frames, state } of options" :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+    <Sprite
+      v-for="{ type, frames, state } of options"
+      :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions"
+      :x="state.x"
+      :y="state.y"
+      :scale="state.scale"
+      cursor="pointer"
       @pointerdown="onClick(type)" />
   </Container>
 </template>

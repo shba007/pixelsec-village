@@ -79,7 +79,7 @@ export const timeline: {
     //
     { screen: 6, popup: -1, scene: 32, character: 37 },
     { screen: 6, popup: 22, scene: 32, character: 38 },
-    { screen: 6, popup: 23, scene: 33, character: 39 },
+    { screen: 6, popup: -1, scene: 33, character: 39 },
     { screen: 6, popup: 23, scene: 34, character: 40 },
     // ***
     { screen: 7, popup: -1, scene: 34, character: 41 },

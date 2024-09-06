@@ -24,6 +24,4 @@ onMounted(() => {
 export const textureOptions = { scaleMode: 0 }
 </script>
 
-<template>
-
-</template>
+<template></template>

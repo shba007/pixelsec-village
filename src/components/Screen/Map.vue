@@ -316,8 +316,8 @@ const characterGuard = reactive({
 })
 
 const characterBaloonVendor = reactive({
-  states: [{ x: 1230, y: 2750, scale: 0.5, alpha: 1, time: 0 }],
-  state: { x: 1230, y: 2750, scale: 0.5, alpha: 1, time: 0 },
+  states: [{ x: 1180, y: 2750, scale: 0.5, alpha: 1, time: 0 }],
+  state: { x: 1180, y: 2750, scale: 0.5, alpha: 1, time: 0 },
 })
 
 const characterMain = reactive<Asset>({
@@ -368,7 +368,7 @@ const characterMain = reactive<Asset>({
     { x: 410, y: 2535, scale: 1.5, alpha: 1, time: 66.3925 },
     { x: 410, y: 2777, scale: 1.85, alpha: 1, time: 68.7825 },
     // stop for the ballon 36
-    { x: 1165, y: 2777, scale: 1.85, alpha: 1, time: 76.3325 },
+    { x: 1120, y: 2777, scale: 1.85, alpha: 1, time: 76.3325 },
     { x: 1291.25, y: 2777, scale: 1.85, alpha: 1, time: 77.5975 },
     { x: 1670, y: 2777, scale: 1.85, alpha: 1, time: 81.3925 },
     { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 83.3925 }, ///** sequence break */
@@ -567,7 +567,7 @@ function handleResponse(value: number) {
     <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
     <!-- <BlurFilter :blur="motionBlur ? 0.9 : 0" /> -->
   </Container>
-  <Container :renderable="isLoad && !rotationStop">
+  <Container :renderable="isLoad">
     <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
     <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
     <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" />
@@ -576,20 +576,19 @@ function handleResponse(value: number) {
     <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
     <ModalProtip v-if="currentPopupIndex === 7" title="1" y="top" />
     <ModalProtip v-else-if="currentPopupIndex === 11" title="2" y="top" />
-    <!-- <Scene7 v-else-if="currentPopupIndex === 9 && screen.animation === 'finished'" /> -->
     <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" />
     <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" @update="handleResponse(18)" />
     <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" />
     <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" />
     <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
     <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
+    <Scene12 v-else-if="currentPopupIndex === 23" />
   </Container>
   <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
     :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
     <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin"
       @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
-    <Scene12 v-if="currentPopupIndex === 23" />
     <!-- @vue-ignore -->
     <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
