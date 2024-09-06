@@ -44,7 +44,7 @@ onMounted(() => {
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :scale="isMobile ? 2 : 1" :anchor="0.5" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :scale="isMobile ? 2 : 0.5" :anchor="0.5" />
     <AppAnimatedSprite v-for="{ type, frames: frames, state } of characters" :key="type" :textures="frames"
       :texture-options="textureOptions" :x="state.x" :y="state.y"
       :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)" :anchor="0.5" :playing="true"
