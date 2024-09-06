@@ -27,7 +27,7 @@ const mainWindow = window
 </script>
 
 <template>
-  <Application :resize-to="mainWindow" :antialias="motionBlur ? true : false">
+  <Application :resize-to="mainWindow" :antialias="true">
     <Loader :resources="{ ...resources.font, ...resources.image, ...resources.sound }" :on-resolved="onResolve">
       <template #fallback="{ progress }">
         <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="0.75"
@@ -49,7 +49,7 @@ const mainWindow = window
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.3.19</p>
+    <p>v0.3.20</p>
     <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>

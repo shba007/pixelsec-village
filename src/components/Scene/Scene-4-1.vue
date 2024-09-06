@@ -27,6 +27,7 @@ function handleMove() {
 useTimeoutFn(handleMove, 5000)
 
 onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
   gameStore.playSFXSound('alarmBell', 2)
 })
 </script>

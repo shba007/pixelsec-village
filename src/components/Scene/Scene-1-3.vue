@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
@@ -20,6 +20,10 @@ useTimeoutFn(handleMove, 8000)
 function handleMove() {
   gameStore.nextTimeline({ id: 3 })
 }
+
+onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
+})
 </script>
 
 <template>

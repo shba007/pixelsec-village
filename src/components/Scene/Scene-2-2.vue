@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { External } from 'vue3-pixi'
 import { useWindowSize, watchDebounced } from '@vueuse/core'
 
@@ -54,20 +54,17 @@ function onComplete() {
   dataStore.setSpendTime([...selectedOptions.value.values()] as spendTimeChoice[])
   gameStore.nextTimeline({ id: 10 })
 }
+
+onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
+})
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite
-      v-for="{ type, frames, state } of options"
-      :texture="frames[Number(selectedOptions.has(type))]"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale"
-      :alpha="1"
-      cursor="pointer"
+    <Sprite v-for="{ type, frames, state } of options" :texture="frames[Number(selectedOptions.has(type))]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" :alpha="1" cursor="pointer"
       @pointerdown="onClick(type)" />
   </Container>
 </template>

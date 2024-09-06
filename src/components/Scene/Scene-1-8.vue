@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
@@ -16,6 +16,10 @@ const modal = computed(() => ({
   image: 'popupScene61',
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1 * zoomFactor.value },
 }))
+
+onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
+})
 </script>
 
 <template>

@@ -204,16 +204,17 @@ export const useGameStore = defineStore('game', () => {
     },
   })
 
-  type SFXSounds = 'buttonPress' | 'buttonPressDesign' | 'tram' | 'protip' | 'panic' | 'alarmBell' | 'alarmLight' | 'countdown'
+  type SFXSounds = 'buttonPress' | 'buttonPressDesign' | 'tram' | 'protip' | 'panic' | 'alarmBell' | 'alarmLight' | 'countdown' | 'dialogBox'
   const sfxSpriteMap = {
-    buttonPress: [11030, 1090],
-    buttonPressDesign: [13120, 880],
-    tram: [29590, 2850],
-    protip: [0, 2170],
-    panic: [3170, 1860],
-    alarmBell: [23120, 5170, true],
-    alarmLight: [15000, 7120 - 300, true],
-    countdown: [6030, 4000, true],
+    buttonPress: [10280 + 500, 1770],
+    buttonPressDesign: [13050, 180 + 500],
+    dialogBox: [32070, 50 + 500],
+    protip: [0, 2170], //
+    tram: [29200, 1870],
+    panic: [3170, 1110],
+    alarmBell: [23040 + 100, 5160 - 1000, true],
+    alarmLight: [14230 + 250, 7810 - 1000, true],
+    countdown: [5280, 4000 - 1000, true],
   }
   const sfxSettings = {
     volume: 1,

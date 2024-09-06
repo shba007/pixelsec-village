@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
@@ -29,6 +29,10 @@ useTimeoutFn(() => {
   image.value = 'popupScene32'
   start()
 }, 8000)
+
+onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
+})
 </script>
 
 <template>

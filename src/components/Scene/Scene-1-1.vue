@@ -29,6 +29,7 @@ function handleStart() {
 
 onMounted(() => {
   if (isLandscape.value) useTimeoutFn(handleStart, 7000)
+  gameStore.playSFXSound('dialogBox')
 })
 
 watch(isLandscape, (value) => {

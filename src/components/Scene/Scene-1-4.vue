@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore, type Character } from '@/stores/game'
@@ -34,23 +34,18 @@ function setCharacter(type: Character) {
     gameStore.nextTimeline({ id: 4 })
   }, 300)
 }
+
+onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
+})
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :scale="0.5" :anchor="0.5" />
-    <AppAnimatedSprite
-      v-for="{ type, frames: frames, state } of characters"
-      :key="type"
-      :textures="frames"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)"
-      :anchor="0.5"
-      :playing="true"
-      :animation-speed="0.05"
-      cursor="pointer"
-      @pointerdown="setCharacter(type)" />
+    <AppAnimatedSprite v-for="{ type, frames: frames, state } of characters" :key="type" :textures="frames"
+      :texture-options="textureOptions" :x="state.x" :y="state.y"
+      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)" :anchor="0.5" :playing="true"
+      :animation-speed="0.05" cursor="pointer" @pointerdown="setCharacter(type)" />
   </Container>
 </template>
