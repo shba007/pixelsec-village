@@ -14,6 +14,7 @@ import popupScene03Texture from '@/assets/image/popup/scene-0-3.png'
 import popupScene031xTexture from '@/assets/image/popup/scene-0-3-1x.png'
 import popupScene04Texture from '@/assets/image/popup/scene-0-4.png'
 import popupScene05Texture from '@/assets/image/popup/scene-0-5.png'
+import popupScene051xTexture from '@/assets/image/popup/scene-0-5-1x.svg'
 import popupScene04Button11Texture from '@/assets/image/popup/scene-0-4-button-1-1.png'
 import popupScene04Button12Texture from '@/assets/image/popup/scene-0-4-button-1-2.png'
 import popupScene04Button21Texture from '@/assets/image/popup/scene-0-4-button-2-1.png'
@@ -342,7 +343,7 @@ export const resources = {
     popupScene04Button12: popupScene04Button12Texture,
     popupScene04Button21: popupScene04Button21Texture,
     popupScene04Button22: popupScene04Button22Texture,
-    popupScene05: popupScene05Texture,
+    popupScene05: popupScene051xTexture,
     popupScene11: popupScene11Texture,
     popupScene11Button11: popupScene11Button11Texture,
     popupScene11Button12: popupScene11Button12Texture,
