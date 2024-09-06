@@ -11,7 +11,7 @@ import popupScene01LandscapeTexture from '@/assets/image/popup/scene-0-1-landsca
 import popupScene01PortraitTexture from '@/assets/image/popup/scene-0-1-portrait.png'
 import popupScene02Texture from '@/assets/image/popup/scene-0-2.png'
 import popupScene03Texture from '@/assets/image/popup/scene-0-3.png'
-import popupScene03smTexture from '@/assets/image/popup/scene-0-3-0.5x.png'
+import popupScene031xTexture from '@/assets/image/popup/scene-0-3-1x.png'
 import popupScene04Texture from '@/assets/image/popup/scene-0-4.png'
 import popupScene05Texture from '@/assets/image/popup/scene-0-5.png'
 import popupScene04Button11Texture from '@/assets/image/popup/scene-0-4-button-1-1.png'
@@ -336,7 +336,7 @@ export const resources = {
     popupScene01Landscape: popupScene01LandscapeTexture,
     popupScene01Portrait: popupScene01PortraitTexture,
     popupScene02: popupScene02Texture,
-    popupScene03: popupScene03smTexture,
+    popupScene03: popupScene031xTexture,
     popupScene04: popupScene04Texture,
     popupScene04Button11: popupScene04Button11Texture,
     popupScene04Button12: popupScene04Button12Texture,
