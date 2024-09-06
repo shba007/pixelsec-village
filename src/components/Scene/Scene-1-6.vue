@@ -55,6 +55,10 @@ onBeforeUnmount(() => {
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    /* <Text :style="{ fontFamily: 'LAN', fontSize: 48 }" :texture-options="textureOptions" :x="-400" :y="-200"
+      :scale="1">
+      TERMS AND CONDITIONS FOR AFIINIDI SERVICES
+    </Text> */
     <External v-if="!rotationStop" class="absolute left-0 top-0 h-dvh w-dvw">
       <div class="absolute left-1/2 top-[calc(58%)] -translate-x-1/2 -translate-y-1/2">
         <section ref="targetElem" class="policy-section cms-content section-legal h-[50vh]">
