@@ -73,12 +73,17 @@ onTick((delta) => {
   count += delta * 0.04
   rotate.scale = (75 + Math.sin(count) * 15) / 300
 })
+
+onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
+})
 </script>
 
 <template>
   <Container v-if="ready" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer" @pointerdown="onClick" />
+    <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer"
+      @pointerdown="onClick" />
   </Container>
 </template>

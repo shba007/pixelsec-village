@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { External } from 'vue3-pixi'
 
 import { textureOptions } from '@/components/AppSettings.vue'
 import { useWindowSize } from '@vueuse/core'
+import { useGameStore } from '@/stores/game';
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
 
+const gameStore = useGameStore()
+
 const modal = reactive({
   image: 'popupScene65',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 3) / 4, scale: 0.35 * zoomFactor.value },
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 3) / 4, scale: 0.325 * zoomFactor.value },
+})
+
+onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
 })
 </script>
 

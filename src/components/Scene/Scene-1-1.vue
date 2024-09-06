@@ -22,7 +22,6 @@ const modal = computed(() => ({
 function handleStart() {
   setTimeout(async () => {
     await gameStore.toggleGameMode(true)
-    gameStore.playBGMSound('normal')
     gameStore.nextTimeline({ id: 1 })
   }, 100)
 }
@@ -49,6 +48,7 @@ onTick((delta) => {
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.25" />
-    <Sprite v-if="!isLandscape" texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer" @pointerdown="handleStart" />
+    <Sprite v-if="!isLandscape" texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale"
+      :anchor="0.5" cursor="pointer" @pointerdown="handleStart" />
   </Container>
 </template>

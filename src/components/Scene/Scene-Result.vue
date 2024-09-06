@@ -11,7 +11,7 @@ const props = defineProps<{
   x: number
   y: number
   scale: number
-  place: 'strawhut' | 'log-house' | 'townhouse' | 'mansion'
+  place: 'strawhut' | 'loghouse' | 'townhouse' | 'mansion'
 }>()
 
 const emit = defineEmits<{
@@ -34,7 +34,7 @@ onMounted(() => {
     case 'strawhut':
       image.value = 'popupScene71'
       break
-    case 'log-house':
+    case 'loghouse':
       image.value = 'popupScene72'
       break
     case 'townhouse':
@@ -47,6 +47,7 @@ onMounted(() => {
 })
 
 useTimeoutFn(() => {
+  gameStore.playSFXSound('dialogBox')
   secondScreen.value = true
   emit('update')
 }, 12000)
@@ -98,30 +99,25 @@ onTick(() => {
     emailInputBox.height = height
   }
 })
+
+onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
+})
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
+    <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5"
+      :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
     <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
-      <input
-        type="email"
-        placeholder="ENTER EMAIL FOR A FULL REPORT"
+      <input type="email" placeholder="ENTER EMAIL FOR A FULL REPORT"
         class="border-2 px-4 py-2 placeholder:font-bold placeholder:text-blue-500"
         :style="{ width: emailInputBox.width + 'px', height: emailInputBox.height + 'px' }" />
     </External>
     <Container v-if="secondScreen">
-      <Sprite
-        v-for="{ type, image, x, y, scale } of socials"
-        :key="type"
-        :texture="image"
-        :texture-options="textureOptions"
-        :x="x"
-        :y="y"
-        :scale="scale"
-        :anchor="0.5"
-        cursor="pointer"
+      <Sprite v-for="{ type, image, x, y, scale } of socials" :key="type" :texture="image"
+        :texture-options="textureOptions" :x="x" :y="y" :scale="scale" :anchor="0.5" cursor="pointer"
         @pointerdown="onShare(type, 'pointerdown')" />
     </Container>
     <!-- <External>

@@ -32,7 +32,7 @@ const map = reactive<any>({
   animation: 'started',
 })
 
-const modal = reactive({ place: 'log-house' as const, x: -200, y: 1, scale: 0.75 })
+const modal = reactive({ place: 'loghouse' as const, x: -200, y: 1, scale: 0.75 })
 
 const characterMain = reactive<Asset>({
   loaded: false,

@@ -5,8 +5,10 @@ import { useWindowSize } from '@vueuse/core'
 import { useGameStore, type Character } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
+import { storeToRefs } from 'pinia'
 
 const gameStore = useGameStore()
+const { isMobile } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
@@ -42,19 +44,10 @@ onMounted(() => {
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :scale="0.5" :anchor="0.5" />
-    <AppAnimatedSprite
-      v-for="{ type, frames: frames, state } of characters"
-      :key="type"
-      :textures="frames"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)"
-      :anchor="0.5"
-      :playing="true"
-      :animation-speed="0.05"
-      cursor="pointer"
-      @pointerdown="setCharacter(type)" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :scale="isMobile ? 2 : 0.5" :anchor="0.5" />
+    <AppAnimatedSprite v-for="{ type, frames: frames, state } of characters" :key="type" :textures="frames"
+      :texture-options="textureOptions" :x="state.x" :y="state.y"
+      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)" :anchor="0.5" :playing="true"
+      :animation-speed="0.05" cursor="pointer" @pointerdown="setCharacter(type)" />
   </Container>
 </template>
