@@ -577,7 +577,7 @@ export const resources = {
     dataTrailSide3: dataTrailSide3Texture,
     dataTrailSide4: dataTrailSide4Texture,
     //
-    sky: stationSkyTexture,
+    stationSky: stationSkyTexture,
     //
     stationCloudSmall: stationCloudSmallTexture,
     stationCloudMedium: stationCloudMediumTexture,

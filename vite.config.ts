@@ -27,88 +27,16 @@ export default defineConfig({
         name: 'Affindi Dataville',
         short_name: 'Dataville',
         description: 'Affindi Dataville',
-        theme_color: '#0593FA',
-        background_color: '#0593FA',
+        theme_color: '#000000',
+        background_color: '#000000',
         orientation: 'landscape',
         icons: [
-          /* {
-            src: '/pwa/icon-48.png',
-            sizes: '48x48',
-            type: 'image/png',
-            purpose: 'any',
-          },
-          {
-            src: '/pwa/icon-72.png',
-            sizes: '72x72',
-            type: 'image/png',
-            purpose: 'any',
-          },
-          {
-            src: '/pwa/icon-96.png',
-            sizes: '96x96',
-            type: 'image/png',
-            purpose: 'any',
-          },
-          {
-            src: '/pwa/icon-128.png',
-            sizes: '128x128',
-            type: 'image/png',
-            purpose: 'any',
-          },
-          {
-            src: '/pwa/icon-192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'any',
-          },
-          {
-            src: '/pwa/icon-384.png',
-            sizes: '384x384',
-            type: 'image/png',
-            purpose: 'any',
-          }, */
           {
             src: '/pwa/icon-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any',
           },
-          /* {
-            src: '/pwa/icon-maskable-48.png',
-            sizes: '48x48',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
-          {
-            src: '/pwa/icon-maskable-72.png',
-            sizes: '72x72',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
-          {
-            src: '/pwa/icon-maskable-96.png',
-            sizes: '96x96',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
-          {
-            src: '/pwa/icon-maskable-128.png',
-            sizes: '128x128',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
-          {
-            src: '/pwa/icon-maskable-192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
-          {
-            src: '/pwa/icon-maskable-384.png',
-            sizes: '384x384',
-            type: 'image/png',
-            purpose: 'maskable',
-          }, */
           {
             src: '/pwa/icon-maskable-512.png',
             sizes: '512x512',

@@ -17,21 +17,27 @@ import SceneExperience from '@/components/Scene/Scene-Experience.vue'
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const gameStore = useGameStore()
-const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
+const { currentScreenIndex, rotationStop, hardStop, motionBlur } = storeToRefs(gameStore)
 
 function onResolve() {
   // gameStore.toggleHardStop(true)
 }
+
+const mainWindow = window
 </script>
 
 <template>
-  <Application>
-    <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
+  <Application :resize-to="mainWindow" :antialias="motionBlur ? true : false">
+    <Loader :resources="{ ...resources.font, ...resources.image, ...resources.sound }" :on-resolved="onResolve">
       <template #fallback="{ progress }">
-        <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="0.75" :style="{ fill: 'white' }"> Loading... {{ Math.floor(progress * 100) }}% </Text>
+        <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="0.75"
+          :style="{ fill: 'white', fontFamily: 'INET' }">
+          Loading... {{ Math.floor(progress * 100) }}%
+        </Text>
       </template>
       <template #default>
-        <ScreenMap v-if="currentScreenIndex <= 6" :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
+        <ScreenMap v-if="currentScreenIndex <= 6"
+          :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
         <ScreenStation v-if="currentScreenIndex === 1" />
         <ScreenPark v-else-if="currentScreenIndex === 3" />
         <ScreenBank v-else-if="currentScreenIndex === 5" />
@@ -58,5 +64,20 @@ function onResolve() {
 <style lang="css">
 :root {
   @apply bg-transparent;
+}
+
+canvas {
+  image-rendering: optimizeSpeed;
+  /* Older versions of FF          */
+  image-rendering: -moz-crisp-edges;
+  /* FF 6.0+                       */
+  image-rendering: -webkit-optimize-contrast;
+  /* Safari                        */
+  image-rendering: -o-crisp-edges;
+  /* OS X & Windows Opera (12.02+) */
+  image-rendering: pixelated;
+  /* Awesome future-browsers       */
+  -ms-interpolation-mode: nearest-neighbor;
+  /* IE                            */
 }
 </style>

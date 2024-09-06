@@ -2,7 +2,6 @@
 import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { useTimeout, useWindowSize } from '@vueuse/core'
 import { onTick } from 'vue3-pixi'
-import { isMobile } from 'pixi.js'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
@@ -78,8 +77,8 @@ onTick((delta) => {
 <template>
   <Container v-if="ready" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" cursor="pointer"
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer"
       @pointerdown="onClick" />
-    <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" />
   </Container>
 </template>

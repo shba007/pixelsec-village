@@ -50,7 +50,7 @@ const emit = defineEmits<{
 }>()
 
 const gameStore = useGameStore()
-const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, characterSkin, textureOptions } = storeToRefs(gameStore)
+const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, characterSkin, textureOptions, motionBlur } = storeToRefs(gameStore)
 
 const { width: screenWidth } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
@@ -533,23 +533,30 @@ function handleResponse(value: number) {
 </script>
 
 <template>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
     <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
     <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
-    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
+    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y"
+      :scale="station.bg.scale" :anchor="0" :z-index="2" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
     <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" />
-    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" :z-index="0" />
+    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y"
+      :scale="station.fg.scale" :anchor="0" :z-index="0" />
     <!-- @vue-ignore -->
     <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-    <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y" :scale="fence.scale" />
-    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
-    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
+    <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y"
+      :scale="fence.scale" />
+    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y"
+      :scale="palmTrees.scale" />
+    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
+      place="map" />
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
     <template v-if="currentCharacterIndex >= 16">
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
+        :type="type as 'purple' | 'green'" place="map" />
     </template>
     <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
     <CharacterGuard place="map" :state="characterGuard.state" />
@@ -558,6 +565,7 @@ function handleResponse(value: number) {
     <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
     <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction as -1 | 1" />
     <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
+    <BlurFilter :blur="motionBlur ? 0.9 : 0" />
   </Container>
   <Container :renderable="isLoad && !rotationStop">
     <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
@@ -576,8 +584,10 @@ function handleResponse(value: number) {
     <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
     <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
   </Container>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
+    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin"
+      @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
     <Scene12 v-if="currentPopupIndex === 23" />
     <!-- @vue-ignore -->
