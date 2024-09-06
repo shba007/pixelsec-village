@@ -50,8 +50,9 @@ onBeforeUnmount(() => {
   window.removeEventListener('appinstalled', handleAppInstalled)
 })
 
+// !pwaInstalled.value ? 'popupSceneInstall' :
 const modal = computed(() => ({
-  image: !pwaInstalled.value ? 'popupSceneInstall' : 'popupSceneRotate',
+  image: 'popupSceneRotate',
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.8 * zoomFactor.value },
 }))
 
