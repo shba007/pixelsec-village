@@ -19,7 +19,7 @@ const emit = defineEmits<{
 }>()
 
 const gameStore = useGameStore()
-const { characterSkin } = storeToRefs(gameStore)
+const { characterSkin, rotationStop } = storeToRefs(gameStore)
 
 const secondScreen = ref(false)
 const image = ref('popupScene71')
@@ -78,8 +78,8 @@ function onShare(type: 'facebook' | 'instagram' | 'x', event?: string) {
   window.open(finalShare, '_blank')
 }
 
-const emailPlaceholderRef = ref<any>(null)
 const emailPlaceholder = reactive({ x: 0, y: 180, scale: 0.5 })
+const emailPlaceholderRef = ref<any>(null)
 const emailInputBox = reactive({ x: 0, y: 0, width: 0, height: 0 })
 
 onTick(() => {
@@ -106,18 +106,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+  <Container v-if="rotationStop" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5"
-      :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
+    <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
     <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
-      <input type="email" placeholder="ENTER EMAIL FOR A FULL REPORT"
-        class="border-2 px-4 py-2 placeholder:font-bold placeholder:text-blue-500"
+      <input
+        type="email"
+        class="border-2 bg-transparent px-4 py-2 placeholder:font-bold placeholder:text-blue-500 active:bg-white"
         :style="{ width: emailInputBox.width + 'px', height: emailInputBox.height + 'px' }" />
     </External>
     <Container v-if="secondScreen">
-      <Sprite v-for="{ type, image, x, y, scale } of socials" :key="type" :texture="image"
-        :texture-options="textureOptions" :x="x" :y="y" :scale="scale" :anchor="0.5" cursor="pointer"
+      <Sprite
+        v-for="{ type, image, x, y, scale } of socials"
+        :key="type"
+        :texture="image"
+        :texture-options="textureOptions"
+        :x="x"
+        :y="y"
+        :scale="scale"
+        :anchor="0.5"
+        cursor="pointer"
         @pointerdown="onShare(type, 'pointerdown')" />
     </Container>
     <!-- <External>

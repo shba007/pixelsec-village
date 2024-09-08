@@ -14,10 +14,6 @@ import Scene1 from '@/components/Scene/Scene-3-1.vue'
 import Scene2 from '@/components/Scene/Scene-3-2.vue'
 import Scene3 from '@/components/Scene/Scene-3-3.vue'
 
-const emit = defineEmits<{
-  (event: 'close', nextSceneIndex: number): void
-}>()
-
 const gameStore = useGameStore()
 const { currentPopupIndex, rotationStop } = storeToRefs(gameStore)
 

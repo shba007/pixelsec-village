@@ -17,10 +17,6 @@ import Scene2 from '@/components/Scene/Scene-4-2.vue'
 import Scene3 from '@/components/Scene/Scene-4-3.vue'
 import ModalProtip from '@/components/ModalProtip.vue'
 
-const emit = defineEmits<{
-  (event: 'close', nextSceneIndex: number): void
-}>()
-
 const gameStore = useGameStore()
 const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
 

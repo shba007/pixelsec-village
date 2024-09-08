@@ -4,7 +4,7 @@ import { External } from 'vue3-pixi'
 
 import { textureOptions } from '@/components/AppSettings.vue'
 import { useWindowSize } from '@vueuse/core'
-import { useGameStore } from '@/stores/game';
+import { useGameStore } from '@/stores/game'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
@@ -22,8 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Sprite :texture="modal.image" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
-    :scale="modal.state.scale" :anchor="0.5" />
+  <Sprite :texture="modal.image" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale" :anchor="0.5" />
   <!--   <External>
     <div class="fixed bottom-0 left-16 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
+import { computed, onBeforeMount, reactive, ref, watchEffect } from 'vue'
 import { External, useScreen } from 'vue3-pixi'
 import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -14,10 +14,6 @@ import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.
 import Pigeon from '@/components/Animation/Pigeon.vue'
 import Scene1 from '@/components/Scene/Scene-2-1.vue'
 import Scene2 from '@/components/Scene/Scene-2-2.vue'
-
-const emit = defineEmits<{
-  (event: 'close', nextSceneIndex: number): void
-}>()
 
 const gameStore = useGameStore()
 const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
