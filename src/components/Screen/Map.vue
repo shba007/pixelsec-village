@@ -566,8 +566,8 @@ function handleResponse(value: number) {
 
 <template>
   <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="0.5" :anchor="0" :z-index="3" />
-    <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="0.5" :anchor="0" :z-index="1" />
+    <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
+    <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
     <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
