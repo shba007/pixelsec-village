@@ -106,7 +106,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Container v-if="rotationStop" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+  <Container v-if="!rotationStop" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
     <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
