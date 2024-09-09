@@ -40,9 +40,8 @@ const characterMain = reactive<Asset>({
   states: [
     { x: 100, y: 100, scale: 3.155, alpha: 1, time: 0 },
     { x: 350, y: 100, scale: 3.155, alpha: 1, time: 2.5 },
-    { x: 350, y: 100, scale: 3.155, alpha: 1, time: 3.5 },
-    { x: 200, y: 100, scale: 3.155, alpha: 1, time: 4 + 1 },
-    { x: 350, y: 100, scale: 3.155, alpha: 1, time: 5.5 + 1 },
+    { x: 200, y: 100, scale: 3.155, alpha: 1, time: 4 },
+    { x: 350, y: 100, scale: 3.155, alpha: 1, time: 5.5 },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'started',

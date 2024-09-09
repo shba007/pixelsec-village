@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch, computed } from 'vue'
 import { External, onTick } from 'vue3-pixi'
-import { useTimeoutFn } from '@vueuse/core'
+import { useFocus, useTimeoutFn } from '@vueuse/core'
 
 import { textureOptions } from '@/components/AppSettings.vue'
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
+import { useDataStore } from '@/stores/data'
 
 const props = defineProps<{
   x: number
@@ -18,6 +19,7 @@ const emit = defineEmits<{
   (event: 'update'): void
 }>()
 
+const dataStore = useDataStore()
 const gameStore = useGameStore()
 const { characterSkin, rotationStop } = storeToRefs(gameStore)
 
@@ -45,12 +47,6 @@ onMounted(() => {
       break
   }
 })
-
-useTimeoutFn(() => {
-  gameStore.playSFXSound('dialogBox')
-  secondScreen.value = true
-  emit('update')
-}, 12000)
 
 const socials = ref([
   { type: 'facebook' as const, image: 'IconFacebook', x: -49 - 40, y: 103 - 20, scale: 0.24 },
@@ -103,19 +99,45 @@ onTick(() => {
 onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
+
+const inputEmail = ref<string>()
+const email = ref<string>()
+
+function onSubmit(value: string) {
+  if (email.value !== undefined) return
+
+  // DATA-COLLECT
+  email.value = value
+  dataStore.setEmail(value)
+  gameStore.playSFXSound('dialogBox')
+
+  setTimeout(() => {
+    secondScreen.value = true
+    emit('update')
+  }, 300)
+}
+const frames = ['resultButton1', 'resultButton2']
+const inputRef = ref<any>()
+const { focused } = useFocus(inputRef)
 </script>
 
 <template>
   <Container v-if="!rotationStop" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
-    <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
-      <input
-        type="email"
-        class="border-2 bg-transparent px-4 py-2 placeholder:font-bold placeholder:text-blue-500 focus:bg-white md:text-lg"
-        :style="{ width: emailInputBox.width + 'px', height: emailInputBox.height + 'px' }" />
-    </External>
-    <Container v-if="secondScreen">
+    <Container v-if="!secondScreen" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
+      <Sprite ref="emailPlaceholderRef" :texture="focused || inputEmail?.length ? 'PlaceholderEmail2' : 'PlaceholderEmail1'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" />
+      <Sprite :texture="frames[Number(!!email?.length)]" :texture-options="textureOptions" :anchor="0.5" :x="450" :y="0" :scale="2.25" cursor="pointer" @pointerdown="onSubmit(inputEmail!)" />
+      <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
+        <input
+          ref="inputRef"
+          type="email"
+          v-model="inputEmail"
+          @keydown.enter="onSubmit(inputEmail!)"
+          class="border-0 bg-transparent px-4 py-2 outline-none placeholder:font-bold placeholder:text-blue-500 md:text-xl"
+          :style="{ width: emailInputBox.width * 0.9 + 'px', height: emailInputBox.height + 'px' }" />
+      </External>
+    </Container>
+    <Container v-else>
       <Sprite
         v-for="{ type, image, x, y, scale } of socials"
         :key="type"

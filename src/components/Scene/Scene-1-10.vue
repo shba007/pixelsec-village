@@ -26,6 +26,8 @@ const options = [
 const selectedOption = ref<boolean>()
 
 function onClick(value: boolean) {
+  if (selectedOption.value !== undefined) return
+
   // DATA-COLLECT
   selectedOption.value = value
   dataStore.setDataVault(value)

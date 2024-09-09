@@ -23,6 +23,7 @@ interface Choice {
   annoyingPoint: annoyingPointChoice | null
   dataVault: boolean | null
   dataRewardsTradeoff: boolean | null
+  email: string | null
 }
 
 const scoreCard = {
@@ -84,6 +85,7 @@ export const useDataStore = defineStore('data', () => {
     annoyingPoint: null,
     dataVault: null,
     dataRewardsTradeoff: null,
+    email: null,
   })
 
   watch(
@@ -169,6 +171,10 @@ export const useDataStore = defineStore('data', () => {
     score.value += scoreCard.dataRewardsTradeoff[String(value) as 'true' | 'false']
   }
 
+  function setEmail(value: string) {
+    choices.email = value
+  }
+
   return {
     resultHouse,
     setReadTC,
@@ -181,5 +187,6 @@ export const useDataStore = defineStore('data', () => {
     setAnnoyingPoint,
     setDataVault,
     setDataRewardsTradeoff,
+    setEmail,
   }
 })

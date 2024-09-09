@@ -300,6 +300,9 @@ import bankAlarmLightLeft2Texture from '@/assets/image/bank/alarm-light/left-2.p
 import bankAlarmLightRight1Texture from '@/assets/image/bank/alarm-light/right-1.png'
 import bankAlarmLightRight2Texture from '@/assets/image/bank/alarm-light/right-2.png'
 //
+import resultButton1Texture from '@/assets/image/buttons/arrow/unpressed.png'
+import resultButton2Texture from '@/assets/image/buttons/arrow/pressed.png'
+//
 import resultStrawHutBgTexture from '@/assets/image/strawhut/bg.png'
 import resultStrawHutFgTexture from '@/assets/image/strawhut/palm-trees.png'
 import resultStrawHutWolve1Texture from '@/assets/image/strawhut/wolves-1.png'
@@ -321,7 +324,8 @@ import sfxSprite from '/sound/sfx-sprite.mp3'
 import IconFacebook from '@/assets/image/popup/icon-social-facebook.png'
 import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
 import IconX from '@/assets/image/popup/icon-social-x.png'
-import PlaceholderEmail from '@/assets/image/popup/placeholder-email.png'
+import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
+import PlaceholderEmail2 from '@/assets/image/popup/placeholder-email-focus.png'
 
 export const resources = {
   font: {
@@ -633,6 +637,9 @@ export const resources = {
     bankCharacterGuard1: characterBankGuard1Texture,
     bankCharacterGuard2: characterBankGuard2Texture,
     //
+    resultButton1: resultButton1Texture,
+    resultButton2: resultButton2Texture,
+    //
     resultStrawHutBg: resultStrawHutBgTexture,
     resultStrawHutFg: resultStrawHutFgTexture,
     resultStrawHutWolve1: resultStrawHutWolve1Texture,
@@ -652,7 +659,8 @@ export const resources = {
     IconFacebook,
     IconInstagram,
     IconX,
-    PlaceholderEmail,
+    PlaceholderEmail1,
+    PlaceholderEmail2,
   },
   image: {
     popupSceneInstall: popupSceneInstallTexture,
@@ -959,6 +967,9 @@ export const resources = {
     bankCharacterGuard1: characterBankGuard1Texture,
     bankCharacterGuard2: characterBankGuard2Texture,
     //
+    resultButton1: resultButton1Texture,
+    resultButton2: resultButton2Texture,
+    //
     resultStrawHutBg: resultStrawHutBgTexture,
     resultStrawHutFg: resultStrawHutFgTexture,
     resultStrawHutWolve1: resultStrawHutWolve1Texture,
@@ -978,7 +989,8 @@ export const resources = {
     IconFacebook,
     IconInstagram,
     IconX,
-    PlaceholderEmail,
+    PlaceholderEmail1,
+    PlaceholderEmail2,
   },
   sound: {
     bgmSprite,

@@ -57,24 +57,24 @@ const alarmLight = ref([
   { type: 'right' as const, x: 1230 - 1975, y: -90, scale: 1 },
 ])
 
-const speedFactor = 0.7
+const panicSpeedFactor = 0.7
 const charactersPanic = ref([
   {
     type: 'green',
     states: [
-      { x: 1030 - 1975, y: 120, scale: 0.75, alpha: 0, time: 0 * speedFactor },
-      { x: 950 - 1975, y: 130, scale: 0.75, alpha: 1, time: 0.25 * speedFactor },
-      { x: -100 - 1975, y: 150, scale: 0.75, alpha: 1, time: 3 * speedFactor },
-      { x: 1030 - 1975, y: 120, scale: 0.75, alpha: 1, time: 5 * speedFactor },
+      { x: 1030 - 1975, y: 120, scale: 0.75, alpha: 0, time: 0 * panicSpeedFactor },
+      { x: 950 - 1975, y: 130, scale: 0.75, alpha: 1, time: 0.25 * panicSpeedFactor },
+      { x: -100 - 1975, y: 150, scale: 0.75, alpha: 1, time: 3 * panicSpeedFactor },
+      { x: 1030 - 1975, y: 120, scale: 0.75, alpha: 1, time: 5 * panicSpeedFactor },
     ],
   },
   {
     type: 'purple',
     states: [
-      { x: 1220 - 1975, y: 150, scale: 0.75, alpha: 0, time: 0 * speedFactor },
-      { x: 1150 - 1975, y: 170, scale: 0.75, alpha: 1, time: 0.5 * speedFactor },
-      { x: 640 - 1975, y: 200, scale: 0.75, alpha: 1, time: 2.5 * speedFactor },
-      { x: 1150 - 1975, y: 140, scale: 0.75, alpha: 1, time: 5 * speedFactor },
+      { x: 1220 - 1975, y: 150, scale: 0.75, alpha: 0, time: 0 * panicSpeedFactor },
+      { x: 1150 - 1975, y: 170, scale: 0.75, alpha: 1, time: 0.5 * panicSpeedFactor },
+      { x: 640 - 1975, y: 200, scale: 0.75, alpha: 1, time: 2.5 * panicSpeedFactor },
+      { x: 1150 - 1975, y: 140, scale: 0.75, alpha: 1, time: 5 * panicSpeedFactor },
     ],
   },
 ])

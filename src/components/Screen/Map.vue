@@ -51,52 +51,52 @@ const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharact
 const { width: screenWidth } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
 
-const speedFactor = 0.25
+const globalSpeedFactor = 0.75
 const screen = reactive<Asset>({
   loaded: false,
   alias: 'mapBg',
   states: [
-    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 0 },
-    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 2 }, // Welcome to Dataville
-    { x: -990, y: -560, scale: 1.96, alpha: 1, time: 5 },
-    { x: -795, y: -590, scale: 2.01, alpha: 1, time: 7 }, // let the adventure begin
-    { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 }, // choose your avater
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 }, // read t&c
-    { x: -650, y: -350, scale: 2.53, alpha: 1, time: 11 }, // zoomin transition
-    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 12.25 }, // zoomin transition
-    { x: -580, y: -413.8683596236825 + 50, scale: 2.01, alpha: 1, time: 14.25 },
-    { x: -860, y: -413.8683596236825 + 50, scale: 2.01, alpha: 1, time: 17 },
-    { x: -860, y: -860.8683596236825, scale: 2.01, alpha: 1, time: 20 },
-    { x: -1350, y: -860.8683596236825, scale: 2.01, alpha: 1, time: 23 },
-    { x: -1350, y: -1042.8683596236826, scale: 2.01, alpha: 1, time: 25.25 },
-    { x: -1300, y: -1042.8683596236826, scale: 2.01, alpha: 1, time: 26 },
-    { x: -1300, y: -1132.8683596236826, scale: 2.01, alpha: 1, time: 27.5 },
-    { x: -700, y: -1132.8683596236826, scale: 2.01, alpha: 1, time: 31 },
-    { x: -700, y: -1089.8683596236826, scale: 2.01, alpha: 1, time: 31.43 },
+    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 0 * globalSpeedFactor },
+    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 2 * globalSpeedFactor }, // Welcome to Dataville
+    { x: -990, y: -560, scale: 1.96, alpha: 1, time: 5 * globalSpeedFactor },
+    { x: -795, y: -590, scale: 2.01, alpha: 1, time: 7 * globalSpeedFactor }, // let the adventure begin
+    { x: -720, y: -405, scale: 1.97, alpha: 1, time: 9 * globalSpeedFactor }, // choose your avater
+    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 10 * globalSpeedFactor }, // read t&c
+    { x: -650, y: -350, scale: 2.53, alpha: 1, time: 11 * globalSpeedFactor }, // zoomin transition
+    { x: -600, y: -270, scale: 2.01, alpha: 1, time: 12.25 * globalSpeedFactor }, // zoomin transition
+    { x: -580, y: -413.8683596236825 + 50, scale: 2.01, alpha: 1, time: 14.25 * globalSpeedFactor },
+    { x: -860, y: -413.8683596236825 + 50, scale: 2.01, alpha: 1, time: 17 * globalSpeedFactor },
+    { x: -860, y: -860.8683596236825, scale: 2.01, alpha: 1, time: 20 * globalSpeedFactor },
+    { x: -1350, y: -860.8683596236825, scale: 2.01, alpha: 1, time: 23 * globalSpeedFactor },
+    { x: -1350, y: -1042.8683596236826, scale: 2.01, alpha: 1, time: 25.25 * globalSpeedFactor },
+    { x: -1300, y: -1042.8683596236826, scale: 2.01, alpha: 1, time: 26 * globalSpeedFactor },
+    { x: -1300, y: -1132.8683596236826, scale: 2.01, alpha: 1, time: 27.5 * globalSpeedFactor },
+    { x: -700, y: -1132.8683596236826, scale: 2.01, alpha: 1, time: 31 * globalSpeedFactor },
+    { x: -700, y: -1089.8683596236826, scale: 2.01, alpha: 1, time: 31.43 * globalSpeedFactor },
     // at park 17
-    { x: -565, y: -1089.8683596236826, scale: 2.01, alpha: 1, time: 32.78 },
-    { x: -565, y: -1090.8683596236826, scale: 2.01, alpha: 1, time: 32.79 },
-    { x: -610, y: -1090.8683596236826 + 50, scale: 2.01, alpha: 1, time: 33.24 - 0.1 },
-    { x: -610, y: -1632.8683596236826 + 50, scale: 2.01, alpha: 1, time: 38.66 - 0.1 },
-    { x: -730, y: -1632.8683596236826 + 50, scale: 2.01, alpha: 1, time: 39.86 },
+    { x: -565, y: -1089.8683596236826, scale: 2.01, alpha: 1, time: 32.78 * globalSpeedFactor },
+    { x: -565, y: -1090.8683596236826, scale: 2.01, alpha: 1, time: 32.79 * globalSpeedFactor },
+    { x: -610, y: -1090.8683596236826 + 50, scale: 2.01, alpha: 1, time: (33.24 - 0.1) * globalSpeedFactor },
+    { x: -610, y: -1632.8683596236826 + 50, scale: 2.01, alpha: 1, time: (38.66 - 0.1) * globalSpeedFactor },
+    { x: -730, y: -1632.8683596236826 + 50, scale: 2.01, alpha: 1, time: 39.86 * globalSpeedFactor },
     // at bank 21
-    { x: -1090, y: -1632.8683596236826, scale: 2.01, alpha: 1, time: 43.46 },
-    { x: -1090, y: -1872.8683596236826, scale: 2.01, alpha: 1, time: 45.86 },
+    { x: -1090, y: -1632.8683596236826, scale: 2.01, alpha: 1, time: 43.46 * globalSpeedFactor },
+    { x: -1090, y: -1872.8683596236826, scale: 2.01, alpha: 1, time: 45.86 * globalSpeedFactor },
     // at pond 23
-    { x: -995, y: -1937.8683596236826, scale: 2.01, alpha: 1, time: 47.015 },
-    { x: -890, y: -1890, scale: 1.85, alpha: 1, time: 54.0175 },
+    { x: -995, y: -1937.8683596236826, scale: 2.01, alpha: 1, time: 47.015 * globalSpeedFactor },
+    { x: -890, y: -1890, scale: 1.85, alpha: 1, time: 54.0175 * globalSpeedFactor },
     // loop ends 25
-    { x: -1085, y: -1922.8683596236826, scale: 2.01, alpha: 1, time: 55.7625 },
-    { x: -1085, y: -2162.8683596236824, scale: 2.01, alpha: 1, time: 58.1625 },
-    { x: -850, y: -2162.8683596236824, scale: 2.01, time: 60.5125, alpha: 1 },
-    { x: -850, y: -2340, scale: 2.01, time: 62.9125, alpha: 1 },
-    { x: -90, y: -2340, scale: 2.01, time: 70.5125, alpha: 1 },
-    { x: -90, y: -2540, scale: 1.64, time: 71.5125, alpha: 1 },
+    { x: -1085, y: -1922.8683596236826, scale: 2.01, alpha: 1, time: 55.7625 * globalSpeedFactor },
+    { x: -1085, y: -2162.8683596236824, scale: 2.01, alpha: 1, time: 58.1625 * globalSpeedFactor },
+    { x: -850, y: -2162.8683596236824, scale: 2.01, alpha: 1, time: 60.5125 * globalSpeedFactor },
+    { x: -850, y: -2340, scale: 2.01, alpha: 1, time: 62.9125 * globalSpeedFactor },
+    { x: -90, y: -2340, scale: 2.01, alpha: 1, time: 70.5125 * globalSpeedFactor },
+    { x: -90, y: -2540, scale: 1.64, alpha: 1, time: 71.5125 * globalSpeedFactor },
     // stop for the ballon 31
-    { x: -930, y: -2590, scale: 1.64, time: 79.0625, alpha: 1 },
-    { x: -1000, y: -2590, scale: 1.64, time: 84.1225, alpha: 1 },
-    { x: -1570, y: -2480, scale: 1.64, time: 86.1225, alpha: 1 },
-    { x: -1210, y: -2270, scale: 0.76, time: 87.7475, alpha: 1 },
+    { x: -930, y: -2590, scale: 1.64, alpha: 1, time: 79.0625 * globalSpeedFactor },
+    { x: -1000, y: -2590, scale: 1.64, alpha: 1, time: 84.1225 * globalSpeedFactor },
+    { x: -1570, y: -2480, scale: 1.64, alpha: 1, time: 86.1225 * globalSpeedFactor },
+    { x: -1210, y: -2270, scale: 0.76, alpha: 1, time: 87.7475 * globalSpeedFactor },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -106,81 +106,82 @@ const characterMain = reactive<Asset>({
   loaded: false,
   alias: 'characterMain',
   states: [
-    { x: 840, y: 514, scale: 1.5, alpha: 0, time: 0 },
-    { x: 840, y: 515, scale: 1.5, alpha: 1, time: 0.25 },
-    { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.5 },
-    { x: 900, y: 515, scale: 1.5, alpha: 0, time: 1.25 }, // entering the tram
-    { x: 900, y: 561, scale: 1.5, alpha: 0, time: 3 },
-    { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 }, //
-    { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 }, //
-    { x: 1665, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
-    { x: 1665, y: 1190, scale: 1.5, alpha: 0, time: 14.25 }, // leaving the tram
-    { x: 1620, y: 1190, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
-    { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 16.5 }, // leaving the tram
-    { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
-    { x: 1020, y: 1237, scale: 1.75, alpha: 1, time: 20.43 },
+    { x: 840, y: 514, scale: 1.5, alpha: 0, time: 0 * globalSpeedFactor },
+    { x: 840, y: 515, scale: 1.5, alpha: 1, time: 0.25 * globalSpeedFactor },
+    { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.5 * globalSpeedFactor },
+    { x: 900, y: 515, scale: 1.5, alpha: 0, time: 1.25 * globalSpeedFactor }, // entering the tram
+    { x: 900, y: 561, scale: 1.5, alpha: 0, time: 3 * globalSpeedFactor },
+    { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 * globalSpeedFactor }, //
+    { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 * globalSpeedFactor }, //
+    { x: 1665, y: 1008, scale: 1.5, alpha: 0, time: 12 * globalSpeedFactor }, //
+    { x: 1665, y: 1190, scale: 1.5, alpha: 0, time: 14.25 * globalSpeedFactor }, // leaving the tram
+    { x: 1620, y: 1190, scale: 1.5, alpha: 1, time: 15 * globalSpeedFactor }, // leaving the tram
+    { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 16.5 * globalSpeedFactor }, // leaving the tram
+    { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 * globalSpeedFactor },
+    { x: 1020, y: 1237, scale: 1.75, alpha: 1, time: 20.43 * globalSpeedFactor },
     // at park 13
-    { x: 885, y: 1237, scale: 1.75, alpha: 1, time: 21.78 },
-    { x: 885, y: 1238, scale: 1.75, alpha: 1, time: 21.79 },
-    { x: 930, y: 1238, scale: 1.5, alpha: 1, time: 22.24 },
-    { x: 930, y: 1780, scale: 1.5, alpha: 1, time: 27.66 },
+    { x: 885, y: 1237, scale: 1.75, alpha: 1, time: 21.78 * globalSpeedFactor },
+    { x: 885, y: 1238, scale: 1.75, alpha: 1, time: 21.79 * globalSpeedFactor },
+    { x: 930, y: 1238, scale: 1.5, alpha: 1, time: 22.24 * globalSpeedFactor },
+    { x: 930, y: 1780, scale: 1.5, alpha: 1, time: 27.66 * globalSpeedFactor },
 
-    { x: 1050, y: 1780, scale: 1.5, alpha: 1, time: 28.86 },
+    { x: 1050, y: 1780, scale: 1.5, alpha: 1, time: 28.86 * globalSpeedFactor },
     // at bank 17
-    { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 32.46 },
-    { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 34.86 },
+    { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 32.46 * globalSpeedFactor },
+    { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 34.86 * globalSpeedFactor },
     // at pond 19
-    { x: 1315, y: 2085, scale: 1.5, alpha: 1, time: 36.015 },
-    { x: 1220, y: 2150, scale: 1.5, alpha: 1, time: 37.1625 },
-    { x: 1100, y: 2150, scale: 1.5, alpha: 1, time: 38.3625 },
-    { x: 1020, y: 2090, scale: 1.5, alpha: 1, time: 39.3625 },
-    { x: 1020, y: 1960, scale: 1.5, alpha: 1, time: 40.6625 },
-    { x: 1110, y: 1910, scale: 1.5, alpha: 1, time: 41.6925 },
-    { x: 1230, y: 1910, scale: 1.5, alpha: 1, time: 42.8925 },
-    { x: 1290, y: 2030, scale: 1.5, alpha: 1, time: 44.2325 },
+    { x: 1315, y: 2085, scale: 1.5, alpha: 1, time: 36.015 * globalSpeedFactor },
+    { x: 1220, y: 2150, scale: 1.5, alpha: 1, time: 37.1625 * globalSpeedFactor },
+    { x: 1100, y: 2150, scale: 1.5, alpha: 1, time: 38.3625 * globalSpeedFactor },
+    { x: 1020, y: 2090, scale: 1.5, alpha: 1, time: 39.3625 * globalSpeedFactor },
+    { x: 1020, y: 1960, scale: 1.5, alpha: 1, time: 40.6625 * globalSpeedFactor },
+    { x: 1110, y: 1910, scale: 1.5, alpha: 1, time: 41.6925 * globalSpeedFactor },
+    { x: 1230, y: 1910, scale: 1.5, alpha: 1, time: 42.8925 * globalSpeedFactor },
+    { x: 1290, y: 2030, scale: 1.5, alpha: 1, time: 44.2325 * globalSpeedFactor },
     // loop starts 27
-    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 45.4975 },
-    { x: 1030, y: 2150, scale: 1.5, alpha: 1, time: 47.6975 },
-    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 49.8975 },
+    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 45.4975 * globalSpeedFactor },
+    { x: 1030, y: 2150, scale: 1.5, alpha: 1, time: 47.6975 * globalSpeedFactor },
+    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 49.8975 * globalSpeedFactor },
     // loop ends 30
-    { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 51.6425 },
-    { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 54.0425 },
-    { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 56.3925 },
-    { x: 1170, y: 2535, scale: 1.5, alpha: 1, time: 58.7925 },
-    { x: 410, y: 2535, scale: 1.5, alpha: 1, time: 66.3925 },
-    { x: 410, y: 2777, scale: 1.85, alpha: 1, time: 68.7825 },
+    { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 51.6425 * globalSpeedFactor },
+    { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 54.0425 * globalSpeedFactor },
+    { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 56.3925 * globalSpeedFactor },
+    { x: 1170, y: 2535, scale: 1.5, alpha: 1, time: 58.7925 * globalSpeedFactor },
+    { x: 410, y: 2535, scale: 1.5, alpha: 1, time: 66.3925 * globalSpeedFactor },
+    { x: 410, y: 2777, scale: 1.85, alpha: 1, time: 68.7825 * globalSpeedFactor },
     // stop for the ballon 36
-    { x: 1120, y: 2777, scale: 1.85, alpha: 1, time: 76.3325 },
-    { x: 1291.25, y: 2777, scale: 1.85, alpha: 1, time: 77.5975 },
-    { x: 1670, y: 2777, scale: 1.85, alpha: 1, time: 81.3925 },
-    { x: 1670, y: 2590 - 20, scale: 1.5, alpha: 1, time: 83.3925 }, ///** sequence break */
-    { x: 1985, y: 2590 - 20, scale: 1.5, alpha: 1, time: 86.5425 },
+    { x: 1120, y: 2777, scale: 1.85, alpha: 1, time: 76.3325 * globalSpeedFactor },
+    { x: 1291.25, y: 2777, scale: 1.85, alpha: 1, time: 77.5975 * globalSpeedFactor },
+    { x: 1670, y: 2777, scale: 1.85, alpha: 1, time: 81.3925 * globalSpeedFactor },
+    { x: 1670, y: 2590 - 20, scale: 1.5, alpha: 1, time: 83.3925 * globalSpeedFactor }, ///** sequence break */
+    { x: 1985, y: 2590 - 20, scale: 1.5, alpha: 1, time: 86.5425 * globalSpeedFactor },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'init',
 })
 
+const susSpeedFactor = 0.25
 const characterSus = reactive<Asset>({
   loaded: false,
   alias: 'characterSus',
   states: [
-    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: 0 },
-    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: 0.75 },
+    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: 0 * globalSpeedFactor },
+    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: 0.75 * globalSpeedFactor },
     // in the pond
-    { x: 1220 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 - 3.35 * speedFactor },
-    { x: 1100 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 1.45 * speedFactor },
-    { x: 1020 - 20, y: 2090 + 20, scale: 0.45, alpha: 1, time: 2.75 + 5.45 * speedFactor },
-    { x: 1020 - 20, y: 1960 + 20, scale: 0.45, alpha: 1, time: 2.75 + 10.65 * speedFactor },
-    { x: 1110 - 20, y: 1910 + 20, scale: 0.45, alpha: 1, time: 2.75 + 14.77 * speedFactor },
-    { x: 1230 - 20, y: 1910 + 20, scale: 0.45, alpha: 1, time: 2.75 + 19.57 * speedFactor },
-    { x: 1290 - 20, y: 2030 + 20, scale: 0.45, alpha: 1, time: 2.75 + 24.93 * speedFactor },
+    { x: 1220 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: (2.75 - 3.35 * susSpeedFactor) * globalSpeedFactor },
+    { x: 1100 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: (2.75 + 1.45 * susSpeedFactor) * globalSpeedFactor },
+    { x: 1020 - 20, y: 2090 + 20, scale: 0.45, alpha: 1, time: (2.75 + 5.45 * susSpeedFactor) * globalSpeedFactor },
+    { x: 1020 - 20, y: 1960 + 20, scale: 0.45, alpha: 1, time: (2.75 + 10.65 * susSpeedFactor) * globalSpeedFactor },
+    { x: 1110 - 20, y: 1910 + 20, scale: 0.45, alpha: 1, time: (2.75 + 14.77 * susSpeedFactor) * globalSpeedFactor },
+    { x: 1230 - 20, y: 1910 + 20, scale: 0.45, alpha: 1, time: (2.75 + 19.57 * susSpeedFactor) * globalSpeedFactor },
+    { x: 1290 - 20, y: 2030 + 20, scale: 0.45, alpha: 1, time: (2.75 + 24.93 * susSpeedFactor) * globalSpeedFactor },
     // loop starts
-    { x: 1250 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 29.99 * speedFactor },
-    { x: 1030 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 38.79 * speedFactor },
-    { x: 1250 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 47.59 * speedFactor },
+    { x: 1250 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: (2.75 + 29.99 * susSpeedFactor) * globalSpeedFactor },
+    { x: 1030 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: (2.75 + 38.79 * susSpeedFactor) * globalSpeedFactor },
+    { x: 1250 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: (2.75 + 47.59 * susSpeedFactor) * globalSpeedFactor },
     //
-    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: 2.75 + 47.59 * speedFactor + 1 },
-    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: 2.75 + 47.59 * speedFactor + 2 },
+    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: (2.75 + 47.59 * susSpeedFactor + 1) * globalSpeedFactor },
+    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: (2.75 + 47.59 * susSpeedFactor + 2) * globalSpeedFactor },
   ],
   state: { x: 1230, y: 2010, scale: 0.45, alpha: 1, time: 1 },
   animation: 'init',
@@ -190,19 +191,19 @@ const tram = reactive<Asset>({
   loaded: false,
   alias: 'tram',
   states: [
-    { x: 902, y: 515, scale: 0.5, alpha: 0, time: 0 },
-    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 0.5 },
-    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 1.5 }, // entering the tram
-    { x: 902, y: 561, scale: 0.5, alpha: 1, time: 3.5 }, //
-    { x: 1178, y: 561, scale: 0.5, alpha: 1, time: 6 }, //
-    { x: 1178, y: 1008, scale: 0.5, alpha: 1, time: 9 }, //
-    { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 12 }, //
-    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 14.5 - 1 }, // leaving the tram
-    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 15 },
-    { x: 1670, y: 2040, scale: 0.5, alpha: 1, time: 23 },
-    { x: 2490, y: 2040, scale: 0.5, alpha: 1, time: 32 },
-    { x: 2490, y: 1708, scale: 0.5, alpha: 1, time: 36 },
-    { x: 2490, y: 1695, scale: 0.5, alpha: 0, time: 36.5 },
+    { x: 902, y: 515, scale: 0.5, alpha: 0, time: 0 * globalSpeedFactor },
+    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 0.5 * globalSpeedFactor },
+    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 1.5 * globalSpeedFactor }, // entering the tram
+    { x: 902, y: 561, scale: 0.5, alpha: 1, time: 3.5 * globalSpeedFactor }, //
+    { x: 1178, y: 561, scale: 0.5, alpha: 1, time: 6 * globalSpeedFactor }, //
+    { x: 1178, y: 1008, scale: 0.5, alpha: 1, time: 9 * globalSpeedFactor }, //
+    { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 12 * globalSpeedFactor }, //
+    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: (14.5 - 1) * globalSpeedFactor }, // leaving the tram
+    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 15 * globalSpeedFactor },
+    { x: 1670, y: 2040, scale: 0.5, alpha: 1, time: 23 * globalSpeedFactor },
+    { x: 2490, y: 2040, scale: 0.5, alpha: 1, time: 32 * globalSpeedFactor },
+    { x: 2490, y: 1708, scale: 0.5, alpha: 1, time: 36 * globalSpeedFactor },
+    { x: 2490, y: 1695, scale: 0.5, alpha: 0, time: 36.5 * globalSpeedFactor },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'init',
