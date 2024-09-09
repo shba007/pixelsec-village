@@ -40,8 +40,9 @@ const characterMain = reactive<Asset>({
   states: [
     { x: 100, y: 100, scale: 3.155, alpha: 1, time: 0 },
     { x: 350, y: 100, scale: 3.155, alpha: 1, time: 2.5 },
-    { x: 200, y: 100, scale: 3.155, alpha: 1, time: 4 },
-    { x: 350, y: 100, scale: 3.155, alpha: 1, time: 5.5 },
+    { x: 350, y: 100, scale: 3.155, alpha: 1, time: 3.5 },
+    { x: 200, y: 100, scale: 3.155, alpha: 1, time: 4 + 1 },
+    { x: 350, y: 100, scale: 3.155, alpha: 1, time: 5.5 + 1 },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'started',
@@ -49,7 +50,7 @@ const characterMain = reactive<Asset>({
 
 function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finished') {
   if (state === 'finished') {
-    if (stateIndex === 2) gameStore.nextTimeline({ screen: -1, id: 62 })
+    if (stateIndex === 3) gameStore.nextTimeline({ screen: -1, id: 62 })
     else gameStore.nextTimeline({ id: 61 })
   }
 }

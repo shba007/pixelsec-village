@@ -17,7 +17,7 @@ const zoomFactor = computed(() => {
 
 const modal = computed(() => ({
   image: 'popupScene33',
-  state: { x: (screenWidth.value * 3) / 4, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+  state: { x: (screenWidth.value * 1) / 4, y: 0, scale: 0.9 * zoomFactor.value },
 }))
 
 const options = ref<

@@ -72,7 +72,7 @@ onBeforeMount(onLoad)
     <Sprite :texture="park.alias.fg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
-  <Container v-if="!rotationStop">
+  <Container v-if="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">
     <Scene1 v-if="currentPopupIndex === 8" />
     <Scene2 v-else-if="currentPopupIndex === 9" />
     <Scene3 v-else-if="currentPopupIndex === 10" />

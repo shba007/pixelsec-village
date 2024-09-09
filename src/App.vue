@@ -41,14 +41,17 @@ const images = computed(() => (isMobile.value ? resources.imageSm : resources.im
   <Application :resize-to="mainWindow" :antialias="false">
     <Loader :resources="{ ...resources.font, ...images, ...resources.sound }" :on-resolved="onResolve">
       <template #fallback="{ progress }">
-        <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="0.75" :style="{ fill: 'white', fontFamily: 'INET' }"> Loading... {{ Math.floor(progress * 100) }}% </Text>
+        <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="0.75"
+          :style="{ fill: 'white', fontFamily: 'INET' }"> Loading... {{ Math.floor(progress * 100) }}% </Text>
       </template>
       <template #default>
         <template v-if="!isStarted">
-          <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="0.75" :style="{ fill: 'white', fontFamily: 'INET' }" cursor="pointer" @pointerdown="onStart"> Start Game </Text>
+          <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="0.75"
+            :style="{ fill: 'white', fontFamily: 'INET' }" cursor="pointer" @pointerdown="onStart"> Start Game </Text>
         </template>
         <template v-else>
-          <ScreenMap v-if="currentScreenIndex <= 6" :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
+          <ScreenMap v-if="currentScreenIndex <= 6"
+            :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
           <ScreenStation v-if="currentScreenIndex === 1" />
           <ScreenPark v-else-if="currentScreenIndex === 3" />
           <ScreenBank v-else-if="currentScreenIndex === 5" />
@@ -61,16 +64,16 @@ const images = computed(() => (isMobile.value ? resources.imageSm : resources.im
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.3.31</p>
-    <!--     <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+    <p>v0.3.32</p>
+    <!-- <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
     <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
   </div>
-  <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
+  <!-- <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
-  </div>
+  </div> -->
 </template>
 
 <style lang="css">

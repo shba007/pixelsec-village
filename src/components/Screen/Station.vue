@@ -29,8 +29,8 @@ const zoomFactor = computed(() => {
 const sky = reactive<Asset>({
   loaded: false,
   alias: 'stationSky',
-  states: [{ x: 0, y: -305, scale: 1.4, alpha: 1, time: 0 }],
-  state: { x: 0, y: -305, scale: 1.4, alpha: 1, time: 0 },
+  states: [{ x: 0, y: -305, scale: 1, alpha: 1, time: 0 }],
+  state: { x: 0, y: -305, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
 })
 
@@ -62,8 +62,8 @@ const characterStationMaster = reactive({
 })
 
 const charactersGeneric = ref<State[]>([
-  { x: screenWidth.value + 50, y: -10, scale: 1, alpha: 1, time: 0 },
-  { x: screenWidth.value + 50, y: -10, scale: 1, alpha: 1, time: 2 },
+  { x: screenWidth.value + 200, y: -10, scale: 1, alpha: 1, time: 0 },
+  { x: screenWidth.value + 200, y: -10, scale: 1, alpha: 1, time: 2 },
   { x: 0, y: -10, scale: 1, alpha: 1, time: 8 },
 ])
 
@@ -86,8 +86,10 @@ useTimeoutFn(() => {
 
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <Sprite :texture="sky.alias" :texture-options="textureOptions" :x="sky.state.x" :y="sky.state.y" :scale="sky.state.scale" :anchor="0.5" />
-    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="station" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+    <Sprite :texture="sky.alias" :texture-options="textureOptions" :x="sky.state.x" :y="sky.state.y"
+      :scale="sky.state.scale" :anchor="0.5" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="station" :width-range="screenWidth"
+      :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
     <Sprite :texture="platform.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="1" :anchor="0.5" />
     <CharacterGeneric :states="charactersGeneric" :animation="true" place="station" />
     <Sprite :texture="platform.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="1" :anchor="0.5" />
@@ -96,7 +98,7 @@ useTimeoutFn(() => {
     <CharacterStationMaster :state="characterStationMaster.state" place="station" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
-  <Container v-if="!rotationStop">
+  <Container v-if="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">
     <Scene1 v-if="currentPopupIndex === 5" />
     <Scene2 v-else-if="currentPopupIndex === 6" />
   </Container>

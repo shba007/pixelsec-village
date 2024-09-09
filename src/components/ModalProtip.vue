@@ -9,8 +9,8 @@ import AppAnimatedSprite from './AppAnimatedSprite.vue'
 const props = withDefaults(
   defineProps<{
     title: string
-    x?: 'left' | 'center' | 'right'
-    y?: 'top' | 'center' | 'bottom'
+    x?: 'left' | 'center' | 'right' | 'default'
+    y?: 'top' | 'center' | 'bottom' | 'default'
   }>(),
   {
     x: 'center',
@@ -83,13 +83,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <AppAnimatedSprite
-    :textures="modal.images"
-    :texture-options="textureOptions"
-    :x="modal.state.x"
-    :y="modal.state.y"
-    :scale="modal.state.scale"
-    :playing="true"
-    :animation-speed="0.08"
-    :anchor="0.5" />
+  <AppAnimatedSprite :textures="modal.images" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
+    :scale="modal.state.scale" :playing="true" :animation-speed="0.08" :anchor="0.5" />
 </template>

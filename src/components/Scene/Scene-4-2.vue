@@ -11,12 +11,14 @@ const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
-  return screenHeight.value / 720
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
 })
+
 
 const modal = computed(() => ({
   image: 'popupScene52',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+  state: { x: 0, y: 0, scale: 0.9 * zoomFactor.value },
 }))
 
 const options = ref<
@@ -92,22 +94,15 @@ onBeforeUnmount(() => {
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="timerText.x" :y="timerText.y" :scale="timerText.scale">
-      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45"> {{ timer[0] }} : {{ timer[1] }} </Text>
+      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45"> {{ timer[0] }} : {{ timer[1] }}
+      </Text>
       <Text :style="{ fill: 'red', fontFamily: 'INET' }" :texture-options="textureOptions" :x="18">
         {{ timer[2] }}
       </Text>
       <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="35"> : {{ timer[3] }}</Text>
     </Container>
-    <Sprite
-      v-for="{ type, frames, state } of options"
-      :key="type"
-      :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions"
-      :anchor="0.5"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale"
-      cursor="pointer"
+    <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :anchor="0.5" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
       @pointerdown="onClick(type)" />
   </Container>
 </template>

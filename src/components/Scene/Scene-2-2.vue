@@ -11,11 +11,14 @@ const dataStore = useDataStore()
 const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => screenWidth.value / 1280)
+const zoomFactor = computed(() => {
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
+})
 
 const modal = computed(() => ({
   image: 'popupScene12',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.8 * zoomFactor.value },
+  state: { x: 0, y: 0, scale: 0.9 * zoomFactor.value },
 }))
 
 const options = reactive<

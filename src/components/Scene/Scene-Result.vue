@@ -108,16 +108,24 @@ onMounted(() => {
 <template>
   <Container v-if="!rotationStop" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5"
-      :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
+    <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail'" :texture-options="textureOptions" :anchor="0.5" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale" />
     <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
-      <input type="email"
-        class="border-2 bg-transparent px-4 py-2 placeholder:font-bold placeholder:text-blue-500 md:text-lg focus:bg-white"
+      <input
+        type="email"
+        class="border-2 bg-transparent px-4 py-2 placeholder:font-bold placeholder:text-blue-500 focus:bg-white md:text-lg"
         :style="{ width: emailInputBox.width + 'px', height: emailInputBox.height + 'px' }" />
     </External>
     <Container v-if="secondScreen">
-      <Sprite v-for="{ type, image, x, y, scale } of socials" :key="type" :texture="image"
-        :texture-options="textureOptions" :x="x" :y="y" :scale="scale" :anchor="0.5" cursor="pointer"
+      <Sprite
+        v-for="{ type, image, x, y, scale } of socials"
+        :key="type"
+        :texture="image"
+        :texture-options="textureOptions"
+        :x="x"
+        :y="y"
+        :scale="scale"
+        :anchor="0.5"
+        cursor="pointer"
         @pointerdown="onShare(type, 'pointerdown')" />
     </Container>
     <!-- <External>

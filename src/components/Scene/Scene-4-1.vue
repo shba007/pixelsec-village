@@ -10,14 +10,15 @@ const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
-  return screenHeight.value / 720
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
 })
 
 const alarmBell = reactive({ x: -355, y: -5, scale: 4.5 })
 
 const modal = computed(() => ({
   image: 'popupScene51',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 3) / 4, scale: 0.9 * zoomFactor.value },
+  state: { x: 0, y: (screenHeight.value * 1) / 4, scale: 0.9 * zoomFactor.value },
 }))
 
 function handleMove() {
