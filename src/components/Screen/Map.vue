@@ -91,12 +91,12 @@ const screen = reactive<Asset>({
     { x: -850, y: -2162.8683596236824, scale: 2.01, time: 60.5125, alpha: 1 },
     { x: -850, y: -2340, scale: 2.01, time: 62.9125, alpha: 1 },
     { x: -90, y: -2340, scale: 2.01, time: 70.5125, alpha: 1 },
-    { x: -90, y: -2520, scale: 1.64, time: 71.5125, alpha: 1 },
+    { x: -90, y: -2540, scale: 1.64, time: 71.5125, alpha: 1 },
     // stop for the ballon 31
-    { x: -930, y: -2555, scale: 1.64, time: 79.0625, alpha: 1 },
-    { x: -1000, y: -2555, scale: 1.64, time: 84.1225, alpha: 1 },
+    { x: -930, y: -2590, scale: 1.64, time: 79.0625, alpha: 1 },
+    { x: -1000, y: -2590, scale: 1.64, time: 84.1225, alpha: 1 },
     { x: -1570, y: -2480, scale: 1.64, time: 86.1225, alpha: 1 },
-    { x: -1210, y: -2210 + 30, scale: 0.76, time: 87.7475, alpha: 1 },
+    { x: -1210, y: -2270, scale: 0.76, time: 87.7475, alpha: 1 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -615,7 +615,7 @@ function handleResponse(value: number) {
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
+  <!--  <External>
     <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">

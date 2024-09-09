@@ -90,7 +90,7 @@ useTimeoutFn(() => {
     <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="station" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
     <Sprite :texture="platform.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="1" :anchor="0.5" />
     <CharacterGeneric :states="charactersGeneric" :animation="true" place="station" />
-    <Sprite :texture="platform.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="1" :anchor="0.5" />
+    <!-- <Sprite :texture="platform.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="1" :anchor="0.5" /> -->
     <StationTram :x="tram.x" :y="tram.y" :width-range="screenWidth" />
     <Sprite :texture="platform.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="1" :anchor="0.5" />
     <CharacterStationMaster :state="characterStationMaster.state" place="station" />
@@ -101,17 +101,17 @@ useTimeoutFn(() => {
     <Scene2 v-else-if="currentPopupIndex === 6" />
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
-    <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50 w-fit">
+  <External>
+    <div class="absolute bottom-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="sky.state.x" type="number" min="-10000" max="10000" step="10" />
         <input v-model="sky.state.y" type="number" min="-10000" max="10000" step="10" />
         <input v-model="sky.state.scale" type="number" min="0" max="10" step="0.01" />
       </div>
-      <div class="flex flex-col gap-2">
+      <!--   <div class="flex flex-col gap-2">
         <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
         <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
-      </div>
+      </div> -->
     </div>
-  </External> -->
+  </External>
 </template>
