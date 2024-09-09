@@ -30,8 +30,10 @@ const mainWindow = window
 const isStarted = ref(false)
 
 function onStart() {
-  isStarted.value = true
   gameStore.playBGMSound('normal')
+  setTimeout(()=>{
+    isStarted.value = true
+  },200)
 }
 
 const images = computed(() => (isMobile.value ? resources.imageSm : resources.image))
