@@ -13,7 +13,7 @@ import ScreenPark from '@/components/Screen/Park.vue'
 import ScreenBank from '@/components/Screen/Bank.vue'
 import ScreenResult from '@/components/Screen/Result.vue'
 import SceneExperience from '@/components/Scene/Scene-Experience.vue'
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { computed } from 'vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -21,11 +21,31 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
 const { currentScreenIndex, rotationStop, hardStop, isMobile } = storeToRefs(gameStore)
 
+async function preloadSound(path:string) {
+  try {
+    let sound
+    const response = await fetch(path)
+    const soundData = await response.blob()
+    sound = new Audio(URL.createObjectURL(soundData))
+
+    return true
+  } catch (error) {
+    console.error('Error loading sound:', error)
+    return false
+  }
+}
+
+onBeforeMount(async ()=>{
+  await preloadSound('/sound/bgm-sprite.mp3')
+  await preloadSound('/sound/sfx-sprite.mp3')
+  isLoaded.value = true
+})
+
 function onResolve() {
   // gameStore.toggleHardStop(true)
-  setTimeout(() => {
+/*   setTimeout(() => {
     isLoaded.value = true
-  }, 3000)
+  }, 3000) */
 }
 
 const mainWindow = window
@@ -77,7 +97,7 @@ const images = computed(() => (isMobile.value ? resources.imageSm : resources.im
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.3.46</p>
+    <p>v0.3.47</p>
     <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
