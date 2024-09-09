@@ -115,7 +115,7 @@ const images = computed(() => (isMobile.value ? resources.imageSm : resources.im
 }
 
 * {
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 canvas {
