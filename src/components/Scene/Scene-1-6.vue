@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
-import { useScroll, useTimeoutFn, useWindowSize } from '@vueuse/core'
+import { useScroll, useTimeoutFn, useWindowSize, watchArray } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
@@ -55,7 +55,7 @@ const boxPlaceholder = reactive({ x: 0, y: 60, scale: 0.5 })
 const boxPlaceholderRef = ref<any>(null)
 const boxDiv = reactive({ x: 0, y: 0, width: 0, height: 0 })
 
-onTick(() => {
+function resize() {
   if (boxPlaceholderRef.value) {
     const localBounds = boxPlaceholderRef.value.getLocalBounds() // Get local bounds of the sprite
     const scaleX = boxPlaceholderRef.value.worldTransform.a // Get global scale on X-axis
@@ -71,6 +71,16 @@ onTick(() => {
     boxDiv.width = width
     boxDiv.height = height
   }
+}
+
+const { width, height } = useWindowSize()
+
+watchArray([width, height], () => {
+  resize()
+})
+
+onMounted(() => {
+  resize()
 })
 </script>
 
@@ -1309,7 +1319,7 @@ onTick(() => {
       <button
         class="absolute bottom-4 left-1/2 aspect-square -translate-x-1/2 rounded-full bg-slate-100 px-3 py-0.5 text-2xl shadow-md"
         @click="autoScroll">↓</button>
-    </External> -->
+    </External>
   </Container>
 </template>
 
