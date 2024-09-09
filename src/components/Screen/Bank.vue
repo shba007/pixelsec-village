@@ -30,10 +30,10 @@ const screen = reactive<any>({
   loaded: false,
   alias: { bg: 'bankSky', fg: 'bankBackground' },
   states: [
-    { x: 1000, y: 200, scale: 1, alpha: 1, time: 0 },
+    { x: 900, y: 200, scale: 1, alpha: 1, time: 0 },
     { x: -550, y: 200, scale: 1, alpha: 1, time: 3 },
   ],
-  state: { x: 1000, y: 200, scale: 1, alpha: 1, time: 0 },
+  state: { x: 900, y: 200, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
 })
 
@@ -108,7 +108,7 @@ onTick((delta) => {
     if (progress == 1) {
       totalElapsedTime = 0
       screen.animation = 'finished'
-      // gameStore.nextTimeline({ id: 36 })
+      gameStore.nextTimeline({ id: 36 })
     }
   }
 })
@@ -153,7 +153,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <Container :x="screenWidth / 2 + (screen.state.x)" :y="screenHeight / 2" :scale="1 * zoomFactor">
+  <Container :x="screenWidth / 2 + screen.state.x * zoomFactor" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container>
       <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale"
         :anchor="0.5" />
@@ -181,7 +181,7 @@ watchEffect(() => {
     <ModalProtip v-if="currentPopupIndex === 16" title="3" x="left" />
   </Container>
   <!-- DEBUG -->
-  <External>
+  <!-- <External>
     <div class="absolute bottom-0 right-24 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
@@ -190,5 +190,5 @@ watchEffect(() => {
         <span class="bg-white">{{ screen.animation }}</span>
       </div>
     </div>
-  </External>
+  </External> -->
 </template>

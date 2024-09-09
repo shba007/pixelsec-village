@@ -41,18 +41,25 @@ const characterMain = reactive<Asset>({
   alias: 'characterMain',
   states: [
     { x: -100, y: 150, scale: 3.155, alpha: 1, time: 0 },
-    { x: 350, y: 150, scale: 3.155, alpha: 1, time: 2.5 },
-    { x: 200, y: 150, scale: 3.155, alpha: 1, time: 4 },
-    { x: 350, y: 150, scale: 3.155, alpha: 1, time: 5.5 },
+    { x: 250, y: 150, scale: 3.155, alpha: 1, time: 2.5 },
+    { x: 100, y: 150, scale: 3.155, alpha: 1, time: 4 },
+    { x: 250, y: 150, scale: 3.155, alpha: 1, time: 5.5 },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'started',
 })
 
+
 function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finished') {
+  console.log(stateIndex)
   if (state === 'finished') {
-    if (stateIndex === 2) gameStore.nextTimeline({ screen: -1, id: 62 })
-    else gameStore.nextTimeline({ id: 61 })
+    if (stateIndex === 2) {
+      setTimeout(() => {
+        gameStore.nextTimeline({ screen: -1, id: 63 })
+      }, 3000)
+    } else {
+      gameStore.nextTimeline({ id: 61 })
+    }
   }
 }
 
@@ -99,7 +106,8 @@ const characterGuard = reactive({
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container :x="map.state.x" :y="map.state.y" :scale="map.state.scale">
       <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
-      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
+      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42"
+        :skin="characterSkin" @update="handleMCUpdate" />
       <SceneResult v-if="currentPopupIndex == 24" :x="modal.x" :y="modal.y" :scale="modal.scale" :place="modal.place" />
       <Dog :x="dog.x" :y="dog.y" :scale="dog.scale" />
       <CharacterGuard place="map" :state="characterGuard.state" />

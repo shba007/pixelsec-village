@@ -49,9 +49,15 @@ const characterMain = reactive<Asset>({
 })
 
 function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finished') {
+  console.log(stateIndex)
   if (state === 'finished') {
-    if (stateIndex === 3) gameStore.nextTimeline({ screen: -1, id: 62 })
-    else gameStore.nextTimeline({ id: 61 })
+    if (stateIndex === 2) {
+      setTimeout(() => {
+        gameStore.nextTimeline({ screen: -1, id: 63 })
+      }, 3000)
+    } else {
+      gameStore.nextTimeline({ id: 61 })
+    }
   }
 }
 
