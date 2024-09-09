@@ -101,17 +101,17 @@ useTimeoutFn(() => {
     <Scene2 v-else-if="currentPopupIndex === 6" />
   </Container>
   <!-- DEBUG -->
-  <External>
+  <!-- <External>
     <div class="absolute bottom-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="sky.state.x" type="number" min="-10000" max="10000" step="10" />
         <input v-model="sky.state.y" type="number" min="-10000" max="10000" step="10" />
         <input v-model="sky.state.scale" type="number" min="0" max="10" step="0.01" />
       </div>
-      <!--   <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
         <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
         <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
-      </div> -->
+      </div> 
     </div>
-  </External>
+  </External> -->
 </template>
