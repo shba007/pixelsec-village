@@ -302,6 +302,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function playBGMSound(id: BGMSounds) {
+    alert('Play BGM')
     playBgm({ id })
     activeSoundList.bgm[1] = id
   }

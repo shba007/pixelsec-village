@@ -30,8 +30,10 @@ const mainWindow = window
 const isStarted = ref(false)
 
 function onStart() {
+  alert('On Start Click')
   gameStore.playBGMSound('normal')
   setTimeout(()=>{
+    alert('On Start')
     isStarted.value = true
   },200)
 }
