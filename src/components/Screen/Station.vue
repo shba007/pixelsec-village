@@ -29,8 +29,8 @@ const zoomFactor = computed(() => {
 const sky = reactive<Asset>({
   loaded: false,
   alias: 'stationSky',
-  states: [{ x: 0, y: -305, scale: 1, alpha: 1, time: 0 }],
-  state: { x: 0, y: -305, scale: 1, alpha: 1, time: 0 },
+  states: [{ x: 0, y: 305, scale: 1, alpha: 1, time: 0 }],
+  state: { x: 0, y: 305, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
 })
 
@@ -98,22 +98,22 @@ useTimeoutFn(() => {
     <CharacterStationMaster :state="characterStationMaster.state" place="station" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
-  <Container v-if="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">
+  <Container :renderable="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">
     <Scene1 v-if="currentPopupIndex === 5" />
     <Scene2 v-else-if="currentPopupIndex === 6" />
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
-        <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50 w-fit">
-          <div class="flex flex-col gap-2">
-            <input v-model="sky.state.x" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="sky.state.y" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="sky.state.scale" type="number" min="0" max="10" step="0.01" />
-          </div>
-             <div class="flex flex-col gap-2">
-            <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
-            <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
-          </div> 
-        </div>
-      </External> -->
+  <External>
+    <div class="flex items-center absolute gap-8 bottom-0 right-0 z-50 w-fit">
+      <div class="flex flex-col gap-2">
+        <input v-model="sky.state.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="sky.state.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="sky.state.scale" type="number" min="0" max="10" step="0.01" />
+      </div>
+      <!--  <div class="flex flex-col gap-2">
+        <input v-model="charactersGeneric[0][0].x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="charactersGeneric[0][0].y" type="number" min="-10000" max="10000" step="10" />
+      </div> -->
+    </div>
+  </External>
 </template>

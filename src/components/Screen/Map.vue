@@ -78,22 +78,20 @@ const screen = reactive<Asset>({
     { x: -565, y: -1090.8683596236826, scale: 2.01, alpha: 1, time: 32.79 },
     { x: -610, y: -1090.8683596236826 + 50, scale: 2.01, alpha: 1, time: 33.24 - 0.1 },
     { x: -610, y: -1632.8683596236826 + 50, scale: 2.01, alpha: 1, time: 38.66 - 0.1 },
-
     { x: -730, y: -1632.8683596236826 + 50, scale: 2.01, alpha: 1, time: 39.86 },
-
     // at bank 21
     { x: -1090, y: -1632.8683596236826, scale: 2.01, alpha: 1, time: 43.46 },
     { x: -1090, y: -1872.8683596236826, scale: 2.01, alpha: 1, time: 45.86 },
     // at pond 23
     { x: -995, y: -1937.8683596236826, scale: 2.01, alpha: 1, time: 47.015 },
-    { x: -890, y: -1890 + 15, scale: 1.92, alpha: 1, time: 54.0175 },
+    { x: -890, y: -1890, scale: 1.85, alpha: 1, time: 54.0175 },
     // loop ends 25
     { x: -1085, y: -1922.8683596236826, scale: 2.01, alpha: 1, time: 55.7625 },
     { x: -1085, y: -2162.8683596236824, scale: 2.01, alpha: 1, time: 58.1625 },
     { x: -850, y: -2162.8683596236824, scale: 2.01, time: 60.5125, alpha: 1 },
     { x: -850, y: -2340, scale: 2.01, time: 62.9125, alpha: 1 },
     { x: -90, y: -2340, scale: 2.01, time: 70.5125, alpha: 1 },
-    { x: -90, y: -2520, scale: 1.64, time: 71.5125, alpha: 1 },
+    { x: -90, y: -2520 - 30, scale: 1.64, time: 71.5125, alpha: 1 },
     // stop for the ballon 31
     { x: -930, y: -2555, scale: 1.64, time: 79.0625, alpha: 1 },
     { x: -1000, y: -2555, scale: 1.64, time: 84.1225, alpha: 1 },
@@ -530,7 +528,7 @@ onTick((delta) => {
 watch(
   () => screen.animation,
   () => {
-    if (currentSceneIndex.value === 5 && screen.animation === 'finished') {
+    if (currentSceneIndex.value === 5 && currentPopupIndex.value === -1 && screen.animation === 'finished') {
       gameStore.nextTimeline({ id: 7 })
     }
   }
@@ -626,7 +624,7 @@ function handleResponse(value: number) {
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
   </Container>
   <!-- DEBUG -->
-  <!--   <External>
+  <!-- <External>
     <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
