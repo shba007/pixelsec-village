@@ -91,7 +91,7 @@ const screen = reactive<Asset>({
     { x: -850, y: -2162.8683596236824, scale: 2.01, time: 60.5125, alpha: 1 },
     { x: -850, y: -2340, scale: 2.01, time: 62.9125, alpha: 1 },
     { x: -90, y: -2340, scale: 2.01, time: 70.5125, alpha: 1 },
-    { x: -90, y: -2520 - 30, scale: 1.64, time: 71.5125, alpha: 1 },
+    { x: -90, y: -2520 + 30, scale: 1.64, time: 71.5125, alpha: 1 },
     // stop for the ballon 31
     { x: -930, y: -2555, scale: 1.64, time: 79.0625, alpha: 1 },
     { x: -1000, y: -2555, scale: 1.64, time: 84.1225, alpha: 1 },

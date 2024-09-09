@@ -315,8 +315,8 @@ import resultMansionBgTexture from '@/assets/image/mansion/bg.png'
 import resultMansionDog1Texture from '@/assets/image/mansion/dog/1.png'
 import resultMansionDog2Texture from '@/assets/image/mansion/dog/2.png'
 
-import bgmSprite from '@/assets/sound/bgm-sprite.mp3'
-import sfxSprite from '@/assets/sound/sfx-sprite.mp3'
+import bgmSprite from '/sound/bgm-sprite.mp3'
+import sfxSprite from '/sound/sfx-sprite.mp3'
 
 import IconFacebook from '@/assets/image/popup/icon-social-facebook.png'
 import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
