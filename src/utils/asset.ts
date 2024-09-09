@@ -669,6 +669,7 @@ export const resources = {
     popupScene04Button21: popupScene04Button21Texture,
     popupScene04Button22: popupScene04Button22Texture,
     popupScene05: popupScene05Texture,
+    popupScene05BG: popupScene05BGTexture,
     popupScene11: popupScene11Texture,
     popupScene11Button11: popupScene11Button11Texture,
     popupScene11Button12: popupScene11Button12Texture,
