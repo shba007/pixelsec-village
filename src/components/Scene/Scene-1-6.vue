@@ -53,7 +53,7 @@ onBeforeUnmount(() => {
 
 const boxPlaceholder = reactive({ x: 0, y: 60, scale: 0.5 })
 const boxPlaceholderRef = ref<any>(null)
-const boxDiv = reactive({ x: 0, y: 0, width: 0, height: 0 })
+const boxDiv = reactive({ x: 0, y: 0, width: 0, height: 0, alpha: 0 })
 
 function resize() {
   if (boxPlaceholderRef.value) {
@@ -70,6 +70,7 @@ function resize() {
 
     boxDiv.width = width
     boxDiv.height = height
+    boxDiv.alpha = 1
   }
 }
 
@@ -80,7 +81,7 @@ watchArray([width, height], () => {
 })
 
 onMounted(() => {
-  resize()
+  setTimeout(resize, 50)
 })
 </script>
 
@@ -94,7 +95,7 @@ onMounted(() => {
     <Sprite ref="boxPlaceholderRef" texture="popupScene05BG" :texture-options="textureOptions" :anchor="0.5"
       :x="boxPlaceholder.x" :y="boxPlaceholder.y" :scale="boxPlaceholder.scale" />
     <External v-if="!rotationStop" class="fixed"
-      :style="{ left: boxDiv.x + 'px', top: boxDiv.y + 'px', width: boxDiv.width + 'px', height: boxDiv.height + 'px' }">
+      :style="{ left: boxDiv.x + 'px', top: boxDiv.y + 'px', width: boxDiv.width + 'px', height: boxDiv.height + 'px', opacity: boxDiv.alpha }">
       <section ref="targetElem" class="policy-section cms-content section-legal">
         <div class="container">
           <article>
