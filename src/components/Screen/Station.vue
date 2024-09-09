@@ -90,7 +90,7 @@ useTimeoutFn(() => {
       :scale="sky.state.scale" :anchor="0.5" />
     <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="station" :width-range="screenWidth"
       :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <!-- <Sprite :texture="platform.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="1" :anchor="0.5" /> -->
+    <Sprite :texture="platform.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="1" :anchor="0.5" />
     <CharacterGeneric :states="charactersGeneric" :animation="true" place="station" />
     <Sprite :texture="platform.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="1" :anchor="0.5" />
     <StationTram :x="tram.x" :y="tram.y" :width-range="screenWidth" />
