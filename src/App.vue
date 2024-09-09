@@ -23,21 +23,27 @@ const { currentScreenIndex, rotationStop, hardStop, isMobile } = storeToRefs(gam
 
 function onResolve() {
   // gameStore.toggleHardStop(true)
+  setTimeout(() => {
+    isLoaded.value = true
+  }, 3000)
 }
 
 const mainWindow = window
 
+const isLoaded = ref(false)
 const isStarted = ref(false)
 
 function onStart() {
+  if (!isLoaded.value)
+    return
   // alert('On Start Click')
   setTimeout(() => {
     gameStore.playBGMSound('normal')
     // alert('On Start')
     setTimeout(() => {
       isStarted.value = true
-    }, 100)
-  }, 100)
+    }, 200)
+  }, 50)
 }
 
 const images = computed(() => (isMobile.value ? resources.imageSm : resources.image))
@@ -45,7 +51,7 @@ const images = computed(() => (isMobile.value ? resources.imageSm : resources.im
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
-    <Loader :resources="{ ...resources.font, ...resources.sound, ...images }" :on-resolved="onResolve">
+    <Loader :resources="{ ...resources.sound, ...resources.font, ...images }" :on-resolved="onResolve">
       <template #fallback="{ progress }">
         <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="1.25"
           :style="{ fill: 'white', fontFamily: 'INET' }"> Loading... {{ Math.floor(progress * 100) }}% </Text>
@@ -53,7 +59,8 @@ const images = computed(() => (isMobile.value ? resources.imageSm : resources.im
       <template #default>
         <template v-if="!isStarted">
           <Text :x="screenWidth / 2" :y="screenHeight / 2" :anchor="0.5" :scale="1.25"
-            :style="{ fill: 'white', fontFamily: 'INET' }" cursor="pointer" @pointerdown="onStart"> Start Game </Text>
+            :style="{ fill: 'white', fontFamily: 'INET' }" cursor="pointer" @pointerdown="onStart">{{ isLoaded ?
+              'Start Game' : 'Loading... 100%' }} </Text>
         </template>
         <template v-else>
           <ScreenMap v-if="currentScreenIndex <= 6"
@@ -70,7 +77,7 @@ const images = computed(() => (isMobile.value ? resources.imageSm : resources.im
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.3.45</p>
+    <p>v0.3.46</p>
     <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
