@@ -83,6 +83,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="modal.images" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
-    :scale="modal.state.scale" :playing="true" :animation-speed="0.08" :anchor="0.5" />
+  <AppAnimatedSprite
+    :textures="modal.images"
+    :texture-options="textureOptions"
+    :x="modal.state.x"
+    :y="modal.state.y"
+    :scale="modal.state.scale"
+    :playing="true"
+    :animation-speed="0.08"
+    :anchor="0.5" />
 </template>

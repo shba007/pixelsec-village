@@ -91,36 +91,134 @@ const screen = reactive<Asset>({
     { x: -850, y: -2162.8683596236824, scale: 2.01, time: 60.5125, alpha: 1 },
     { x: -850, y: -2340, scale: 2.01, time: 62.9125, alpha: 1 },
     { x: -90, y: -2340, scale: 2.01, time: 70.5125, alpha: 1 },
-    { x: -90, y: -2520 + 30, scale: 1.64, time: 71.5125, alpha: 1 },
+    { x: -90, y: -2520, scale: 1.64, time: 71.5125, alpha: 1 },
     // stop for the ballon 31
     { x: -930, y: -2555, scale: 1.64, time: 79.0625, alpha: 1 },
     { x: -1000, y: -2555, scale: 1.64, time: 84.1225, alpha: 1 },
     { x: -1570, y: -2480, scale: 1.64, time: 86.1225, alpha: 1 },
-    { x: -1210, y: -2210, scale: 0.76, time: 87.7475, alpha: 1 },
+    { x: -1210, y: -2210 + 30, scale: 0.76, time: 87.7475, alpha: 1 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
 })
 
-function updateScreen(data: { x: number; y: number; scale: number; alpha: number; time: number }) {
-  screen.state.x = data.x
-  screen.state.y = data.y
-  screen.state.scale = data.scale
-  screen.state.alpha = data.alpha
-  screen.state.time = data.time
-}
+const characterMain = reactive<Asset>({
+  loaded: false,
+  alias: 'characterMain',
+  states: [
+    { x: 840, y: 514, scale: 1.5, alpha: 0, time: 0 },
+    { x: 840, y: 515, scale: 1.5, alpha: 1, time: 0.25 },
+    { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.5 },
+    { x: 900, y: 515, scale: 1.5, alpha: 0, time: 1.25 }, // entering the tram
+    { x: 900, y: 561, scale: 1.5, alpha: 0, time: 3 },
+    { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 }, //
+    { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 }, //
+    { x: 1665, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
+    { x: 1665, y: 1190, scale: 1.5, alpha: 0, time: 14.25 }, // leaving the tram
+    { x: 1620, y: 1190, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
+    { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 16.5 }, // leaving the tram
+    { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
+    { x: 1020, y: 1237, scale: 1.75, alpha: 1, time: 20.43 },
+    // at park 13
+    { x: 885, y: 1237, scale: 1.75, alpha: 1, time: 21.78 },
+    { x: 885, y: 1238, scale: 1.75, alpha: 1, time: 21.79 },
+    { x: 930, y: 1238, scale: 1.5, alpha: 1, time: 22.24 },
+    { x: 930, y: 1780, scale: 1.5, alpha: 1, time: 27.66 },
+
+    { x: 1050, y: 1780, scale: 1.5, alpha: 1, time: 28.86 },
+    // at bank 17
+    { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 32.46 },
+    { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 34.86 },
+    // at pond 19
+    { x: 1315, y: 2085, scale: 1.5, alpha: 1, time: 36.015 },
+    { x: 1220, y: 2150, scale: 1.5, alpha: 1, time: 37.1625 },
+    { x: 1100, y: 2150, scale: 1.5, alpha: 1, time: 38.3625 },
+    { x: 1020, y: 2090, scale: 1.5, alpha: 1, time: 39.3625 },
+    { x: 1020, y: 1960, scale: 1.5, alpha: 1, time: 40.6625 },
+    { x: 1110, y: 1910, scale: 1.5, alpha: 1, time: 41.6925 },
+    { x: 1230, y: 1910, scale: 1.5, alpha: 1, time: 42.8925 },
+    { x: 1290, y: 2030, scale: 1.5, alpha: 1, time: 44.2325 },
+    // loop starts 27
+    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 45.4975 },
+    { x: 1030, y: 2150, scale: 1.5, alpha: 1, time: 47.6975 },
+    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 49.8975 },
+    // loop ends 30
+    { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 51.6425 },
+    { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 54.0425 },
+    { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 56.3925 },
+    { x: 1170, y: 2535, scale: 1.5, alpha: 1, time: 58.7925 },
+    { x: 410, y: 2535, scale: 1.5, alpha: 1, time: 66.3925 },
+    { x: 410, y: 2777, scale: 1.85, alpha: 1, time: 68.7825 },
+    // stop for the ballon 36
+    { x: 1120, y: 2777, scale: 1.85, alpha: 1, time: 76.3325 },
+    { x: 1291.25, y: 2777, scale: 1.85, alpha: 1, time: 77.5975 },
+    { x: 1670, y: 2777, scale: 1.85, alpha: 1, time: 81.3925 },
+    { x: 1670, y: 2590 - 20, scale: 1.5, alpha: 1, time: 83.3925 }, ///** sequence break */
+    { x: 1985, y: 2590 - 20, scale: 1.5, alpha: 1, time: 86.5425 },
+  ],
+  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
+  animation: 'init',
+})
+
+const characterSus = reactive<Asset>({
+  loaded: false,
+  alias: 'characterSus',
+  states: [
+    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: 0 },
+    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: 0.75 },
+    // in the pond
+    { x: 1220 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 - 3.35 * speedFactor },
+    { x: 1100 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 1.45 * speedFactor },
+    { x: 1020 - 20, y: 2090 + 20, scale: 0.45, alpha: 1, time: 2.75 + 5.45 * speedFactor },
+    { x: 1020 - 20, y: 1960 + 20, scale: 0.45, alpha: 1, time: 2.75 + 10.65 * speedFactor },
+    { x: 1110 - 20, y: 1910 + 20, scale: 0.45, alpha: 1, time: 2.75 + 14.77 * speedFactor },
+    { x: 1230 - 20, y: 1910 + 20, scale: 0.45, alpha: 1, time: 2.75 + 19.57 * speedFactor },
+    { x: 1290 - 20, y: 2030 + 20, scale: 0.45, alpha: 1, time: 2.75 + 24.93 * speedFactor },
+    // loop starts
+    { x: 1250 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 29.99 * speedFactor },
+    { x: 1030 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 38.79 * speedFactor },
+    { x: 1250 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 47.59 * speedFactor },
+    //
+    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: 2.75 + 47.59 * speedFactor + 1 },
+    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: 2.75 + 47.59 * speedFactor + 2 },
+  ],
+  state: { x: 1230, y: 2010, scale: 0.45, alpha: 1, time: 1 },
+  animation: 'init',
+})
+
+const tram = reactive<Asset>({
+  loaded: false,
+  alias: 'tram',
+  states: [
+    { x: 902, y: 515, scale: 0.5, alpha: 0, time: 0 },
+    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 0.5 },
+    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 1.5 }, // entering the tram
+    { x: 902, y: 561, scale: 0.5, alpha: 1, time: 3.5 }, //
+    { x: 1178, y: 561, scale: 0.5, alpha: 1, time: 6 }, //
+    { x: 1178, y: 1008, scale: 0.5, alpha: 1, time: 9 }, //
+    { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 12 }, //
+    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 14.5 - 1 }, // leaving the tram
+    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 15 },
+    { x: 1670, y: 2040, scale: 0.5, alpha: 1, time: 23 },
+    { x: 2490, y: 2040, scale: 0.5, alpha: 1, time: 32 },
+    { x: 2490, y: 1708, scale: 0.5, alpha: 1, time: 36 },
+    { x: 2490, y: 1695, scale: 0.5, alpha: 0, time: 36.5 },
+  ],
+  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
+  animation: 'init',
+})
 
 const station = reactive({
   bg: { x: 725, y: 265, scale: 1 },
   fg: { x: 725, y: 265, scale: 1 },
 })
 
-const wave = reactive({
+/* const wave = reactive({
   x: 240,
   y: 1525,
   scale: 0.5,
 })
-
+ */
 const flags = ref([
   { type: 'station' as const, x: 705, y: 380, scale: 0.5 },
   { type: 'station' as const, x: 1105, y: 380, scale: 0.5 },
@@ -314,115 +412,9 @@ const characterBaloonVendor = reactive({
   state: { x: 1180, y: 2750, scale: 0.5, alpha: 1, time: 0 },
 })
 
-const characterMain = reactive<Asset>({
-  loaded: false,
-  alias: 'characterMain',
-  states: [
-    { x: 840, y: 514, scale: 1.5, alpha: 0, time: 0 },
-    { x: 840, y: 515, scale: 1.5, alpha: 1, time: 0.25 },
-    { x: 850, y: 515, scale: 1.5, alpha: 1, time: 0.5 },
-    { x: 900, y: 515, scale: 1.5, alpha: 0, time: 1.25 }, // entering the tram
-    { x: 900, y: 561, scale: 1.5, alpha: 0, time: 3 },
-    { x: 1180, y: 561, scale: 1.5, alpha: 0, time: 6 }, //
-    { x: 1180, y: 1008, scale: 1.5, alpha: 0, time: 9 }, //
-    { x: 1665, y: 1008, scale: 1.5, alpha: 0, time: 12 }, //
-    { x: 1665, y: 1190, scale: 1.5, alpha: 0, time: 14.25 }, // leaving the tram
-    { x: 1620, y: 1190, scale: 1.5, alpha: 1, time: 15 }, // leaving the tram
-    { x: 1620, y: 1280, scale: 1.5, alpha: 1, time: 16.5 }, // leaving the tram
-    { x: 1020, y: 1280, scale: 1.5, alpha: 1, time: 20 },
-    { x: 1020, y: 1237, scale: 1.75, alpha: 1, time: 20.43 },
-    // at park 13
-    { x: 885, y: 1237, scale: 1.75, alpha: 1, time: 21.78 },
-    { x: 885, y: 1238, scale: 1.75, alpha: 1, time: 21.79 },
-    { x: 930, y: 1238, scale: 1.5, alpha: 1, time: 22.24 },
-    { x: 930, y: 1780, scale: 1.5, alpha: 1, time: 27.66 },
-
-    { x: 1050, y: 1780, scale: 1.5, alpha: 1, time: 28.86 },
-    // at bank 17
-    { x: 1410, y: 1780, scale: 1.5, alpha: 1, time: 32.46 },
-    { x: 1410, y: 2020, scale: 1.5, alpha: 1, time: 34.86 },
-    // at pond 19
-    { x: 1315, y: 2085, scale: 1.5, alpha: 1, time: 36.015 },
-    { x: 1220, y: 2150, scale: 1.5, alpha: 1, time: 37.1625 },
-    { x: 1100, y: 2150, scale: 1.5, alpha: 1, time: 38.3625 },
-    { x: 1020, y: 2090, scale: 1.5, alpha: 1, time: 39.3625 },
-    { x: 1020, y: 1960, scale: 1.5, alpha: 1, time: 40.6625 },
-    { x: 1110, y: 1910, scale: 1.5, alpha: 1, time: 41.6925 },
-    { x: 1230, y: 1910, scale: 1.5, alpha: 1, time: 42.8925 },
-    { x: 1290, y: 2030, scale: 1.5, alpha: 1, time: 44.2325 },
-    // loop starts 27
-    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 45.4975 },
-    { x: 1030, y: 2150, scale: 1.5, alpha: 1, time: 47.6975 },
-    { x: 1250, y: 2150, scale: 1.5, alpha: 1, time: 49.8975 },
-    // loop ends 30
-    { x: 1405, y: 2070, scale: 1.5, alpha: 1, time: 51.6425 },
-    { x: 1405, y: 2310, scale: 1.5, alpha: 1, time: 54.0425 },
-    { x: 1170, y: 2310, scale: 1.5, alpha: 1, time: 56.3925 },
-    { x: 1170, y: 2535, scale: 1.5, alpha: 1, time: 58.7925 },
-    { x: 410, y: 2535, scale: 1.5, alpha: 1, time: 66.3925 },
-    { x: 410, y: 2777, scale: 1.85, alpha: 1, time: 68.7825 },
-    // stop for the ballon 36
-    { x: 1120, y: 2777, scale: 1.85, alpha: 1, time: 76.3325 },
-    { x: 1291.25, y: 2777, scale: 1.85, alpha: 1, time: 77.5975 },
-    { x: 1670, y: 2777, scale: 1.85, alpha: 1, time: 81.3925 },
-    { x: 1670, y: 2590, scale: 1.5, alpha: 1, time: 83.3925 }, ///** sequence break */
-    { x: 1985, y: 2590, scale: 1.5, alpha: 1, time: 86.5425 },
-  ],
-  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
-  animation: 'init',
-})
-
-const characterSus = reactive<Asset>({
-  loaded: false,
-  alias: 'characterSus',
-  states: [
-    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: 0 },
-    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: 0.75 },
-    // in the pond
-    { x: 1220 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 - 3.35 * speedFactor },
-    { x: 1100 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 1.45 * speedFactor },
-    { x: 1020 - 20, y: 2090 + 20, scale: 0.45, alpha: 1, time: 2.75 + 5.45 * speedFactor },
-    { x: 1020 - 20, y: 1960 + 20, scale: 0.45, alpha: 1, time: 2.75 + 10.65 * speedFactor },
-    { x: 1110 - 20, y: 1910 + 20, scale: 0.45, alpha: 1, time: 2.75 + 14.77 * speedFactor },
-    { x: 1230 - 20, y: 1910 + 20, scale: 0.45, alpha: 1, time: 2.75 + 19.57 * speedFactor },
-    { x: 1290 - 20, y: 2030 + 20, scale: 0.45, alpha: 1, time: 2.75 + 24.93 * speedFactor },
-    // loop starts
-    { x: 1250 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 29.99 * speedFactor },
-    { x: 1030 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 38.79 * speedFactor },
-    { x: 1250 - 20, y: 2150 + 20, scale: 0.45, alpha: 1, time: 2.75 + 47.59 * speedFactor },
-    //
-    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: 2.75 + 47.59 * speedFactor + 1 },
-    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: 2.75 + 47.59 * speedFactor + 2 },
-  ],
-  state: { x: 1230, y: 2010, scale: 0.45, alpha: 1, time: 1 },
-  animation: 'init',
-})
-
-const tram = reactive<Asset>({
-  loaded: false,
-  alias: 'tram',
-  states: [
-    { x: 902, y: 515, scale: 0.5, alpha: 0, time: 0 },
-    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 0.5 },
-    { x: 902, y: 520, scale: 0.5, alpha: 1, time: 1.5 }, // entering the tram
-    { x: 902, y: 561, scale: 0.5, alpha: 1, time: 3.5 }, //
-    { x: 1178, y: 561, scale: 0.5, alpha: 1, time: 6 }, //
-    { x: 1178, y: 1008, scale: 0.5, alpha: 1, time: 9 }, //
-    { x: 1670, y: 1008, scale: 0.5, alpha: 1, time: 12 }, //
-    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 14.5 - 1 }, // leaving the tram
-    { x: 1670, y: 1190, scale: 0.5, alpha: 1, time: 15 },
-    { x: 1670, y: 2040, scale: 0.5, alpha: 1, time: 23 },
-    { x: 2490, y: 2040, scale: 0.5, alpha: 1, time: 32 },
-    { x: 2490, y: 1708, scale: 0.5, alpha: 1, time: 36 },
-    { x: 2490, y: 1695, scale: 0.5, alpha: 0, time: 36.5 },
-  ],
-  state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
-  animation: 'init',
-})
-
 const mapHeight = ref(3844)
 const mapWidth = ref(3124)
-const clouds = ref<
+/* const clouds = ref<
   {
     size: 'lg' | 'md' | 'sm'
     x: number
@@ -439,7 +431,7 @@ const clouds = ref<
   { size: 'sm', x: -50, y: 0.78, direction: 1 },
   { size: 'md', x: -300, y: 0.9, direction: 1 },
   { size: 'sm', x: -600, y: 0.96, direction: 1 },
-])
+]) */
 
 watch(
   () => screen.animation,
@@ -447,6 +439,14 @@ watch(
     gameStore.toggleMotionBlur(value === 'started')
   }
 )
+
+function updateScreen(data: { x: number; y: number; scale: number; alpha: number; time: number }) {
+  screen.state.x = data.x
+  screen.state.y = data.y
+  screen.state.scale = data.scale
+  screen.state.alpha = data.alpha
+  screen.state.time = data.time
+}
 
 function onLoad() {
   updateScreen(screen.states[0])
@@ -563,30 +563,23 @@ function handleResponse(value: number) {
 </script>
 
 <template>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
     <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
     <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
-    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y"
-      :scale="station.bg.scale" :anchor="0" :z-index="2" />
+    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
     <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" />
-    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y"
-      :scale="station.fg.scale" :anchor="0" :z-index="0" />
+    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" :z-index="0" />
     <!-- @vue-ignore -->
     <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-    <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y"
-      :scale="fence.scale" />
-    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y"
-      :scale="palmTrees.scale" />
-    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
-      place="map" />
+    <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y" :scale="fence.scale" />
+    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
+    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
     <template v-if="currentCharacterIndex === 16">
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
-        :type="type as 'purple' | 'green'" place="map" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
     </template>
     <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
     <CharacterGuard place="map" :state="characterGuard.state" />
@@ -614,10 +607,8 @@ function handleResponse(value: number) {
     <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
     <Scene12 v-else-if="currentPopupIndex === 23" />
   </Container>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin"
-      @update="handleMCUpdate" />
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
     <!-- @vue-ignore -->
     <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
