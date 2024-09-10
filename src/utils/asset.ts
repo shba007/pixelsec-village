@@ -311,8 +311,8 @@ import resultStrawHutWolve3Texture from '@/assets/image/strawhut/wolves-3.png'
 import resultStrawHutWolve4Texture from '@/assets/image/strawhut/wolves-4.png'
 import resultStrawHutWolve5Texture from '@/assets/image/strawhut/wolves-5.png'
 //
-import resultLogHouseBgTexture from '@/assets/image/log-house/bg.png'
-import resultTownHouseBgTexture from '@/assets/image/town-house/bg.png'
+import resultLogHouseBgTexture from '@/assets/image/loghouse/bg.png'
+import resultTownHouseBgTexture from '@/assets/image/townhouse/bg.png'
 import resultMansionBgTexture from '@/assets/image/mansion/bg.png'
 //
 import resultMansionDog1Texture from '@/assets/image/mansion/dog/1.png'
