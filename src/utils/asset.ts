@@ -222,11 +222,20 @@ import mapPalmTreesTexture from '@/assets/image/map/palm-trees.png'
 import mapCarTexture from '@/assets/image/map/car.png'
 import mapFenceTexture from '@/assets/image/map/fence.png'
 // Fountain
-import mapFountain1Texture from '@/assets/image/map/fountain/1.png'
-import mapFountain2Texture from '@/assets/image/map/fountain/2.png'
-import mapFountain3Texture from '@/assets/image/map/fountain/3.png'
-import mapFountain4Texture from '@/assets/image/map/fountain/4.png'
-import mapFountain5Texture from '@/assets/image/map/fountain/5.png'
+import mapFountain1Texture from '@/assets/image/fountain/map-1.png'
+import mapFountain2Texture from '@/assets/image/fountain/map-2.png'
+import mapFountain3Texture from '@/assets/image/fountain/map-3.png'
+import mapFountain4Texture from '@/assets/image/fountain/map-4.png'
+import mapFountain5Texture from '@/assets/image/fountain/map-5.png'
+//
+import parkFountain1Texture from '@/assets/image/fountain/park-1.png'
+import parkFountain2Texture from '@/assets/image/fountain/park-2.png'
+import parkFountain3Texture from '@/assets/image/fountain/park-3.png'
+import parkFountain4Texture from '@/assets/image/fountain/park-4.png'
+import parkFountain5Texture from '@/assets/image/fountain/park-5.png'
+import parkFountain6Texture from '@/assets/image/fountain/park-6.png'
+import parkFountain7Texture from '@/assets/image/fountain/park-7.png'
+import parkFountain8Texture from '@/assets/image/fountain/park-8.png'
 // Street Lamp
 import streetLamp1Texture from '@/assets/image/map/street-lamp/1.png'
 import streetLamp2Texture from '@/assets/image/map/street-lamp/2.png'
@@ -283,6 +292,7 @@ import stationTramTexture from '@/assets/image/station/tram.png'
 // Park
 import parkBgTexture from '@/assets/image/park/bg.png'
 import parkFgTexture from '@/assets/image/park/fg.png'
+import parkTruckTexture from '@/assets/image/park/truck.png'
 // Bank
 import bankSkyTexture from '@/assets/image/bank/sky.png'
 import bankBgTexture from '@/assets/image/bank/bg.png'
@@ -434,11 +444,20 @@ export const resources = {
     mapFence: mapFenceTexture,
     mapPalmTrees: mapPalmTreesTexture,
     //
-    fountain1: mapFountain1Texture,
-    fountain2: mapFountain2Texture,
-    fountain3: mapFountain3Texture,
-    fountain4: mapFountain4Texture,
-    fountain5: mapFountain5Texture,
+    mapFountain1: mapFountain1Texture,
+    mapFountain2: mapFountain2Texture,
+    mapFountain3: mapFountain3Texture,
+    mapFountain4: mapFountain4Texture,
+    mapFountain5: mapFountain5Texture,
+    //
+    parkFountain1: parkFountain1Texture,
+    parkFountain2: parkFountain2Texture,
+    parkFountain3: parkFountain3Texture,
+    parkFountain4: parkFountain4Texture,
+    parkFountain5: parkFountain5Texture,
+    parkFountain6: parkFountain6Texture,
+    parkFountain7: parkFountain7Texture,
+    parkFountain8: parkFountain8Texture,
     //
     mapStationBg: mapStationBgTexture,
     mapStationFg: mapStationFgTexture,
@@ -600,6 +619,7 @@ export const resources = {
     //
     parkBg: parkBgTexture,
     parkFg: parkFgTexture,
+    parkTruck: parkTruckTexture,
     //
     parkCloudSmall: parkCloudSmallTexture,
     parkCloudMedium: parkCloudMediumTexture,
@@ -764,11 +784,20 @@ export const resources = {
     mapFence: mapFenceTexture,
     mapPalmTrees: mapPalmTreesTexture,
     //
-    fountain1: mapFountain1Texture,
-    fountain2: mapFountain2Texture,
-    fountain3: mapFountain3Texture,
-    fountain4: mapFountain4Texture,
-    fountain5: mapFountain5Texture,
+    mapFountain1: mapFountain1Texture,
+    mapFountain2: mapFountain2Texture,
+    mapFountain3: mapFountain3Texture,
+    mapFountain4: mapFountain4Texture,
+    mapFountain5: mapFountain5Texture,
+    //
+    parkFountain1: parkFountain1Texture,
+    parkFountain2: parkFountain2Texture,
+    parkFountain3: parkFountain3Texture,
+    parkFountain4: parkFountain4Texture,
+    parkFountain5: parkFountain5Texture,
+    parkFountain6: parkFountain6Texture,
+    parkFountain7: parkFountain7Texture,
+    parkFountain8: parkFountain8Texture,
     //
     mapStationBg: mapStationBgTexture,
     mapStationFg: mapStationFgTexture,
@@ -930,6 +959,7 @@ export const resources = {
     //
     parkBg: parkBgTexture,
     parkFg: parkFgTexture,
+    parkTruck: parkTruckTexture,
     //
     parkCloudSmall: parkCloudSmallTexture,
     parkCloudMedium: parkCloudMediumTexture,

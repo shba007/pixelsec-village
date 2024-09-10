@@ -57,7 +57,7 @@ const socials = ref([
 
 function onShare(type: 'facebook' | 'instagram' | 'x', event?: string) {
   console.log('Shared on ', type, event)
-  const shareURL = 'https://affinidi-game-poc.onrender.com' + `/html/${props.place}-${characterSkin.value}.html`
+  const shareURL = 'https://affinidi-game-poc.onrender.com' + `/html/${props.place}-${characterSkin.value}`
   let finalShare = ''
 
   // `https://twitter.com/intent/tweet?url=${pageUrl}&text=${text}&hashtags=${hashtags}

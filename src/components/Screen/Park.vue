@@ -13,6 +13,7 @@ import Pigeon from '@/components/Animation/Pigeon.vue'
 import Scene1 from '@/components/Scene/Scene-3-1.vue'
 import Scene2 from '@/components/Scene/Scene-3-2.vue'
 import Scene3 from '@/components/Scene/Scene-3-3.vue'
+import Fountain from '../Animation/Fountain.vue'
 
 const gameStore = useGameStore()
 const { currentPopupIndex, rotationStop } = storeToRefs(gameStore)
@@ -46,6 +47,8 @@ const clouds = ref<
   { size: 'sm', x: -screenWidth.value / 2 - 100, y: 150 - 350, direction: 1 },
 ])
 
+const fountain = reactive({ x: 500, y: -130, scale: 1 })
+
 const pigeons = ref([
   { x: -400, y: -300, scale: 1, flip: false },
   { x: 540, y: 280, scale: 1, flip: true },
@@ -67,9 +70,15 @@ onBeforeMount(onLoad)
 
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <Sprite :texture="park.alias.bg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y - 400" :scale="park.state.scale * 1.225" :anchor="0.5" />
-    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="park" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="park.alias.fg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
+    <Sprite :texture="park.alias.bg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y - 400"
+      :scale="park.state.scale * 1.225" :anchor="0.5" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="park" :width-range="screenWidth"
+      :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+    <Sprite :texture="park.alias.fg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y"
+      :scale="park.state.scale" :anchor="0.5" />
+    <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" place="park" />
+    <Sprite texture="parkTruck" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y"
+      :scale="park.state.scale" :anchor="0.5" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container v-if="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">
@@ -81,7 +90,7 @@ onBeforeMount(onLoad)
     <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
+  <!--  <External>
     <div class="absolute bottom-0 left-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="park.state.x" type="number" min="-10000" max="10000" step="10" />
@@ -89,9 +98,9 @@ onBeforeMount(onLoad)
         <input v-model="park.state.scale" type="number" min="0" max="10" step="0.01" />
       </div>
       <div class="flex flex-col gap-2">
-        <input v-model="pigeons[0].x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="pigeons[0].y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="pigeons[0].scale" type="number" min="0" max="20" step="0.01" />
+        <input v-model="fountain.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="fountain.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="fountain.scale" type="number" min="0" max="20" step="0.01" />
       </div>
     </div>
   </External> -->
