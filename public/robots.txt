@@ -1,3 +1,7 @@
+# Allow Facebook's crawlers to access the entire site
+User-agent: facebookexternalhit
+Allow: /
+
 # Example 1: Block only Googlebot
 User-agent: Googlebot
 Disallow: /
@@ -7,10 +11,6 @@ User-agent: Googlebot
 User-agent: AdsBot-Google
 Disallow: /
 
-User-agent: meta-externalagent
-Allow: /                    # Allow everything
-Disallow: /private/         # Disallow a specific directory
-
-# Example 3: Block all crawlers except AdsBot (AdsBot crawlers must be named explicitly)
+# Example 3: Block all crawlers except AdsBot and Facebook's crawler
 User-agent: *
 Disallow: /
