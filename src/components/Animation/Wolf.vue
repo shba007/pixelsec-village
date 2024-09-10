@@ -9,6 +9,7 @@ const props = defineProps<{
   x: number
   y: number
   scale: number
+  alpha: number
   flip: boolean
 }>()
 
@@ -18,5 +19,5 @@ const speed = ref(getRandomInteger(100, 200) / 5000)
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :alpha="alpha" :playing="playing" :animation-speed="speed" />
 </template>
