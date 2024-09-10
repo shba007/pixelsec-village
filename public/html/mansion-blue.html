@@ -28,24 +28,24 @@
     <meta name="twitter:url" content="https://affinidi-game-poc.onrender.com">
     <script>
         // Detect bot by checking the userAgent and other conditions
-        function isBot() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const botPatterns = [
-                /bot/i,
-                /crawl/i,
-                /spider/i,
-                /slurp/i,
-                /fetch/i,
-                /mediapartners/i
-            ];
-
-            return botPatterns.some(pattern => pattern.test(userAgent)) ||
-                !navigator.userAgent || navigator.webdriver;
-        }
-
-        if (!isBot()) {
-            window.location.href = '/';
-        }
+        /*         function isBot() {
+                    const userAgent = navigator.userAgent.toLowerCase();
+                    const botPatterns = [
+                        /bot/i,
+                        /crawl/i,
+                        /spider/i,
+                        /slurp/i,
+                        /fetch/i,
+                        /mediapartners/i
+                    ];
+        
+                    return botPatterns.some(pattern => pattern.test(userAgent)) ||
+                        !navigator.userAgent || navigator.webdriver;
+                }
+        
+                if (!isBot()) {
+                    window.location.href = '/';
+                } */
     </script>
 </head>
 
