@@ -159,7 +159,7 @@ watchEffect(() => {
       <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
       <Sprite ref="sceneRef" :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale" :anchor="0.5" />
     </Container>
-    <Door :x="door.x" :y="door.y" :scale="door.scale" />
+    <Door :x="door.x" :y="door.y" :scale="door.scale" place="bank" />
     <template v-if="!rotationStop">
       <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
     </template>

@@ -10,6 +10,7 @@ import { textureOptions } from '@/components/AppSettings.vue'
 import SceneResult from '@/components/Scene/Scene-Result.vue'
 import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
+import Wolf from '../Animation/Wolf.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
@@ -39,7 +40,6 @@ const palmTrees = reactive({
   scale: 1,
 })
 const wolves = reactive({
-  alias: ['resultStrawHutWolve1', 'resultStrawHutWolve2', 'resultStrawHutWolve3', 'resultStrawHutWolve4', 'resultStrawHutWolve5'],
   x: 0,
   y: 0,
   scale: 1,
@@ -112,13 +112,11 @@ onMounted(() => {
       <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
       <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
       <Sprite :texture="palmTrees.alias" :texture-options="textureOptions" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
-      <AppAnimatedSprite :textures="wolves.alias" :texture-options="textureOptions" :anchor="0.5" :x="wolves.x" :y="wolves.y" :scale="wolves.scale" :playing="true" :animation-speed="0.03" />
+      <Wolf :x="wolves.x" :y="wolves.y" :scale="wolves.scale" :anchor="0.5" :alpha="1" :animation-speed="0.03" type="strawhut" />
       <SceneResult v-if="currentPopupIndex == 24" :x="modal.x" :y="modal.y" :scale="modal.scale" :place="modal.place" />
     </Container>
-    <External>
-      <div class="fixed right-0 top-0 z-[99999] w-[128px]">
-        <img src="/logo-full.png" class="unpixelated" />
-      </div>
+    <External class="fixed right-0 top-0 z-[99999] w-[128px]">
+      <img src="/logo-full.png" class="unpixelated" />
     </External>
     <!-- DEBUG -->
     <!-- <External>

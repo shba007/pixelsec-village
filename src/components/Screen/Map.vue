@@ -40,6 +40,8 @@ import Scene9 from '@/components/Scene/Scene-1-9.vue'
 import Scene10 from '@/components/Scene/Scene-1-10.vue'
 import Scene11 from '@/components/Scene/Scene-1-11.vue'
 import Scene12 from '@/components/Scene/Scene-1-12.vue'
+import Door from '../Animation/Door.vue'
+import Wolf from '../Animation/Wolf.vue'
 
 defineProps<{
   isLoad: boolean
@@ -561,33 +563,31 @@ const respondedSceneIndex = ref(0)
 function handleResponse(value: number) {
   respondedSceneIndex.value = value
 }
+
+const door = reactive({ x: 1137, y: 1716, scale: 1 })
+const wolf = reactive({ x: 2467, y: 2387, scale: 1 })
 </script>
 
 <template>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
     <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
     <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
-    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y"
-      :scale="station.bg.scale" :anchor="0" :z-index="2" />
+    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" place="map" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
     <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" />
-    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y"
-      :scale="station.fg.scale" :anchor="0" :z-index="0" />
+    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" :z-index="0" />
     <!-- @vue-ignore -->
     <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-    <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y"
-      :scale="fence.scale" />
-    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y"
-      :scale="palmTrees.scale" />
-    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
-      place="map" />
+    <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y" :scale="fence.scale" />
+    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
+    <Wolf :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="1" type="map" />
+    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
+    <Door :x="door.x" :y="door.y" :scale="door.scale" :playing="currentCharacterIndex === 16" place="map" />
     <template v-if="currentCharacterIndex === 16">
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
-        :type="type as 'purple' | 'green'" place="map" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
     </template>
     <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
     <CharacterGuard place="map" :state="characterGuard.state" />
@@ -615,17 +615,15 @@ function handleResponse(value: number) {
     <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
     <Scene12 v-else-if="currentPopupIndex === 23" />
   </Container>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin"
-      @update="handleMCUpdate" />
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
     <!-- @vue-ignore -->
     <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <!-- <External>
     <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
@@ -635,6 +633,11 @@ function handleResponse(value: number) {
         <input v-model="screen.state.time" type="number" min="0" max="10" step="0.01" />
         <span class="bg-white">{{ screen.animation }}</span>
         <span class="bg-white">{{ currentSceneIndex }}</span>
+      </div>
+      <div class="flex flex-col gap-2">
+        <input v-model="wolf.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="wolf.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="wolf.scale" type="number" min="0" max="10" step="0.01" />
       </div>
     </div>
   </External> -->

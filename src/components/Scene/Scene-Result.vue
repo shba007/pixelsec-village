@@ -131,7 +131,7 @@ const wolf = reactive({ x: 280, y: 190, scale: 1, alpha: 0 })
 
 <template>
   <Container v-if="!rotationStop" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" />
+    <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container v-if="!secondScreen" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
       <Sprite ref="emailPlaceholderRef" :texture="inputEmail?.length ? 'PlaceholderEmail2' : 'PlaceholderEmail1'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" />

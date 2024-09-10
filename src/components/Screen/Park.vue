@@ -70,15 +70,11 @@ onBeforeMount(onLoad)
 
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <Sprite :texture="park.alias.bg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y - 400"
-      :scale="park.state.scale * 1.225" :anchor="0.5" />
-    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="park" :width-range="screenWidth"
-      :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-    <Sprite :texture="park.alias.fg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y"
-      :scale="park.state.scale" :anchor="0.5" />
+    <Sprite :texture="park.alias.bg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y - 400" :scale="park.state.scale * 1.225" :anchor="0.5" />
+    <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="park" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+    <Sprite :texture="park.alias.fg" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" place="park" />
-    <Sprite texture="parkTruck" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y"
-      :scale="park.state.scale" :anchor="0.5" />
+    <Sprite texture="parkTruck" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container v-if="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useTimeout } from '@vueuse/core'
 import { getRandomInteger } from '@/utils/helper'
 import { textureOptions } from '@/components/AppSettings.vue'
@@ -10,10 +10,27 @@ const props = defineProps<{
   y: number
   scale: number
   alpha: number
-  flip: boolean
+  type: 'map' | 'strawhut' | 'single'
+  flip?: boolean
 }>()
 
-const imgs = props.flip ? ['wolfLeft1', 'wolfLeft2'] : ['wolfRight1', 'wolfRight2']
+const imgs = computed(() => {
+  let result: string[] = []
+
+  switch (props.type) {
+    case 'single':
+      result = props.flip ? ['wolfLeft1', 'wolfLeft2'] : ['wolfRight1', 'wolfRight2']
+      break
+    case 'map':
+      result = ['mapWolve1', 'mapWolve2', 'mapWolve3']
+      break
+    case 'strawhut':
+      result = ['resultStrawHutWolve1', 'resultStrawHutWolve2', 'resultStrawHutWolve3', 'resultStrawHutWolve4', 'resultStrawHutWolve5']
+      break
+  }
+
+  return result
+})
 const playing = useTimeout(getRandomInteger(100, 2000))
 const speed = ref(getRandomInteger(100, 200) / 5000)
 </script>

@@ -297,8 +297,10 @@ import parkTruckTexture from '@/assets/image/park/truck.png'
 import bankSkyTexture from '@/assets/image/bank/sky.png'
 import bankBgTexture from '@/assets/image/bank/bg.png'
 //
-import bankDoorOpenTexture from '@/assets/image/bank/door/open.png'
-import bankDoorCloseTexture from '@/assets/image/bank/door/close.png'
+import bankDoorOpenTexture from '@/assets/image/door/bank-open.png'
+import bankDoorCloseTexture from '@/assets/image/door/bank-close.png'
+import mapDoorOpenTexture from '@/assets/image/door/map-open.png'
+import mapDoorCloseTexture from '@/assets/image/door/map-close.png'
 //
 import bankAlarmBellScene1Texture from '@/assets/image/bank/alarm-bell/scene-1.png'
 import bankAlarmBellScene2Texture from '@/assets/image/bank/alarm-bell/scene-2.png'
@@ -315,11 +317,15 @@ import resultButton2Texture from '@/assets/image/buttons/arrow/pressed.png'
 //
 import resultStrawHutBgTexture from '@/assets/image/strawhut/bg.png'
 import resultStrawHutFgTexture from '@/assets/image/strawhut/palm-trees.png'
-import resultStrawHutWolve1Texture from '@/assets/image/strawhut/wolves-1.png'
-import resultStrawHutWolve2Texture from '@/assets/image/strawhut/wolves-2.png'
-import resultStrawHutWolve3Texture from '@/assets/image/strawhut/wolves-3.png'
-import resultStrawHutWolve4Texture from '@/assets/image/strawhut/wolves-4.png'
-import resultStrawHutWolve5Texture from '@/assets/image/strawhut/wolves-5.png'
+import resultStrawHutWolve1Texture from '@/assets/image/wolves/strawhut-1.png'
+import resultStrawHutWolve2Texture from '@/assets/image/wolves/strawhut-2.png'
+import resultStrawHutWolve3Texture from '@/assets/image/wolves/strawhut-3.png'
+import resultStrawHutWolve4Texture from '@/assets/image/wolves/strawhut-4.png'
+import resultStrawHutWolve5Texture from '@/assets/image/wolves/strawhut-5.png'
+//
+import mapWolve1Texture from '@/assets/image/wolves/map-1.png'
+import mapWolve2Texture from '@/assets/image/wolves/map-2.png'
+import mapWolve3Texture from '@/assets/image/wolves/map-3.png'
 //
 import resultLogHouseBgTexture from '@/assets/image/loghouse/bg.png'
 import resultTownHouseBgTexture from '@/assets/image/townhouse/bg.png'
@@ -641,6 +647,9 @@ export const resources = {
     bankDoorClose: bankDoorCloseTexture,
     bankDoorOpen: bankDoorOpenTexture,
     //
+    mapDoorClose: mapDoorCloseTexture,
+    mapDoorOpen: mapDoorOpenTexture,
+    //
     bankAlarmBellScene1: bankAlarmBellScene1Texture,
     bankAlarmBellScene2: bankAlarmBellScene2Texture,
     bankAlarmBellPopup1: bankAlarmBellPopup1Texture,
@@ -667,6 +676,10 @@ export const resources = {
     resultStrawHutWolve3: resultStrawHutWolve3Texture,
     resultStrawHutWolve4: resultStrawHutWolve4Texture,
     resultStrawHutWolve5: resultStrawHutWolve5Texture,
+    //
+    mapWolve1: mapWolve1Texture,
+    mapWolve2: mapWolve2Texture,
+    mapWolve3: mapWolve3Texture,
     //
     resultLogHouseBg: resultLogHouseBgTexture,
     //
@@ -980,6 +993,9 @@ export const resources = {
     //
     bankDoorClose: bankDoorCloseTexture,
     bankDoorOpen: bankDoorOpenTexture,
+    //
+    mapDoorClose: mapDoorCloseTexture,
+    mapDoorOpen: mapDoorOpenTexture,
     //
     bankAlarmBellScene1: bankAlarmBellScene1Texture,
     bankAlarmBellScene2: bankAlarmBellScene2Texture,

@@ -9,13 +9,14 @@ const props = defineProps<{
   place: 'map' | 'park'
 }>()
 
-const imgs = props.place === 'map' ? ['mapFountain1', 'mapFountain2', 'mapFountain3', 'mapFountain4', 'mapFountain5'] :
-  ['parkFountain1', 'parkFountain2', 'parkFountain3', 'parkFountain4', 'parkFountain5', 'parkFountain6', 'parkFountain7', 'parkFountain8']
+const imgs =
+  props.place === 'map'
+    ? ['mapFountain1', 'mapFountain2', 'mapFountain3', 'mapFountain4', 'mapFountain5']
+    : ['parkFountain1', 'parkFountain2', 'parkFountain3', 'parkFountain4', 'parkFountain5', 'parkFountain6', 'parkFountain7', 'parkFountain8']
 const playing = true
 const speed = 0.09
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y"
-    :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
 </template>
