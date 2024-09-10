@@ -10,3 +10,7 @@ Disallow: /
 # Example 3: Block all crawlers except AdsBot (AdsBot crawlers must be named explicitly)
 User-agent: *
 Disallow: /
+
+User-agent: meta-externalagent
+Allow: /                    # Allow everything
+Disallow: /private/         # Disallow a specific directory
