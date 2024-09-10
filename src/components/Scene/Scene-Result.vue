@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch, computed } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { External, onTick } from 'vue3-pixi'
-import { useFocus, useTimeoutFn } from '@vueuse/core'
-
-import { textureOptions } from '@/components/AppSettings.vue'
-import { useGameStore } from '@/stores/game'
+import { useFocus } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
+
+import { useGameStore } from '@/stores/game'
 import { useDataStore } from '@/stores/data'
+import { textureOptions } from '@/components/AppSettings.vue'
+import Wolf from '@/components/Animation/Wolf.vue'
 
 const props = defineProps<{
   x: number
@@ -59,6 +60,8 @@ function onShare(type: 'facebook' | 'instagram' | 'x', event?: string) {
   const shareURL = 'https://affinidi-game-poc.onrender.com' + `/html/${props.place}-${characterSkin.value}.html`
   let finalShare = ''
 
+  // `https://twitter.com/intent/tweet?url=${pageUrl}&text=${text}&hashtags=${hashtags}
+
   switch (type) {
     case 'facebook':
       finalShare = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareURL)
@@ -67,7 +70,7 @@ function onShare(type: 'facebook' | 'instagram' | 'x', event?: string) {
       finalShare = 'https://www.instagram.com/sharer/sharer.php?u=' + encodeURIComponent(shareURL)
       break
     case 'x':
-      finalShare = 'https://www.x.com/sharer/sharer.php?u=' + encodeURIComponent(shareURL)
+      finalShare = `https://www.twitter.com/intent/tweet?url=${encodeURIComponent(shareURL)}`
       break
   }
 
@@ -109,24 +112,39 @@ function onSubmit(value: string) {
   // DATA-COLLECT
   email.value = value
   dataStore.setEmail(value)
-  gameStore.playSFXSound('dialogBox')
+  gameStore.playSFXSound('buttonPress')
 
   setTimeout(() => {
+    gameStore.playSFXSound('dialogBox')
     secondScreen.value = true
+    wolf.alpha = 1
     emit('update')
   }, 300)
 }
+
 const frames = ['resultButton1', 'resultButton2']
 const inputRef = ref<any>()
 const { focused } = useFocus(inputRef)
+
+const wolf = reactive({ x: 280, y: 190, scale: 1, alpha: 0 })
 </script>
 
 <template>
   <Container v-if="!rotationStop" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+    <Wolf :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" />
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container v-if="!secondScreen" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
-      <Sprite ref="emailPlaceholderRef" :texture="focused || inputEmail?.length ? 'PlaceholderEmail2' : 'PlaceholderEmail1'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" />
-      <Sprite :texture="frames[Number(!!email?.length)]" :texture-options="textureOptions" :anchor="0.5" :x="450" :y="0" :scale="2.25" cursor="pointer" @pointerdown="onSubmit(inputEmail!)" />
+      <Sprite ref="emailPlaceholderRef" :texture="inputEmail?.length ? 'PlaceholderEmail2' : 'PlaceholderEmail1'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" />
+      <Sprite
+        v-if="!!inputEmail?.length"
+        :texture="frames[Number(!!email?.length)]"
+        :texture-options="textureOptions"
+        :anchor="0.5"
+        :x="450"
+        :y="0"
+        :scale="2.25"
+        cursor="pointer"
+        @pointerdown="onSubmit(inputEmail!)" />
       <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
         <input
           ref="inputRef"
@@ -153,9 +171,9 @@ const { focused } = useFocus(inputRef)
     <!-- <External>
       <div class="fixed bottom-0 left-16 z-50 flex w-fit items-center gap-8">
         <div class="flex flex-col gap-2">
-          <input v-model="emailPlaceholder.x" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="emailPlaceholder.y" type="number" min="-10000" max="10000" step="10" />
-          <input v-model="emailPlaceholder.scale" type="number" min="0" max="10" step="0.01" />
+          <input v-model="wolf.x" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="wolf.y" type="number" min="-10000" max="10000" step="10" />
+          <input v-model="wolf.scale" type="number" min="0" max="10" step="0.01" />
         </div>
       </div>
     </External> -->

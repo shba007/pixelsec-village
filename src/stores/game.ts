@@ -1,6 +1,6 @@
 import { computed, reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
-import { useDocumentVisibility, useFullscreen, useScreenOrientation, useTimeoutFn, useWindowSize } from '@vueuse/core'
+import { useDocumentVisibility, useFullscreen, useScreenOrientation, useWindowSize } from '@vueuse/core'
 import { useSound } from '@vueuse/sound'
 
 import { resources } from '@/utils/asset'

@@ -9,12 +9,16 @@ const props = withDefaults(
     x: number
     y: number
     scale: number
+    alpha?: number
     anchor: number
     playing: boolean
-    animationSpeed: number
+    animationSpeed?: number
     textureOptions: any
   }>(),
-  { animationSpeed: 1 }
+  {
+    alpha: 1,
+    animationSpeed: 1,
+  }
 )
 
 // count will increase every 200ms
@@ -36,5 +40,5 @@ watch(
 </script>
 
 <template>
-  <Sprite :texture="textures[textureIndex]" :key="textureIndex" :texture-options="inheritedTextureOptions" :x="x" :y="y" :scale="scale" :anchor="anchor" cursor="pointer" />
+  <Sprite :texture="textures[textureIndex]" :key="textureIndex" :texture-options="inheritedTextureOptions" :x="x" :y="y" :scale="scale" :alpha="alpha" :anchor="anchor" cursor="pointer" />
 </template>
