@@ -40,15 +40,15 @@ onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
 
-const titleText = reactive({ x: 10, y: -85, style: { fontFamily: 'LAN', fontSize: 66, align: 'center', lineHeight: 76 } })
+const titleText = reactive({ x: 10, y: -85, style: { fontFamily: 'LAN', fontSize: 66, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container v-if="toggle" :x="titleText.x" :y="titleText.y">
-      <Text :anchor="0.5" :style="{ ...titleText.style, stroke: 1, strokeThickness: 1 }"> Before we begin,\nlet's go
-        through the T&Cs.
+      <Text :anchor="0.5" :style="titleText.style">
+        Before we begin,\nlet's go through the T&Cs.
       </Text>
     </Container>
     <Sprite v-for="{ type, frames, state } of options" :key="String(type)"

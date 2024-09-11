@@ -8,7 +8,10 @@ import fontPixelOperatorBold from '/fonts/PixelOperator/PixelOperatorBold.ttf'
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
 import popupSceneInstallTexture from '@/assets/image/popup/scene-install.png'
 import popupSceneRotateTexture from '@/assets/image/popup/scene-rotate.png'
+import popupBgSlimTexture from '@/assets/image/popup/bg-slim.png'
 import popupBgLandscapeTexture from '@/assets/image/popup/bg-landscape.png'
+import popupBgSquareTexture from '@/assets/image/popup/bg-square.png'
+import popupBgPortraitTexture from '@/assets/image/popup/bg-portrait.png'
 import popupSceneRotateOverlayTexture from '@/assets/image/popup/scene-rotate-overlay.png'
 import popupScene01LandscapeTexture from '@/assets/image/popup/scene-0-1-landscape.png'
 import popupScene01PortraitTexture from '@/assets/image/popup/scene-0-1-portrait.png'
@@ -357,7 +360,10 @@ export const resources = {
     popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,
     popupSceneRotate: popupSceneRotateTexture,
+    popupBgSlim: popupBgSlimTexture,
     popupBgLandscape: popupBgLandscapeTexture,
+    popupBgPortrait: popupBgPortraitTexture,
+    popupBgSquare: popupBgSquareTexture,
     popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
     popupScene01Landscape: popupScene01LandscapeTexture,
     popupScene01Portrait: popupScene01PortraitTexture,
@@ -705,7 +711,10 @@ export const resources = {
     popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,
     popupSceneRotate: popupSceneRotateTexture,
+    popupBgSlim: popupBgSlimTexture,
     popupBgLandscape: popupBgLandscapeTexture,
+    popupBgPortrait: popupBgPortraitTexture,
+    popupBgSquare: popupBgSquareTexture,
     popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
     popupScene01Landscape: popupScene01LandscapeTexture,
     popupScene01Portrait: popupScene01PortraitTexture,
