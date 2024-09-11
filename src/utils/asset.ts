@@ -1,11 +1,14 @@
 // public
 // fonts
-import frontINET from '/fonts/INET.ttf'
-import frontLAN from '/fonts/LAN.ttf'
+import fontINET from '/fonts/INET.ttf'
+import fontLAN from '/fonts/LAN.ttf'
+import fontPixelOperator from '/fonts/PixelOperator/PixelOperator.ttf'
+import fontPixelOperatorBold from '/fonts/PixelOperator/PixelOperatorBold.ttf'
 // asset
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
 import popupSceneInstallTexture from '@/assets/image/popup/scene-install.png'
 import popupSceneRotateTexture from '@/assets/image/popup/scene-rotate.png'
+import popupBgLandscapeTexture from '@/assets/image/popup/bg-landscape.png'
 import popupSceneRotateOverlayTexture from '@/assets/image/popup/scene-rotate-overlay.png'
 import popupScene01LandscapeTexture from '@/assets/image/popup/scene-0-1-landscape.png'
 import popupScene01PortraitTexture from '@/assets/image/popup/scene-0-1-portrait.png'
@@ -345,13 +348,16 @@ import PlaceholderEmail2 from '@/assets/image/popup/placeholder-email-focus.png'
 
 export const resources = {
   font: {
-    frontINET,
-    frontLAN,
+    INET: fontINET,
+    LAN: fontLAN,
+    PixelOperator: fontPixelOperator,
+    PixelOperatorBold: fontPixelOperatorBold
   },
   imageSm: {
     popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,
     popupSceneRotate: popupSceneRotateTexture,
+    popupBgLandscape: popupBgLandscapeTexture,
     popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
     popupScene01Landscape: popupScene01LandscapeTexture,
     popupScene01Portrait: popupScene01PortraitTexture,
@@ -699,6 +705,7 @@ export const resources = {
     popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,
     popupSceneRotate: popupSceneRotateTexture,
+    popupBgLandscape: popupBgLandscapeTexture,
     popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
     popupScene01Landscape: popupScene01LandscapeTexture,
     popupScene01Portrait: popupScene01PortraitTexture,

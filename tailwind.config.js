@@ -1,5 +1,3 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -7,10 +5,6 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    fontFamily: {
-      inet: ['INET', ...defaultTheme.fontFamily.sans],
-      lan: ['LAN', ...defaultTheme.fontFamily.sans],
-    },
     extend: {},
   },
   plugins: [],

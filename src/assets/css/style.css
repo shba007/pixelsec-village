@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Inet';
-  src: url('/fonts/INET.ttf');
-}
-
-@font-face {
-  font-family: 'Lan';
-  src: url('/fonts/LAN.ttf');
-}
-
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -28,7 +18,7 @@
 }
 
 body {
-  @apply overflow-hidden font-lan;
+  @apply overflow-hidden;
 }
 
 *:not(.unpixelated) {
