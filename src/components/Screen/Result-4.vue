@@ -9,9 +9,8 @@ import type { Asset } from '@/utils/types'
 import { textureOptions } from '@/components/AppSettings.vue'
 import SceneResult from '@/components/Scene/Scene-Result.vue'
 import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
-import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
-import Dog from '../Animation/Dog.vue'
-import CharacterGuard from '../Animation/Character/CharacterGuard.vue'
+import Dog from '@/components/Animation/Dog.vue'
+import CharacterGuard from '@/components/Animation/Character/CharacterGuard.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
@@ -34,7 +33,7 @@ const map = reactive<any>({
   animation: 'started',
 })
 
-const modal = reactive({ place: 'mansion' as const, x: -200, y: 1, scale: 0.75 })
+const modal = reactive({ place: 'mansion' as const, x: -200, y: 0, scale: 0.75 })
 
 const characterMain = reactive<Asset>({
   loaded: false,
@@ -110,11 +109,6 @@ const characterGuard = reactive({
       <Dog :x="dog.x" :y="dog.y" :scale="dog.scale" />
       <CharacterGuard place="map" :state="characterGuard.state" />
     </Container>
-    <External>
-      <div class="fixed right-0 top-0 z-[99999] w-[128px]">
-        <img src="/logo-full.png" class="unpixelated" />
-      </div>
-    </External>
     <!-- DEBUG -->
     <!--     <External>
       <div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">

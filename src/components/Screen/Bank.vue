@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, reactive, ref, watch, watchEffect } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
-import { useWindowSize } from '@vueuse/core'
+import { useWindowSize, watchArray } from '@vueuse/core'
 import { textureOptions } from '@/components/AppSettings.vue'
 import { useGameStore } from '@/stores/game'
 
@@ -30,10 +30,10 @@ const screen = reactive<any>({
   loaded: false,
   alias: { bg: 'bankSky', fg: 'bankBackground' },
   states: [
-    { x: 900, y: 200, scale: 1, alpha: 1, time: 0 },
-    { x: -550, y: 200, scale: 1, alpha: 1, time: 3 },
+    { x: 0, y: 200, scale: 1, alpha: 1, time: 0 },
+    { x: 0, y: 200, scale: 1, alpha: 1, time: 3 },
   ],
-  state: { x: 900, y: 200, scale: 1, alpha: 1, time: 0 },
+  state: { x: 0, y: 200, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
 })
 
@@ -139,27 +139,35 @@ onMounted(() => {
 })
 
 const sceneRef = ref<any>(null)
-watchEffect(() => {
+
+function resize() {
   if (sceneRef.value) {
     const localBounds = sceneRef.value.getLocalBounds() // Get local bounds of the sprite
     const scaleX = sceneRef.value.worldTransform.a // Get global scale on X-axis
 
     const width = localBounds.width * scaleX
 
-    console.log({ width })
+    screen.state.x = width / 2 - screenWidth.value / 2 - 200
+    screen.states[0].x = width / 2 - screenWidth.value / 2 - 200
+    screen.states[1].x = -width / 2 + screenWidth.value / 2 + 200
   }
+}
+
+watchArray([screenWidth, screenHeight], resize)
+
+onMounted(() => {
+  setTimeout(resize, 50)
 })
-// screenwidth ->
 </script>
 
 <template>
-  <Container :x="screenWidth / 2 + screen.state.x * zoomFactor" :y="screenHeight / 2" :scale="1 * zoomFactor">
+  <Container :x="screenWidth / 2 + screen.state.x" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container>
       <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale" :anchor="0.5" />
       <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
       <Sprite ref="sceneRef" :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale" :anchor="0.5" />
     </Container>
-    <Door :x="door.x" :y="door.y" :scale="door.scale" place="bank" />
+    <Door :x="door.x" :y="door.y" :scale="door.scale" place="bank" :playing="true" />
     <template v-if="!rotationStop">
       <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
     </template>
@@ -176,7 +184,7 @@ watchEffect(() => {
     <ModalProtip v-if="currentPopupIndex === 16" title="3" x="left" />
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
+  <!--  <External>
     <div class="absolute bottom-0 right-24 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />

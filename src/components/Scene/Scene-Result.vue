@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from 'vue'
 import { External, onTick } from 'vue3-pixi'
-import { useFocus } from '@vueuse/core'
+// import { useFocus } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
@@ -26,10 +26,10 @@ const { characterSkin, rotationStop } = storeToRefs(gameStore)
 
 const secondScreen = ref(false)
 const image = ref('popupScene71')
-const scale = ref(1)
+const modalScale = ref(1)
 const modal = computed(() => ({
   image: !secondScreen.value ? image.value : 'popupScene8',
-  state: { x: props.x, y: props.y, scale: props.scale * scale.value },
+  state: { x: props.x, y: props.y, scale: props.scale * modalScale.value },
 }))
 
 onMounted(() => {
@@ -55,12 +55,9 @@ const socials = ref([
   { type: 'x' as const, image: 'IconX', x: 36 + 40, y: 103 - 20, scale: 0.24 },
 ])
 
-function onShare(type: 'facebook' | 'instagram' | 'x', event?: string) {
-  console.log('Shared on ', type, event)
+function onShare(type: 'facebook' | 'instagram' | 'x') {
   const shareURL = 'https://affinidi-game-poc.onrender.com' + `/html/${props.place}-${characterSkin.value}`
   let finalShare = ''
-
-  // `https://twitter.com/intent/tweet?url=${pageUrl}&text=${text}&hashtags=${hashtags}
 
   switch (type) {
     case 'facebook':
@@ -106,8 +103,15 @@ onMounted(() => {
 const inputEmail = ref<string>()
 const email = ref<string>()
 
+function validateEmail(email: string) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
 function onSubmit(value: string) {
   if (email.value !== undefined) return
+
+  if (!validateEmail(value)) return
 
   // DATA-COLLECT
   email.value = value
@@ -124,7 +128,7 @@ function onSubmit(value: string) {
 
 const frames = ['resultButton1', 'resultButton2']
 const inputRef = ref<any>()
-const { focused } = useFocus(inputRef)
+// const { focused } = useFocus(inputRef)
 
 const wolf = reactive({ x: 280, y: 190, scale: 1, alpha: 0 })
 </script>

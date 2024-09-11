@@ -5,10 +5,8 @@ import { useWindowSize } from '@vueuse/core'
 import { useGameStore, type Character } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
-import { storeToRefs } from 'pinia'
 
 const gameStore = useGameStore()
-const { isMobile } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)

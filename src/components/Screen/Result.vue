@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useDataStore } from '@/stores/data'
 import { storeToRefs } from 'pinia'
+import { External } from 'vue3-pixi'
 
 import Result1 from '@/components/Screen/Result-1.vue'
 import Result2 from '@/components/Screen/Result-2.vue'
@@ -9,10 +10,6 @@ import Result4 from '@/components/Screen/Result-4.vue'
 
 const dataStore = useDataStore()
 const { resultHouse } = storeToRefs(dataStore)
-
-/* onMounted(() => {
-  console.log({ ResultHouse: resultHouse.value })
-}) */
 </script>
 
 <template>
@@ -20,4 +17,7 @@ const { resultHouse } = storeToRefs(dataStore)
   <Result2 v-else-if="resultHouse === 2" />
   <Result3 v-else-if="resultHouse === 3" />
   <Result4 v-else />
+  <External class="fixed right-0 top-0 z-[99999] w-[128px]">
+    <img src="/logo-full.png" class="unpixelated" />
+  </External>
 </template>

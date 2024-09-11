@@ -39,7 +39,6 @@ const options = ref<
 
 const selectedOption = ref<dataBreachActionChoice>()
 
-const timerText = reactive({ x: -50, y: -220, scale: 3.5 })
 const counter = useInterval(10)
 const timer = computed(() => {
   const number = Math.max(8 * 100 - counter.value, 0)
@@ -60,9 +59,7 @@ const timer = computed(() => {
     return []
   }
 
-  // Return the formatted timer string
-  const digits = formattedSeconds.split('')
-  return [`${formattedMinutes}`, `${digits[0]}`, `${digits[1]}`, `${formattedMilliseconds}`]
+  return [formattedMinutes.split(''), formattedSeconds.split(''), formattedMilliseconds.split('')]
 })
 
 function onClick(value: dataBreachActionChoice) {
@@ -87,17 +84,25 @@ onBeforeUnmount(() => {
   gameStore.playBGMSound('panic')
   gameStore.playSFXSound('alarmLight')
 })
+
+const timerText = reactive({ x: -180, y: -175, style: { fontFamily: 'INET', fontSize: 88 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Container :x="timerText.x" :y="timerText.y" :scale="timerText.scale">
-      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="-45"> {{ timer[0] }} : {{ timer[1] }} </Text>
-      <Text :style="{ fill: 'red', fontFamily: 'INET' }" :texture-options="textureOptions" :x="18">
-        {{ timer[2] }}
-      </Text>
-      <Text :style="{ fontFamily: 'INET' }" :texture-options="textureOptions" :x="35"> : {{ timer[3] }}</Text>
+    <Container :x="timerText.x" :y="timerText.y">
+      <template v-for="(digits, digitsIndex) of timer" :key="digitsIndex">
+        <Text
+          v-for="(digit, digitIndex) of digits"
+          :key="digitsIndex + '-' + digitIndex"
+          :style="{ ...timerText.style, fill: digitsIndex == 1 && digitIndex == 1 ? 'red' : 'black' }"
+          :x="170 * digitsIndex + 50 * digitIndex"
+          :anchor="0.5">
+          {{ digit }}
+        </Text>
+        <Text v-if="digitsIndex !== 2" :style="timerText.style" :x="165 * digitsIndex + 110" :y="-2" :anchor="0.5">:</Text>
+      </template>
     </Container>
     <Sprite
       v-for="{ type, frames, state } of options"

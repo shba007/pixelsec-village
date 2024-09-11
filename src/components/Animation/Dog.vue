@@ -5,7 +5,7 @@ import { getRandomInteger } from '@/utils/helper'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
-const props = defineProps<{
+defineProps<{
   x: number
   y: number
   scale: number

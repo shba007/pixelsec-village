@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import { External, onTick } from 'vue3-pixi'
+import { External } from 'vue3-pixi'
 import { useScroll, useTimeoutFn, useWindowSize, watchArray } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
@@ -8,7 +8,7 @@ import { textureOptions } from '@/components/AppSettings.vue'
 import { storeToRefs } from 'pinia'
 
 const gameStore = useGameStore()
-const { rotationStop, isMobile } = storeToRefs(gameStore)
+const { rotationStop } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
@@ -76,9 +76,7 @@ function resize() {
 
 const { width, height } = useWindowSize()
 
-watchArray([width, height], () => {
-  resize()
-})
+watchArray([width, height], resize)
 
 onMounted(() => {
   setTimeout(resize, 50)

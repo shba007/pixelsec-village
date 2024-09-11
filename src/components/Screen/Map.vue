@@ -3,7 +3,7 @@ import { computed, onBeforeMount, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { BlurFilter } from 'pixi.js'
+// import { BlurFilter } from 'pixi.js'
 
 import { useGameStore } from '@/stores/game'
 import type { Asset, State } from '@/utils/types'
@@ -11,8 +11,8 @@ import type { Asset, State } from '@/utils/types'
 import StreetLamp from '@/components/Animation/StreetLamp.vue'
 import Pigeon from '@/components/Animation/Pigeon.vue'
 import Flag from '@/components/Animation/Flag.vue'
-import Wave from '@/components/Animation/Wave.vue'
-import Cloud from '@/components/Animation/Cloud.vue'
+/* import Wave from '@/components/Animation/Wave.vue'
+import Cloud from '@/components/Animation/Cloud.vue' */
 import MapTram from '@/components/Animation/MapTram.vue'
 import Fountain from '@/components/Animation/Fountain.vue'
 import BaloonStand from '@/components/Animation/BaloonStand.vue'
@@ -48,7 +48,7 @@ defineProps<{
 }>()
 
 const gameStore = useGameStore()
-const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, characterSkin, textureOptions, isLandscape } = storeToRefs(gameStore)
+const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, characterSkin, textureOptions } = storeToRefs(gameStore)
 
 const { width: screenWidth } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
@@ -415,8 +415,8 @@ const characterBaloonVendor = reactive({
   state: { x: 1180, y: 2750, scale: 0.5, alpha: 1, time: 0 },
 })
 
-const mapHeight = ref(3844)
-const mapWidth = ref(3124)
+// const mapHeight = ref(3844)
+// const mapWidth = ref(3124)
 /* const clouds = ref<
   {
     size: 'lg' | 'md' | 'sm'
@@ -570,21 +570,22 @@ const wolf = reactive({ x: 2467, y: 2387, scale: 1 })
 
 <template>
   <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="3" />
-    <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" :z-index="1" />
-    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" :z-index="2" />
+    <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" />
+    <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" />
+    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" place="map" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
     <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-    <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" />
-    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" :z-index="0" />
+    <!-- <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" /> -->
+    <!-- <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y"
+      :scale="station.fg.scale" :anchor="0" /> -->
     <!-- @vue-ignore -->
     <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
     <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y" :scale="fence.scale" />
     <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
     <Wolf :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="1" type="map" />
     <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
-    <CharacterStationMaster place="map" :state="characterStationMaster.state" />
+    <!-- <CharacterStationMaster place="map" :state="characterStationMaster.state" /> -->
     <Door :x="door.x" :y="door.y" :scale="door.scale" :playing="currentCharacterIndex === 16" place="map" />
     <template v-if="currentCharacterIndex === 16">
       <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
@@ -599,14 +600,14 @@ const wolf = reactive({ x: 2467, y: 2387, scale: 1 })
     <!-- <BlurFilter :blur="motionBlur ? 0.9 : 0" /> -->
   </Container>
   <Container :renderable="isLoad && !rotationStop">
-    <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
+    <!-- <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" /> 
     <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
     <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" />
-    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" />
+    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" /> 
     <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
     <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
-    <ModalProtip v-if="currentPopupIndex === 7" title="1" y="top" />
-    <ModalProtip v-else-if="currentPopupIndex === 11" title="2" y="top" />
+     <ModalProtip v-if="currentPopupIndex === 7" title="1" y="top" /> -->
+    <ModalProtip v-if="currentPopupIndex === 11" title="2" y="top" />
     <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" />
     <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" @update="handleResponse(18)" />
     <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" />
@@ -618,9 +619,21 @@ const wolf = reactive({ x: 2467, y: 2387, scale: 1 })
   <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
     <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
+    <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" />
+    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
+    <CharacterStationMaster place="map" :state="characterStationMaster.state" />
     <!-- @vue-ignore -->
     <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
         :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
+  </Container>
+  <Container :renderable="isLoad && !rotationStop">
+    <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
+    <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
+    <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" />
+    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" />
+    <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
+    <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
+    <ModalProtip v-else-if="currentPopupIndex === 7" title="1" y="top" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

@@ -48,6 +48,7 @@ onMounted(() => {
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Sprite
       v-for="{ type, frames, state } of options"
+      :key="String(type)"
       :texture="frames[Number(selectedOption === type)]"
       :texture-options="textureOptions"
       :x="state.x"

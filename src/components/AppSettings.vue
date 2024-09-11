@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useApplication } from 'vue3-pixi'
-import { isMobile } from 'pixi.js'
+// import { isMobile } from 'pixi.js'
 
 const app = useApplication()
 // app.value.renderer.options.antialias = true

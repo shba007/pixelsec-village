@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue'
+import { reactive } from 'vue'
 import { onTick } from 'vue3-pixi'
 import { textureOptions } from '@/components/AppSettings.vue'
 
@@ -18,14 +18,6 @@ const car = reactive({
   speed: 0.015,
   direction: props.widthRange,
 })
-
-/* watch(() => props, () => {
-    car.x = props.x
-    car.y = props.y
-    car.scale = props.scale
-    car.speed = 0.01
-    car.direction = props.widthRange
-}, { deep: true }) */
 
 const img = 'mapCar'
 

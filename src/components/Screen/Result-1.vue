@@ -9,8 +9,7 @@ import type { Asset } from '@/utils/types'
 import { textureOptions } from '@/components/AppSettings.vue'
 import SceneResult from '@/components/Scene/Scene-Result.vue'
 import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
-import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
-import Wolf from '../Animation/Wolf.vue'
+import Wolf from '@/components/Animation/Wolf.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
@@ -45,7 +44,7 @@ const wolves = reactive({
   scale: 1,
 })
 
-const modal = reactive({ place: 'strawhut' as const, x: -420, y: 1, scale: 1 })
+const modal = reactive({ place: 'strawhut' as const, x: -420, y: 0, scale: 1 })
 
 const characterMain = reactive<Asset>({
   loaded: false,
@@ -115,9 +114,6 @@ onMounted(() => {
       <Wolf :x="wolves.x" :y="wolves.y" :scale="wolves.scale" :anchor="0.5" :alpha="1" :animation-speed="0.03" type="strawhut" />
       <SceneResult v-if="currentPopupIndex == 24" :x="modal.x" :y="modal.y" :scale="modal.scale" :place="modal.place" />
     </Container>
-    <External class="fixed right-0 top-0 z-[99999] w-[128px]">
-      <img src="/logo-full.png" class="unpixelated" />
-    </External>
     <!-- DEBUG -->
     <!-- <External>
 			<div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">

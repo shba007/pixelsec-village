@@ -25,10 +25,6 @@ const props = defineProps<{
   states: State[]
 }>()
 
-const emit = defineEmits<{
-  (e: 'update', stateIndex: number, state: 'init' | 'started' | 'finished'): void
-}>()
-
 const characterAnimations = {
   frontStill: ['characterSusGuyFishing1', 'characterSusGuyFishing2'],
   frontWalk: ['characterSusGuyWalkFront1', 'characterSusGuyWalkFront2'],
@@ -62,12 +58,12 @@ watch(props.states, (value) => {
 const currentCharacterIndex = ref(0)
 const holdedCharacterIndex = ref(0)
 watch(currentMCCharacterIndex, (value) => {
-  // holdedStateIndex.value = value
-  if (value === 20) {
+  if (value === 19) {
+    gameStore.playBGMSound('susGuy')
+  } else if (value === 20) {
     holdedCharacterIndex.value = value - 19
     currentCharacterIndex.value = value - 20
     activeCharacter.animation = 'started'
-    gameStore.playBGMSound('susGuy')
   } else if (value > 20) {
     holdedCharacterIndex.value = value - 19
   }
@@ -83,12 +79,6 @@ watch(rotationStop, (value) => {
   }
 })
 
-/* watch(
-  () => activeCharacter.animation,
-  () => {
-    console.log('activeCharacterAnimation', activeCharacter.animation)
-  }
-) */
 // Move Character
 let totalElapsedTime = 0
 let progress = 0

@@ -18,7 +18,7 @@ const zoomFactor = computed(() => {
 
 const modal = computed(() => ({
   image: 'popupScene12',
-  state: { x: 0, y: 0, scale: 0.9 * zoomFactor.value },
+  state: { x: 0, y: 0, scale: 0.95 * zoomFactor.value },
 }))
 
 const options = reactive<
@@ -68,6 +68,7 @@ onMounted(() => {
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Sprite
       v-for="{ type, frames, state } of options"
+      :key="type"
       :texture="frames[Number(selectedOptions.has(type))]"
       :texture-options="textureOptions"
       :x="state.x"

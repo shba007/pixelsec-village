@@ -69,11 +69,8 @@ const tram = reactive<Object>({
 
 watch(
   () => props.animation,
-  (value, oldValue) => {
+  (value) => {
     tram.animation = value
-    /*     if (oldValue === 'init' && value === 'started') {
-          gameStore.playSFXSound('tram', 2)
-        } */
   }
 )
 

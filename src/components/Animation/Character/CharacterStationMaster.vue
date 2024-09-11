@@ -3,7 +3,7 @@ import type { State } from '@/utils/types'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
-const props = defineProps<{
+defineProps<{
   state: State
   place: 'map' | 'station'
 }>()
