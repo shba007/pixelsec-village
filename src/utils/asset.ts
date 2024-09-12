@@ -354,7 +354,7 @@ export const resources = {
     INET: fontINET,
     LAN: fontLAN,
     PixelOperator: fontPixelOperator,
-    PixelOperatorBold: fontPixelOperatorBold
+    PixelOperatorBold: fontPixelOperatorBold,
   },
   imageSm: {
     popupSceneInstall: popupSceneInstallTexture,

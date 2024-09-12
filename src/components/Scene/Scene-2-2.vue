@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, onMounted, reactive, ref } from 'vue'
-import { External } from 'vue3-pixi'
 import { useWindowSize, watchDebounced } from '@vueuse/core'
 
 import { useDataStore, type spendTimeChoice } from '@/stores/data'

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { External } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 
 import { useDataStore, type ageChoice } from '@/stores/data'

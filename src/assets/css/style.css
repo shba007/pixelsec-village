@@ -2,11 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Lan';
+  src: url('/fonts/LAN.ttf');
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
   scrollbar-width: 6px;
+  touch-action: pan-y;
 }
 
 *::-webkit-scrollbar {
@@ -17,11 +23,27 @@
   @apply rounded-md bg-slate-300;
 }
 
-body {
-  @apply overflow-hidden;
+*:not(.unpixelated) {
+  image-rendering: optimizeSpeed;
+  /* Older versions of FF          */
+  image-rendering: -moz-crisp-edges;
+  /* FF 6.0+                       */
+  image-rendering: -webkit-optimize-contrast;
+  /* Safari                        */
+  image-rendering: -o-crisp-edges;
+  /* OS X & Windows Opera (12.02+) */
+  image-rendering: pixelated;
+  /* Awesome future-browsers       */
+  -ms-interpolation-mode: nearest-neighbor;
+  /* IE                            */
 }
 
-*:not(.unpixelated) {
+body {
+  @apply overflow-hidden;
+  font-family: 'Lan';
+}
+
+canvas {
   image-rendering: optimizeSpeed;
   /* Older versions of FF          */
   image-rendering: -moz-crisp-edges;

@@ -69,15 +69,13 @@ const titleText = reactive({ x: 100, y: 20, style: { fontFamily: 'LAN', fontSize
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="-255">
-      <Container v-for="{ type, value, state } of options" :x="state.x" :y="state.y" cursor="pointer"
-        @pointerdown="onClick(type)">
-        <Sprite :key="type" :texture="frames[Number(selectedOptions.has(type))]" :texture-options="textureOptions"
-          :scale="state.scale" />
+      <Container v-for="{ type, value, state } of options" :x="state.x" :y="state.y" cursor="pointer" @pointerdown="onClick(type)">
+        <Sprite :key="type" :texture="frames[Number(selectedOptions.has(type))]" :texture-options="textureOptions" :scale="state.scale" />
         <Text v-if="toggle" :style="titleText.style" :x="titleText.x" :y="titleText.y">{{ value }}</Text>
       </Container>
     </Container>
   </Container>
-  <External>
+  <!-- <External>
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="titleText.x" type="number" min="-10000" max="10000" step="10" />
@@ -89,5 +87,5 @@ const titleText = reactive({ x: 100, y: 20, style: { fontFamily: 'LAN', fontSize
         <button @click="toggle = !toggle">Toggle {{ toggle }}</button>
       </div>
     </div>
-  </External>
+  </External> -->
 </template>
