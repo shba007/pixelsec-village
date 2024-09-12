@@ -19,10 +19,10 @@ const modal = computed(() => ({
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
 }))
 
-const options = [
-  { type: false, frames: ['popupScene04Button11', 'popupScene04Button12'], state: { x: -340, y: 50, scale: 0.5 } },
-  { type: true, frames: ['popupScene04Button21', 'popupScene04Button22'], state: { x: 40, y: 50, scale: 0.5 } },
-]
+const options = computed(() => [
+  { type: false, value: 'Skip T&Cs', frames: toggle.value ? ['buttonLong', 'buttonLongPressed'] : ['popupScene04Button11', 'popupScene04Button12'], state: { x: -340 + 144, y: 50 + 60, scale: toggle.value ? 4 : 0.5 } },
+  { type: true, value: 'Read T&Cs', frames: toggle.value ? ['buttonLong', 'buttonLongPressed'] : ['popupScene04Button21', 'popupScene04Button22'], state: { x: 40 + 144, y: 50 + 60, scale: toggle.value ? 4 : 0.5 } },
+])
 
 const selectedOption = ref<boolean>()
 
@@ -41,32 +41,32 @@ onMounted(() => {
 })
 
 const titleText = reactive({ x: 10, y: -85, anchor: 0.5, style: { fontFamily: 'LAN', fontSize: 66, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
+const buttonText = reactive({ x: 0, y: 0, anchor: 0.5, style: { fontFamily: 'LAN', fontSize: 44, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container v-if="toggle" :x="titleText.x" :y="titleText.y">
-      <Text :anchor="titleText.anchor" :style="titleText.style"> Before we begin,\nlet's go through the T&Cs. </Text>
+      <Text :anchor="titleText.anchor" :style="titleText.style">Before we begin,\nlet's go through the T&Cs.</Text>
     </Container>
-    <Sprite
-      v-for="{ type, frames, state } of options"
-      :key="String(type)"
-      :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale"
-      cursor="pointer"
-      @pointerdown="onClick(type)" />
+    <Container v-for="{ type, value, frames, state } of options" :key="String(type)" :x="state.x" :y="state.y"
+      cursor="pointer" @pointerdown="onClick(type)">
+      <Sprite :texture="frames[Number(selectedOption === type)]" :texture-options="textureOptions" :scale="state.scale"
+        :anchor="buttonText.anchor" />
+      <Text :anchor="buttonText.anchor"
+        :style="{ ...buttonText.style, fill: type === selectedOption ? '#506745' : 'black' }">
+        {{ value }}
+      </Text>
+    </Container>
   </Container>
-  <!-- <External>
+  <!--   <External>
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
-        <input v-model="titleText.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="titleText.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="titleText.style.fontSize" type="number" min="0" max="120" step="4" />
-        <input v-model="titleText.style.lineHeight" type="number" min="0" max="120" step="4" />
+        <input v-model="buttonText.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="buttonText.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="buttonText.style.fontSize" type="number" min="0" max="120" step="4" />
+        <input v-model="buttonText.style.lineHeight" type="number" min="0" max="120" step="4" />
       </div>
       <div class="fixed right-0 bottom-0 z-[99999] flex flex-col gap-2 bg-white p-2">
         <button @click="toggle = !toggle">Toggle {{ toggle }}</button>

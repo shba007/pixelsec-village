@@ -24,21 +24,20 @@ const modal = computed(() => ({
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1 * zoomFactor.value },
 }))
 
-const options = ref<
-  {
-    type: annoyingPointChoice
-    state: {
-      x: number
-      y: number
-      scale: number
-    }
-  }[]
->([
-  { type: 'begin-followed', state: { x: -340, y: -210, scale: 1 } },
-  { type: 'having-to-keep-giving-away-info', state: { x: -340, y: -120, scale: 1 } },
-  { type: 'cant-save-autofill-details-in-incognito-mode', state: { x: -340, y: -30, scale: 1 } },
-  { type: 'cant-store-all-my-digital-identities-in-one-place', state: { x: -340, y: 70, scale: 1 } },
-])
+const options: {
+  type: annoyingPointChoice
+  state: {
+    x: number
+    y: number
+    scale: number
+  }
+}[] =
+  [
+    { type: 'begin-followed', state: { x: -340, y: -210, scale: 1 } },
+    { type: 'having-to-keep-giving-away-info', state: { x: -340, y: -120, scale: 1 } },
+    { type: 'cant-save-autofill-details-in-incognito-mode', state: { x: -340, y: -30, scale: 1 } },
+    { type: 'cant-store-all-my-digital-identities-in-one-place', state: { x: -340, y: 70, scale: 1 } },
+  ]
 
 const selectedOption = ref<annoyingPointChoice>()
 const showPopup = ref(true)
@@ -67,15 +66,8 @@ onMounted(() => {
 <template>
   <Container v-if="showPopup" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite
-      v-for="{ type, state } of options"
-      :key="String(type)"
-      :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale"
-      cursor="pointer"
+    <Sprite v-for="{ type, state } of options" :key="String(type)" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
       @pointerdown="onClick(type)" />
   </Container>
 </template>

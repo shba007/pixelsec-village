@@ -20,10 +20,10 @@ const modal = computed(() => ({
   state: { x: 0, y: 0, scale: 0.9 * zoomFactor.value },
 }))
 
-const options = ref([
+const options = [
   { type: true, state: { x: 65, y: -30, scale: 5.5 / 4 } },
   { type: false, state: { x: 65, y: 80, scale: 5.5 / 4 } },
-])
+]
 
 const selectedOption = ref<boolean | null>(null)
 
@@ -48,15 +48,8 @@ onMounted(() => {
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite
-      v-for="{ type, state } of options"
-      :key="String(type)"
-      :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale"
-      cursor="pointer"
+    <Sprite v-for="{ type, state } of options" :key="String(type)" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
       @pointerdown="onClick(type)" />
   </Container>
 </template>

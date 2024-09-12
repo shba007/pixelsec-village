@@ -21,22 +21,21 @@ const modal = computed(() => ({
   state: { x: 0, y: 0, scale: 1 * zoomFactor.value },
 }))
 
-const options = reactive<
-  {
-    type: ageChoice
-    frames: string[]
-    state: {
-      x: number
-      y: number
-      scale: number
-    }
-  }[]
->([
-  { type: '18-25', frames: ['popupScene11Button11', 'popupScene11Button12'], state: { x: -385, y: 50, scale: 0.5 } },
-  { type: '26-35', frames: ['popupScene11Button21', 'popupScene11Button22'], state: { x: -192.5, y: 50, scale: 0.5 } },
-  { type: '36-44', frames: ['popupScene11Button31', 'popupScene11Button32'], state: { x: 0, y: 50, scale: 0.5 } },
-  { type: '45-54', frames: ['popupScene11Button41', 'popupScene11Button42'], state: { x: 192.5, y: 50, scale: 0.5 } },
-])
+const options: {
+  type: ageChoice
+  frames: string[]
+  state: {
+    x: number
+    y: number
+    scale: number
+  }
+}[] =
+  [
+    { type: '18-25', frames: ['popupScene11Button11', 'popupScene11Button12'], state: { x: -385, y: 50, scale: 0.5 } },
+    { type: '26-35', frames: ['popupScene11Button21', 'popupScene11Button22'], state: { x: -192.5, y: 50, scale: 0.5 } },
+    { type: '36-44', frames: ['popupScene11Button31', 'popupScene11Button32'], state: { x: 0, y: 50, scale: 0.5 } },
+    { type: '45-54', frames: ['popupScene11Button41', 'popupScene11Button42'], state: { x: 192.5, y: 50, scale: 0.5 } },
+  ]
 
 const selectedOption = ref<ageChoice>()
 
@@ -61,15 +60,8 @@ onMounted(() => {
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <CharacterStationMaster :state="characterStationMaster" place="station" />
-    <Sprite
-      v-for="{ type, frames, state } of options"
-      :key="type"
-      :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale"
-      cursor="pointer"
+    <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
       @pointerdown="onClick(type)" />
   </Container>
 </template>

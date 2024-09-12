@@ -71,6 +71,7 @@ const scoreCard = {
 }
 
 const apiBaseURL = 'https://h13p701h52.execute-api.ap-south-1.amazonaws.com/dev/affinidi-dataville-log'
+const apiKey = 'b0vQG5LaMa5AKAgvngkHeakXmyShdVGo8FxVUkdt'
 
 export const useDataStore = defineStore('data', () => {
   const key = nanoid()
@@ -94,6 +95,7 @@ export const useDataStore = defineStore('data', () => {
       try {
         await ofetch(apiBaseURL, {
           method: 'POST',
+          headers: { 'x-api-key': apiKey },
           body: {
             key,
             data: value,
