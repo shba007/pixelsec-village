@@ -41,7 +41,7 @@ onMounted(() => {
 })
 
 const titleText = reactive({ x: 10, y: -85, anchor: 0.5, style: { fontFamily: 'LAN', fontSize: 66, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
-const buttonText = reactive({ x: 0, y: 0, anchor: 0.5, style: { fontFamily: 'LAN', fontSize: 44, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
+const buttonText = reactive({ x: 0, y: -5, anchor: 0.5, style: { fontFamily: 'INET', fontSize: 48, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
@@ -54,7 +54,7 @@ const buttonText = reactive({ x: 0, y: 0, anchor: 0.5, style: { fontFamily: 'LAN
       cursor="pointer" @pointerdown="onClick(type)">
       <Sprite :texture="frames[Number(selectedOption === type)]" :texture-options="textureOptions" :scale="state.scale"
         :anchor="buttonText.anchor" />
-      <Text :anchor="buttonText.anchor"
+      <Text :x="buttonText.x" :y="buttonText.y" :anchor="buttonText.anchor"
         :style="{ ...buttonText.style, fill: type === selectedOption ? '#506745' : 'black' }">
         {{ value }}
       </Text>
