@@ -1,6 +1,6 @@
 import { computed, reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
-import { useDocumentVisibility, useFullscreen, useScreenOrientation, useWindowSize } from '@vueuse/core'
+import { useDocumentVisibility, useEventListener, useFullscreen, useScreenOrientation, useWakeLock, useWindowSize } from '@vueuse/core'
 import { useSound } from '@vueuse/sound'
 
 import { resources } from '@/utils/asset'
@@ -131,6 +131,7 @@ export const useGameStore = defineStore('game', () => {
 
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
+  const { isSupported: isWakeLockSupported, isActive, forceRequest, request, release } = useWakeLock()
 
   function toggleHardStop(value: boolean) {
     $hardStop.value = value
@@ -145,9 +146,11 @@ export const useGameStore = defineStore('game', () => {
       if (value && isMobile.value) {
         await enterFullscreen()
         await lockOrientation('landscape')
+        request('screen')
       } else {
         await exitFullscreen()
         unlockOrientation()
+        release()
       }
     } catch (error) {
       // console.log(error)
@@ -207,7 +210,6 @@ export const useGameStore = defineStore('game', () => {
   }
   const {
     play: playBgm,
-    pause: pauseBgm,
     stop: stopBgm,
     sound: soundBgm,
   } = useSound(resources.sound.bgmSprite, {
@@ -239,11 +241,7 @@ export const useGameStore = defineStore('game', () => {
     playbackRate: 1,
   }
 
-  const {
-    play: playSfx1,
-    pause: pauseSfx1,
-    stop: stopSfx1,
-  } = useSound(resources.sound.sfxSprite, {
+  const { play: playSfx1, stop: stopSfx1 } = useSound(resources.sound.sfxSprite, {
     volume: volumeSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
@@ -251,11 +249,7 @@ export const useGameStore = defineStore('game', () => {
       activeSoundList.sfx[1] = null
     },
   })
-  const {
-    play: playSfx2,
-    pause: pauseSfx2,
-    stop: stopSfx2,
-  } = useSound(resources.sound.sfxSprite, {
+  const { play: playSfx2, stop: stopSfx2 } = useSound(resources.sound.sfxSprite, {
     volume: volumeSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
@@ -263,11 +257,7 @@ export const useGameStore = defineStore('game', () => {
       activeSoundList.sfx[2] = null
     },
   })
-  const {
-    play: playSfx3,
-    pause: pauseSfx3,
-    stop: stopSfx3,
-  } = useSound(resources.sound.sfxSprite, {
+  const { play: playSfx3, stop: stopSfx3 } = useSound(resources.sound.sfxSprite, {
     volume: volumeSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
@@ -276,7 +266,7 @@ export const useGameStore = defineStore('game', () => {
     },
   })
 
-  function playSFXSound(id: SFXSounds, instanceId = 1) {
+  function playSFX(id: SFXSounds, instanceId = 1) {
     if (visibility.value === 'hidden') return
 
     if (instanceId == 1) {
@@ -291,7 +281,7 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
-  function stopSFXSound(instanceId?: number) {
+  function stopSFX(instanceId?: number) {
     if (instanceId === undefined) {
       stopSfx1()
       stopSfx2()
@@ -301,28 +291,50 @@ export const useGameStore = defineStore('game', () => {
     else if (instanceId == 3) stopSfx3()
   }
 
-  function playBGMSound(id: BGMSounds) {
+  function playBGM(id: BGMSounds) {
     // alert('Play BGM')
-    playBgm({ id })
+    if (activeSoundList.bgm[1] === null) {
+      playBgm({ id })
+    } else {
+      soundBgm.fade(0.4, 0, 500)
+      setTimeout(() => {
+        soundBgm.fade(0, 0.4, 500)
+        playBgm({ id })
+      }, 100)
+    }
     activeSoundList.bgm[1] = id
+  }
+
+  function stopBGM(id: BGMSounds) {
+    // alert('Stop BGM')
+    stopBgm({ id })
+    activeSoundList.bgm[1] = null
   }
 
   const visibility = useDocumentVisibility()
 
-  watch(visibility, (current, previous) => {
+  function handleVisibilityChange(current: string, previous: string) {
     if (current === 'visible' && previous === 'hidden') {
       volumeBgm.value = 0.4
       volumeSfx.value = 1
-      // soundEnabledBgm.value = true
-      // soundEnabledSfx.value = true
       console.log('Sound Enabled')
     } else {
       volumeBgm.value = 0
       volumeSfx.value = 0
-      // soundEnabledBgm.value = false
-      // soundEnabledSfx.value = false
       console.log('Sound Disabled')
     }
+  }
+
+  watch(visibility, (current, previous) => {
+    handleVisibilityChange(current, previous)
+  })
+
+  useEventListener(document, 'focus', (evt) => {
+    handleVisibilityChange('visible', 'hidden')
+  })
+
+  useEventListener(document, 'blur', (evt) => {
+    handleVisibilityChange('visible', 'hidden')
   })
 
   return {
@@ -343,8 +355,9 @@ export const useGameStore = defineStore('game', () => {
     toggleGameMode,
     setCharacterSkin,
     nextTimeline,
-    playSFXSound,
-    stopSFXSound,
-    playBGMSound,
+    playSFXSound: playSFX,
+    stopSFXSound: stopSFX,
+    playBGMSound: playBGM,
+    stopBGMSound: stopBGM,
   }
 })
