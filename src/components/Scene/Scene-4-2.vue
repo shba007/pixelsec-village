@@ -5,6 +5,7 @@ import { useInterval, useWindowSize } from '@vueuse/core'
 import { textureOptions } from '@/components/AppSettings.vue'
 import { useDataStore, type dataBreachActionChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
+import AppButton from '@/components/AppButton.vue'
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
@@ -20,22 +21,20 @@ const modal = computed(() => ({
   state: { x: 0, y: 0, scale: 0.9 * zoomFactor.value },
 }))
 
-const options = ref<
-  {
-    type: dataBreachActionChoice
-    frames: string[]
-    state: {
-      x: number
-      y: number
-      scale: number
-    }
-  }[]
->([
-  { type: 'do-nothing', frames: ['popupScene52Button11', 'popupScene52Button12'], state: { x: -175, y: -45, scale: 0.5 } },
-  { type: 'take-action-only-when-prompted', frames: ['popupScene52Button21', 'popupScene52Button22'], state: { x: 130, y: -45, scale: 0.5 } },
-  { type: 'alert-the-authority-change-login-details', frames: ['popupScene52Button31', 'popupScene52Button32'], state: { x: -120, y: 125, scale: 0.5 } },
-  { type: 'delete-the-app', frames: ['popupScene52Button41', 'popupScene52Button42'], state: { x: 185, y: 125, scale: 0.5 } },
-])
+const options: {
+  key: dataBreachActionChoice
+  value: string
+  type: 'long' | 'short'
+  state: {
+    x: number
+    y: number
+  }
+}[] = [
+  { key: 'do-nothing', value: 'Do nothing', type: 'short', state: { x: -175, y: -45 } },
+  { key: 'take-action-only-when-prompted', value: 'Take action only\nwhen prompted', type: 'long', state: { x: 130, y: -45 } },
+  { key: 'alert-the-authority-change-login-details', value: 'Alert the authority\nchange login details', type: 'long', state: { x: -120, y: 125 } },
+  { key: 'delete-the-app', value: 'Delete\nthe app', type: 'short', state: { x: 185, y: 125 } },
+]
 
 const selectedOption = ref<dataBreachActionChoice>()
 
@@ -104,16 +103,19 @@ const timerText = reactive({ x: -180, y: -175, style: { fontFamily: 'INET', font
         <Text v-if="digitsIndex !== 2" :style="timerText.style" :x="165 * digitsIndex + 110" :y="-2" :anchor="0.5">:</Text>
       </template>
     </Container>
-    <Sprite
-      v-for="{ type, frames, state } of options"
-      :key="type"
-      :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions"
-      :anchor="0.5"
+    <!-- <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
+      :texture-options="textureOptions" :anchor="0.5" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
+      @pointerdown="onClick(type)" /> -->
+    <AppButton
+      v-for="{ key, value, state, type } of options"
+      :key="key"
+      :text="value"
       :x="state.x"
       :y="state.y"
-      :scale="state.scale"
-      cursor="pointer"
-      @pointerdown="onClick(type)" />
+      :type="type"
+      :scale="1.25"
+      :is-pressed="selectedOption === key"
+      :font-size="36"
+      @click="onClick(key)" />
   </Container>
 </template>

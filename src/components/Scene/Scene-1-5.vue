@@ -6,6 +6,7 @@ import { useWindowSize } from '@vueuse/core'
 import { useDataStore } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
+import AppButton from '@/components/AppButton.vue'
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
@@ -19,10 +20,17 @@ const modal = computed(() => ({
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
 }))
 
-const options = computed(() => [
-  { type: false, value: 'Skip T&Cs', frames: toggle.value ? ['buttonLong', 'buttonLongPressed'] : ['popupScene04Button11', 'popupScene04Button12'], state: { x: -340 + 144, y: 50 + 60, scale: toggle.value ? 4 : 0.5 } },
-  { type: true, value: 'Read T&Cs', frames: toggle.value ? ['buttonLong', 'buttonLongPressed'] : ['popupScene04Button21', 'popupScene04Button22'], state: { x: 40 + 144, y: 50 + 60, scale: toggle.value ? 4 : 0.5 } },
-])
+const options: {
+  type: boolean
+  value: string
+  state: {
+    x: number
+    y: number
+  }
+}[] = [
+  { type: false, value: 'Skip T&Cs', state: { x: -340 + 144, y: 50 + 60 } },
+  { type: true, value: 'Read T&Cs', state: { x: 40 + 144, y: 50 + 60 } },
+]
 
 const selectedOption = ref<boolean>()
 
@@ -41,7 +49,7 @@ onMounted(() => {
 })
 
 const titleText = reactive({ x: 10, y: -85, anchor: 0.5, style: { fontFamily: 'LAN', fontSize: 66, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
-const buttonText = reactive({ x: 0, y: -5, anchor: 0.5, style: { fontFamily: 'INET', fontSize: 48, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
+// const buttonText = reactive({ x: 0, y: -5, anchor: 0.5, style: { fontFamily: 'INET', fontSize: 48, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
@@ -50,7 +58,7 @@ const buttonText = reactive({ x: 0, y: -5, anchor: 0.5, style: { fontFamily: 'IN
     <Container v-if="toggle" :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style">Before we begin,\nlet's go through the T&Cs.</Text>
     </Container>
-    <Container v-for="{ type, value, frames, state } of options" :key="String(type)" :x="state.x" :y="state.y"
+    <!-- <Container v-for="{ type, value, frames, state } of options" :key="String(type)" :x="state.x" :y="state.y"
       cursor="pointer" @pointerdown="onClick(type)">
       <Sprite :texture="frames[Number(selectedOption === type)]" :texture-options="textureOptions" :scale="state.scale"
         :anchor="buttonText.anchor" />
@@ -58,7 +66,17 @@ const buttonText = reactive({ x: 0, y: -5, anchor: 0.5, style: { fontFamily: 'IN
         :style="{ ...buttonText.style, fill: type === selectedOption ? '#506745' : 'black' }">
         {{ value }}
       </Text>
-    </Container>
+    </Container> -->
+    <AppButton
+      v-for="{ type, value, state } of options"
+      :key="String(type)"
+      type="long"
+      :text="value"
+      :x="state.x"
+      :y="state.y"
+      :scale="1"
+      :is-pressed="type === selectedOption"
+      @click="onClick(type)" />
   </Container>
   <!--   <External>
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">

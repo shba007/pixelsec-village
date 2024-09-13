@@ -18,7 +18,6 @@ import Scene2 from '@/components/Scene/Scene-2-2.vue'
 const gameStore = useGameStore()
 const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
 
-const canvasScreen = useScreen()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const zoomFactor = computed(() => {

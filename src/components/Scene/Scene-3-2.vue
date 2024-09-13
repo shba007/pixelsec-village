@@ -6,6 +6,7 @@ import { useWindowSize, watchDebounced } from '@vueuse/core'
 import { useDataStore, type dataExchangeChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
+import AppCheckbox from '@/components/AppCheckbox.vue'
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
@@ -22,23 +23,20 @@ const modal = computed(() => ({
   state: { x: (screenWidth.value * 1) / 4, y: 0, scale: 0.9 * zoomFactor.value },
 }))
 
-const options = ref<
-  {
-    type: dataExchangeChoice
-    value: string
-    state: {
-      x: number
-      y: number
-      scale: number
-    }
-  }[]
->([
-  { type: 'shopping-info', value: 'Past online shopping info', state: { x: 0, y: -245, scale: 5.5 / 4 } },
-  { type: 'bank-card-details', value: 'Bank/Card details', state: { x: 0, y: -151.25, scale: 5.5 / 4 } },
-  { type: 'social-media-profile', value: 'Social media profile', state: { x: 0, y: -57.5, scale: 5.5 / 4 } },
-  { type: 'personal-preferences', value: 'Personal preferences', state: { x: 0, y: 36.25, scale: 5.5 / 4 } },
-  { type: 'personal-details', value: 'Personal details', state: { x: 0, y: 130, scale: 5.5 / 4 } },
-])
+const options: {
+  type: dataExchangeChoice
+  value: string
+  state: {
+    x: number
+    y: number
+  }
+}[] = [
+  { type: 'shopping-info', value: 'Past online shopping info', state: { x: 0, y: -245 } },
+  { type: 'bank-card-details', value: 'Bank/Card details', state: { x: 0, y: -151.25 } },
+  { type: 'social-media-profile', value: 'Social media profile', state: { x: 0, y: -57.5 } },
+  { type: 'personal-preferences', value: 'Personal preferences', state: { x: 0, y: 36.25 } },
+  { type: 'personal-details', value: 'Personal details', state: { x: 0, y: 130 } },
+]
 
 const selectedOptions = ref<Set<dataExchangeChoice>>(new Set())
 
@@ -56,24 +54,24 @@ function onComplete() {
   gameStore.nextTimeline({ id: 25 })
 }
 
-const frames = ['buttonSquare', 'buttonSquarePressed']
-
 onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
 
-const titleText = reactive({ x: 100, y: 20, style: { fontFamily: 'LAN', fontSize: 44, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
+// const frames = ['buttonSquare', 'buttonSquarePressed']
+// const titleText = reactive({ x: 100, y: 20, style: { fontFamily: 'LAN', fontSize: 44, align: 'center', lineHeight: 76, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Container :x="-255">
+    <!--  <Container :x="-255">
       <Container v-for="{ type, value, state } of options" :x="state.x" :y="state.y" cursor="pointer" @pointerdown="onClick(type)">
         <Sprite :key="type" :texture="frames[Number(selectedOptions.has(type))]" :texture-options="textureOptions" :scale="state.scale" />
         <Text v-if="toggle" :style="titleText.style" :x="titleText.x" :y="titleText.y">{{ value }}</Text>
       </Container>
-    </Container>
+    </Container> -->
+    <AppCheckbox v-for="{ type, value, state } of options" :key="type" :text="value" :x="state.x - 235" :y="state.y + 50" :scale="1" :is-checked="selectedOptions.has(type)" @click="onClick(type)" />
   </Container>
   <!-- <External>
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">

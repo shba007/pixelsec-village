@@ -17,7 +17,7 @@ const zoomFactor = computed(() => {
 const isSecondScreen = ref(false)
 const toggle = ref(true)
 const modal = computed(() => ({
-  image: toggle.value ? ('popupBgSlim') : (!isSecondScreen.value ? 'popupScene31' : 'popupScene32'),
+  image: toggle.value ? 'popupBgSlim' : !isSecondScreen.value ? 'popupScene31' : 'popupScene32',
   state: { x: 0, y: -(screenHeight.value * 1) / 4, scale: 0.9 * zoomFactor.value },
 }))
 
@@ -45,14 +45,10 @@ const secondTitleText = reactive({ x: -30, y: 0, anchor: 0.5, style: { fontFamil
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="toggle ? 0.26 : 0.5" />
     <Container v-if="toggle">
-      <Text v-if="!isSecondScreen" :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor"
-        :style="titleText.style">
+      <Text v-if="!isSecondScreen" :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :style="titleText.style">
         It's a hot day and you need to cool off.\nHow about a free ice-cream in exchange \nfor your personal data?
       </Text>
-      <Text v-else="!isSecondScreen" :x="secondTitleText.x" :y="secondTitleText.y" :anchor="secondTitleText.anchor"
-        :style="secondTitleText.style">
-        What are you willing to share?\nPick more than one.
-      </Text>
+      <Text v-else :x="secondTitleText.x" :y="secondTitleText.y" :anchor="secondTitleText.anchor" :style="secondTitleText.style"> What are you willing to share?\nPick more than one. </Text>
     </Container>
   </Container>
   <!--   <External>

@@ -126,7 +126,7 @@ function onSubmit(value: string) {
   }, 300)
 }
 
-const frames = ['resultButton1', 'resultButton2']
+const frames = ['buttonArrow', 'buttonArrowPressed']
 const inputRef = ref<any>()
 // const { focused } = useFocus(inputRef)
 
