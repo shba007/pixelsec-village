@@ -101,9 +101,9 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
     <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
   </div>
-  <!-- <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
+  <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>
-  </div> -->
+  </div> 
 </template>
 
 <style lang="css">
