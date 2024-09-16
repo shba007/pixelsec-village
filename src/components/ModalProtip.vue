@@ -25,7 +25,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => {
   let images = ['popupProtip11', 'popupProtip12']
-  let scale = 0.8 / 2
+  let scale = 0.5
   switch (props.title) {
     case '1':
       images = ['popupProtip11', 'popupProtip12']
@@ -83,13 +83,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <AppAnimatedSprite
-    :textures="modal.images"
-    :texture-options="textureOptions"
-    :x="modal.state.x"
-    :y="modal.state.y"
-    :scale="modal.state.scale"
-    :playing="true"
-    :animation-speed="0.08"
-    :anchor="0.5" />
+  <AppAnimatedSprite :textures="modal.images" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
+    :scale="modal.state.scale" :playing="true" :animation-speed="0.08" :anchor="0.5" />
 </template>
