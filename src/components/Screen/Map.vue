@@ -28,6 +28,8 @@ import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 import CharacterGuard from '@/components/Animation/Character/CharacterGuard.vue'
 import CharacterSus from '@/components/Animation/Character/CharacterSus.vue'
 import ModalProtip from '@/components/ModalProtip.vue'
+import Door from '@/components/Animation/Door.vue'
+import Wolf from '@/components/Animation/Wolf.vue'
 
 import Scene1 from '@/components/Scene/Scene-1-1.vue'
 import Scene2 from '@/components/Scene/Scene-1-2.vue'
@@ -40,8 +42,6 @@ import Scene9 from '@/components/Scene/Scene-1-9.vue'
 import Scene10 from '@/components/Scene/Scene-1-10.vue'
 import Scene11 from '@/components/Scene/Scene-1-11.vue'
 import Scene12 from '@/components/Scene/Scene-1-12.vue'
-import Door from '../Animation/Door.vue'
-import Wolf from '../Animation/Wolf.vue'
 
 defineProps<{
   isLoad: boolean
@@ -50,10 +50,11 @@ defineProps<{
 const gameStore = useGameStore()
 const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, characterSkin, textureOptions } = storeToRefs(gameStore)
 
-const { width: screenWidth } = useWindowSize()
+const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
+// const zoomFactor = computed(() => screenHeight.value / 720)
 
-const globalSpeedFactor = 0.75
+const globalSpeedFactor = 0.65
 const screen = reactive<Asset>({
   loaded: false,
   alias: 'mapBg',
@@ -86,19 +87,19 @@ const screen = reactive<Asset>({
     { x: -1090, y: -1872.8683596236826, scale: 2.01, alpha: 1, time: 45.86 * globalSpeedFactor },
     // at pond 23
     { x: -995, y: -1937.8683596236826, scale: 2.01, alpha: 1, time: 47.015 * globalSpeedFactor },
-    { x: -890, y: -1890, scale: 1.85, alpha: 1, time: 54.0175 * globalSpeedFactor },
+    { x: -890, y: -1820, scale: 1.85, alpha: 1, time: 54.0175 * globalSpeedFactor },
     // loop ends 25
     { x: -1085, y: -1922.8683596236826, scale: 2.01, alpha: 1, time: 55.7625 * globalSpeedFactor },
     { x: -1085, y: -2162.8683596236824, scale: 2.01, alpha: 1, time: 58.1625 * globalSpeedFactor },
     { x: -850, y: -2162.8683596236824, scale: 2.01, alpha: 1, time: 60.5125 * globalSpeedFactor },
     { x: -850, y: -2340, scale: 2.01, alpha: 1, time: 62.9125 * globalSpeedFactor },
     { x: -90, y: -2340, scale: 2.01, alpha: 1, time: 70.5125 * globalSpeedFactor },
-    { x: -90, y: -2540, scale: 1.64, alpha: 1, time: 71.5125 * globalSpeedFactor },
+    { x: -90, y: -2510, scale: 1.8, alpha: 1, time: 71.5125 * globalSpeedFactor },
     // stop for the ballon 31
-    { x: -930, y: -2590, scale: 1.64, alpha: 1, time: 79.0625 * globalSpeedFactor },
-    { x: -1000, y: -2590, scale: 1.64, alpha: 1, time: 84.1225 * globalSpeedFactor },
-    { x: -1570, y: -2480, scale: 1.64, alpha: 1, time: 86.1225 * globalSpeedFactor },
-    { x: -1210, y: -2270, scale: 0.76, alpha: 1, time: 87.7475 * globalSpeedFactor },
+    { x: -930, y: -2510, scale: 1.8, alpha: 1, time: 79.0625 * globalSpeedFactor },
+    { x: -1000, y: -2510, scale: 1.8, alpha: 1, time: 84.1225 * globalSpeedFactor },
+    { x: -1570, y: -2510, scale: 1.8, alpha: 1, time: 86.1225 * globalSpeedFactor },
+    { x: -980, y: -2220, scale: 0.8, alpha: 1, time: 87.7475 * globalSpeedFactor },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
@@ -415,27 +416,6 @@ const characterBaloonVendor = reactive({
   state: { x: 1180, y: 2750, scale: 0.5, alpha: 1, time: 0 },
 })
 
-// const mapHeight = ref(3844)
-// const mapWidth = ref(3124)
-/* const clouds = ref<
-  {
-    size: 'lg' | 'md' | 'sm'
-    x: number
-    y: number
-    direction: number
-  }[]
->([
-  { size: 'lg', x: -100, y: 0.2, direction: 1 },
-  { size: 'lg', x: -300, y: 0.32, direction: 1 },
-  { size: 'lg', x: -600, y: 0.46, direction: 1 },
-  { size: 'sm', x: -200, y: 0.54, direction: 1 },
-  { size: 'md', x: -50, y: 0.66, direction: 1 },
-  { size: 'lg', x: -250, y: 0.69, direction: 1 },
-  { size: 'sm', x: -50, y: 0.78, direction: 1 },
-  { size: 'md', x: -300, y: 0.9, direction: 1 },
-  { size: 'sm', x: -600, y: 0.96, direction: 1 },
-]) */
-
 watch(
   () => screen.animation,
   (value) => {
@@ -569,12 +549,10 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
 </script>
 
 <template>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
     <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" />
     <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" />
-    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y"
-      :scale="station.bg.scale" :anchor="0" />
+    <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" place="map" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
     <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
@@ -583,18 +561,14 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
       :scale="station.fg.scale" :anchor="0" /> -->
     <!-- @vue-ignore -->
     <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-    <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y"
-      :scale="fence.scale" />
-    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y"
-      :scale="palmTrees.scale" />
+    <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y" :scale="fence.scale" />
+    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
     <Wolf :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="1" type="map" />
-    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
-      place="map" />
+    <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
     <!-- <CharacterStationMaster place="map" :state="characterStationMaster.state" /> -->
     <Door :x="door.x" :y="door.y" :scale="door.scale" :playing="currentCharacterIndex === 16" place="map" />
     <template v-if="currentCharacterIndex === 16">
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
-        :type="type as 'purple' | 'green'" place="map" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :type="type as 'purple' | 'green'" place="map" />
     </template>
     <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
     <CharacterGuard place="map" :state="characterGuard.state" />
@@ -613,36 +587,30 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
     <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
     <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
      <ModalProtip v-if="currentPopupIndex === 7" title="1" y="top" /> -->
-    <ModalProtip v-if="currentPopupIndex === 11" title="2" y="top" />
-    <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" />
-    <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" @update="handleResponse(18)" />
-    <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" />
-    <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" />
-    <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" />
-    <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" />
-    <Scene12 v-else-if="currentPopupIndex === 23" />
+    <ModalProtip v-if="currentPopupIndex === 11" title="2" y="top" :zoom-factor="zoomFactor" />
+    <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" :zoom-factor="zoomFactor" @update="handleResponse(18)" />
+    <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" :zoom-factor="zoomFactor" />
+    <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" :zoom-factor="zoomFactor" />
+    <Scene12 v-else-if="currentPopupIndex === 23" :zoom-factor="zoomFactor" />
   </Container>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor"
-    :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
-    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin"
-      @update="handleMCUpdate" />
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
     <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" />
-    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y"
-      :scale="station.fg.scale" :anchor="0" />
+    <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
-    <!-- @vue-ignore -->
-    <!--  <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="map" :size="size" :x="x"
-        :y="mapHeight *  screen.state.scale * y" :scale="0.5" :direction="direction" :width-range="mapWidth" /> -->
   </Container>
   <Container :renderable="isLoad && !rotationStop">
-    <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" />
-    <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
-    <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" />
-    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" />
-    <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
-    <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
-    <ModalProtip v-else-if="currentPopupIndex === 7" title="1" y="top" />
+    <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <ModalProtip v-else-if="currentPopupIndex === 7" title="1" y="top" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>
@@ -655,11 +623,6 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
         <input v-model="screen.state.time" type="number" min="0" max="10" step="0.01" />
         <span class="bg-white">{{ screen.animation }}</span>
         <span class="bg-white">{{ currentSceneIndex }}</span>
-      </div>
-      <div class="flex flex-col gap-2">
-        <input v-model="wolf.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="wolf.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="wolf.scale" type="number" min="0" max="10" step="0.01" />
       </div>
     </div>
   </External> -->

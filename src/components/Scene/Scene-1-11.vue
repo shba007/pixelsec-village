@@ -7,15 +7,18 @@ import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppButton from '@/components/AppButton.vue'
 
+const props = defineProps<{
+  zoomFactor: number
+}>()
+
 const dataStore = useDataStore()
 const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => screenWidth.value / 1280)
 
 const modal = computed(() => ({
-  image: 'popupBgSquare',//'popupScene64',
-  state: { x: (screenWidth.value * 3) / 4, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
+  image: 'popupBgSquare', //'popupScene64',
+  state: { x: (screenWidth.value * 3) / 4, y: (screenHeight.value * 1) / 2, scale: 0.9 * props.zoomFactor },
 }))
 
 const options = [
@@ -42,16 +45,13 @@ onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
 
-const titleText = reactive({ x: -16, y: -70, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 56 * 4, align: 'left', lineHeight: 64 * 4, stroke: 1, strokeThickness: 1 * 4 } })
+const titleText = reactive({ x: -16, y: -70, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 54 * 4, align: 'left', lineHeight: 64 * 4, stroke: 1, strokeThickness: 1 * 4 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Text :anchor="titleText.anchor" :style="titleText.style" :x="titleText.x" :y="titleText.y"
-      :scale="titleText.scale">
-      Are you willing to\nexchange your\ndata for rebates\nor rewards?
-    </Text>
+    <Text :anchor="titleText.anchor" :style="titleText.style" :x="titleText.x" :y="titleText.y" :scale="titleText.scale"> Are you willing to\nexchange your\ndata for rebates\nor rewards? </Text>
     <!--     <Sprite
       v-for="{ type, frames, state } of options"
       :key="String(type)"
@@ -62,7 +62,6 @@ const titleText = reactive({ x: -16, y: -70, anchor: 0.5, scale: 0.25, style: { 
       :scale="state.scale"
       cursor="pointer"
       @pointerdown="onClick(type)" /> -->
-    <AppButton v-for="{ key, value, state } of options" :key="String(key)" type="short" :text="value" :x="state.x"
-      :y="state.y" :scale="1" :is-pressed="key === selectedOption" @click="onClick(key)" />
+    <AppButton v-for="{ key, value, state } of options" :key="String(key)" type="short" :text="value" :x="state.x" :y="state.y" :scale="1" :is-pressed="key === selectedOption" @click="onClick(key)" />
   </Container>
 </template>

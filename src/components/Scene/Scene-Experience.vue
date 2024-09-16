@@ -9,7 +9,7 @@ import { textureOptions } from '@/components/AppSettings.vue'
 const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => screenWidth.value / 1280)
+const zoomFactor = computed(() => screenHeight.value / 720)
 
 const pwaInstalled = ref(false)
 const installPromptEvent = ref<Event | null>(null)
@@ -53,7 +53,7 @@ onBeforeUnmount(() => {
 // !pwaInstalled.value ? 'popupSceneInstall' :
 const modal = computed(() => ({
   image: 'popupSceneRotate',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.8 * zoomFactor.value },
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.45 * zoomFactor.value },
 }))
 
 async function handleRotate() {

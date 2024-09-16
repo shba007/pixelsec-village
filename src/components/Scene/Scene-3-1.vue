@@ -1,24 +1,22 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { External } from 'vue3-pixi'
 import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 
+const props = defineProps<{
+  zoomFactor: number
+}>()
+
 const gameStore = useGameStore()
+
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
-const zoomFactor = computed(() => {
-  const aspectRatio = screenWidth.value / screenHeight.value
-  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
-})
-
 const isSecondScreen = ref(false)
-const toggle = ref(true)
 const modal = computed(() => ({
-  image: toggle.value ? 'popupBgSlim' : !isSecondScreen.value ? 'popupScene31' : 'popupScene32',
-  state: { x: 0, y: -(screenHeight.value * 1) / 4, scale: 0.9 * zoomFactor.value },
+  image: 'popupBgSlim',
+  state: { x: 0, y: -(screenHeight.value * 1) / 4, scale: 0.9 * props.zoomFactor },
 }))
 
 function handleMove() {
@@ -37,21 +35,20 @@ onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
 
-const titleText = reactive({ x: -9, y: -10, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 56 * 4, align: 'left', lineHeight: 72 * 4, stroke: 1, strokeThickness: 1 * 4 } })
-const secondTitleText = reactive({ x: -30, y: 0, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 56 * 4, align: 'left', lineHeight: 72 * 4, stroke: 1, strokeThickness: 1 * 4 } })
+const titleText = reactive({ x: -9, y: -10, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 54 * 4, align: 'left', lineHeight: 64 * 4, stroke: 1, strokeThickness: 1 * 4 } })
+const secondTitleText = reactive({ x: -30, y: 0, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 54 * 4, align: 'left', lineHeight: 64 * 4, stroke: 1, strokeThickness: 1 * 4 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="toggle ? 0.26 : 0.5" />
-    <Container v-if="toggle">
-      <Text v-if="!isSecondScreen" :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale"
-        :style="titleText.style">
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Container>
+      <Text v-if="!isSecondScreen" :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
         It's a hot day and you need to cool off.\nHow about a free ice-cream in exchange \nfor your personal data?
       </Text>
-      <Text v-else :x="secondTitleText.x" :y="secondTitleText.y" :anchor="secondTitleText.anchor"
-        :scale="secondTitleText.scale" :style="secondTitleText.style"> What are you willing to share?\nPick more than
-        one. </Text>
+      <Text v-else :x="secondTitleText.x" :y="secondTitleText.y" :anchor="secondTitleText.anchor" :scale="secondTitleText.scale" :style="secondTitleText.style">
+        What are you willing to share?\nPick more than one.
+      </Text>
     </Container>
   </Container>
   <!--   <External>

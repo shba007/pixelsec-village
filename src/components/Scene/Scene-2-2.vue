@@ -1,23 +1,21 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue'
-import { useWindowSize, watchDebounced } from '@vueuse/core'
+import { watchDebounced } from '@vueuse/core'
 
 import { useDataStore, type spendTimeChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 
+const props = defineProps<{
+  zoomFactor: number
+}>()
+
 const dataStore = useDataStore()
 const gameStore = useGameStore()
 
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => {
-  const aspectRatio = screenWidth.value / screenHeight.value
-  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
-})
-
 const modal = computed(() => ({
   image: 'popupScene12',
-  state: { x: 0, y: 0, scale: 0.95 * zoomFactor.value },
+  state: { x: 0, y: 0, scale: 0.9 * props.zoomFactor },
 }))
 
 const options: {

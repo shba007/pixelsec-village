@@ -11,6 +11,7 @@ const props = withDefaults(
     title: string
     x?: 'left' | 'center' | 'right' | 'default'
     y?: 'top' | 'center' | 'bottom' | 'default'
+    zoomFactor: number
   }>(),
   {
     x: 'center',
@@ -21,7 +22,6 @@ const props = withDefaults(
 const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => screenWidth.value / 1280)
 
 const modal = computed(() => {
   let images = ['popupProtip11', 'popupProtip12']
@@ -71,7 +71,7 @@ const modal = computed(() => {
 
   return {
     images,
-    state: { x: screenWidth.value * xFactor, y: screenHeight.value * yFactor, scale: scale * zoomFactor.value },
+    state: { x: screenWidth.value * xFactor, y: screenHeight.value * yFactor, scale: scale * props.zoomFactor },
     xFactor: xFactor * 100 + '%',
     yFactor: yFactor * 100 + '%',
   }

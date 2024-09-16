@@ -7,9 +7,9 @@ import { useGameStore } from '@/stores/game'
 
 import type { Asset } from '@/utils/types'
 import { textureOptions } from '@/components/AppSettings.vue'
-import SceneResult from '@/components/Scene/Scene-Result.vue'
 import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 import Wolf from '@/components/Animation/Wolf.vue'
+import SceneResult from '@/components/Scene/Scene-Result.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
@@ -25,8 +25,8 @@ const map = reactive<any>({
   loaded: false,
   alias: { bg: 'resultStrawHutBg', fg: 'resultStrawHutFg' },
   states: [
-    { x: 0, y: 0, scale: 0.85, alpha: 1, time: 0 },
-    { x: 220, y: 0, scale: 1, alpha: 1, time: 2 },
+    { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
+    { x: 125, y: 0, scale: 1.25, alpha: 1, time: 2 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'started',
@@ -44,7 +44,7 @@ const wolves = reactive({
   scale: 1,
 })
 
-const modal = reactive({ place: 'strawhut' as const, x: -420, y: 0, scale: 1 })
+const modal = reactive({ place: 'strawhut' as const, x: -420, y: 0 })
 
 const characterMain = reactive<Asset>({
   loaded: false,
@@ -105,27 +105,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
-    <Container :x="map.state.x" :y="map.state.y" :scale="map.state.scale">
-      <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
-      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42"
-        :skin="characterSkin" @update="handleMCUpdate" />
-      <Sprite :texture="palmTrees.alias" :texture-options="textureOptions" :x="palmTrees.x" :y="palmTrees.y"
-        :scale="palmTrees.scale" />
-      <Wolf :x="wolves.x" :y="wolves.y" :scale="wolves.scale" :anchor="0.5" :alpha="1" :animation-speed="0.03"
-        type="strawhut" />
-      <SceneResult v-if="currentPopupIndex == 24" :x="modal.x" :y="modal.y" :scale="modal.scale" :place="modal.place" />
-    </Container>
-    <!-- DEBUG -->
-    <!-- <External>
-			<div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">
-				<div class="flex flex-col gap-2">
-					<input v-model="map.state.x" type="number" min="-10000" max="10000" step="10" />
-					<input v-model="map.state.y" type="number" min="-10000" max="10000" step="10" />
-					<input v-model="map.state.scale" type="number" min="0" max="10" step="0.01" />
-					<p>{{ currentSceneIndex }}</p>
-				</div>
-			</div>
-		</External> -->
+  <Container :x="screenWidth / 2 + map.state.x" :y="screenHeight / 2 + map.state.y" :scale="map.state.scale * zoomFactor">
+    <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
+    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
+    <Sprite :texture="palmTrees.alias" :texture-options="textureOptions" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
+    <Wolf :x="wolves.x" :y="wolves.y" :scale="wolves.scale" :anchor="0.5" :alpha="1" :animation-speed="0.03" type="strawhut" />
   </Container>
+  <Container>
+    <SceneResult v-if="currentPopupIndex == 24" :place="modal.place" :zoom-factor="zoomFactor" />
+  </Container>
+  <!-- DEBUG -->
+  <!--   <External>
+    <div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">
+      <div class="flex flex-col gap-2">
+        <input v-model="map.state.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="map.state.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="map.state.scale" type="number" min="0" max="10" step="0.01" />
+        <p>{{ currentSceneIndex }}</p>
+      </div>
+    </div>
+  </External> -->
 </template>

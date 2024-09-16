@@ -7,6 +7,10 @@ import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppCheckbox from '@/components/AppCheckbox.vue'
 
+const props = defineProps<{
+  zoomFactor: number
+}>()
+
 const emit = defineEmits<{
   (event: 'update'): void
 }>()
@@ -15,14 +19,10 @@ const dataStore = useDataStore()
 const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => {
-  const aspectRatio = screenWidth.value / screenHeight.value
-  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
-})
 
 const modal = computed(() => ({
   image: 'popupBgLandscape', //'popupScene62',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1 * zoomFactor.value },
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * props.zoomFactor },
 }))
 
 const options: {

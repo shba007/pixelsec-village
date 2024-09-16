@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 import { External, onTick } from 'vue3-pixi'
-// import { useFocus } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
@@ -10,10 +10,8 @@ import { textureOptions } from '@/components/AppSettings.vue'
 import Wolf from '@/components/Animation/Wolf.vue'
 
 const props = defineProps<{
-  x: number
-  y: number
-  scale: number
   place: 'strawhut' | 'loghouse' | 'townhouse' | 'mansion'
+  zoomFactor: number
 }>()
 
 const emit = defineEmits<{
@@ -24,30 +22,15 @@ const dataStore = useDataStore()
 const gameStore = useGameStore()
 const { characterSkin, rotationStop } = storeToRefs(gameStore)
 
+const { width: screenWidth, height: screenHeight } = useWindowSize()
+
 const secondScreen = ref(false)
-const image = ref('popupScene71')
-const modalScale = ref(1)
 const modal = computed(() => ({
-  image: !secondScreen.value ? image.value : 'popupScene8',
-  state: { x: props.x, y: props.y, scale: props.scale * modalScale.value },
+  image: !secondScreen.value ? 'popupBgSquare' : 'popupScene8',
+  state: { x: (screenWidth.value * 1) / 4, y: (screenHeight.value * 1) / 2, scale: 0.9 * props.zoomFactor },
 }))
 
-onMounted(() => {
-  switch (props.place) {
-    case 'strawhut':
-      image.value = 'popupScene71'
-      break
-    case 'loghouse':
-      image.value = 'popupScene72'
-      break
-    case 'townhouse':
-      image.value = 'popupScene73'
-      break
-    case 'mansion':
-      image.value = 'popupScene74'
-      break
-  }
-})
+const wolf = reactive({ x: 280, y: 190, scale: 1, alpha: 0 })
 
 const socials = ref([
   { type: 'facebook' as const, image: 'IconFacebook', x: -49 - 40, y: 103 - 20, scale: 0.24 },
@@ -74,7 +57,7 @@ function onShare(type: 'facebook' | 'instagram' | 'x') {
   window.open(finalShare, '_blank')
 }
 
-const emailPlaceholder = reactive({ x: 0, y: 180, scale: 0.5 })
+const emailPlaceholder = reactive({ x: 0, y: 200, scale: 0.5 })
 const emailPlaceholderRef = ref<any>(null)
 const emailInputBox = reactive({ x: 0, y: 0, width: 0, height: 0 })
 
@@ -128,37 +111,68 @@ function onSubmit(value: string) {
 
 const frames = ['buttonArrow', 'buttonArrowPressed']
 const inputRef = ref<any>()
-// const { focused } = useFocus(inputRef)
 
-const wolf = reactive({ x: 280, y: 190, scale: 1, alpha: 0 })
+const titleText = reactive({ x: -250, y: -50, anchor: 0, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 49 * 4, align: 'left', lineHeight: 59 * 4, stroke: 1, strokeThickness: 1 * 4 } })
 </script>
 
 <template>
   <Container v-if="!rotationStop" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Container v-if="!secondScreen" :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
-      <Sprite ref="emailPlaceholderRef" :texture="inputEmail?.length ? 'PlaceholderEmail2' : 'PlaceholderEmail1'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" />
-      <Sprite
-        v-if="!!inputEmail?.length"
-        :texture="frames[Number(!!email?.length)]"
-        :texture-options="textureOptions"
-        :anchor="0.5"
-        :x="450"
-        :y="0"
-        :scale="2.25"
-        cursor="pointer"
-        @pointerdown="onSubmit(inputEmail!)" />
-      <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
-        <input
-          ref="inputRef"
-          type="email"
-          v-model="inputEmail"
-          @keydown.enter="onSubmit(inputEmail!)"
-          class="border-0 bg-transparent px-4 py-2 outline-none placeholder:font-bold placeholder:text-blue-500 md:text-xl"
-          :style="{ width: emailInputBox.width * 0.9 + 'px', height: emailInputBox.height + 'px' }" />
-      </External>
-    </Container>
+    <template v-if="!secondScreen">
+      <Container :x="titleText.x" :y="titleText.y">
+        <template v-if="place === 'strawhut'">
+          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE\nIN A </Text>
+          <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VULNERABLE\nSTRAW HUT</Text>
+          <Text :anchor="titleText.anchor" :scale="titleText.scale / 1.4" :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }">
+            Identity and data protection are\nnew to you. This makes you an\neasy target for your valuable\ninformation to be exposed.
+          </Text>
+        </template>
+        <template v-else-if="place === 'loghouse'">
+          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
+          <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;BASIC LOG HOUSE</Text>
+          <Text :y="-50" :anchor="titleText.anchor" :scale="titleText.scale / 1.4" :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }">
+            You have a good foundation in\nunderstanding data privacy but\nneed better security as you leave\nyour data in the hands of third-\nparties and dated systems.
+          </Text>
+        </template>
+        <template v-else-if="place === 'townhouse'">
+          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
+          <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;CONVENIENT\nTOWNHOUSE</Text>
+          <Text :y="-0" :anchor="titleText.anchor" :scale="titleText.scale / 1.4" :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }"
+            >You enjoy the openness of\ntechnology and often share your data\nfor ease of access but that might put\nyour data in the wrong hands.
+          </Text>
+        </template>
+        <template v-else-if="place === 'mansion'">
+          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
+          <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;GUARDED MANSION</Text>
+          <Text :y="-60" :anchor="titleText.anchor" :scale="titleText.scale / 1.4" :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }"
+            >Your digital fortress is heavily\nguarded with high-level knowledge\nand high security in place. But even\nthe most secure mansion could\nbenefit from the latest upgrades.
+          </Text>
+        </template>
+      </Container>
+      <Container :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
+        <Sprite ref="emailPlaceholderRef" :texture="inputEmail?.length ? 'PlaceholderEmail2' : 'PlaceholderEmail1'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" />
+        <Sprite
+          v-if="!!inputEmail?.length"
+          :texture="frames[Number(!!email?.length)]"
+          :texture-options="textureOptions"
+          :anchor="0.5"
+          :x="450"
+          :y="0"
+          :scale="2.25"
+          cursor="pointer"
+          @pointerdown="onSubmit(inputEmail!)" />
+        <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
+          <input
+            ref="inputRef"
+            type="email"
+            v-model="inputEmail"
+            @keydown.enter="onSubmit(inputEmail!)"
+            class="border-0 bg-transparent px-4 py-2 outline-none placeholder:font-bold placeholder:text-blue-500 md:text-xl"
+            :style="{ width: emailInputBox.width * 0.9 + 'px', height: emailInputBox.height + 'px' }" />
+        </External>
+      </Container>
+    </template>
     <Container v-else>
       <Sprite
         v-for="{ type, image, x, y, scale } of socials"
@@ -170,7 +184,7 @@ const wolf = reactive({ x: 280, y: 190, scale: 1, alpha: 0 })
         :scale="scale"
         :anchor="0.5"
         cursor="pointer"
-        @pointerdown="onShare(type, 'pointerdown')" />
+        @pointerdown="onShare(type)" />
     </Container>
     <!-- <External>
       <div class="fixed bottom-0 left-16 z-50 flex w-fit items-center gap-8">

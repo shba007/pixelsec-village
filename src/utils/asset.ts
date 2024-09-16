@@ -84,10 +84,10 @@ import popupScene12Texture from '@/assets/image/popup/scene-1-2.png'
 // import popupScene63Button22Texture from '@/assets/image/popup/scene-6-3-button-2-2.png'
 // import popupScene64Texture from '@/assets/image/popup/scene-6-4.png'
 // import popupScene65Texture from '@/assets/image/popup/scene-6-5.png'
-import popupScene71Texture from '@/assets/image/popup/scene-7-1.png'
-import popupScene72Texture from '@/assets/image/popup/scene-7-2.png'
-import popupScene73Texture from '@/assets/image/popup/scene-7-3.png'
-import popupScene74Texture from '@/assets/image/popup/scene-7-4.png'
+// import popupScene71Texture from '@/assets/image/popup/scene-7-1.png'
+// import popupScene72Texture from '@/assets/image/popup/scene-7-2.png'
+// import popupScene73Texture from '@/assets/image/popup/scene-7-3.png'
+// import popupScene74Texture from '@/assets/image/popup/scene-7-4.png'
 import popupScene8Texture from '@/assets/image/popup/scene-8.png'
 //
 import popupProtip11Texture from '@/assets/image/popup/protip-1-1.png'
@@ -432,10 +432,10 @@ export const resources = {
     // popupScene63Button21: popupScene63Button21Texture,
     // popupScene63Button22: popupScene63Button22Texture,
     // popupScene65: popupScene65Texture,
-    popupScene71: popupScene71Texture,
-    popupScene72: popupScene72Texture,
-    popupScene73: popupScene73Texture,
-    popupScene74: popupScene74Texture,
+    // popupScene71: popupScene71Texture,
+    // popupScene72: popupScene72Texture,
+    // popupScene73: popupScene73Texture,
+    // popupScene74: popupScene74Texture,
     popupScene8: popupScene8Texture,
     //
     popupProtip11: popupProtip11Texture,

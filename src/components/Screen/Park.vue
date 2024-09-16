@@ -19,7 +19,6 @@ const gameStore = useGameStore()
 const { currentPopupIndex, rotationStop } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-
 const zoomFactor = computed(() => {
   const aspectRatio = screenWidth.value / screenHeight.value
   return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
@@ -78,9 +77,9 @@ onBeforeMount(onLoad)
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container v-if="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">
-    <Scene1 v-if="currentPopupIndex === 8" />
-    <Scene2 v-else-if="currentPopupIndex === 9" />
-    <Scene3 v-else-if="currentPopupIndex === 10" />
+    <Scene1 v-if="currentPopupIndex === 8" :zoom-factor="zoomFactor" />
+    <Scene2 v-else-if="currentPopupIndex === 9" :zoom-factor="zoomFactor" />
+    <Scene3 v-else-if="currentPopupIndex === 10" :zoom-factor="zoomFactor" />
   </Container>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />

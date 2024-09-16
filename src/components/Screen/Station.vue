@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, reactive, ref, watchEffect } from 'vue'
-import { External, useScreen } from 'vue3-pixi'
+import { External } from 'vue3-pixi'
 import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
@@ -19,7 +19,6 @@ const gameStore = useGameStore()
 const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-
 const zoomFactor = computed(() => {
   const aspectRatio = screenWidth.value / screenHeight.value
   return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
@@ -96,8 +95,8 @@ useTimeoutFn(() => {
     <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
   <Container :renderable="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">
-    <Scene1 v-if="currentPopupIndex === 5" />
-    <Scene2 v-else-if="currentPopupIndex === 6" />
+    <Scene1 v-if="currentPopupIndex === 5" :zoom-factor="zoomFactor" />
+    <Scene2 v-else-if="currentPopupIndex === 6" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

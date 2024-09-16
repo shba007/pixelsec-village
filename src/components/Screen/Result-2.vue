@@ -10,10 +10,10 @@ import { textureOptions } from '@/components/AppSettings.vue'
 import SceneResult from '@/components/Scene/Scene-Result.vue'
 import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 
-const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
 const { characterSkin, currentPopupIndex, currentCharacterIndex, currentSceneIndex: currentGlobalSceneIndex, rotationStop } = storeToRefs(gameStore)
 
+const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
   const aspectRatio = screenWidth.value / screenHeight.value
   return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
@@ -31,7 +31,7 @@ const map = reactive<any>({
   animation: 'started',
 })
 
-const modal = reactive({ place: 'loghouse' as const, x: -200, y: 0, scale: 0.75 })
+const modal = reactive({ place: 'loghouse' as const, x: -200, y: 0 })
 
 const characterMain = reactive<Asset>({
   loaded: false,
@@ -95,20 +95,21 @@ onMounted(() => {
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container :x="map.state.x" :y="map.state.y" :scale="map.state.scale">
       <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
-      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42"
-        :skin="characterSkin" @update="handleMCUpdate" />
-      <SceneResult v-if="currentPopupIndex == 24" :x="modal.x" :y="modal.y" :scale="modal.scale" :place="modal.place" />
+      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
     </Container>
-    <!-- DEBUG -->
-    <!-- <External>
-			<div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">
-				<div class="flex flex-col gap-2">
-					<input v-model="map.state.x" type="number" min="-10000" max="10000" step="10" />
-					<input v-model="map.state.y" type="number" min="-10000" max="10000" step="10" />
-					<input v-model="map.state.scale" type="number" min="0" max="10" step="0.01" />
-					<p>{{ currentSceneIndex }}</p>
-				</div>
-			</div>
-		</External> -->
   </Container>
+  <Container>
+    <SceneResult v-if="currentPopupIndex == 24" :place="modal.place" :zoom-factor="zoomFactor" />
+  </Container>
+  <!-- DEBUG -->
+  <!-- <External>
+    <div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">
+      <div class="flex flex-col gap-2">
+        <input v-model="map.state.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="map.state.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="map.state.scale" type="number" min="0" max="10" step="0.01" />
+        <p>{{ currentSceneIndex }}</p>
+      </div>
+    </div>
+  </External> -->
 </template>
