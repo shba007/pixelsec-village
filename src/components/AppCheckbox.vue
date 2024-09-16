@@ -24,7 +24,7 @@ const emit = defineEmits<{
 const checkbox = computed(() => {
   let texture = !props.isChecked ? 'buttonSquare' : 'buttonSquarePressed'
 
-  return { texture, style: { fontFamily: 'LAN', fontSize: props.fontSize ?? 48, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } }
+  return { texture, scale: 0.25, style: { fontFamily: 'LAN', fontSize: (props.fontSize ?? 48) * 4, align: 'left', lineHeight: 64 * 4, stroke: 1, strokeThickness: 1 * 4 } }
 })
 
 function onClick() {
@@ -35,6 +35,7 @@ function onClick() {
 <template>
   <Container :x="x" :y="y" :scale="scale" cursor="pointer" @pointerdown="onClick">
     <Sprite :texture="checkbox.texture" :texture-options="textureOptions" :anchor="0.5" :scale="1.35" />
-    <Text :x="60 + gap" :y="0" :anchor-x="0" :anchor-y="0.5" :style="checkbox.style">{{ text }}</Text>
+    <Text :x="60 + gap" :y="0" :scale="checkbox.scale" :anchor-x="0" :anchor-y="0.5" :style="checkbox.style">{{ text
+      }}</Text>
   </Container>
 </template>

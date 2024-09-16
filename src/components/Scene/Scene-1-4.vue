@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore, type Character } from '@/stores/game'
@@ -12,7 +12,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
 
 const modal = computed(() => ({
-  image: 'popupScene03',
+  image: 'popupBgLandscape',
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * zoomFactor.value },
 }))
 
@@ -38,23 +38,22 @@ function setCharacter(type: Character) {
 onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
+
+const titleText = reactive({ x: 0, y: -120, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 54 * 4, align: 'center', lineHeight: 64 * 4, stroke: 1, strokeThickness: 1 * 4 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :scale="0.5" :anchor="0.5" />
-    <AppAnimatedSprite
-      v-for="{ type, frames: frames, state } of characters"
-      :key="type"
-      :textures="frames"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)"
-      :anchor="0.5"
-      :playing="true"
-      :animation-speed="0.05"
-      cursor="pointer"
-      @pointerdown="setCharacter(type)" />
+    <Container :x="titleText.x" :y="titleText.y">
+      <Text :y="-65" :anchor="titleText.anchor" :scale="titleText.scale"
+        :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }">SELECT YOUR AVATAR</Text>
+      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">Choose your main character
+        energy.</Text>
+    </Container>
+    <AppAnimatedSprite v-for="{ type, frames: frames, state } of characters" :key="type" :textures="frames"
+      :texture-options="textureOptions" :x="state.x" :y="state.y"
+      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)" :anchor="0.5" :playing="true"
+      :animation-speed="0.05" cursor="pointer" @pointerdown="setCharacter(type)" />
   </Container>
 </template>

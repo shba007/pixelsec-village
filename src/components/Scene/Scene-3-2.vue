@@ -19,7 +19,7 @@ const zoomFactor = computed(() => {
 const toggle = ref(true)
 
 const modal = computed(() => ({
-  image: toggle.value ? 'popupBgSquare' : 'popupScene33',
+  image: 'popupBgSquare',
   state: { x: (screenWidth.value * 1) / 4, y: 0, scale: 0.9 * zoomFactor.value },
 }))
 
@@ -31,12 +31,12 @@ const options: {
     y: number
   }
 }[] = [
-  { type: 'shopping-info', value: 'Past online shopping info', state: { x: 0, y: -245 } },
-  { type: 'bank-card-details', value: 'Bank/Card details', state: { x: 0, y: -151.25 } },
-  { type: 'social-media-profile', value: 'Social media profile', state: { x: 0, y: -57.5 } },
-  { type: 'personal-preferences', value: 'Personal preferences', state: { x: 0, y: 36.25 } },
-  { type: 'personal-details', value: 'Personal details', state: { x: 0, y: 130 } },
-]
+    { type: 'shopping-info', value: 'Past online shopping info', state: { x: 0, y: -245 } },
+    { type: 'bank-card-details', value: 'Bank/Card details', state: { x: 0, y: -151.25 } },
+    { type: 'social-media-profile', value: 'Social media profile', state: { x: 0, y: -57.5 } },
+    { type: 'personal-preferences', value: 'Personal preferences', state: { x: 0, y: 36.25 } },
+    { type: 'personal-details', value: 'Personal details', state: { x: 0, y: 130 } },
+  ]
 
 const selectedOptions = ref<Set<dataExchangeChoice>>(new Set())
 
@@ -71,7 +71,8 @@ onMounted(() => {
         <Text v-if="toggle" :style="titleText.style" :x="titleText.x" :y="titleText.y">{{ value }}</Text>
       </Container>
     </Container> -->
-    <AppCheckbox v-for="{ type, value, state } of options" :key="type" :text="value" :x="state.x - 235" :y="state.y + 50" :scale="1" :is-checked="selectedOptions.has(type)" @click="onClick(type)" />
+    <AppCheckbox v-for="{ type, value, state } of options" :key="type" :text="value" :x="state.x - 235"
+      :y="state.y + 50" :scale="1" :is-checked="selectedOptions.has(type)" @click="onClick(type)" />
   </Container>
   <!-- <External>
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">

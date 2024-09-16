@@ -4,22 +4,22 @@ import { textureOptions } from '@/components/AppSettings.vue'
 
 const props = defineProps<
   | {
-      type: 'arrow'
-      x: number
-      y: number
-      scale: number
-      isPressed: boolean
-      fontSize?: number
-    }
+    type: 'arrow'
+    x: number
+    y: number
+    scale: number
+    isPressed: boolean
+    fontSize?: number
+  }
   | {
-      type: 'short' | 'long'
-      text: string
-      x: number
-      y: number
-      scale: number
-      isPressed: boolean
-      fontSize?: number
-    }
+    type: 'short' | 'long'
+    text: string
+    x: number
+    y: number
+    scale: number
+    isPressed: boolean
+    fontSize?: number
+  }
 >()
 
 const emit = defineEmits<{
@@ -41,7 +41,7 @@ const button = computed(() => {
       break
   }
 
-  return { texture, style: { fontFamily: 'LAN', fontSize: props.fontSize ?? 48, align: 'center', lineHeight: 44, stroke: 1, strokeThickness: 1, fill: props.isPressed ? '#506745' : 'black' } }
+  return { texture, scale: 0.25, style: { fontFamily: 'LAN', fontSize: (props.fontSize ?? 48) * 4, align: 'center', lineHeight: 44 * 4, stroke: 1, strokeThickness: 1 * 4, fill: props.isPressed ? '#506745' : 'black' } }
 })
 
 function onClick() {
@@ -53,7 +53,7 @@ function onClick() {
   <Container :x="x" :y="y" :scale="1" cursor="pointer" @pointerdown="onClick">
     <Sprite :texture="button.texture" :texture-options="textureOptions" :anchor="0.5" :scale="4 * scale" />
     <template v-if="type !== 'arrow'">
-      <Text :x="0" :y="-5" :anchor="0.5" :style="button.style">{{ text }}</Text>
+      <Text :x="0" :y="-5" :scale="button.scale" :anchor="0.5" :style="button.style">{{ text }}</Text>
     </template>
   </Container>
 </template>

@@ -144,12 +144,11 @@ function resize() {
   if (sceneRef.value) {
     const localBounds = sceneRef.value.getLocalBounds() // Get local bounds of the sprite
     const scaleX = sceneRef.value.worldTransform.a // Get global scale on X-axis
-
     const width = localBounds.width * scaleX
 
-    screen.state.x = width / 2 - screenWidth.value / 2 - 200
-    screen.states[0].x = width / 2 - screenWidth.value / 2 - 200
-    screen.states[1].x = -width / 2 + screenWidth.value / 2 + 200
+    screen.state.x = (width / 2) * 0.8 - screenWidth.value / 2
+    screen.states[0].x = (width / 2) * 0.8 - screenWidth.value / 2
+    screen.states[1].x = (-width / 2) * 0.8 + screenWidth.value / 2
   }
 }
 
@@ -163,16 +162,21 @@ onMounted(() => {
 <template>
   <Container :x="screenWidth / 2 + screen.state.x" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container>
-      <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale" :anchor="0.5" />
-      <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-      <Sprite ref="sceneRef" :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale" :anchor="0.5" />
+      <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale"
+        :anchor="0.5" />
+      <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth"
+        :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+      <Sprite ref="sceneRef" :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0"
+        :scale="screen.state.scale" :anchor="0.5" />
     </Container>
     <Door :x="door.x" :y="door.y" :scale="door.scale" place="bank" :playing="true" />
     <template v-if="!rotationStop">
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank"
+        :type="type as 'purple' | 'green'" />
     </template>
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" place="bank" />
-    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
+    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y"
+      :scale="scale" />
     <CharacterGuard :state="characterGuard" place="bank" />
   </Container>
   <Container v-if="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">

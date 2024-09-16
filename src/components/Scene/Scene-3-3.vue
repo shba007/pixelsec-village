@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { useDataStore } from '@/stores/data'
@@ -17,7 +17,7 @@ const zoomFactor = computed(() => {
 })
 
 const modal = computed(() => ({
-  image: 'popupScene34',
+  image: 'popupBgLandscape',//'popupScene34',
   state: { x: 0, y: 0, scale: 0.9 * zoomFactor.value },
 }))
 
@@ -29,9 +29,9 @@ const options: {
     y: number
   }
 }[] = [
-  { type: true, value: 'Yes', state: { x: 65 + 40, y: -30 + 45 } },
-  { type: false, value: 'No', state: { x: 65 + 40, y: 80 + 45 } },
-]
+    { type: true, value: 'Yes', state: { x: 65 + 40, y: -30 + 45 } },
+    { type: false, value: 'No', state: { x: 65 + 40, y: 80 + 45 } },
+  ]
 
 const selectedOption = ref<boolean | null>(null)
 
@@ -49,14 +49,21 @@ function onClick(option: boolean) {
 onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
+
+const titleText = reactive({ x: -10, y: -125, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 58 * 4, align: 'left', lineHeight: 64 * 4, stroke: 1, strokeThickness: 1 * 4 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Text :anchor="titleText.anchor" :style="titleText.style" :x="titleText.x" :y="titleText.y"
+      :scale="titleText.scale">
+      Would you like to collect all your\ndata from one place for\nconvenience
+    </Text>
     <!-- <Sprite v-for="{ type, state } of options" :key="String(type)" :texture="frames[Number(selectedOption === type)]"
       :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
       @pointerdown="onClick(type)" /> -->
-    <AppCheckbox v-for="{ type, value, state } of options" :key="String(type)" :text="value" :x="state.x" :y="state.y" :scale="1" :is-checked="selectedOption === type" @click="onClick(type)" />
+    <AppCheckbox v-for="{ type, value, state } of options" :key="String(type)" :text="value" :x="state.x" :y="state.y"
+      :scale="1" :is-checked="selectedOption === type" @click="onClick(type)" />
   </Container>
 </template>

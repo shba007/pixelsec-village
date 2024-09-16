@@ -47,7 +47,6 @@ const characterMain = reactive<Asset>({
 })
 
 function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finished') {
-  console.log(stateIndex)
   if (state === 'finished') {
     if (stateIndex === 2) {
       setTimeout(() => {
@@ -96,7 +95,8 @@ onMounted(() => {
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container :x="map.state.x" :y="map.state.y" :scale="map.state.scale">
       <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
-      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
+      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42"
+        :skin="characterSkin" @update="handleMCUpdate" />
       <SceneResult v-if="currentPopupIndex == 24" :x="modal.x" :y="modal.y" :scale="modal.scale" :place="modal.place" />
     </Container>
     <!-- DEBUG -->

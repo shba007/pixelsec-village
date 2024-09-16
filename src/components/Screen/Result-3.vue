@@ -47,7 +47,6 @@ const characterMain = reactive<Asset>({
 })
 
 function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finished') {
-  console.log(stateIndex)
   if (state === 'finished') {
     if (stateIndex === 2) {
       setTimeout(() => {

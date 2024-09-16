@@ -17,7 +17,7 @@ const zoomFactor = computed(() => {
 })
 
 const modal = computed(() => ({
-  image: 'popupScene52',
+  image: 'popupBgLandscape',//'popupScene52',
   state: { x: 0, y: 0, scale: 0.9 * zoomFactor.value },
 }))
 
@@ -30,11 +30,11 @@ const options: {
     y: number
   }
 }[] = [
-  { key: 'do-nothing', value: 'Do nothing', type: 'short', state: { x: -175, y: -45 } },
-  { key: 'take-action-only-when-prompted', value: 'Take action only\nwhen prompted', type: 'long', state: { x: 130, y: -45 } },
-  { key: 'alert-the-authority-change-login-details', value: 'Alert the authority\nchange login details', type: 'long', state: { x: -120, y: 125 } },
-  { key: 'delete-the-app', value: 'Delete\nthe app', type: 'short', state: { x: 185, y: 125 } },
-]
+    { key: 'do-nothing', value: 'Do nothing', type: 'short', state: { x: -175, y: -45 } },
+    { key: 'take-action-only-when-prompted', value: 'Take action only\nwhen prompted', type: 'long', state: { x: 130, y: -45 } },
+    { key: 'alert-the-authority-change-login-details', value: 'Alert the authority\nchange login details', type: 'long', state: { x: -120, y: 125 } },
+    { key: 'delete-the-app', value: 'Delete\nthe app', type: 'short', state: { x: 185, y: 125 } },
+  ]
 
 const selectedOption = ref<dataBreachActionChoice>()
 
@@ -84,38 +84,30 @@ onBeforeUnmount(() => {
   gameStore.playSFXSound('alarmLight')
 })
 
-const timerText = reactive({ x: -180, y: -175, style: { fontFamily: 'INET', fontSize: 88 } })
+const titleText = reactive({ x: 185, y: -52, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 40 * 4, align: 'left', lineHeight: 64 * 4, stroke: 1, strokeThickness: 1 * 4 } })
+const timerText = reactive({ x: -180, y: -175, scale: 0.25, style: { fontFamily: 'INET', fontSize: 88 * 4 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="timerText.x" :y="timerText.y">
+      <Text :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale"
+        :style="titleText.style">Countdown timer:</Text>
       <template v-for="(digits, digitsIndex) of timer" :key="digitsIndex">
-        <Text
-          v-for="(digit, digitIndex) of digits"
-          :key="digitsIndex + '-' + digitIndex"
-          :style="{ ...timerText.style, fill: digitsIndex == 1 && digitIndex == 1 ? 'red' : 'black' }"
-          :x="170 * digitsIndex + 50 * digitIndex"
-          :anchor="0.5">
+        <Text v-for="(digit, digitIndex) of digits" :key="digitsIndex + '-' + digitIndex"
+          :x="170 * digitsIndex + 50 * digitIndex" :scale="timerText.scale" :anchor="0.5"
+          :style="{ ...timerText.style, fill: digitsIndex == 1 && digitIndex == 1 ? 'red' : 'black' }">
           {{ digit }}
         </Text>
-        <Text v-if="digitsIndex !== 2" :style="timerText.style" :x="165 * digitsIndex + 110" :y="-2" :anchor="0.5">:</Text>
+        <Text v-if="digitsIndex !== 2" :x="165 * digitsIndex + 110" :y="-2" :scale="timerText.scale" :anchor="0.5"
+          :style="timerText.style">:</Text>
       </template>
     </Container>
     <!-- <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
       :texture-options="textureOptions" :anchor="0.5" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
       @pointerdown="onClick(type)" /> -->
-    <AppButton
-      v-for="{ key, value, state, type } of options"
-      :key="key"
-      :text="value"
-      :x="state.x"
-      :y="state.y"
-      :type="type"
-      :scale="1.25"
-      :is-pressed="selectedOption === key"
-      :font-size="36"
-      @click="onClick(key)" />
+    <AppButton v-for="{ key, value, state, type } of options" :key="key" :text="value" :x="state.x" :y="state.y"
+      :type="type" :scale="1.25" :is-pressed="selectedOption === key" :font-size="36" @click="onClick(key)" />
   </Container>
 </template>

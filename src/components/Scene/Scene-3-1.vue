@@ -37,18 +37,21 @@ onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
 
-const titleText = reactive({ x: -9, y: -10, anchor: 0.5, style: { fontFamily: 'LAN', fontSize: 56, align: 'left', lineHeight: 72, stroke: 1, strokeThickness: 1 } })
-const secondTitleText = reactive({ x: -30, y: 0, anchor: 0.5, style: { fontFamily: 'LAN', fontSize: 56, align: 'left', lineHeight: 72, stroke: 1, strokeThickness: 1 } })
+const titleText = reactive({ x: -9, y: -10, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 56 * 4, align: 'left', lineHeight: 72 * 4, stroke: 1, strokeThickness: 1 * 4 } })
+const secondTitleText = reactive({ x: -30, y: 0, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 56 * 4, align: 'left', lineHeight: 72 * 4, stroke: 1, strokeThickness: 1 * 4 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="toggle ? 0.26 : 0.5" />
     <Container v-if="toggle">
-      <Text v-if="!isSecondScreen" :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :style="titleText.style">
+      <Text v-if="!isSecondScreen" :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale"
+        :style="titleText.style">
         It's a hot day and you need to cool off.\nHow about a free ice-cream in exchange \nfor your personal data?
       </Text>
-      <Text v-else :x="secondTitleText.x" :y="secondTitleText.y" :anchor="secondTitleText.anchor" :style="secondTitleText.style"> What are you willing to share?\nPick more than one. </Text>
+      <Text v-else :x="secondTitleText.x" :y="secondTitleText.y" :anchor="secondTitleText.anchor"
+        :scale="secondTitleText.scale" :style="secondTitleText.style"> What are you willing to share?\nPick more than
+        one. </Text>
     </Container>
   </Container>
   <!--   <External>
