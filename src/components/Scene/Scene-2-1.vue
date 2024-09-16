@@ -27,11 +27,11 @@ const options: {
     y: number
   }
 }[] = [
-  { type: '18-25', value: '18-25', state: { x: -385 + 95, y: 50 + 60 } },
-  { type: '26-35', value: '26-35', state: { x: -192.5 + 95, y: 50 + 60 } },
-  { type: '36-44', value: '36-44', state: { x: 0 + 95, y: 50 + 60 } },
-  { type: '45-54', value: '45-54', state: { x: 192.5 + 95, y: 50 + 60 } },
-]
+    { type: '18-25', value: '18-25', state: { x: -385 + 95, y: 50 + 60 } },
+    { type: '26-35', value: '26-35', state: { x: -192.5 + 95, y: 50 + 60 } },
+    { type: '36-44', value: '36-44', state: { x: 0 + 95, y: 50 + 60 } },
+    { type: '45-54', value: '45-54', state: { x: 192.5 + 95, y: 50 + 60 } },
+  ]
 
 const selectedOption = ref<ageChoice>()
 
@@ -51,28 +51,21 @@ onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
 
-const titleText = reactive({ x: 120, y: -55, anchor: 0.5, scale: 0.25, style: { fontFamily: 'LAN', fontSize: 54 * 4, align: 'left', lineHeight: 64 * 4, stroke: 1, strokeThickness: 1 * 4 } })
+const titleText = reactive({ x: 120, y: -55, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="titleText.x" :y="titleText.y">
-      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Please verify your age\nfor tram ticket purchase </Text>
+      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Please verify your age\nfor
+        tram ticket purchase </Text>
     </Container>
     <CharacterStationMaster :state="characterStationMaster" place="station" />
     <!--     <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
       :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
       @pointerdown="onClick(type)" /> -->
-    <AppButton
-      v-for="{ type, value, state } of options"
-      :key="String(type)"
-      type="short"
-      :text="value"
-      :x="state.x"
-      :y="state.y"
-      :scale="1"
-      :is-pressed="type === selectedOption"
-      @click="onClick(type)" />
+    <AppButton v-for="{ type, value, state } of options" :key="String(type)" type="short" :text="value" :x="state.x"
+      :y="state.y" :scale="1" :is-pressed="type === selectedOption" @click="onClick(type)" />
   </Container>
 </template>

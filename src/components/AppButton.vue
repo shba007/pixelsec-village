@@ -4,22 +4,22 @@ import { textureOptions } from '@/components/AppSettings.vue'
 
 const props = defineProps<
   | {
-      type: 'arrow'
-      x: number
-      y: number
-      scale: number
-      isPressed: boolean
-      fontSize?: number
-    }
+    type: 'arrow'
+    x: number
+    y: number
+    scale: number
+    isPressed: boolean
+    fontSize?: number
+  }
   | {
-      type: 'short' | 'long'
-      text: string
-      x: number
-      y: number
-      scale: number
-      isPressed: boolean
-      fontSize?: number
-    }
+    type: 'short' | 'long'
+    text: string
+    x: number
+    y: number
+    scale: number
+    isPressed: boolean
+    fontSize?: number
+  }
 >()
 
 const emit = defineEmits<{
@@ -43,14 +43,14 @@ const button = computed(() => {
 
   return {
     texture,
-    scale: 0.25,
+    scale: 1,
     style: {
       fontFamily: 'LAN',
-      fontSize: (props.fontSize ?? 44) * 4,
+      fontSize: (props.fontSize ?? 44),
       align: 'center',
-      lineHeight: (props.fontSize * 1.2 ?? 36) * 4,
+      lineHeight: (props.fontSize * 1.2 ?? 36),
       stroke: 1,
-      strokeThickness: 1 * 4,
+      strokeThickness: 1,
       fill: props.isPressed ? '#506745' : 'black',
     },
   }
