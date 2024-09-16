@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue'
 import { Application, Loader } from 'vue3-pixi'
-import { useWindowSize } from '@vueuse/core'
+import { useTimeout, useTimeoutFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { resources } from '@/utils/asset'
@@ -45,8 +45,14 @@ function preloadAudio(url: string) {
   });
 }
 
+const isLoaded = ref(false)
+const { start: timerStart } = useTimeoutFn(() => {
+  isLoaded.value = true
+}, 10000, { immediate: false })
+
 onBeforeMount(async () => {
-  (await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound))))
+  timerStart()
+  await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound)))
   isLoaded.value = true
 })
 
@@ -55,8 +61,6 @@ function onResolve() {
 }
 
 const mainWindow = computed(() => window)
-
-const isLoaded = ref(false)
 const isStarted = ref(false)
 
 function onStart() {
@@ -101,7 +105,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.4.10</p>
+    <p>v0.4.11</p>
     <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
