@@ -20,7 +20,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
 const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
 
-/* function preloadAudio(url: string) {
+function preloadAudio(url: string) {
   return new Promise((resolve, reject) => {
     fetch(url)
       .then((response) => {
@@ -32,19 +32,19 @@ const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
       .then((blob) => {
         setTimeout(() => {
           resolve(true)
-        }, 100)
+        }, 1000)
       })
       .catch((error) => {
         reject(false)
         console.error('Error downloading the audio:', error)
       })
   })
-} */
+}
 
 const isLoaded = ref(false)
 
 onBeforeMount(async () => {
-  // await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound)))
+  await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound)))
   isLoaded.value = true
 })
 
