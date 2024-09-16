@@ -20,7 +20,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
 const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
 
-function preloadAudio(url: string) {
+/* function preloadAudio(url: string) {
   return new Promise((resolve, reject) => {
     fetch(url)
       .then((response) => {
@@ -39,12 +39,12 @@ function preloadAudio(url: string) {
         console.error('Error downloading the audio:', error)
       })
   })
-}
+} */
 
 const isLoaded = ref(false)
 
 onBeforeMount(async () => {
-  await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound)))
+  // await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound)))
   isLoaded.value = true
 })
 
@@ -70,7 +70,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
-    <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
+    <Loader :resources="{ ...resources.sound, ...resources.font, ...resources.image }" :on-resolved="onResolve">
       <template #fallback="{ progress }">
         <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{
           Math.floor(progress * 99) }}% </Text>
