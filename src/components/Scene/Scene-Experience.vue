@@ -53,7 +53,7 @@ onBeforeUnmount(() => {
 // !pwaInstalled.value ? 'popupSceneInstall' :
 const modal = computed(() => ({
   image: 'popupSceneRotate',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.45 * zoomFactor.value },
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.55 * zoomFactor.value },
 }))
 
 async function handleRotate() {
@@ -83,6 +83,7 @@ onMounted(() => {
   <Container v-if="ready" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer" @pointerdown="onClick" />
+    <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer"
+      @pointerdown="onClick" />
   </Container>
 </template>
