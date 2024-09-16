@@ -90,7 +90,7 @@ import popupScene12Texture from '@/assets/image/popup/scene-1-2.png'
 // import popupScene72Texture from '@/assets/image/popup/scene-7-2.png'
 // import popupScene73Texture from '@/assets/image/popup/scene-7-3.png'
 // import popupScene74Texture from '@/assets/image/popup/scene-7-4.png'
-import popupScene8Texture from '@/assets/image/popup/scene-8.png'
+// import popupScene8Texture from '@/assets/image/popup/scene-8.png'
 //
 import popupProtip11Texture from '@/assets/image/popup/protip-1-1.png'
 import popupProtip12Texture from '@/assets/image/popup/protip-1-2.png'
@@ -440,7 +440,7 @@ export const resources = {
     // popupScene72: popupScene72Texture,
     // popupScene73: popupScene73Texture,
     // popupScene74: popupScene74Texture,
-    popupScene8: popupScene8Texture,
+    // popupScene8: popupScene8Texture,
     //
     popupProtip11: popupProtip11Texture,
     popupProtip12: popupProtip12Texture,
