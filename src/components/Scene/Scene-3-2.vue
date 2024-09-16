@@ -18,7 +18,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => ({
   image: 'popupBgSquare',
-  state: { x: (screenWidth.value * 1) / 4, y: 0, scale: 0.9 * props.zoomFactor },
+  state: { x: (screenWidth.value * 1) / 4, y: 0, scale: 1.0 * props.zoomFactor },
 }))
 
 const options: {

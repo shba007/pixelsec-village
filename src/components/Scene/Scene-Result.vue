@@ -27,7 +27,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const secondScreen = ref(false)
 const modal = computed(() => ({
   image: !secondScreen.value ? 'popupBgSquare' : 'popupScene8',
-  state: { x: (screenWidth.value * 1) / 4, y: (screenHeight.value * 1) / 2, scale: 0.9 * props.zoomFactor },
+  state: { x: (screenWidth.value * 1) / 4, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
 }))
 
 const wolf = reactive({ x: 280, y: 190, scale: 1, alpha: 0 })

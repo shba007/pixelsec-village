@@ -17,7 +17,7 @@ const { currentPopupIndex } = storeToRefs(gameStore)
 
 const modal = computed(() => ({
   image: 'popupBgLandscape',
-  state: { x: 0, y: 0, scale: 0.9 * props.zoomFactor },
+  state: { x: 0, y: 0, scale: 1.0 * props.zoomFactor },
 }))
 
 const options = ref<

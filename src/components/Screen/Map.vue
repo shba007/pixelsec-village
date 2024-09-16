@@ -52,7 +52,7 @@ const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharact
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => screenWidth.value / 1280)
-// const zoomFactor = computed(() => screenHeight.value / 720)
+const zoomFactorHeight = computed(() => screenHeight.value / 720)
 
 const globalSpeedFactor = 0.65
 const screen = reactive<Asset>({
@@ -587,14 +587,14 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
     <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
     <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
      <ModalProtip v-if="currentPopupIndex === 7" title="1" y="top" /> -->
-    <ModalProtip v-if="currentPopupIndex === 11" title="2" y="top" :zoom-factor="zoomFactor" />
-    <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" :zoom-factor="zoomFactor" @update="handleResponse(18)" />
-    <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" :zoom-factor="zoomFactor" />
-    <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" :zoom-factor="zoomFactor" />
-    <Scene12 v-else-if="currentPopupIndex === 23" :zoom-factor="zoomFactor" />
+    <ModalProtip v-if="currentPopupIndex === 11" title="2" y="top" :zoom-factor="zoomFactorHeight" />
+    <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" />
+    <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" @update="handleResponse(18)" />
+    <ModalProtip v-else-if="currentPopupIndex === 19" title="4" y="top" :zoom-factor="zoomFactorHeight" />
+    <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" />
+    <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" />
+    <ModalProtip v-else-if="currentPopupIndex === 22" title="5" x="left" :zoom-factor="zoomFactorHeight" />
+    <Scene12 v-else-if="currentPopupIndex === 23" :zoom-factor="zoomFactorHeight" />
   </Container>
   <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
     <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
@@ -604,13 +604,13 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
   </Container>
   <Container :renderable="isLoad && !rotationStop">
-    <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <ModalProtip v-else-if="currentPopupIndex === 7" title="1" y="top" :zoom-factor="zoomFactor" />
+    <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" />
+    <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" />
+    <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" />
+    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" />
+    <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" />
+    <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" :zoom-factor="zoomFactorHeight" />
+    <ModalProtip v-else-if="currentPopupIndex === 7" title="1" y="top" :zoom-factor="zoomFactorHeight" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

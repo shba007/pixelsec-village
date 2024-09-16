@@ -18,7 +18,7 @@ const alarmBell = reactive({ x: -355, y: -5, scale: 4.5 })
 
 const modal = computed(() => ({
   image: 'popupBgSlim', //'popupScene51',
-  state: { x: 0, y: (screenHeight.value * 1) / 4, scale: 0.9 * props.zoomFactor },
+  state: { x: 0, y: (screenHeight.value * 1) / 4, scale: 1.0 * props.zoomFactor },
 }))
 
 function handleMove() {

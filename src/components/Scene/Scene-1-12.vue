@@ -15,7 +15,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = reactive({
   image: 'popupBgSlim', //'popupScene65',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 3) / 4, scale: 0.9 * props.zoomFactor },
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 3) / 4, scale: 1.0 * props.zoomFactor },
 })
 
 onMounted(() => {

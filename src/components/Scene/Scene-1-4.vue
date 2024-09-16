@@ -16,7 +16,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => ({
   image: 'popupBgLandscape',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 0.9 * props.zoomFactor },
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
 }))
 
 const characters = [

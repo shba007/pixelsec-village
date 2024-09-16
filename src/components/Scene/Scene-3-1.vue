@@ -16,7 +16,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const isSecondScreen = ref(false)
 const modal = computed(() => ({
   image: 'popupBgSlim',
-  state: { x: 0, y: -(screenHeight.value * 1) / 4, scale: 0.9 * props.zoomFactor },
+  state: { x: 0, y: -(screenHeight.value * 1) / 4, scale: 1.0 * props.zoomFactor },
 }))
 
 function handleMove() {
