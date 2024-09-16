@@ -46,7 +46,7 @@ function preloadAudio(url: string) {
 }
 
 onBeforeMount(async () => {
-  isLoaded.value = (await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound)))).every((value) => value)
+  isLoaded.value = (await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound)))).every((value) => value || !value)
 })
 
 function onResolve() {
@@ -76,13 +76,13 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
     <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
       <template #fallback="{ progress }">
         <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{
-          Math.floor(progress * 100) }}% </Text>
+          Math.floor(progress * 99) }}% </Text>
       </template>
       <template #default>
         <template v-if="!isStarted">
           <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style" cursor="pointer"
             @pointerdown="onStart">
-            {{ isLoaded ? 'Start Game' : 'Loading... 100%' }}
+            {{ isLoaded ? 'Start Game' : 'Loading... 99%' }}
           </Text>
         </template>
         <template v-else>
@@ -100,7 +100,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.4.8</p>
+    <p>v0.4.9</p>
    <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
