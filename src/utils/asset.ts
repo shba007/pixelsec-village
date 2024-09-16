@@ -2,6 +2,8 @@
 // fonts
 import fontINET from '/fonts/INET.ttf'
 import fontLAN from '/fonts/LAN.ttf'
+import fontDogica from '/fonts/Dogica/dogica.ttf'
+import fontDogicaBold from '/fonts/Dogica/dogicabold.ttf'
 // asset
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
 import popupSceneInstallTexture from '@/assets/image/popup/scene-install.png'
@@ -356,6 +358,8 @@ export const resources = {
   font: {
     INET: fontINET,
     LAN: fontLAN,
+    Dogica: fontDogica,
+    DogicaBold: fontDogicaBold,
   },
   sound: {
     bgmSprite,
