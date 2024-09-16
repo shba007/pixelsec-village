@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { watchDebounced } from '@vueuse/core'
 
 import { useDataStore, type spendTimeChoice } from '@/stores/data'
@@ -56,11 +56,17 @@ function onComplete() {
 onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
+
+const titleText = reactive({ x: 220, y: 0, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="1" />
+    <Sprite :x="195" :y="-15" texture="popupBgSquare" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Container :x="titleText.x" :y="titleText.y">
+      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">How will you spend\nyour time on the tram?\n\nPick more than one.</Text>
+    </Container>
     <Sprite
       v-for="{ type, frames, state } of options"
       :key="type"

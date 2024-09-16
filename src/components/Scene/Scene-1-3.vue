@@ -35,11 +35,8 @@ const titleText = reactive({ x: 0, y: 50, anchor: 0.5, scale: 1, style: { fontFa
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="titleText.x" :y="titleText.y">
-      <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale"
-        :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> LET THE ADVENTURE BEGIN
-      </Text>
-      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">Excited to find out which house
-        you\nwill arrive in? Answer the questions\nto determine your result. </Text>
+      <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> LET THE ADVENTURE BEGIN </Text>
+      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">Excited to find out which house you\nwill arrive in? Answer the questions\nto determine your result. </Text>
     </Container>
   </Container>
 </template>

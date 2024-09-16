@@ -28,7 +28,6 @@ const titleText = reactive({ x: 0, y: -5, anchor: 0.5, scale: 1, style: { fontFa
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <Text :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale"
-      :style="titleText.style">What annoys you most\nabout data sharing?</Text>
+    <Text :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">What annoys you most\nabout data sharing?</Text>
   </Container>
 </template>

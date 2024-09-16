@@ -29,9 +29,9 @@ const options: {
     y: number
   }
 }[] = [
-    { type: false, value: 'Skip T&Cs', state: { x: -340 + 144, y: 50 + 60 } },
-    { type: true, value: 'Read T&Cs', state: { x: 40 + 144, y: 50 + 60 } },
-  ]
+  { type: false, value: 'Skip T&Cs', state: { x: -340 + 144, y: 50 + 60 } },
+  { type: true, value: 'Read T&Cs', state: { x: 40 + 144, y: 50 + 60 } },
+]
 
 const selectedOption = ref<boolean>()
 
@@ -56,10 +56,17 @@ const titleText = reactive({ x: 10, y: -85, anchor: 0.5, scale: 1, style: { font
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="titleText.x" :y="titleText.y">
-      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Before we begin,\nlet's go
-        through the T&Cs. </Text>
+      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Before we begin,\nlet's go through the T&Cs. </Text>
     </Container>
-    <AppButton v-for="{ type, value, state } of options" :key="String(type)" type="long" :text="value" :x="state.x"
-      :y="state.y" :scale="1" :is-pressed="type === selectedOption" @click="onClick(type)" />
+    <AppButton
+      v-for="{ type, value, state } of options"
+      :key="String(type)"
+      type="long"
+      :text="value"
+      :x="state.x"
+      :y="state.y"
+      :scale="1"
+      :is-pressed="type === selectedOption"
+      @click="onClick(type)" />
   </Container>
 </template>

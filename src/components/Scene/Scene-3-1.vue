@@ -43,12 +43,10 @@ const secondTitleText = reactive({ x: -30, y: 0, anchor: 0.5, scale: 1, style: {
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container>
-      <Text v-if="!isSecondScreen" :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale"
-        :style="titleText.style">
+      <Text v-if="!isSecondScreen" :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
         It's a hot day and you need to cool off.\nHow about a free ice-cream in exchange \nfor your personal data?
       </Text>
-      <Text v-else :x="secondTitleText.x" :y="secondTitleText.y" :anchor="secondTitleText.anchor"
-        :scale="secondTitleText.scale" :style="secondTitleText.style">
+      <Text v-else :x="secondTitleText.x" :y="secondTitleText.y" :anchor="secondTitleText.anchor" :scale="secondTitleText.scale" :style="secondTitleText.style">
         What are you willing to share?\nPick more than one.
       </Text>
     </Container>

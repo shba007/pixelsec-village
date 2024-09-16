@@ -49,14 +49,21 @@ const titleText = reactive({ x: 0, y: -120, anchor: 0.5, scale: 1, style: { font
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
     <Sprite :texture="modal.image" :texture-options="textureOptions" :scale="0.5" :anchor="0.5" />
     <Container :x="titleText.x" :y="titleText.y">
-      <Text :y="-65" :anchor="titleText.anchor" :scale="titleText.scale"
-        :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }">SELECT YOUR AVATAR</Text>
-      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">Choose your main character
-        energy.</Text>
+      <Text :y="-65" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }">SELECT YOUR AVATAR</Text>
+      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">Choose your main character energy.</Text>
     </Container>
-    <AppAnimatedSprite v-for="{ type, frames: frames, state } of characters" :key="type" :textures="frames"
-      :texture-options="textureOptions" :x="state.x" :y="state.y"
-      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)" :anchor="0.5" :playing="true"
-      :animation-speed="0.05" cursor="pointer" @pointerdown="setCharacter(type)" />
+    <AppAnimatedSprite
+      v-for="{ type, frames: frames, state } of characters"
+      :key="type"
+      :textures="frames"
+      :texture-options="textureOptions"
+      :x="state.x"
+      :y="state.y"
+      :scale="state.scale * (selectedCharacter === type ? 1.25 : 1)"
+      :anchor="0.5"
+      :playing="true"
+      :animation-speed="0.05"
+      cursor="pointer"
+      @pointerdown="setCharacter(type)" />
   </Container>
 </template>
