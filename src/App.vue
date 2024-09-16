@@ -30,32 +30,20 @@ function preloadAudio(url: string) {
         return response.blob()
       })
       .then((blob) => {
-        const audioUrl = URL.createObjectURL(blob)
-        const audio = new Audio(audioUrl)
-        audio.addEventListener('canplaythrough', () => {
-          setTimeout(() => {
-            resolve(true)
-          }, 100)
-        })
+        setTimeout(() => {
+          resolve(true)
+        }, 100)
       })
       .catch((error) => {
-        reject(false) // If an error occurs, reject the promise
+        reject(false)
         console.error('Error downloading the audio:', error)
       })
   })
 }
 
 const isLoaded = ref(false)
-const { start: timerStart } = useTimeoutFn(
-  () => {
-    isLoaded.value = true
-  },
-  10000,
-  { immediate: false }
-)
 
 onBeforeMount(async () => {
-  timerStart()
   await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound)))
   isLoaded.value = true
 })
@@ -84,16 +72,19 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
   <Application :resize-to="mainWindow" :antialias="false">
     <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
       <template #fallback="{ progress }">
-        <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{ Math.floor(progress * 99) }}% </Text>
+        <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{
+          Math.floor(progress * 99) }}% </Text>
       </template>
       <template #default>
         <template v-if="!isStarted">
-          <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style" cursor="pointer" @pointerdown="onStart">
+          <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style" cursor="pointer"
+            @pointerdown="onStart">
             {{ isLoaded ? 'Start Game' : 'Loading... 99%' }}
           </Text>
         </template>
         <template v-else>
-          <ScreenMap v-if="currentScreenIndex <= 6" :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
+          <ScreenMap v-if="currentScreenIndex <= 6"
+            :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
           <ScreenStation v-if="currentScreenIndex === 1" />
           <ScreenPark v-else-if="currentScreenIndex === 3" />
           <ScreenBank v-else-if="currentScreenIndex === 5" />
