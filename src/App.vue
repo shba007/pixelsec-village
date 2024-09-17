@@ -69,16 +69,18 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 
 
 function hideAddressBar() {
-  window.scrollTo(0, 200);
+  window.scrollTo(0, 50);
 }
 
-/* window.addEventListener('load', function() {
-  hideAddressBar();
-}); */
+window.addEventListener('load', function () {
+  setTimeout(function () {
+    hideAddressBar();
+  }, 0);
+});
 
-document.addEventListener('touchstart', function () {
+/* document.addEventListener('touchstart', function () {
   hideAddressBar();
-}, { passive: true });
+}, { passive: true }); */
 </script>
 
 <template>
@@ -110,7 +112,7 @@ document.addEventListener('touchstart', function () {
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.4.33</p>
+    <p>v0.4.34</p>
     <!--     <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
