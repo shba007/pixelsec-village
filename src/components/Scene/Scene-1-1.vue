@@ -48,7 +48,7 @@ onTick((delta) => {
 })
 
 const titleText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'center', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
-const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { fontFamily: 'INET', fontSize: 50, align: 'center', lineHeight: 54, fill: '#7F7F7F' } })
+const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 44, align: 'center', lineHeight: 54, fill: '#7F7F7F' } })
 </script>
 
 <template>
