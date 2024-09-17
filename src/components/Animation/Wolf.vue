@@ -14,7 +14,7 @@ const props = defineProps<{
   flip?: boolean
 }>()
 
-const imgs = computed(() => {
+const textures = computed(() => {
   let result: string[] = []
 
   switch (props.type) {
@@ -36,5 +36,5 @@ const speed = ref(getRandomInteger(100, 200) / 5000)
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :alpha="alpha" :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="textures" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :alpha="alpha" :playing="playing" :animation-speed="speed" />
 </template>

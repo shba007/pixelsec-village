@@ -15,7 +15,7 @@ const gameStore = useGameStore()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => ({
-  image: 'popupBgLandscape',
+  texture: 'popupBgLandscape',
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -47,7 +47,7 @@ const titleText = reactive({ x: 0, y: -120, anchor: 0.5, scale: 1, style: { font
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :scale="0.5" :anchor="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :scale="0.5" :anchor="0.5" />
     <Container :x="titleText.x" :y="titleText.y">
       <Text :y="-65" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }">SELECT YOUR AVATAR</Text>
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">Choose your main character energy.</Text>

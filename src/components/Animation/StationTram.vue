@@ -9,7 +9,7 @@ const props = defineProps<{
   widthRange: number
 }>()
 
-const tram = reactive({ img: 'stationTram', x: props.x, y: props.y, scale: 1, width: 790, speed: 4 })
+const tram = reactive({ texture: 'stationTram', x: props.x, y: props.y, scale: 1, width: 790, speed: 4 })
 
 watch(
   () => props,
@@ -25,6 +25,6 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Sprite :texture="tram.img" :texture-options="textureOptions" :x="tram.x" :y="tram.y" :scale="tram.scale" :anchor-x="0.5" :anchor-y="0.5" />
+  <Sprite :texture="tram.texture" :texture-options="textureOptions" :x="tram.x" :y="tram.y" :scale="tram.scale" :anchor-x="0.5" :anchor-y="0.5" />
   <Sprite :texture="'stationTramWire'" :texture-options="textureOptions" :x="0" :y="tram.y - 202" :scale="tram.scale" :anchor="0.5" />
 </template>

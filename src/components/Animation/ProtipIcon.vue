@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useTimeout } from '@vueuse/core'
-import { getRandomInteger } from '@/utils/helper'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
@@ -11,9 +8,9 @@ defineProps<{
   scale: number
 }>()
 
-const textures = ['wave1', 'wave2', 'wave3', 'wave4', 'wave5', 'wave4', 'wave3', 'wave2']
-const playing = useTimeout(getRandomInteger(100, 2000))
-const speed = ref(getRandomInteger(500, 1000) / 20000)
+const textures = ['portipIcon1', 'portipIcon2']
+const playing = true
+const speed = 0.08
 </script>
 
 <template>

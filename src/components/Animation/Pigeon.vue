@@ -11,11 +11,11 @@ const props = defineProps<{
   flip: boolean
 }>()
 
-const imgs = props.flip ? ['pigeonLeftStand', 'pigeonLeftPeck'] : ['pigeonRightStand', 'pigeonRightPeck']
+const textures = props.flip ? ['pigeonLeftStand', 'pigeonLeftPeck'] : ['pigeonRightStand', 'pigeonRightPeck']
 const playing = useTimeout(getRandomInteger(100, 2000))
 const speed = 0.01
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="textures" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
 </template>

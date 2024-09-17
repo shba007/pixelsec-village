@@ -15,7 +15,7 @@ const dataStore = useDataStore()
 const gameStore = useGameStore()
 
 const modal = computed(() => ({
-  image: 'popupBgLandscape',
+  texture: 'popupBgLandscape',
   state: { x: 0, y: 0, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -56,7 +56,7 @@ const titleText = reactive({ x: 120, y: -55, anchor: 0.5, scale: 1, style: { fon
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Please verify your age\nfor tram ticket purchase </Text>
     </Container>

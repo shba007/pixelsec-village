@@ -17,7 +17,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const alarmBell = reactive({ x: -355, y: -5, scale: 4.5 })
 
 const modal = computed(() => ({
-  image: 'popupBgSlim', //'popupScene51',
+  texture: 'popupBgSlim', //'popupScene51',
   state: { x: 0, y: (screenHeight.value * 1) / 4, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -37,7 +37,7 @@ const titleText = reactive({ x: 95, y: -5, anchor: 0.5, scale: 1, style: { fontF
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Text :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"
       >Your go-to app has a data\nbreach. You have 8 seconds\nto decide what to do.</Text
     >

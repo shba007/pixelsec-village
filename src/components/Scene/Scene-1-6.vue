@@ -17,7 +17,7 @@ const { rotationStop } = storeToRefs(gameStore)
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => ({
-  image: 'popupBgLandscape',
+  texture: 'popupBgLandscape',
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -90,7 +90,7 @@ const titleText = reactive({ x: 0, y: -170, anchor: 0.5, scale: 1, style: { font
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> TERMS AND CONDITIONS FOR\nAFIINIDI SERVICES </Text>
     </Container>
@@ -885,7 +885,7 @@ const titleText = reactive({ x: 0, y: -170, anchor: 0.5, scale: 1, style: { font
               <div class="ms-md-5 ms-4">
                 <p class="paragraph">
                   <span class="c0">i.</span> The liveness check is a feature designed to ensure that a live person is interacting with the ap-plication, as opposed to an automated process like a bot
-                  or a static image
+                  or a static texture
                 </p>
                 <p class="paragraph">
                   <span class="c0">ii.</span> During the liveness check, the user receives a prompt instructing them to show their face to the camera. The application analyses the data to determine

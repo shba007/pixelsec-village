@@ -17,7 +17,7 @@ const gameStore = useGameStore()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => ({
-  image: 'popupBgSquare', //'popupScene63',
+  texture: 'popupBgSquare', //'popupScene63',
   state: { x: (screenWidth.value * 3) / 4, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -57,7 +57,7 @@ const titleText = reactive({ x: 15, y: -70, anchor: 0.5, scale: 1, style: { font
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Text :anchor="titleText.anchor" :style="titleText.style" :x="titleText.x" :y="titleText.y" :scale="titleText.scale">
       Would you store your\nmultiple online profiles \nand data securely in a\nsingle vault?
     </Text>

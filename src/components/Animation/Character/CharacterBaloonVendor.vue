@@ -11,9 +11,9 @@ defineProps<{
   state: State
 }>()
 
-const imgs = ['characterBaloonVendor1', 'characterBaloonVendor2']
+const textures = ['characterBaloonVendor1', 'characterBaloonVendor2']
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions.blur" :anchor="0.5" :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
+  <AppAnimatedSprite :textures="textures" :texture-options="textureOptions.blur" :anchor="0.5" :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
 </template>

@@ -15,7 +15,7 @@ const props = defineProps<{
   place: 'map' | 'park'
 }>()
 
-const images = {
+const textures = {
   map: ['mapCharacterIcecreamVendor1', 'mapCharacterIcecreamVendor2'],
   park: ['parkCharacterIcecreamVendorWave1', 'parkCharacterIcecreamVendorWave2'],
 }
@@ -26,5 +26,5 @@ watch(currentSceneIndex, (value) => {
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="images[place]" :texture-options="textureOptions" :anchor="0.5" :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
+  <AppAnimatedSprite :textures="textures[place]" :texture-options="textureOptions" :anchor="0.5" :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
 </template>

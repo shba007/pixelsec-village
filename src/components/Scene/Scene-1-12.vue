@@ -14,7 +14,7 @@ const gameStore = useGameStore()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = reactive({
-  image: 'popupBgSlim', //'popupScene65',
+  texture: 'popupBgSlim', //'popupScene65',
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 3) / 4, scale: 1.0 * props.zoomFactor },
 })
 
@@ -27,7 +27,7 @@ const titleText = reactive({ x: 0, y: 30, anchor: 0.5, scale: 1, style: { fontFa
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="titleText.x" :y="titleText.y">
       <Text :x="0" :y="-110" :scale="titleText.scale" :anchor="titleText.anchor" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }">IT'S TIME TO HEAD HOME</Text>
       <Text :scale="titleText.scale" :anchor="titleText.anchor" :style="titleText.style">Please wait while we put on the \nfinishing touches to your house.</Text>

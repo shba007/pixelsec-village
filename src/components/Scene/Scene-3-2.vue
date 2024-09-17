@@ -17,7 +17,7 @@ const gameStore = useGameStore()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => ({
-  image: 'popupBgSquare',
+  texture: 'popupBgSquare',
   state: { x: (screenWidth.value * 1) / 4, y: 0, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -59,7 +59,7 @@ onMounted(() => {
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <AppCheckbox v-for="{ type, value, state } of options" :key="type" :text="value" :x="state.x - 220" :y="state.y + 50" :scale="1" :is-checked="selectedOptions.has(type)" @click="onClick(type)" />
   </Container>
 </template>

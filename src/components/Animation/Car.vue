@@ -19,7 +19,7 @@ const car = reactive({
   direction: props.widthRange,
 })
 
-const img = 'mapCar'
+const texture = 'mapCar'
 
 onTick((delta) => {
   car.x = car.x + delta * car.speed * car.direction
@@ -28,5 +28,5 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Sprite :texture="img" :texture-options="textureOptions" :x="car.x" :y="car.y" :anchor="0.5" :scale="car.scale" />
+  <Sprite :texture="texture" :texture-options="textureOptions" :x="car.x" :y="car.y" :anchor="0.5" :scale="car.scale" />
 </template>

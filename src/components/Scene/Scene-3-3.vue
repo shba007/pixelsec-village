@@ -14,7 +14,7 @@ const dataStore = useDataStore()
 const gameStore = useGameStore()
 
 const modal = computed(() => ({
-  image: 'popupBgLandscape',
+  texture: 'popupBgLandscape',
   state: { x: 0, y: 0, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -52,7 +52,7 @@ const titleText = reactive({ x: -10, y: -125, anchor: 0.5, scale: 1, style: { fo
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Text :anchor="titleText.anchor" :style="titleText.style" :x="titleText.x" :y="titleText.y" :scale="titleText.scale">
       Would you like to collect all your\ndata from one place for\nconvenience
     </Text>

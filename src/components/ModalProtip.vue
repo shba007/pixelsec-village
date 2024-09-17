@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, reactive } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
-import AppAnimatedSprite from './AppAnimatedSprite.vue'
+import ProtipIcon from '@/components/Animation/ProtipIcon.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -24,23 +24,22 @@ const gameStore = useGameStore()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => {
-  let images = ['popupProtip11', 'popupProtip12']
-  let scale = 0.5
+  let texture = ''
   switch (props.title) {
     case '1':
-      images = ['popupProtip11', 'popupProtip12']
+      texture = 'popupBgSlim'
       break
     case '2':
-      images = ['popupProtip21', 'popupProtip22']
+      texture = 'popupBgSlim'
       break
     case '3':
-      images = ['popupProtip31', 'popupProtip32']
+      texture = 'popupBgSquare'
       break
     case '4':
-      images = ['popupProtip41', 'popupProtip42']
+      texture = 'popupBgSlim'
       break
     case '5':
-      images = ['popupProtip51', 'popupProtip52']
+      texture = 'popupBgSquare'
       break
   }
 
@@ -70,8 +69,9 @@ const modal = computed(() => {
   }
 
   return {
-    images,
-    state: { x: screenWidth.value * xFactor, y: screenHeight.value * yFactor, scale: scale * props.zoomFactor },
+    texture,
+    textures,
+    state: { x: screenWidth.value * xFactor, y: screenHeight.value * yFactor },
     xFactor: xFactor * 100 + '%',
     yFactor: yFactor * 100 + '%',
   }
@@ -80,9 +80,61 @@ const modal = computed(() => {
 onMounted(() => {
   gameStore.playSFXSound('protip')
 })
+
+const title1Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
+const title2Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
+const title3Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
+const title4Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 44, align: 'left', lineHeight: 54, stroke: 1, strokeThickness: 1 } })
+const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="modal.images" :texture-options="textureOptions" :x="modal.state.x" :y="modal.state.y"
-    :scale="modal.state.scale" :playing="true" :animation-speed="0.08" :anchor="0.5" />
+  <Container :x="modal.state.x" :y="modal.state.y" :scale="zoomFactor">
+    <template v-if="title === '1'">
+      <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+      <ProtipIcon :x="-375" :y="-50" :scale="1" />
+      <Container :x="title1Text.x" :y="title1Text.y">
+        <Text :x="-230" :y="120" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="{ ...title1Text.style, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
+        <Text :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">You can DISCOVER your\nfragmented data across the\ndigital realm with Affinidi.</Text>
+      </Container>
+    </template>
+    <template v-else-if="title === '2'">
+      <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+      <ProtipIcon :x="-375" :y="-50" :scale="1" />
+      <Container :x="title2Text.x" :y="title2Text.y">
+        <Text :x="-230" :y="120" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="{ ...title2Text.style, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
+        <Text :y="-30" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="title2Text.style"
+          >You can COLLECT all your\n personal info from your digital\nfootprint for a 360-degree unified\nview of your digital self.
+        </Text>
+      </Container>
+    </template>
+    <template v-else-if="title === '3'">
+      <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+      <ProtipIcon :x="50" :y="-180" :scale="1.1" />
+      <Container :x="title3Text.x" :y="title3Text.y">
+        <Text :x="0" :y="-100" :anchor="title3Text.anchor" :scale="title3Text.scale" :style="{ ...title3Text.style, fontSize: 54, lineHeight: 64, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
+        <Text :y="0" :anchor="title3Text.anchor" :scale="title3Text.scale" :style="title3Text.style">You can STORE\nyour data securely in\nAffinidi Vault and be\nin control.</Text>
+      </Container>
+    </template>
+    <template v-else-if="title === '4'">
+      <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+      <ProtipIcon :x="-375" :y="-50" :scale="1" />
+      <Container :x="title4Text.x" :y="title4Text.y">
+        <Text :x="-230" :y="120" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="{ ...title4Text.style, fontSize: 54, lineHeight: 64, fill: '#9C38FB', stroke: '#9C38FB' }"
+          >PRO TIP:</Text
+        >
+        <Text :y="-15" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style"
+          >You can choose how and who you\nwant to SHARE what data with\nanytime. It's easy to give consent\nwith Affinidi.</Text
+        >
+      </Container>
+    </template>
+    <template v-else-if="title === '5'">
+      <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+      <ProtipIcon :x="50" :y="-180" :scale="1.1" />
+      <Container :x="title5Text.x" :y="title5Text.y">
+        <Text :x="0" :y="-100" :anchor="title5Text.anchor" :scale="title5Text.scale" :style="{ ...title5Text.style, fontSize: 54, lineHeight: 64, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
+        <Text :y="0" :anchor="title5Text.anchor" :scale="title5Text.scale" :style="title5Text.style"> In the near future,\nyou can MONETISE\nyour data by\nexchanging\nthem for value. </Text>
+      </Container>
+    </template>
+  </Container>
 </template>

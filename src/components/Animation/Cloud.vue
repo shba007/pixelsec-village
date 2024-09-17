@@ -22,7 +22,7 @@ const cloud = reactive({
   width: 200,
 })
 
-const img = computed(() => {
+const texture = computed(() => {
   switch (props.size) {
     case 'lg':
       return props.place + 'CloudLarge'
@@ -57,5 +57,5 @@ onTick((delta) => {
 </script>
 
 <template>
-  <Sprite :texture="img" :texture-options="textureOptions" :x="cloud.x" :y="cloud.y" :anchor="0.5" :scale="cloud.scale" />
+  <Sprite :texture="texture" :texture-options="textureOptions" :x="cloud.x" :y="cloud.y" :anchor="0.5" :scale="cloud.scale" />
 </template>

@@ -7,9 +7,9 @@ import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 
-const props = defineProps<{
+/* const props = defineProps<{
   zoomFactor: number
-}>()
+}>() */
 const zoomFactor = computed(() => screenHeight.value / 720)
 
 const gameStore = useGameStore()
@@ -18,7 +18,7 @@ const { isLandscape } = storeToRefs(gameStore)
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => ({
-  image: isLandscape.value ? 'popupBgLandscape' : 'popupBgPortrait',
+  texture: isLandscape.value ? 'popupBgLandscape' : 'popupBgPortrait',
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: (isLandscape.value ? 1.0 : 0.55) * zoomFactor.value },
 }))
 
@@ -48,12 +48,12 @@ onTick((delta) => {
 })
 
 const titleText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'center', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
-const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { fontFamily: 'INET', fontSize: 44, align: 'center', lineHeight: 36, fill: '#7F7F7F' } })
+const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { fontFamily: 'INET', fontSize: 44, align: 'center', lineHeight: 54, fill: '#7F7F7F' } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <template v-if="!isLandscape">
       <Container :x="titleText.x" :y="titleText.y">
         <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> WELCOME TO\n DATAVILLE </Text>

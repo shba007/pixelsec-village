@@ -42,7 +42,7 @@ function capitalize(word: string) {
   return word.charAt(0).toUpperCase() + word.slice(1)
 }
 
-const imgs = {
+const textures = {
   map: [`characterPanic${capitalize(props.type)}MapLeft`, `characterPanic${capitalize(props.type)}MapRight`, `characterPanic${capitalize(props.type)}MapStand`],
   bank: [`characterPanic${capitalize(props.type)}BankLeft`, `characterPanic${capitalize(props.type)}BankRight`],
 }
@@ -102,7 +102,7 @@ onMounted(() => {
 
 <template>
   <AppAnimatedSprite
-    :textures="imgs[place]"
+    :textures="textures[place]"
     :texture-options="textureOptions"
     :anchor="0.5"
     :x="activeCharacter.state.x"

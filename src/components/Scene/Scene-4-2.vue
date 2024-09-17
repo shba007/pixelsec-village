@@ -15,7 +15,7 @@ const dataStore = useDataStore()
 const gameStore = useGameStore()
 
 const modal = computed(() => ({
-  image: 'popupBgLandscape',
+  texture: 'popupBgLandscape',
   state: { x: 0, y: 0, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -82,13 +82,13 @@ onBeforeUnmount(() => {
   gameStore.playSFXSound('alarmLight')
 })
 
-const titleText = reactive({ x: 185, y: -52, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 44, align: 'left', lineHeight: 36, stroke: 1, strokeThickness: 1 } })
+const titleText = reactive({ x: 185, y: -52, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 44, align: 'left', lineHeight: 54, stroke: 1, strokeThickness: 1 } })
 const timerText = reactive({ x: -180, y: -175, scale: 1, style: { fontFamily: 'INET', fontSize: 88, lineHeight: 64, stroke: 0, strokeThickness: 0 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container :x="timerText.x" :y="timerText.y">
       <Text :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">Countdown timer:</Text>
       <template v-for="(digits, digitsIndex) of timer" :key="digitsIndex">

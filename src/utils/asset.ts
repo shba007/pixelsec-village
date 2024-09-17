@@ -6,6 +6,8 @@ import fontDogica from '/fonts/Dogica/dogica.ttf'
 import fontDogicaBold from '/fonts/Dogica/dogicabold.ttf'
 // asset
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
+import portipIcon1Texture from '@/assets/image/popup/protip-1.png'
+import portipIcon2Texture from '@/assets/image/popup/protip-2.png'
 import popupSceneInstallTexture from '@/assets/image/popup/scene-install.png'
 import popupSceneRotateTexture from '@/assets/image/popup/scene-rotate.png'
 import popupBgSlimTexture from '@/assets/image/popup/bg-slim.png'
@@ -92,17 +94,16 @@ import popupScene12Texture from '@/assets/image/popup/scene-1-2.png'
 // import popupScene74Texture from '@/assets/image/popup/scene-7-4.png'
 // import popupScene8Texture from '@/assets/image/popup/scene-8.png'
 //
-import popupProtip11Texture from '@/assets/image/popup/protip-1-1.png'
-import popupProtip12Texture from '@/assets/image/popup/protip-1-2.png'
-import popupProtip21Texture from '@/assets/image/popup/protip-2-1.png'
-import popupProtip22Texture from '@/assets/image/popup/protip-2-2.png'
-import popupProtip31Texture from '@/assets/image/popup/protip-3-1.png'
-import popupProtip32Texture from '@/assets/image/popup/protip-3-2.png'
-import popupProtip41Texture from '@/assets/image/popup/protip-4-1.png'
-import popupProtip42Texture from '@/assets/image/popup/protip-4-2.png'
-import popupProtip51Texture from '@/assets/image/popup/protip-5-1.png'
-import popupProtip52Texture from '@/assets/image/popup/protip-5-2.png'
-
+// import popupProtip11Texture from '@/assets/image/popup/protip-1-1.png'
+// import popupProtip12Texture from '@/assets/image/popup/protip-1-2.png'
+// import popupProtip21Texture from '@/assets/image/popup/protip-2-1.png'
+// import popupProtip22Texture from '@/assets/image/popup/protip-2-2.png'
+// import popupProtip31Texture from '@/assets/image/popup/protip-3-1.png'
+// import popupProtip32Texture from '@/assets/image/popup/protip-3-2.png'
+// import popupProtip41Texture from '@/assets/image/popup/protip-4-1.png'
+// import popupProtip42Texture from '@/assets/image/popup/protip-4-2.png'
+// import popupProtip51Texture from '@/assets/image/popup/protip-5-1.png'
+// import popupProtip52Texture from '@/assets/image/popup/protip-5-2.png'
 //
 import mapCloudLargeTexture from '@/assets/image/clouds/map-large.png'
 import mapCloudMediumTexture from '@/assets/image/clouds/map-medium.png'
@@ -227,8 +228,8 @@ import dataTrailSide2Texture from '@/assets/image/character/trail/side-2.png'
 import dataTrailSide3Texture from '@/assets/image/character/trail/side-3.png'
 import dataTrailSide4Texture from '@/assets/image/character/trail/side-4.png'
 // Map
-import map1xBgTexture from '@/assets/image/map/1x-bg.png'
-import map1xFgTexture from '@/assets/image/map/1x-fg.png'
+import mapBgTexture from '@/assets/image/map/bg.png'
+import map1xFgTexture from '@/assets/image/map/fg.png'
 import mapPalmTreesTexture from '@/assets/image/map/palm-trees.png'
 import mapCarTexture from '@/assets/image/map/car.png'
 import mapFenceTexture from '@/assets/image/map/fence.png'
@@ -368,6 +369,8 @@ export const resources = {
   image: {
     popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,
+    portipIcon1: portipIcon1Texture,
+    portipIcon2: portipIcon2Texture,
     popupSceneRotate: popupSceneRotateTexture,
     popupBgSlim: popupBgSlimTexture,
     popupBgLandscape: popupBgLandscapeTexture,
@@ -442,16 +445,16 @@ export const resources = {
     // popupScene74: popupScene74Texture,
     // popupScene8: popupScene8Texture,
     //
-    popupProtip11: popupProtip11Texture,
-    popupProtip12: popupProtip12Texture,
-    popupProtip21: popupProtip21Texture,
-    popupProtip22: popupProtip22Texture,
-    popupProtip31: popupProtip31Texture,
-    popupProtip32: popupProtip32Texture,
-    popupProtip41: popupProtip41Texture,
-    popupProtip42: popupProtip42Texture,
-    popupProtip51: popupProtip51Texture,
-    popupProtip52: popupProtip52Texture,
+    // popupProtip11: popupProtip11Texture,
+    // popupProtip12: popupProtip12Texture,
+    // popupProtip21: popupProtip21Texture,
+    // popupProtip22: popupProtip22Texture,
+    // popupProtip31: popupProtip31Texture,
+    // popupProtip32: popupProtip32Texture,
+    // popupProtip41: popupProtip41Texture,
+    // popupProtip42: popupProtip42Texture,
+    // popupProtip51: popupProtip51Texture,
+    // popupProtip52: popupProtip52Texture,
     //
     buttonSquare: buttonSquareTexture,
     buttonSquarePressed: buttonSquarePressedTexture,
@@ -467,7 +470,7 @@ export const resources = {
     pigeonRightPeck: pigeonRightPeckTexture,
     pigeonRightStand: pigeonRightStandTexture,
     //
-    mapBg: map1xBgTexture,
+    mapBg: mapBgTexture,
     mapFg: map1xFgTexture,
     mapCar: mapCarTexture,
     mapFence: mapFenceTexture,

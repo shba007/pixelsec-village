@@ -11,11 +11,11 @@ defineProps<{
   scale: number
 }>()
 
-const imgs = ['mapBoat1', 'mapBoat2']
+const textures = ['mapBoat1', 'mapBoat2']
 const playing = useTimeout(getRandomInteger(100, 2000))
 const speed = ref(getRandomInteger(1000, 2000) / 20000)
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="imgs" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="textures" :texture-options="textureOptions" :anchor="0.5" :scale="scale" :x="x" :y="y" :playing="playing" :animation-speed="speed" />
 </template>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref } from 'vue'
 import { Application, Loader } from 'vue3-pixi'
-import { useTimeoutFn, useWindowSize } from '@vueuse/core'
+import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { resources } from '@/utils/asset'
@@ -29,7 +29,7 @@ function preloadAudio(url: string) {
         }
         return response.blob()
       })
-      .then((blob) => {
+      .then(() => {
         setTimeout(() => {
           resolve(true)
         }, 1000)
@@ -65,7 +65,7 @@ function onStart() {
   }, 50)
 }
 
-const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.value / 2, style: { fontFamily: 'INET', fontSize: 44, lineHeight: 36, fill: 'white' } }))
+const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.value / 2, style: { fontFamily: 'INET', fontSize: 44, lineHeight: 54, fill: 'white' } }))
 </script>
 
 <template>
@@ -94,12 +94,12 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.4.19</p>
-    <!-- <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+    <p>v0.4.20</p>
+    <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
     <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
-    <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
+    <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p>
   </div>
   <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
     <button @click="gameStore.toggleHardStop(!hardStop)">HardStop {{ hardStop }}</button>

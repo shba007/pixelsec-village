@@ -9,7 +9,7 @@ defineProps<{
   type: 'left' | 'right'
 }>()
 
-const imgs = {
+const textures = {
   left: ['bankAlarmLightLeft1', 'bankAlarmLightLeft2'],
   right: ['bankAlarmLightRight1', 'bankAlarmLightRight2'],
 }
@@ -18,5 +18,5 @@ const speed = 0.05
 </script>
 
 <template>
-  <AppAnimatedSprite :blend-mode="1" :textures="imgs[type]" :texture-options="textureOptions" :anchor="0.5" :x="x" :y="y" :scale="scale" :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :blend-mode="1" :textures="textures[type]" :texture-options="textureOptions" :anchor="0.5" :x="x" :y="y" :scale="scale" :playing="playing" :animation-speed="speed" />
 </template>

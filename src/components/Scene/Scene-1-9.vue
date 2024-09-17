@@ -21,7 +21,7 @@ const gameStore = useGameStore()
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => ({
-  image: 'popupBgLandscape', //'popupScene62',
+  texture: 'popupBgLandscape', //'popupScene62',
   state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -65,7 +65,7 @@ onMounted(() => {
 
 <template>
   <Container v-if="showPopup" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <!--     <Sprite v-for="{ type, value,  state } of options" :key="String(type)" :texture="frames[Number(selectedOption === type)]"
       :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="1" cursor="pointer"
       @pointerdown="onClick(type)" /> -->

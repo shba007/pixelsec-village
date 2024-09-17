@@ -15,10 +15,10 @@ const props = withDefaults(
   }
 )
 
-const imgs = props.place === 'map' ? ['mapDoorOpen', 'mapDoorOpen', 'mapDoorClose'] : ['bankDoorOpen', 'bankDoorOpen', 'bankDoorClose']
+const textures = props.place === 'map' ? ['mapDoorOpen', 'mapDoorOpen', 'mapDoorClose'] : ['bankDoorOpen', 'bankDoorOpen', 'bankDoorClose']
 const speed = 0.015
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="playing ? imgs : [imgs[2]]" :texture-options="textureOptions" :anchor="0.5" :x="x" :y="y" :scale="scale" :playing="playing" :animation-speed="speed" />
+  <AppAnimatedSprite :textures="playing ? textures : [textures[2]]" :texture-options="textureOptions" :anchor="0.5" :x="x" :y="y" :scale="scale" :playing="playing" :animation-speed="speed" />
 </template>

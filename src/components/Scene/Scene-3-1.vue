@@ -15,7 +15,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const isSecondScreen = ref(false)
 const modal = computed(() => ({
-  image: 'popupBgSlim',
+  texture: 'popupBgSlim',
   state: { x: 0, y: -(screenHeight.value * 1) / 4, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -41,7 +41,7 @@ const secondTitleText = reactive({ x: -30, y: 0, anchor: 0.5, scale: 1, style: {
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container>
       <Text v-if="!isSecondScreen" :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
         It's a hot day and you need to cool off.\nHow about a free ice-cream in exchange \nfor your personal data?

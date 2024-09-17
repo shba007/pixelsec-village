@@ -8,12 +8,12 @@ defineProps<{
   place: 'map' | 'station'
 }>()
 
-const imgs = {
+const textures = {
   map: ['mapCharacterStationMaster1', 'mapCharacterStationMaster2', 'mapCharacterStationMaster3'],
   station: ['stationCharacterStationMaster1', 'stationCharacterStationMaster2'],
 }
 </script>
 
 <template>
-  <AppAnimatedSprite :textures="imgs[place]" :texture-options="textureOptions" :anchor="0.5" :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
+  <AppAnimatedSprite :textures="textures[place]" :texture-options="textureOptions" :anchor="0.5" :scale="state.scale" :x="state.x" :y="state.y" :playing="true" :animation-speed="0.03" />
 </template>

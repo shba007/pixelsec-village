@@ -16,7 +16,7 @@ const gameStore = useGameStore()
 const { currentPopupIndex } = storeToRefs(gameStore)
 
 const modal = computed(() => ({
-  image: 'popupBgLandscape',
+  texture: 'popupBgLandscape',
   state: { x: 0, y: 0, scale: 1.0 * props.zoomFactor },
 }))
 
@@ -53,12 +53,12 @@ onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
 
-const titleText = reactive({ x: 0, y: -150, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 44, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
+const titleText = reactive({ x: 0, y: -150, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 44, align: 'left', lineHeight: 54, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
   <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.image" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
     <Container>
       <Text v-if="currentPopupIndex === 14" :x="titleText.x - 30" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"
         >Your data could be compromised. Who\ndo you think should protect your data?</Text
