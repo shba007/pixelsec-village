@@ -202,11 +202,12 @@ export const useGameStore = defineStore('game', () => {
     resultLost: [7270, 20020 - 100, true],
   }
   const volumeBgm = ref(0.4)
+  const playbackRateBgm = ref(1)
   const soundEnabledBgm = ref(true)
   const bgmSettings = {
     interrupt: true,
     sprite: bgmSpriteMap,
-    playbackRate: 1,
+    autoplay: true,
   }
   const {
     play: playBgm,
@@ -214,10 +215,11 @@ export const useGameStore = defineStore('game', () => {
     sound: soundBgm,
   } = useSound(resources.sound.bgmSprite, {
     volume: volumeBgm,
+    playBackRate: playbackRateBgm,
     soundEnabled: soundEnabledBgm,
     ...bgmSettings,
     load: () => {
-      console.log('bgm Loaded')
+      console.log('Bgm Loaded')
     },
     onend: () => {
       activeSoundList.bgm[1] = null
@@ -237,15 +239,17 @@ export const useGameStore = defineStore('game', () => {
     countdown: [5280, 4000 - 1000, true],
   }
   const volumeSfx = ref(1)
+  const playbackRateSfx = ref(1)
   const soundEnabledSfx = ref(true)
   const sfxSettings = {
     interrupt: true,
     sprite: sfxSpriteMap,
-    playbackRate: 1,
+    autoplay: true,
   }
 
   const { play: playSfx1, stop: stopSfx1 } = useSound(resources.sound.sfxSprite, {
     volume: volumeSfx,
+    playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
     load: () => {
@@ -257,6 +261,7 @@ export const useGameStore = defineStore('game', () => {
   })
   const { play: playSfx2, stop: stopSfx2 } = useSound(resources.sound.sfxSprite, {
     volume: volumeSfx,
+    playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
     onend: () => {
@@ -265,6 +270,7 @@ export const useGameStore = defineStore('game', () => {
   })
   const { play: playSfx3, stop: stopSfx3 } = useSound(resources.sound.sfxSprite, {
     volume: volumeSfx,
+    playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
     onend: () => {
@@ -303,11 +309,13 @@ export const useGameStore = defineStore('game', () => {
       playBgm({ id })
     } else {
       try {
-        soundBgm.fade(0.4, 0, 500)
+        soundBgm.value.fade(0.4, 0, 500)
         setTimeout(() => {
-          soundBgm.fade(0, 0.4, 500)
+          soundBgm.value.fade(0, 0.4, 500)
+        }, 500)
+        setTimeout(() => {
           playBgm({ id })
-        }, 100)
+        }, 1000)
       } catch (error) {
         console.log('Test fade failed')
       }

@@ -7,10 +7,9 @@ import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 
-/* const props = defineProps<{
+const props = defineProps<{
   zoomFactor: number
-}>() */
-const zoomFactor = computed(() => screenHeight.value / 720)
+}>()
 
 const gameStore = useGameStore()
 const { isLandscape } = storeToRefs(gameStore)
@@ -19,7 +18,7 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const modal = computed(() => ({
   texture: isLandscape.value ? 'popupBgLandscape' : 'popupBgPortrait',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: (isLandscape.value ? 1.0 : 0.55) * zoomFactor.value },
+  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: (isLandscape.value ? 1.0 : 1.5) * props.zoomFactor },
 }))
 
 function handleStart() {

@@ -1,23 +1,19 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
+
 import { useDataStore, type ageChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 
-import { textureOptions } from '@/components/AppSettings.vue'
+import AppPopup from '@/components/AppPopup.vue'
 import AppButton from '@/components/AppButton.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
 
-const props = defineProps<{
+defineProps<{
   zoomFactor: number
 }>()
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-
-const modal = computed(() => ({
-  texture: 'popupBgLandscape',
-  state: { x: 0, y: 0, scale: 1.0 * props.zoomFactor },
-}))
 
 const options: {
   type: ageChoice
@@ -38,13 +34,14 @@ const selectedOption = ref<ageChoice>()
 const characterStationMaster = reactive({ x: -270, y: -50, scale: 1.1, alpha: 1, time: 0 })
 
 function onClick(value: ageChoice) {
+  // DATA-COLLECT
   selectedOption.value = value
   dataStore.setAge(value)
   gameStore.playSFXSound('buttonPress')
-  // DATA-COLLECT
-  setTimeout(() => {
-    gameStore.nextTimeline({ id: 9 })
-  }, 300)
+}
+
+function handleMove() {
+  gameStore.nextTimeline({ id: 9 })
 }
 
 onMounted(() => {
@@ -55,8 +52,7 @@ const titleText = reactive({ x: 120, y: -30, anchor: 0.5, scale: 1, style: { fon
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Please verify your age\nfor tram ticket purchase </Text>
     </Container>
@@ -71,5 +67,5 @@ const titleText = reactive({ x: 120, y: -30, anchor: 0.5, scale: 1, style: { fon
       :scale="1"
       :is-pressed="type === selectedOption"
       @click="onClick(type)" />
-  </Container>
+  </AppPopup>
 </template>

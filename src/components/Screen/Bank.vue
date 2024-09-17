@@ -15,7 +15,7 @@ import CharacterGuard from '@/components/Animation/Character/CharacterGuard.vue'
 import Scene1 from '@/components/Scene/Scene-4-1.vue'
 import Scene2 from '@/components/Scene/Scene-4-2.vue'
 import Scene3 from '@/components/Scene/Scene-4-3.vue'
-import ModalProtip from '@/components/ModalProtip.vue'
+import AppProtip from '@/components/AppProtip.vue'
 
 const gameStore = useGameStore()
 const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
@@ -178,7 +178,7 @@ onMounted(() => {
     <Scene3 v-else-if="currentPopupIndex === 14 || currentPopupIndex === 15" :zoom-factor="zoomFactor" />
   </Container>
   <Container>
-    <ModalProtip v-if="currentPopupIndex === 16" title="3" x="left" :zoom-factor="zoomFactor" />
+    <AppProtip v-if="currentPopupIndex === 16" title="3" x="left" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

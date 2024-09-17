@@ -38,9 +38,8 @@
 }
 
 body {
-  /* @apply overflow-hidden; */
   font-family: 'Lan';
-  height: 101vh;
+  @apply overflow-x-hidden;
 }
 
 canvas {

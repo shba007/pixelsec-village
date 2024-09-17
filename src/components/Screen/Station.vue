@@ -27,8 +27,8 @@ const zoomFactor = computed(() => {
 const sky = reactive<Asset>({
   loaded: false,
   alias: 'stationSky',
-  states: [{ x: 0, y: -340, scale: 1, alpha: 1, time: 0 }],
-  state: { x: 0, y: -340, scale: 1, alpha: 1, time: 0 },
+  states: [{ x: 0, y: -360, scale: 1, alpha: 1, time: 0 }],
+  state: { x: 0, y: -360, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
 })
 
@@ -94,7 +94,7 @@ useTimeoutFn(() => {
     <CharacterStationMaster :state="characterStationMaster.state" place="station" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
-  <Container :renderable="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">
+  <Container :renderable="!rotationStop">
     <Scene1 v-if="currentPopupIndex === 5" :zoom-factor="zoomFactor" />
     <Scene2 v-else-if="currentPopupIndex === 6" :zoom-factor="zoomFactor" />
   </Container>

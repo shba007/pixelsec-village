@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
-import { useWindowSize } from '@vueuse/core'
+import { onMounted, reactive, ref } from 'vue'
 
 import { useGameStore, type Character } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
+import AppPopup from '@/components/AppPopup.vue'
 
-const props = defineProps<{
+defineProps<{
   zoomFactor: number
 }>()
 
 const gameStore = useGameStore()
-
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-
-const modal = computed(() => ({
-  texture: 'popupBgLandscape',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
-}))
 
 const characters = [
   { type: 'black' as const, frames: ['characterMainBlackFrontWalk1', 'characterMainBlackFrontWalk2'], state: { x: -245, y: 95, scale: 5 } },
@@ -32,10 +25,10 @@ function setCharacter(type: Character) {
   selectedCharacter.value = type
   gameStore.setCharacterSkin(type)
   gameStore.playSFXSound('buttonPressDesign')
+}
 
-  setTimeout(() => {
-    gameStore.nextTimeline({ id: 4 })
-  }, 300)
+function handleMove() {
+  gameStore.nextTimeline({ id: 4 })
 }
 
 onMounted(() => {
@@ -46,8 +39,7 @@ const titleText = reactive({ x: 0, y: -120, anchor: 0.5, scale: 1, style: { font
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :scale="0.5" :anchor="0.5" />
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :y="-65" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }">SELECT YOUR AVATAR</Text>
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">Choose your main character energy.</Text>
@@ -65,5 +57,5 @@ const titleText = reactive({ x: 0, y: -120, anchor: 0.5, scale: 1, style: { font
       :animation-speed="0.05"
       cursor="pointer"
       @pointerdown="setCharacter(type)" />
-  </Container>
+  </AppPopup>
 </template>

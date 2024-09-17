@@ -1,22 +1,18 @@
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref } from 'vue'
-import { watchDebounced } from '@vueuse/core'
+import { onMounted, reactive, ref } from 'vue'
 
 import { useDataStore, type spendTimeChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 
-const props = defineProps<{
+import AppPopup from '@/components/AppPopup.vue'
+
+defineProps<{
   zoomFactor: number
 }>()
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-
-const modal = computed(() => ({
-  texture: 'popupScene12',
-  state: { x: 0, y: 0, scale: 1.0 * props.zoomFactor },
-}))
 
 const options: {
   type: spendTimeChoice
@@ -45,9 +41,7 @@ function onClick(option: spendTimeChoice) {
   else selectedOptions.value.add(option)
 }
 
-watchDebounced(() => [...selectedOptions.value.values()], onComplete, { debounce: 2000 })
-
-function onComplete() {
+function handleMove() {
   // DATA-COLLECT
   dataStore.setSpendTime([...selectedOptions.value.values()] as spendTimeChoice[])
   gameStore.nextTimeline({ id: 10 })
@@ -57,26 +51,27 @@ onMounted(() => {
   gameStore.playSFXSound('dialogBox')
 })
 
-const titleText = reactive({ x: 220, y: 0, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
+const titleText = reactive({ x: 0, y: 0, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="1" />
-    <Sprite :x="195" :y="-15" texture="popupBgSquare" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+  <AppPopup type="square" x="right" y="center" :zoom-factor="zoomFactor" @next="handleMove">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">How will you spend\nyour time on the tram?\n\nPick more than one.</Text>
     </Container>
-    <Sprite
-      v-for="{ type, frames, state } of options"
-      :key="type"
-      :texture="frames[Number(selectedOptions.has(type))]"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale"
-      :alpha="1"
-      cursor="pointer"
-      @pointerdown="onClick(type)" />
-  </Container>
+    <Container :x="-300">
+      <Sprite texture="mobileTexture" :texture-options="textureOptions" :anchor="0.5" :scale="1" />
+      <Sprite
+        v-for="{ type, frames, state } of options"
+        :key="type"
+        :texture="frames[Number(selectedOptions.has(type))]"
+        :texture-options="textureOptions"
+        :x="state.x"
+        :y="state.y"
+        :scale="state.scale"
+        :alpha="1"
+        cursor="pointer"
+        @pointerdown="onClick(type)" />
+    </Container>
+  </AppPopup>
 </template>

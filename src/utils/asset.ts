@@ -62,7 +62,7 @@ import smartphoneSocial from '@/assets/image/station/smartphone/social.png'
 //
 import popupScene05BGTexture from '@/assets/image/popup/scene-0-5-bg.png'
 // import popupScene11Texture from '@/assets/image/popup/scene-1-1.png'
-import popupScene12Texture from '@/assets/image/popup/scene-1-2.png'
+import mobileTexture from '@/assets/image/popup/mobile.png'
 // import popupScene31Texture from '@/assets/image/popup/scene-3-1.png'
 // import popupScene32Texture from '@/assets/image/popup/scene-3-2.png'
 // import popupScene33Texture from '@/assets/image/popup/scene-3-3.png'
@@ -397,7 +397,7 @@ export const resources = {
     // popupScene11Button32: popupScene11Button32Texture,
     // popupScene11Button41: popupScene11Button41Texture,
     // popupScene11Button42: popupScene11Button42Texture,
-    popupScene12: popupScene12Texture,
+    mobileTexture: mobileTexture,
     smartphoneBanking,
     smartphoneBankingHighlighted,
     smartphoneEmail,

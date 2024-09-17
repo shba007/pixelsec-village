@@ -2,25 +2,15 @@
 import { computed } from 'vue'
 import { textureOptions } from '@/components/AppSettings.vue'
 
-const props = defineProps<
-  | {
-      type: 'arrow'
-      x: number
-      y: number
-      scale: number
-      isPressed: boolean
-      fontSize?: number
-    }
-  | {
-      type: 'short' | 'long'
-      text: string
-      x: number
-      y: number
-      scale: number
-      isPressed: boolean
-      fontSize?: number
-    }
->()
+const props = defineProps<{
+  type: 'arrow' | 'short' | 'long'
+  text?: string
+  x: number
+  y: number
+  scale: number
+  isPressed: boolean
+  fontSize?: number
+}>()
 
 const emit = defineEmits<{
   (e: 'click'): void

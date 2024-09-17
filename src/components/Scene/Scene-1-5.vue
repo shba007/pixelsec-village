@@ -1,25 +1,18 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
-import { useWindowSize } from '@vueuse/core'
+import { onMounted, reactive, ref } from 'vue'
 
 import { useDataStore } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/AppSettings.vue'
-import AppButton from '@/components/AppButton.vue'
 
-const props = defineProps<{
+import AppButton from '@/components/AppButton.vue'
+import AppPopup from '@/components/AppPopup.vue'
+
+defineProps<{
   zoomFactor: number
 }>()
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-
-const modal = computed(() => ({
-  texture: 'popupBgLandscape',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
-}))
 
 const options: {
   type: boolean
@@ -40,9 +33,10 @@ function onClick(value: boolean) {
   selectedOption.value = value
   dataStore.setReadTC(value)
   gameStore.playSFXSound('buttonPress')
-  setTimeout(() => {
-    gameStore.nextTimeline(value ? { screen: 1, id: 5 } : { screen: 2, id: 6 })
-  }, 300)
+}
+
+function handleMove() {
+  gameStore.nextTimeline(selectedOption.value ? { screen: 1, id: 5 } : { screen: 2, id: 6 })
 }
 
 onMounted(() => {
@@ -53,8 +47,7 @@ const titleText = reactive({ x: 10, y: -85, anchor: 0.5, scale: 1, style: { font
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Before we begin,\nlet's go through the T&Cs. </Text>
     </Container>
@@ -68,5 +61,5 @@ const titleText = reactive({ x: 10, y: -85, anchor: 0.5, scale: 1, style: { font
       :scale="1"
       :is-pressed="type === selectedOption"
       @click="onClick(type)" />
-  </Container>
+  </AppPopup>
 </template>
