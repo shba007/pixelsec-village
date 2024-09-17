@@ -66,22 +66,42 @@ function onStart() {
 }
 
 const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.value / 2, style: { fontFamily: 'INET', fontSize: 44, lineHeight: 54, fill: 'white' } }))
+
+function hideAddressBar() {
+  // Scroll slightly to hide the address bar
+  window.scrollTo(0, 100);
+}
+
+// Touchstart event to trigger scroll on first user interaction
+document.addEventListener('touchstart', function () {
+  hideAddressBar();
+}, { passive: true });
+
+// Visibility change event to trigger scroll when the tab becomes active
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'visible') {
+    setTimeout(hideAddressBar, 0);
+  }
+});
 </script>
 
 <template>
   <Application :resize-to="mainWindow" :antialias="false">
     <Loader :resources="{ ...resources.sound, ...resources.font, ...resources.image }" :on-resolved="onResolve">
       <template #fallback="{ progress }">
-        <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{ Math.floor(progress * 99) }}% </Text>
+        <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{
+          Math.floor(progress * 99) }}% </Text>
       </template>
       <template #default>
         <template v-if="!isStarted">
-          <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style" cursor="pointer" @pointerdown="onStart">
+          <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style" cursor="pointer"
+            @pointerdown="onStart">
             {{ isLoaded ? 'Start Game' : 'Loading... 99%' }}
           </Text>
         </template>
         <template v-else>
-          <ScreenMap v-if="currentScreenIndex <= 6" :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
+          <ScreenMap v-if="currentScreenIndex <= 6"
+            :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
           <ScreenStation v-if="currentScreenIndex === 1" />
           <ScreenPark v-else-if="currentScreenIndex === 3" />
           <ScreenBank v-else-if="currentScreenIndex === 5" />
@@ -94,7 +114,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.4.29</p>
+    <p>v0.4.30</p>
     <!--     <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
