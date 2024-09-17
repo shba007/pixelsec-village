@@ -68,7 +68,7 @@ function onStart() {
 const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.value / 2, style: { fontFamily: 'INET', fontSize: 44, lineHeight: 54, fill: 'white' } }))
 
 function hideAddressBar() {
-  window.scrollTo(0, 10);
+  window.scrollTo(0, 50);
 }
 
 window.addEventListener('load', function () {
@@ -115,7 +115,7 @@ window.addEventListener('load', function () {
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.4.37</p>
+    <p>v0.4.38</p>
     <!--     <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
