@@ -67,7 +67,7 @@ function onStart() {
 
 const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.value / 2, style: { fontFamily: 'INET', fontSize: 44, lineHeight: 54, fill: 'white' } }))
 
-function hideAddressBar() {
+/* function hideAddressBar() {
   // Scroll slightly to hide the address bar
   window.scrollTo(0, 100);
 }
@@ -82,7 +82,7 @@ document.addEventListener('visibilitychange', function () {
   if (document.visibilityState === 'visible') {
     setTimeout(hideAddressBar, 0);
   }
-});
+}); */
 </script>
 
 <template>
@@ -114,7 +114,7 @@ document.addEventListener('visibilitychange', function () {
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.4.30</p>
+    <p>v0.4.31</p>
     <!--     <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
