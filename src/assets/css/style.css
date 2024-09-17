@@ -40,7 +40,7 @@
 body {
   /* @apply overflow-hidden; */
   font-family: 'Lan';
-  height: 150vh;
+  height: 101vh;
 }
 
 canvas {
