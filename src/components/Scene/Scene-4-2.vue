@@ -28,10 +28,10 @@ const options: {
     y: number
   }
 }[] = [
-  { key: 'do-nothing', value: 'Do nothing', type: 'short', state: { x: -175, y: -45 } },
+  { key: 'do-nothing', value: 'Do nothing', type: 'short', state: { x: -210, y: -45 } },
   { key: 'take-action-only-when-prompted', value: 'Take action only\nwhen prompted', type: 'long', state: { x: 130, y: -45 } },
-  { key: 'alert-the-authority-change-login-details', value: 'Alert the authority\nchange login details', type: 'long', state: { x: -120, y: 125 } },
-  { key: 'delete-the-app', value: 'Delete\nthe app', type: 'short', state: { x: 185, y: 125 } },
+  { key: 'alert-the-authority-change-login-details', value: 'Alert the authority\nchange login details', type: 'long', state: { x: -140, y: 140 } },
+  { key: 'delete-the-app', value: 'Delete\nthe app', type: 'short', state: { x: 200, y: 140 } },
 ]
 
 const selectedOption = ref<dataBreachActionChoice>()
@@ -51,7 +51,7 @@ const timer = computed(() => {
 
   if (number === 1) {
     setTimeout(() => {
-      gameStore.nextTimeline({ id: 33 })
+      // gameStore.nextTimeline({ id: 33 })
     }, 50)
     return []
   }
@@ -114,9 +114,9 @@ const timerText = reactive({ x: -180, y: -175, scale: 1, style: { fontFamily: 'I
       :x="state.x"
       :y="state.y"
       :type="type"
-      :scale="1.25"
+      :scale="1.375"
       :is-pressed="selectedOption === key"
-      :font-size="36"
       @click="onClick(key)" />
+    <!-- :font-size="36" -->
   </Container>
 </template>
