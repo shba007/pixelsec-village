@@ -67,11 +67,18 @@ function onStart() {
 
 const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.value / 2, style: { fontFamily: 'INET', fontSize: 44, lineHeight: 54, fill: 'white' } }))
 
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    window.scrollTo(0, 200);
-  }, 0);
-});
+
+function hideAddressBar() {
+  window.scrollTo(0, 200);
+}
+
+/* window.addEventListener('load', function() {
+  hideAddressBar();
+}); */
+
+document.addEventListener('touchstart', function () {
+  hideAddressBar();
+}, { passive: true });
 </script>
 
 <template>
