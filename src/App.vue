@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref } from 'vue'
+import { computed, onBeforeMount, ref, watch } from 'vue'
 import { Application, Loader } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -18,7 +18,7 @@ import SceneExperience from '@/components/Scene/Scene-Experience.vue'
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const gameStore = useGameStore()
-const { currentScreenIndex, rotationStop, hardStop } = storeToRefs(gameStore)
+const { currentScreenIndex, rotationStop, hardStop, isLandscape } = storeToRefs(gameStore)
 
 function preloadAudio(url: string) {
   return new Promise((resolve, reject) => {
@@ -68,7 +68,7 @@ function onStart() {
 const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.value / 2, style: { fontFamily: 'INET', fontSize: 44, lineHeight: 54, fill: 'white' } }))
 
 function hideAddressBar() {
-  window.scrollTo(0, 100);
+  window.scrollTo(0, 80);
 }
 
 window.addEventListener('load', function () {
@@ -76,6 +76,10 @@ window.addEventListener('load', function () {
     hideAddressBar();
   }, 0);
 }, { passive: true });
+
+watch(isLandscape, () => {
+  hideAddressBar()
+})
 
 /* document.addEventListener('touchstart', function () {
   hideAddressBar();
@@ -111,7 +115,7 @@ window.addEventListener('load', function () {
   </Application>
   <!-- DEBUG -->
   <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-    <p>v0.4.35</p>
+    <p>v0.4.36</p>
     <!--     <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
     <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
     <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
