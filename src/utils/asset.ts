@@ -105,9 +105,9 @@ import popupScene12Texture from '@/assets/image/popup/scene-1-2.png'
 // import popupProtip51Texture from '@/assets/image/popup/protip-5-1.png'
 // import popupProtip52Texture from '@/assets/image/popup/protip-5-2.png'
 //
-import mapCloudLargeTexture from '@/assets/image/clouds/map-large.png'
-import mapCloudMediumTexture from '@/assets/image/clouds/map-medium.png'
-import mapCloudSmallTexture from '@/assets/image/clouds/map-small.png'
+// import mapCloudLargeTexture from '@/assets/image/clouds/map-large.png'
+// import mapCloudMediumTexture from '@/assets/image/clouds/map-medium.png'
+// import mapCloudSmallTexture from '@/assets/image/clouds/map-small.png'
 import stationCloudLargeTexture from '@/assets/image/clouds/station-large.png'
 import stationCloudMediumTexture from '@/assets/image/clouds/station-medium.png'
 import stationCloudSmallTexture from '@/assets/image/clouds/station-small.png'
@@ -264,11 +264,11 @@ import flagSchoolRed2Texture from '@/assets/image/map/flags/school-red-2.png'
 import flagStation1Texture from '@/assets/image/map/flags/station-1.png'
 import flagStation2Texture from '@/assets/image/map/flags/station-2.png'
 // Wave
-import wave1Texture from '@/assets/image/map/waves/1.png'
-import wave2Texture from '@/assets/image/map/waves/2.png'
-import wave3Texture from '@/assets/image/map/waves/3.png'
-import wave4Texture from '@/assets/image/map/waves/4.png'
-import wave5Texture from '@/assets/image/map/waves/5.png'
+// import wave1Texture from '@/assets/image/map/waves/1.png'
+// import wave2Texture from '@/assets/image/map/waves/2.png'
+// import wave3Texture from '@/assets/image/map/waves/3.png'
+// import wave4Texture from '@/assets/image/map/waves/4.png'
+// import wave5Texture from '@/assets/image/map/waves/5.png'
 // Baloon Stand
 import baloonStand1Texture from '@/assets/image/map/baloon-stand/1.png'
 import baloonStand2Texture from '@/assets/image/map/baloon-stand/2.png'
@@ -509,15 +509,15 @@ export const resources = {
     flagStation1: flagStation1Texture,
     flagStation2: flagStation2Texture,
     //
-    wave1: wave1Texture,
-    wave2: wave2Texture,
-    wave3: wave3Texture,
-    wave4: wave4Texture,
-    wave5: wave5Texture,
+    // wave1: wave1Texture,
+    // wave2: wave2Texture,
+    // wave3: wave3Texture,
+    // wave4: wave4Texture,
+    // wave5: wave5Texture,
     //
-    mapCloudLarge: mapCloudLargeTexture,
-    mapCloudMedium: mapCloudMediumTexture,
-    mapCloudSmall: mapCloudSmallTexture,
+    // mapCloudLarge: mapCloudLargeTexture,
+    // mapCloudMedium: mapCloudMediumTexture,
+    // mapCloudSmall: mapCloudSmallTexture,
     //
     tramFront: tramFrontTexture,
     tramBack: tramBackTexture,
