@@ -98,10 +98,10 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
         </template>
       </Loader>
     </Application>
-    <img src="/images/image-bg.png" class="absolute top-0 left-0 -z-10" />
+    <img src="/images/image-bg.png" class="absolute top-0 left-0 -z-10 landscape:hidden" />
     <!-- DEBUG -->
     <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-      <p>v0.4.52</p>
+      <p>v0.4.53</p>
       <!-- <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
       <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
       <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
