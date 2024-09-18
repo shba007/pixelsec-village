@@ -19,10 +19,10 @@ onMounted(() => {
   // app.value.renderer.options.powerPreference = 'high-performance'
 })
 
-onTick(() => {
+/* onTick(() => {
   const canvas = document.querySelector<HTMLCanvasElement>('canvas')!
   canvas.style.touchAction = 'auto'
-})
+}) */
 </script>
 
 <script lang="ts">
