@@ -21,7 +21,7 @@ const emit = defineEmits<{
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-const { characterSkin } = storeToRefs(gameStore)
+const { characterSkin, rotationStop } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
@@ -117,75 +117,77 @@ const titleText = reactive({ x: -250, y: -50, anchor: 0, scale: 1, style: { font
 </script>
 
 <template>
-  <AppPopup v-if="!secondScreen" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
-    <Container :x="titleText.x" :y="titleText.y">
-      <template v-if="place === 'strawhut'">
-        <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE\nIN A </Text>
-        <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VULNERABLE\nSTRAW HUT</Text>
-        <Text :anchor="titleText.anchor" :scale="titleText.scale / 1.4" :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }">
-          Identity and data protection are\nnew to you. This makes you an\neasy target for your valuable\ninformation to be exposed.
-        </Text>
+  <template v-if="!rotationStop">
+    <AppPopup v-if="!secondScreen" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
+      <Container :x="titleText.x" :y="titleText.y">
+        <template v-if="place === 'strawhut'">
+          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA
+            LIVE\nIN A </Text>
+          <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale"
+            :style="{ ...titleText.style, fill: '#3b5df8' }">
+            ‎&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VULNERABLE\nSTRAW HUT</Text>
+          <Text :anchor="titleText.anchor" :scale="titleText.scale / 1.4"
+            :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }">
+            Identity and data protection are\nnew to you. This makes you an\neasy target for your valuable\ninformation
+            to be exposed.
+          </Text>
+        </template>
+        <template v-else-if="place === 'loghouse'">
+          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE
+            IN\nA</Text>
+          <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale"
+            :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;BASIC LOG HOUSE</Text>
+          <Text :y="-50" :anchor="titleText.anchor" :scale="titleText.scale / 1.4"
+            :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }">
+            You have a good foundation in\nunderstanding data privacy but\nneed better security as you leave\nyour data
+            in the hands of third-\nparties and dated systems.
+          </Text>
+        </template>
+        <template v-else-if="place === 'townhouse'">
+          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE
+            IN\nA</Text>
+          <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale"
+            :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;CONVENIENT\nTOWNHOUSE</Text>
+          <Text :y="-0" :anchor="titleText.anchor" :scale="titleText.scale / 1.4"
+            :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }">You enjoy the openness
+            of\ntechnology and often share your data\nfor ease of access but that might put\nyour data in the wrong
+            hands.
+          </Text>
+        </template>
+        <template v-else-if="place === 'mansion'">
+          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE
+            IN\nA</Text>
+          <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale"
+            :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;GUARDED MANSION</Text>
+          <Text :y="-60" :anchor="titleText.anchor" :scale="titleText.scale / 1.4"
+            :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }">Your digital fortress is
+            heavily\nguarded with high-level knowledge\nand high security in place. But even\nthe most secure mansion
+            could\nbenefit from the latest upgrades.
+          </Text>
+        </template>
+      </Container>
+      <Container :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
+        <Sprite ref="emailPlaceholderRef" :texture="inputEmail?.length ? 'PlaceholderEmail2' : 'PlaceholderEmail1'"
+          :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" />
+        <Sprite v-if="!!inputEmail?.length" :texture="frames[Number(!!email?.length)]" :texture-options="textureOptions"
+          :anchor="0.5" :x="450" :y="0" :scale="2.25" cursor="pointer" @pointerdown="onSubmit(inputEmail!)" />
+        <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
+          <input ref="inputRef" type="email" v-model="inputEmail" @keydown.enter="onSubmit(inputEmail!)"
+            class="border-0 bg-transparent px-4 py-2 outline-none placeholder:font-bold placeholder:text-blue-500 md:text-xl"
+            :style="{ width: emailInputBox.width * 0.9 + 'px', height: emailInputBox.height + 'px' }" />
+        </External>
+      </Container>
+    </AppPopup>
+    <AppPopup v-else type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
+      <template v-slot:popupBg>
+        <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false"
+          type="single" />
       </template>
-      <template v-else-if="place === 'loghouse'">
-        <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
-        <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;BASIC LOG HOUSE</Text>
-        <Text :y="-50" :anchor="titleText.anchor" :scale="titleText.scale / 1.4" :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }">
-          You have a good foundation in\nunderstanding data privacy but\nneed better security as you leave\nyour data in the hands of third-\nparties and dated systems.
-        </Text>
-      </template>
-      <template v-else-if="place === 'townhouse'">
-        <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
-        <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;CONVENIENT\nTOWNHOUSE</Text>
-        <Text :y="-0" :anchor="titleText.anchor" :scale="titleText.scale / 1.4" :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }"
-          >You enjoy the openness of\ntechnology and often share your data\nfor ease of access but that might put\nyour data in the wrong hands.
-        </Text>
-      </template>
-      <template v-else-if="place === 'mansion'">
-        <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
-        <Text :y="-125" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;GUARDED MANSION</Text>
-        <Text :y="-60" :anchor="titleText.anchor" :scale="titleText.scale / 1.4" :style="{ ...titleText.style, lineHeight: titleText.style.lineHeight * 1.1 }"
-          >Your digital fortress is heavily\nguarded with high-level knowledge\nand high security in place. But even\nthe most secure mansion could\nbenefit from the latest upgrades.
-        </Text>
-      </template>
-    </Container>
-    <Container :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
-      <Sprite ref="emailPlaceholderRef" :texture="inputEmail?.length ? 'PlaceholderEmail2' : 'PlaceholderEmail1'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" />
-      <Sprite
-        v-if="!!inputEmail?.length"
-        :texture="frames[Number(!!email?.length)]"
-        :texture-options="textureOptions"
-        :anchor="0.5"
-        :x="450"
-        :y="0"
-        :scale="2.25"
-        cursor="pointer"
-        @pointerdown="onSubmit(inputEmail!)" />
-      <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
-        <input
-          ref="inputRef"
-          type="email"
-          v-model="inputEmail"
-          @keydown.enter="onSubmit(inputEmail!)"
-          class="border-0 bg-transparent px-4 py-2 outline-none placeholder:font-bold placeholder:text-blue-500 md:text-xl"
-          :style="{ width: emailInputBox.width * 0.9 + 'px', height: emailInputBox.height + 'px' }" />
-      </External>
-    </Container>
-  </AppPopup>
-  <AppPopup v-else type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
-    <template v-slot:popupBg>
-      <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
-    </template>
-    <Text :x="titleText.x" :y="titleText.y - 150" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">SHARE WITH YOUR\nFRIENDS AND SEE WHAT\nHOUSE THEY LIVE IN</Text>
-    <Sprite
-      v-for="{ type, texture, x, y, scale } of socials"
-      :key="type"
-      :texture="texture"
-      :texture-options="textureOptions"
-      :x="x"
-      :y="y"
-      :scale="scale"
-      :anchor="0.5"
-      cursor="pointer"
-      @pointerdown="onShare(type)" />
-  </AppPopup>
+      <Text :x="titleText.x" :y="titleText.y - 150" :anchor="titleText.anchor" :scale="titleText.scale"
+        :style="titleText.style">SHARE WITH YOUR\nFRIENDS AND SEE WHAT\nHOUSE THEY LIVE IN</Text>
+      <Sprite v-for="{ type, texture, x, y, scale } of socials" :key="type" :texture="texture"
+        :texture-options="textureOptions" :x="x" :y="y" :scale="scale" :anchor="0.5" cursor="pointer"
+        @pointerdown="onShare(type)" />
+    </AppPopup>
+  </template>
 </template>
