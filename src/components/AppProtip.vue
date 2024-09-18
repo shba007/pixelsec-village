@@ -129,7 +129,7 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
           >PRO TIP:</Text
         >
         <Text :y="-15" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style"
-          >You can choose how and who you\nwant to &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp what data with\nanytime. It's easy to give consent\nwith Affinidi.</Text
+          >You can choose how and who you\nwant to &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; what data with\nanytime. It's easy to give consent\nwith Affinidi.</Text
         >
         <Text :x="142" :y="40" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="{ ...title4Text.style, fill: '#3464FD', stroke: '#3464FD' }">SHARE</Text>
       </Container>

@@ -3,7 +3,6 @@ import { computed, onBeforeMount, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-// import { BlurFilter } from 'pixi.js'
 
 import { useGameStore } from '@/stores/game'
 import type { Asset, State } from '@/utils/types'
@@ -11,14 +10,14 @@ import type { Asset, State } from '@/utils/types'
 import StreetLamp from '@/components/Animation/StreetLamp.vue'
 import Pigeon from '@/components/Animation/Pigeon.vue'
 import Flag from '@/components/Animation/Flag.vue'
-/* import Wave from '@/components/Animation/Wave.vue'
-import Cloud from '@/components/Animation/Cloud.vue' */
 import MapTram from '@/components/Animation/MapTram.vue'
 import Fountain from '@/components/Animation/Fountain.vue'
 import BaloonStand from '@/components/Animation/BaloonStand.vue'
 import AppSign from '@/components/Animation/AppSign.vue'
 import Car from '@/components/Animation/Car.vue'
 import Boat from '@/components/Animation/Boat.vue'
+import Door from '@/components/Animation/Door.vue'
+import Wolf from '@/components/Animation/Wolf.vue'
 import CharacterGeneric from '@/components/Animation/Character/CharacterGeneric.vue'
 import CharacterStationMaster from '@/components/Animation/Character/CharacterStationMaster.vue'
 import CharacterIcecreamVendor from '@/components/Animation/Character/CharacterIcecreamVendor.vue'
@@ -28,8 +27,6 @@ import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 import CharacterGuard from '@/components/Animation/Character/CharacterGuard.vue'
 import CharacterSus from '@/components/Animation/Character/CharacterSus.vue'
 import AppProtip from '@/components/AppProtip.vue'
-import Door from '@/components/Animation/Door.vue'
-import Wolf from '@/components/Animation/Wolf.vue'
 
 import Scene1 from '@/components/Scene/Scene-1-1.vue'
 import Scene2 from '@/components/Scene/Scene-1-2.vue'
@@ -51,8 +48,11 @@ const gameStore = useGameStore()
 const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, characterSkin, textureOptions } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => screenWidth.value / 1280)
-const zoomFactorAlt = computed(() => {
+const zoomFactorMap = computed(() => {
+  if (currentScreenIndex.value !== 0) return screenHeight.value / 720
+  else return screenWidth.value / 1280
+})
+const zoomFactor = computed(() => {
   const aspectRatio = screenWidth.value / screenHeight.value
   return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
 })
@@ -280,12 +280,6 @@ const streetLamp = ref([
   { x: 370, y: 2800, scale: 0.5 },
 ])
 
-/* const wolfs = ref([
-  { x: 2050, y: 2310, scale: 0.5, flip: false },
-  { x: 2770, y: 2810, scale: 0.5, flip: true },
-  { x: 2510, y: 2950, scale: 0.5, flip: false },
-]) */
-
 const baloonStand = reactive({
   x: 755,
   y: 1160,
@@ -321,7 +315,6 @@ const palmTrees = reactive({
 })
 
 const boats = ref([
-  // { x: 510, y: 3000, scale: 1 },
   { x: 630, y: 3000, scale: 1 },
   { x: 750, y: 3000, scale: 1 },
   { x: 870, y: 3000, scale: 1 },
@@ -552,7 +545,7 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
 </script>
 
 <template>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactorMap" :y="screen.state.y * screen.state.scale * zoomFactorMap" :scale="screen.state.scale * zoomFactorMap">
     <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" />
     <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" />
     <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
@@ -583,23 +576,16 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
     <!-- <BlurFilter :blur="motionBlur ? 0.9 : 0" /> -->
   </Container>
   <Container :renderable="isLoad && !rotationStop">
-    <!-- <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" /> 
-    <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
-    <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" />
-    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" /> 
-    <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" />
-    <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" />
-     <AppProtip v-if="currentPopupIndex === 7" title="1" y="top" /> -->
-    <AppProtip v-if="currentPopupIndex === 11" title="2" y="top" :zoom-factor="zoomFactorAlt" />
-    <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" :zoom-factor="zoomFactorAlt" />
-    <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" :zoom-factor="zoomFactorAlt" @update="handleResponse(18)" />
-    <AppProtip v-else-if="currentPopupIndex === 19" title="4" y="top" :zoom-factor="zoomFactorAlt" />
-    <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" :zoom-factor="zoomFactorAlt" />
-    <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" :zoom-factor="zoomFactorAlt" />
-    <AppProtip v-else-if="currentPopupIndex === 22" title="5" x="left" :zoom-factor="zoomFactorAlt" />
-    <Scene12 v-else-if="currentPopupIndex === 23" :zoom-factor="zoomFactorAlt" />
+    <AppProtip v-if="currentPopupIndex === 11" title="2" y="top" :zoom-factor="zoomFactor" />
+    <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" :zoom-factor="zoomFactor" @update="handleResponse(18)" />
+    <AppProtip v-else-if="currentPopupIndex === 19" title="4" y="top" :zoom-factor="zoomFactor" />
+    <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <AppProtip v-else-if="currentPopupIndex === 22" title="5" x="left" :zoom-factor="zoomFactor" />
+    <Scene12 v-else-if="currentPopupIndex === 23" :zoom-factor="zoomFactor" />
   </Container>
-  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactor" :y="screen.state.y * screen.state.scale * zoomFactor" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactorMap" :y="screen.state.y * screen.state.scale * zoomFactorMap" :scale="screen.state.scale * zoomFactorMap">
     <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
     <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" />
@@ -607,13 +593,13 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
   </Container>
   <Container :renderable="isLoad && !rotationStop">
-    <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" :zoom-factor="zoomFactorAlt" />
+    <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
     <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
-    <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" :zoom-factor="zoomFactorAlt" />
-    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" :zoom-factor="zoomFactorAlt" />
-    <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" :zoom-factor="zoomFactorAlt" />
-    <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" :zoom-factor="zoomFactorAlt" />
-    <AppProtip v-else-if="currentPopupIndex === 7" title="1" y="top" :zoom-factor="zoomFactorAlt" />
+    <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
+    <AppProtip v-else-if="currentPopupIndex === 7" title="1" y="top" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

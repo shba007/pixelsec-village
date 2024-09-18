@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useGameStore } from '@/stores/game';
-import { storeToRefs } from 'pinia';
+import { useGameStore } from '@/stores/game'
+import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import { onTick, useApplication } from 'vue3-pixi'
 // import { isMobile } from 'pixi.js'

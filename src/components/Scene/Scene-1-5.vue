@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 import { useDataStore } from '@/stores/data'
 import { useGameStore } from '@/stores/game'

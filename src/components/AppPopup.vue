@@ -30,8 +30,9 @@ function capitalizeFirstLetter(string: string) {
 }
 
 const modal = computed(() => {
-  const xFactor = 320,
+  let xFactor = 320,
     yFactor = 160
+
   let x = 0,
     y = 0
 
@@ -40,7 +41,7 @@ const modal = computed(() => {
       x = -1 * xFactor
       break
     case 'center':
-      x = 0 * xFactor
+      x = 0.1 * xFactor
       break
     case 'right':
       x = 1 * xFactor
@@ -55,7 +56,8 @@ const modal = computed(() => {
       y = -1 * yFactor
       break
     case 'center':
-      y = 0 * yFactor
+      yFactor = -160
+      y = 0.1 * yFactor
       break
     case 'bottom':
       y = 1 * yFactor
