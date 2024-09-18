@@ -165,7 +165,7 @@ const titleText = reactive({ x: -250, y: -50, anchor: 0, scale: 1, style: { font
             type="email"
             v-model="inputEmail"
             @keydown.enter="onSubmit(inputEmail!)"
-            class="border-0 bg-transparent px-4 py-2 outline-none placeholder:font-bold placeholder:text-blue-500 md:text-xl"
+            class="border-0 bg-transparent px-4 py-2 outline-none placeholder:font-bold placeholder:text-blue-500 md:text-xl lg:text-2xl"
             :style="{ width: emailInputBox.width * 0.9 + 'px', height: emailInputBox.height + 'px' }" />
         </External>
       </Container>

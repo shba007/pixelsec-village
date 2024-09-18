@@ -21,7 +21,10 @@ const gameStore = useGameStore()
 const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => screenHeight.value / 720)
+const zoomFactor = computed(() => {
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
+})
 
 // Asset
 const screen = reactive<any>({
