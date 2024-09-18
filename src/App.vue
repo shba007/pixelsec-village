@@ -70,28 +70,22 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 </script>
 
 <template>
-  <main class="relative bg-black"
-    :class="{ 'overflow-hidden portrait:h-[130vh]': (isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop)) }">
-    <Application :width="screenWidth" :height="screenHeight" :antialias="motionBlur" power-preference="high-performance"
-      class="relative z-10">
+  <main class="relative bg-black" :class="{ 'overflow-hidden portrait:h-[130vh]': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop) }">
+    <Application :width="screenWidth" :height="screenHeight" :antialias="motionBlur" power-preference="high-performance" class="relative z-10">
       <Loader :resources="{ ...resources.sound, ...resources.font, ...resources.image }" :on-resolved="onResolve">
         <template #fallback="{ progress }">
-          <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{
-            Math.floor(progress * 99) }}% </Text>
+          <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{ Math.floor(progress * 99) }}% </Text>
         </template>
         <template #default>
           <template v-if="!isStarted">
             <Container v-if="isLoaded" :x="loadingText.x" :y="loadingText.y" :scale="0.75">
-              <AppButton type="long" text="Start Game" :x="0" :y="0" :scale="1" :is-pressed="isPressed"
-                @click="onClick" />
+              <AppButton type="long" text="Start Game" :x="0" :y="0" :scale="1" :is-pressed="isPressed" @click="onClick" />
             </Container>
-            <Text v-else :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... 99%
-            </Text>
+            <Text v-else :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... 99% </Text>
             <AppSettings />
           </template>
           <template v-else>
-            <ScreenMap v-if="currentScreenIndex <= 6"
-              :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
+            <ScreenMap v-if="currentScreenIndex <= 6" :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
             <ScreenStation v-if="currentScreenIndex === 1" />
             <ScreenPark v-else-if="currentScreenIndex === 3" />
             <ScreenBank v-else-if="currentScreenIndex === 5" />
@@ -103,11 +97,17 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
       </Loader>
     </Application>
     <img
-      v-if="isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop) && (currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6)"
-      src="/images/image-bg.png" class="absolute left-0 top-0 landscape:hidden" />
+      v-if="
+        isMobile.apple.phone &&
+        isStarted &&
+        (currentScreenIndex === 0 || rotationStop) &&
+        (currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6)
+      "
+      src="/images/image-bg.png"
+      class="absolute left-0 top-0 landscape:hidden" />
     <!-- DEBUG -->
     <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-      <p>v0.4.57</p>
+      <p>v0.4.58</p>
       <!--       <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
       <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
       <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>

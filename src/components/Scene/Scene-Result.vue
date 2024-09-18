@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { useWindowSize, watchArray } from '@vueuse/core'
-import { External } from 'vue3-pixi'
+import { useWindowSize } from '@vueuse/core'
+import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
@@ -75,10 +75,8 @@ function resize() {
   }
 }
 
-watchArray([screenWidth, screenHeight], resize)
-
-onMounted(() => {
-  setTimeout(resize, 50)
+onTick(() => {
+  resize()
 })
 
 onMounted(() => {
