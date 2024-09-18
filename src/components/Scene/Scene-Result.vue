@@ -161,7 +161,7 @@ const titleText = reactive({ x: -250, y: -50, anchor: 0, scale: 1, style: { font
           :scale="2.25"
           cursor="pointer"
           @pointerdown="onSubmit(inputEmail!)" />
-        <External class="fixed z-10" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
+        <External class="fixed z-20 touch-none" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
           <input
             ref="inputRef"
             type="email"

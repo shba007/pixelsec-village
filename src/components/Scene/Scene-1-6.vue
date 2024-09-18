@@ -84,8 +84,8 @@ const titleText = reactive({ x: 0, y: -170, anchor: 0.5, scale: 1, style: { font
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> TERMS AND CONDITIONS FOR\nAFIINIDI SERVICES </Text>
     </Container>
     <Sprite ref="boxPlaceholderRef" texture="popupScene05BG" :texture-options="textureOptions" :anchor="0.5" :x="boxPlaceholder.x" :y="boxPlaceholder.y" :scale="boxPlaceholder.scale" />
-    <External v-if="!rotationStop" class="fixed" :style="{ left: boxDiv.x + 'px', top: boxDiv.y + 'px', width: boxDiv.width + 'px', height: boxDiv.height + 'px', opacity: boxDiv.alpha }">
-      <section ref="targetElem" class="policy-section cms-content section-legal">
+    <External v-if="!rotationStop" class="fixed z-10" :style="{ left: boxDiv.x + 'px', top: boxDiv.y + 'px', width: boxDiv.width + 'px', height: boxDiv.height + 'px', opacity: boxDiv.alpha }">
+      <section ref="targetElem" class="policy-section cms-content section-legal touch-none">
         <div class="container">
           <article>
             <p>Version 2.2 - May 2024</p>

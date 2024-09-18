@@ -3,6 +3,7 @@ import { computed, onBeforeMount, ref } from 'vue'
 import { Application, Loader } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
+import { isMobile } from 'pixi.js'
 
 import { resources } from '@/utils/asset'
 import { useGameStore } from '@/stores/game'
@@ -70,7 +71,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 
 <template>
   <main class="relative bg-black"
-    :class="{ 'portrait:h-[130vh] overflow-hidden': (isStarted && (currentScreenIndex === 0 || rotationStop)) }">
+    :class="{ 'overflow-hidden portrait:h-[130vh]': (isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop)) }">
     <Application :width="screenWidth" :height="screenHeight" :antialias="motionBlur" power-preference="high-performance"
       class="relative z-10">
       <Loader :resources="{ ...resources.sound, ...resources.font, ...resources.image }" :on-resolved="onResolve">
@@ -102,11 +103,11 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
       </Loader>
     </Application>
     <img
-      v-if="(isStarted && (currentScreenIndex === 0 || rotationStop)) && (currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6)"
+      v-if="isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop) && (currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6)"
       src="/images/image-bg.png" class="absolute left-0 top-0 landscape:hidden" />
     <!-- DEBUG -->
     <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-      <p>v0.4.55</p>
+      <p>v0.4.57</p>
       <!--       <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
       <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
       <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>

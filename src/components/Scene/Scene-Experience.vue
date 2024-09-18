@@ -3,7 +3,7 @@ import { computed, reactive } from 'vue'
 import { isMobile } from 'pixi.js'
 import { onTick } from 'vue3-pixi'
 
-import { useTimeout, useWindowSize } from '@vueuse/core';
+import { useTimeout, useWindowSize } from '@vueuse/core'
 import { useGameStore } from '@/stores/game'
 import AppPopup from '@/components/AppPopup.vue'
 
@@ -39,17 +39,11 @@ const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { f
   <AppPopup v-if="ready" type="portrait" x="center" y="center" :zoom-factor="zoomFactor * 2" :show-button="false">
     <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
     <Container :x="titleText.x" :y="titleText.y">
-      <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale"
-        :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> FOR
-        BEST\nVIEWING\nEXPERIENCE </Text>
-      <Text :y="-80" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"> Rotate your\nscreen
-        to\ncontinue </Text>
-      <Text v-if="!isMobile.apple.phone" :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10" :y="330"
-        :style="fullscreenText.style">Full screen</Text>
-      <Text v-else :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10" :y="330"
-        :style="fullscreenText.style">Swipe up and rotate!</Text>
+      <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> FOR BEST\nVIEWING\nEXPERIENCE </Text>
+      <Text :y="-80" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"> Rotate your\nscreen to\ncontinue </Text>
+      <Text v-if="!isMobile.apple.phone" :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10" :y="330" :style="fullscreenText.style">Full screen</Text>
+      <Text v-else :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10" :y="330" :style="fullscreenText.style">Swipe up and rotate!</Text>
     </Container>
-    <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer"
-      @pointerdown="handleStart" />
+    <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer" @pointerdown="handleStart" />
   </AppPopup>
 </template>
