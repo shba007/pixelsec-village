@@ -39,7 +39,7 @@
 
 body {
   font-family: 'Lan';
-  @apply overflow-hidden;
+  @apply overflow-x-hidden;
 }
 
 canvas {
