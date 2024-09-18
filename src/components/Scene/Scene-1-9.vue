@@ -42,16 +42,19 @@ function onClick(option: annoyingPointChoice) {
   selectedOption.value = option
   dataStore.setAnnoyingPoint(option)
   gameStore.playSFXSound('buttonPress')
+  onNext()
 }
 
-function handleMove() {
-  emit('update')
-  showPopup.value = false
+function onNext() {
+  setTimeout(() => {
+    emit('update')
+    showPopup.value = false
+  }, 100)
 }
 </script>
 
 <template>
-  <AppPopup v-if="showPopup" type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup v-if="showPopup" type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <AppCheckbox
       v-for="{ key, value, state } of options"
       :key="key"

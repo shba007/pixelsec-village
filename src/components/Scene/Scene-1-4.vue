@@ -22,20 +22,23 @@ const characters = [
 const selectedCharacter = ref<Character>()
 
 function setCharacter(type: Character) {
+  if (selectedCharacter.value !== undefined) return
+
   selectedCharacter.value = type
   gameStore.setCharacterSkin(type)
   gameStore.playSFXSound('buttonPressDesign')
+  onNext()
 }
 
-function handleMove() {
-  gameStore.nextTimeline({ id: 4 })
+function onNext() {
+  setTimeout(() => gameStore.nextTimeline({ id: 4 }), 100)
 }
 
 const titleText = reactive({ x: 0, y: -120, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'center', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
-  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :y="-65" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }">SELECT YOUR AVATAR</Text>
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">Choose your main character energy.</Text>

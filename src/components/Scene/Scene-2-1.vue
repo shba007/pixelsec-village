@@ -34,21 +34,24 @@ const selectedOption = ref<ageChoice>()
 const characterStationMaster = reactive({ x: -270, y: -50, scale: 1.1, alpha: 1, time: 0 })
 
 function onClick(value: ageChoice) {
+  if (selectedOption.value !== undefined) return
+
   // DATA-COLLECT
   selectedOption.value = value
   dataStore.setAge(value)
   gameStore.playSFXSound('buttonPress')
+  onNext()
 }
 
-function handleMove() {
-  gameStore.nextTimeline({ id: 9 })
+function onNext() {
+  setTimeout(() => gameStore.nextTimeline({ id: 9 }), 100)
 }
 
 const titleText = reactive({ x: 120, y: -30, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
-  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Please verify your age\nfor tram ticket purchase </Text>
     </Container>

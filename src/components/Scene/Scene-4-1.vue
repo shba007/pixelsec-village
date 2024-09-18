@@ -13,7 +13,7 @@ const gameStore = useGameStore()
 
 const alarmBell = reactive({ x: -355, y: -5, scale: 4.5 })
 
-function handleMove() {
+function onNext() {
   gameStore.nextTimeline({ id: 32 })
 }
 
@@ -25,7 +25,7 @@ const titleText = reactive({ x: 95, y: -5, anchor: 0.5, scale: 1, style: { fontF
 </script>
 
 <template>
-  <AppPopup type="slim" x="center" y="bottom" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="slim" x="center" y="bottom" :zoom-factor="zoomFactor" @next="onNext">
     <Text :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
       Your go-to app has a data\nbreach. You have 8 seconds\nto decide what to do.
     </Text>

@@ -25,24 +25,27 @@ const options: {
   { type: false, value: 'No', state: { x: 65 + 40, y: 80 + 45 } },
 ]
 
-const selectedOption = ref<boolean | null>(null)
+const selectedOption = ref<boolean>()
 
 function onClick(option: boolean) {
+  if (selectedOption.value !== undefined) return
+
   // DATA-COLLECT
   selectedOption.value = option
   dataStore.setCollectData(option)
   gameStore.playSFXSound('buttonPress')
+  onNext()
 }
 
-function handleMove() {
-  gameStore.nextTimeline({ id: 26 })
+function onNext() {
+  setTimeout(() => gameStore.nextTimeline({ id: 26 }), 100)
 }
 
 const titleText = reactive({ x: -10, y: -125, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
-  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Text :anchor="titleText.anchor" :style="titleText.style" :x="titleText.x" :y="titleText.y" :scale="titleText.scale">
       Would you like to collect all your\ndata from one place for\nconvenience
     </Text>

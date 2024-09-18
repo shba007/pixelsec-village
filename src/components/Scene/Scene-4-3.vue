@@ -34,14 +34,17 @@ const options = ref<
 const selectedOption = ref<dataResponsibilityChoice>()
 
 function onClick(value: dataResponsibilityChoice) {
+  if (selectedOption.value !== undefined) return
+
   // DATA-COLLECT
   selectedOption.value = value
   dataStore.setDataResponsibility(value)
   gameStore.playSFXSound('buttonPress', 2)
+  onNext()
 }
 
-function handleMove() {
-  gameStore.nextTimeline(currentPopupIndex.value === 14 ? { screen: 2, id: 35 } : { screen: 1, id: 36 })
+function onNext() {
+  setTimeout(() => gameStore.nextTimeline(currentPopupIndex.value === 14 ? { screen: 2, id: 35 } : { screen: 1, id: 36 }))
 }
 
 onMounted(() => {
@@ -52,7 +55,7 @@ const titleText = reactive({ x: 0, y: -150, anchor: 0.5, scale: 1, style: { font
 </script>
 
 <template>
-  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container>
       <Text v-if="currentPopupIndex === 14" :x="titleText.x - 30" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
         Your data could be compromised. Who\ndo you think should protect your data?

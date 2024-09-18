@@ -12,7 +12,7 @@ const gameStore = useGameStore()
 
 const isSecondScreen = ref(false)
 
-function handleMove() {
+function onNext() {
   gameStore.nextTimeline({ id: 24 })
 }
 
@@ -26,7 +26,7 @@ const secondTitleText = reactive({ x: -30, y: 0, anchor: 0.5, scale: 1, style: {
       It's a hot day and you need to cool off.\nHow about a free ice-cream in exchange \nfor your personal data?
     </Text>
   </AppPopup>
-  <AppPopup v-else type="slim" x="center" y="top" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup v-else type="slim" x="center" y="top" :zoom-factor="zoomFactor" @next="onNext">
     <Text :x="secondTitleText.x" :y="secondTitleText.y" :anchor="secondTitleText.anchor" :scale="secondTitleText.scale" :style="secondTitleText.style">
       What are you willing to share?\nPick more than one.
     </Text>

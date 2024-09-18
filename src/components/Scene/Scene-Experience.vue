@@ -5,11 +5,15 @@ import { onTick } from 'vue3-pixi'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
+import AppPopup from '@/components/AppPopup.vue'
 
 const gameStore = useGameStore()
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-const zoomFactor = computed(() => screenHeight.value / 720)
+const zoomFactor = computed(() => {
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
+})
 
 const pwaInstalled = ref(false)
 const installPromptEvent = ref<Event | null>(null)
@@ -66,12 +70,12 @@ async function onClick() {
 }
 
 const ready = useTimeout(250)
-const rotate = reactive({ x: 0, y: 305, scale: 0.3 })
+const rotate = reactive({ x: 0, y: 305 + 300, scale: 1 })
 let count = 0
 
 onTick((delta) => {
   count += delta * 0.04
-  rotate.scale = (75 + Math.sin(count) * 15) / 300
+  rotate.scale = (75 + Math.sin(count) * 15) / 200
 })
 
 onMounted(() => {
@@ -80,9 +84,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <Container v-if="ready" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
+  <AppPopup v-if="ready" type="portrait" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="1" />
     <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer" @pointerdown="onClick" />
-  </Container>
+  </AppPopup>
 </template>

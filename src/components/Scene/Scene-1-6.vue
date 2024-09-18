@@ -20,7 +20,7 @@ const { arrivedState, y } = useScroll(targetElem, { behavior: 'instant' })
 
 let interval: any
 
-function handleMove() {
+function onNext() {
   gameStore.nextTimeline({ id: 6 })
 }
 
@@ -35,7 +35,7 @@ watch(
   (value) => {
     if (value) {
       clearInterval(interval)
-      useTimeoutFn(handleMove, 3000)
+      useTimeoutFn(onNext, 3000)
     }
   }
 )

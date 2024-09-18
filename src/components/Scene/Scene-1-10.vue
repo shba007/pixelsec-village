@@ -34,17 +34,18 @@ function onClick(value: boolean) {
   selectedOption.value = value
   dataStore.setDataVault(value)
   gameStore.playSFXSound('buttonPress')
+  onNext()
 }
 
-function handleMove() {
-  gameStore.nextTimeline({ id: 54 })
+function onNext() {
+  setTimeout(() => gameStore.nextTimeline({ id: 54 }))
 }
 
 const titleText = reactive({ x: 15, y: -70, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
-  <AppPopup type="square" x="right" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="square" x="right" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Text :anchor="titleText.anchor" :style="titleText.style" :x="titleText.x" :y="titleText.y" :scale="titleText.scale">
       Would you store your\nmultiple online profiles \nand data securely in a\nsingle vault?
     </Text>

@@ -29,21 +29,24 @@ const options: {
 const selectedOption = ref<boolean>()
 
 function onClick(value: boolean) {
+  if (selectedOption.value !== undefined) return
+
   // DATA-COLLECT
   selectedOption.value = value
   dataStore.setReadTC(value)
   gameStore.playSFXSound('buttonPress')
+  onNext()
 }
 
-function handleMove() {
-  gameStore.nextTimeline(selectedOption.value ? { screen: 1, id: 5 } : { screen: 2, id: 6 })
+function onNext() {
+  setTimeout(() => gameStore.nextTimeline(selectedOption.value ? { screen: 1, id: 5 } : { screen: 2, id: 6 }), 100)
 }
 
 const titleText = reactive({ x: 10, y: -85, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'center', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
-  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Before we begin,\nlet's go through the T&Cs. </Text>
     </Container>

@@ -37,7 +37,9 @@ function onClick(option: dataExchangeChoice) {
   else selectedOptions.value.add(option)
 }
 
-function handleMove() {
+function onNext() {
+  if (![...selectedOptions.value.values()].length) return
+
   // DATA-COLLECT
   dataStore.setDataExchange([...selectedOptions.value.values()])
   gameStore.nextTimeline({ id: 25 })
@@ -45,7 +47,7 @@ function handleMove() {
 </script>
 
 <template>
-  <AppPopup type="square" x="right" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="square" x="right" y="center" :zoom-factor="zoomFactor" @next="onNext">
     <AppCheckbox v-for="{ type, value, state } of options" :key="type" :text="value" :x="state.x - 220" :y="state.y + 50" :scale="1" :is-checked="selectedOptions.has(type)" @click="onClick(type)" />
   </AppPopup>
 </template>

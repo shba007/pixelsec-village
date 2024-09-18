@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 import { useDataStore, type spendTimeChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
@@ -41,7 +41,9 @@ function onClick(option: spendTimeChoice) {
   else selectedOptions.value.add(option)
 }
 
-function handleMove() {
+function onNext() {
+  if (![...selectedOptions.value.values()].length) return
+
   // DATA-COLLECT
   dataStore.setSpendTime([...selectedOptions.value.values()] as spendTimeChoice[])
   gameStore.nextTimeline({ id: 10 })
@@ -51,7 +53,7 @@ const titleText = reactive({ x: 0, y: 0, anchor: 0.5, scale: 1, style: { fontFam
 </script>
 
 <template>
-  <AppPopup type="square" x="right" y="center" :popup-x="titleText.x" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="square" x="right" y="center" :popup-x="titleText.x" :zoom-factor="zoomFactor" @next="onNext">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">How will you spend\nyour time on the tram?\n\nPick more than one.</Text>
     </Container>

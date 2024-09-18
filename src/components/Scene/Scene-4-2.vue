@@ -45,9 +45,7 @@ const timer = computed(() => {
   let formattedMilliseconds = milliseconds.toString().padStart(2, '0')
 
   if (number === 1) {
-    setTimeout(() => {
-      gameStore.nextTimeline({ id: 33 })
-    }, 50)
+    onNext(true)
     return []
   }
 
@@ -55,14 +53,17 @@ const timer = computed(() => {
 })
 
 function onClick(value: dataBreachActionChoice) {
+  if (selectedOption.value !== undefined) return
+
   // DATA-COLLECT
   selectedOption.value = value
   dataStore.setDataBreachAction(value)
   gameStore.playSFXSound('buttonPress')
+  onNext(false)
 }
 
-function handleMove() {
-  gameStore.nextTimeline({ screen: 2, id: 34 })
+function onNext(skip: boolean) {
+  setTimeout(() => gameStore.nextTimeline(skip ? { screen: 2, id: 34 } : { id: 33 }), 100)
 }
 
 onMounted(() => {
@@ -81,7 +82,7 @@ const timerText = reactive({ x: -180, y: -175, scale: 1, style: { fontFamily: 'I
 </script>
 
 <template>
-  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container :x="timerText.x" :y="timerText.y">
       <Text :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">Countdown timer:</Text>
       <template v-for="(digits, digitsIndex) of timer" :key="digitsIndex">
