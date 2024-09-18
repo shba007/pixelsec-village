@@ -39,7 +39,7 @@
 
 body {
   font-family: 'Lan';
-  height: 150vh;
+  @apply h-full portrait:h-[150vh] ;
   /* @apply overflow-x-hidden landscape:overflow-hidden; */
 }
 
