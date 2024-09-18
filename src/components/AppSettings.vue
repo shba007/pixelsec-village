@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import { useGameStore } from '@/stores/game';
+import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue'
 import { onTick, useApplication } from 'vue3-pixi'
 // import { isMobile } from 'pixi.js'
+
+const gameStore = useGameStore()
+const { isLandscape } = storeToRefs(gameStore)
 
 const app = useApplication()
 // app.value.renderer.options.antialias = true
@@ -19,10 +24,12 @@ onMounted(() => {
   // app.value.renderer.options.powerPreference = 'high-performance'
 })
 
-/* onTick(() => {
-  const canvas = document.querySelector<HTMLCanvasElement>('canvas')!
-  canvas.style.touchAction = 'auto'
-}) */
+onTick(() => {
+  if (!isLandscape.value) {
+    const canvas = document.querySelector<HTMLCanvasElement>('canvas')!
+    canvas.style.touchAction = 'auto'
+  }
+})
 </script>
 
 <script lang="ts">

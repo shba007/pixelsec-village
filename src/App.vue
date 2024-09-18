@@ -70,7 +70,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 
 <template>
   <main>
-    <Application :width="screenWidth" :height="screenHeight" :antialias="motionBlur"
+    <Application :width="screenWidth" :height="screenHeight + (isLandscape ? 0 : 200)" :antialias="motionBlur"
       power-preference="high-performance">
       <Loader :resources="{ ...resources.sound, ...resources.font, ...resources.image }" :on-resolved="onResolve">
         <template #fallback="{ progress }">
@@ -100,7 +100,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
     </Application>
     <!-- DEBUG -->
     <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-      <p>v0.4.46</p>
+      <p>v0.4.47</p>
       <!-- <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
       <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
       <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
