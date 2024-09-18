@@ -44,7 +44,7 @@ function onClick(value: dataResponsibilityChoice) {
 }
 
 function onNext() {
-  setTimeout(() => gameStore.nextTimeline(currentPopupIndex.value === 14 ? { screen: 2, id: 35 } : { screen: 1, id: 36 }))
+  setTimeout(() => gameStore.nextTimeline(currentPopupIndex.value === 14 ? { screen: 2, id: 35 } : { screen: 1, id: 36 }), 300)
 }
 
 onMounted(() => {

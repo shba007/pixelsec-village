@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import { useScroll, useTimeoutFn, useWindowSize, watchArray } from '@vueuse/core'
-import { External } from 'vue3-pixi'
+import { useScroll, useTimeoutFn } from '@vueuse/core'
+import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
@@ -67,9 +67,7 @@ function resize() {
   }
 }
 
-const { width, height } = useWindowSize()
-
-watchArray([width, height], resize)
+onTick(resize)
 
 onMounted(() => {
   setTimeout(resize, 50)
@@ -85,7 +83,7 @@ const titleText = reactive({ x: 0, y: -170, anchor: 0.5, scale: 1, style: { font
     </Container>
     <Sprite ref="boxPlaceholderRef" texture="popupScene05BG" :texture-options="textureOptions" :anchor="0.5" :x="boxPlaceholder.x" :y="boxPlaceholder.y" :scale="boxPlaceholder.scale" />
     <External v-if="!rotationStop" class="fixed z-10" :style="{ left: boxDiv.x + 'px', top: boxDiv.y + 'px', width: boxDiv.width + 'px', height: boxDiv.height + 'px', opacity: boxDiv.alpha }">
-      <section ref="targetElem" class="policy-section cms-content section-legal touch-none">
+      <section ref="targetElem" class="policy-section cms-content section-legal touch-pan-down">
         <div class="container">
           <article>
             <p>Version 2.2 - May 2024</p>

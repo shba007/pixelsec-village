@@ -39,7 +39,7 @@ const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { f
 </script>
 
 <template>
-  <AppPopup v-if="!isLandscape" type="portrait" x="center" y="center" :zoom-factor="zoomFactor * 2" :show-button="false">
+  <AppPopup v-if="!isLandscape" type="portrait" x="center" y="center" :zoom-factor="zoomFactor * 1.5" :show-button="false">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> WELCOME TO\n DATAVILLE </Text>
       <Text :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"> Where your online\n habits and choices\n will shape the kind\n of house you live\n in. Let's go! </Text>

@@ -2,7 +2,7 @@
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
-import { useWindowSize, watchArray } from '@vueuse/core'
+import { useWindowSize } from '@vueuse/core'
 import { textureOptions } from '@/components/AppSettings.vue'
 import { useGameStore } from '@/stores/game'
 
@@ -117,17 +117,14 @@ onTick((delta) => {
 watch(currentSceneIndex, (value) => {
   if (value === 21) {
     screen.animation = 'started'
-    console.log(screen.animation)
+    gameStore.stopSFXSound()
+    gameStore.playBGMSound('normal')
   }
 })
 
 watch(currentPopupIndex, (value) => {
   if (value === 16) {
-    gameStore.stopSFXSound()
-    gameStore.playBGMSound('normal')
-    setTimeout(() => {
-      gameStore.nextTimeline({ id: 37 })
-    }, 3000)
+    setTimeout(() => gameStore.nextTimeline({ id: 37 }), 5000)
   }
 })
 
@@ -144,15 +141,19 @@ function resize() {
     const scaleX = sceneRef.value.worldTransform.a // Get global scale on X-axis
     const width = localBounds.width * scaleX
 
-    screen.state.x = (width / 2) * 0.8 - screenWidth.value / 2
-    screen.states[0].x = (width / 2) * 0.8 - screenWidth.value / 2
-    screen.states[1].x = (-width / 2) * 0.8 + screenWidth.value / 2
+    // screen.state.x = (width / 2) * 0.8 - screenWidth.value / 2
+    screen.states[0].x = (width / 2) * 0.825 - screenWidth.value / 2
+    screen.states[1].x = (-width / 2) * 0.825 + screenWidth.value / 2
   }
 }
 
-watchArray([screenWidth, screenHeight], resize)
+onTick(resize)
 
-onMounted(() => setTimeout(resize, 50))
+onMounted(() => {
+  setTimeout(() => {
+    screen.state.x = screen.states[0].x
+  }, 50)
+})
 </script>
 
 <template>
@@ -165,7 +166,13 @@ onMounted(() => setTimeout(resize, 50))
     <Door :x="door.x" :y="door.y" :scale="door.scale" place="bank" :playing="true" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" place="bank" />
     <template v-if="!rotationStop">
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :type="type as 'purple' | 'green'" />
+      <CharacterPanic
+        v-for="({ type, states }, index) of charactersPanic"
+        :key="index"
+        :states="states"
+        place="bank"
+        :play-sound="screen.animation === 'init' && type === 'purple'"
+        :type="type as 'purple' | 'green'" />
     </template>
     <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <CharacterGuard :state="characterGuard" place="bank" />

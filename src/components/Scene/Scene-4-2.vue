@@ -63,7 +63,7 @@ function onClick(value: dataBreachActionChoice) {
 }
 
 function onNext(skip: boolean) {
-  setTimeout(() => gameStore.nextTimeline(skip ? { screen: 2, id: 34 } : { id: 33 }), 100)
+  setTimeout(() => gameStore.nextTimeline(!skip ? { screen: 2, id: 34 } : { id: 33 }), 300)
 }
 
 onMounted(() => {

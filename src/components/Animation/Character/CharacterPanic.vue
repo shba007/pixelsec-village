@@ -7,17 +7,21 @@ import { onTick } from 'vue3-pixi'
 import { useGameStore } from '@/stores/game'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
-const props = defineProps<{
-  place: 'map' | 'bank'
-  states: {
-    x: number
-    y: number
-    scale: number
-    alpha: number
-    time: number
-  }[]
-  type: 'green' | 'purple'
-}>()
+const props = withDefaults(
+  defineProps<{
+    place: 'map' | 'bank'
+    states: {
+      x: number
+      y: number
+      scale: number
+      alpha: number
+      time: number
+    }[]
+    type: 'green' | 'purple'
+    playSound: boolean
+  }>(),
+  { playSound: true }
+)
 
 const gameStore = useGameStore()
 const { currentPopupIndex, textureOptions } = storeToRefs(gameStore)
@@ -84,14 +88,16 @@ watch(currentPopupIndex, (value) => {
 
 const { resume, pause } = useIntervalFn(
   () => {
-    gameStore.playSFXSound('panic', 3)
+    if (props.playSound) {
+      gameStore.playSFXSound('panic', 3)
+    }
   },
   5000,
   { immediate: false }
 )
 
 onMounted(() => {
-  if (props.type === 'purple') {
+  if (props.playSound) {
     gameStore.playSFXSound('panic', 3)
     resume()
   }

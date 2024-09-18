@@ -77,7 +77,8 @@ const modal = computed(() => {
 })
 
 onMounted(() => {
-  gameStore.playSFXSound('protip')
+  gameStore.playSFXSound('dialogBox')
+  setTimeout(() => gameStore.playSFXSound('protip'), 800)
 })
 
 const title1Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })

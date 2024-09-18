@@ -72,7 +72,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 <template>
   <main class="relative bg-black" :class="{ 'overflow-hidden portrait:h-[130vh]': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop) }">
     <Application :width="screenWidth" :height="screenHeight" :antialias="motionBlur" power-preference="high-performance" class="relative z-10">
-      <Loader :resources="{ ...resources.sound, ...resources.font, ...resources.image }" :on-resolved="onResolve">
+      <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
         <template #fallback="{ progress }">
           <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{ Math.floor(progress * 99) }}% </Text>
         </template>
@@ -107,8 +107,8 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
       class="absolute left-0 top-0 landscape:hidden" />
     <!-- DEBUG -->
     <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-      <p>v0.4.58</p>
-      <!--       <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+      <p>v0.4.59</p>
+      <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
       <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
       <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
       <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>

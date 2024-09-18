@@ -38,7 +38,7 @@ function onClick(option: boolean) {
 }
 
 function onNext() {
-  setTimeout(() => gameStore.nextTimeline({ id: 26 }), 100)
+  setTimeout(() => gameStore.nextTimeline({ id: 26 }), 300)
 }
 
 const titleText = reactive({ x: -10, y: -125, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })

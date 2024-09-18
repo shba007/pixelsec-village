@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, onMounted } from 'vue'
-import { useWindowSize } from '@vueuse/core'
+import { useTimeout, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
@@ -77,7 +77,11 @@ const modal = computed(() => {
 
 const button = reactive({ x: 350, y: 180, scale: 0.5, isPressed: false, isShow: props.showButton })
 
+const ready = useTimeout(200)
+
 onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
+
   switch (props.type) {
     case 'portrait':
       button.x = 100
@@ -96,22 +100,21 @@ onMounted(() => {
       button.y = 80
       break
   }
-
-  gameStore.playSFXSound('dialogBox')
 })
 
 function handleButtonPress() {
   if (button.isPressed || props.buttonDisabled) return
 
-  button.isPressed = true
   gameStore.playSFXSound('buttonPress')
-
-  setTimeout(() => emit('next'), 100)
+  setTimeout(() => {
+    button.isPressed = true
+    setTimeout(() => emit('next'), 300)
+  }, 0)
 }
 </script>
 
 <template>
-  <Container :x="screenWidth * 0.5" :y="screenHeight * 0.5" :scale="zoomFactor">
+  <Container v-if="ready" :x="screenWidth * 0.5" :y="screenHeight * 0.5" :scale="zoomFactor">
     <Container :x="modal.state.x" :y="modal.state.y">
       <slot name="popupBg" />
       <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
