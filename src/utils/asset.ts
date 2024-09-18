@@ -9,12 +9,12 @@ import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
 import portipIcon1Texture from '@/assets/image/popup/protip-1.png'
 import portipIcon2Texture from '@/assets/image/popup/protip-2.png'
 import popupSceneInstallTexture from '@/assets/image/popup/scene-install.png'
-import popupSceneRotateTexture from '@/assets/image/popup/scene-rotate.png'
+// import popupSceneRotateTexture from '@/assets/image/popup/scene-rotate.png'
+import popupSceneRotateOverlayTexture from '@/assets/image/popup/scene-rotate-overlay.png'
 import popupBgSlimTexture from '@/assets/image/popup/bg-slim.png'
 import popupBgLandscapeTexture from '@/assets/image/popup/bg-landscape.png'
 import popupBgSquareTexture from '@/assets/image/popup/bg-square.png'
 import popupBgPortraitTexture from '@/assets/image/popup/bg-portrait.png'
-import popupSceneRotateOverlayTexture from '@/assets/image/popup/scene-rotate-overlay.png'
 //
 import buttonLongTexture from '@/assets/image/buttons/long/unpressed.png'
 import buttonLongPressedTexture from '@/assets/image/buttons/long/pressed.png'
@@ -354,6 +354,7 @@ import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
 import IconX from '@/assets/image/popup/icon-social-x.png'
 import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
 import PlaceholderEmail2 from '@/assets/image/popup/placeholder-email-focus.png'
+import BgImage from '/images/image-bg.png'
 
 export const resources = {
   font: {
@@ -367,16 +368,17 @@ export const resources = {
     sfxSprite,
   },
   image: {
+    BgImage,
     popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,
     portipIcon1: portipIcon1Texture,
     portipIcon2: portipIcon2Texture,
-    popupSceneRotate: popupSceneRotateTexture,
+    // popupSceneRotate: popupSceneRotateTexture,
+    popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
     popupBgSlim: popupBgSlimTexture,
     popupBgLandscape: popupBgLandscapeTexture,
     popupBgPortrait: popupBgPortraitTexture,
     popupBgSquare: popupBgSquareTexture,
-    popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
     // popupScene01Landscape: popupScene01LandscapeTexture,
     // popupScene01Portrait: popupScene01PortraitTexture,
     // popupScene02: popupScene02Texture,
