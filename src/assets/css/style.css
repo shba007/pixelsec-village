@@ -39,7 +39,8 @@
 
 body {
   font-family: 'Lan';
-  @apply overflow-x-hidden landscape:overflow-hidden;
+  height: 150vh;
+  /* @apply overflow-x-hidden landscape:overflow-hidden; */
 }
 
 canvas {
