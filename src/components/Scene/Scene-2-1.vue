@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 import { useDataStore, type ageChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
@@ -43,10 +43,6 @@ function onClick(value: ageChoice) {
 function handleMove() {
   gameStore.nextTimeline({ id: 9 })
 }
-
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
 
 const titleText = reactive({ x: 120, y: -30, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>

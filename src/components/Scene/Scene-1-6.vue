@@ -1,25 +1,19 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { useScroll, useTimeoutFn, useWindowSize, watchArray } from '@vueuse/core'
 import { External } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
+import AppPopup from '@/components/AppPopup.vue'
 
-const props = defineProps<{
+defineProps<{
   zoomFactor: number
 }>()
 
 const gameStore = useGameStore()
 const { rotationStop } = storeToRefs(gameStore)
-
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-
-const modal = computed(() => ({
-  texture: 'popupBgLandscape',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
-}))
 
 const targetElem = ref<HTMLParagraphElement | null>(null)
 const { arrivedState, y } = useScroll(targetElem, { behavior: 'instant' })
@@ -45,10 +39,6 @@ watch(
     }
   }
 )
-
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
 
 onBeforeUnmount(() => {
   if (interval) clearInterval(interval)
@@ -89,8 +79,7 @@ const titleText = reactive({ x: 0, y: -170, anchor: 0.5, scale: 1, style: { font
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> TERMS AND CONDITIONS FOR\nAFIINIDI SERVICES </Text>
     </Container>
@@ -957,7 +946,7 @@ const titleText = reactive({ x: 0, y: -170, anchor: 0.5, scale: 1, style: { font
       </section>
       <button class="absolute bottom-4 left-1/2 aspect-square -translate-x-1/2 rounded-full bg-slate-100 px-3 py-0.5 text-2xl shadow-md" @click="autoScroll">↓</button>
     </External>
-  </Container>
+  </AppPopup>
 </template>
 
 <style scoped>

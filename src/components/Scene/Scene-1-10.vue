@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
-import { useWindowSize } from '@vueuse/core'
+import { reactive, ref } from 'vue'
 
 import { useDataStore } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/AppSettings.vue'
 import AppButton from '@/components/AppButton.vue'
+import AppPopup from '@/components/AppPopup.vue'
 
-const props = defineProps<{
+defineProps<{
   zoomFactor: number
 }>()
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-
-const modal = computed(() => ({
-  texture: 'popupBgSquare', //'popupScene63',
-  state: { x: (screenWidth.value * 3) / 4, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
-}))
 
 const options: {
   key: boolean
@@ -42,35 +34,20 @@ function onClick(value: boolean) {
   selectedOption.value = value
   dataStore.setDataVault(value)
   gameStore.playSFXSound('buttonPress')
-
-  setTimeout(() => {
-    gameStore.nextTimeline({ id: 54 })
-  }, 300)
 }
 
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
+function handleMove() {
+  gameStore.nextTimeline({ id: 54 })
+}
 
 const titleText = reactive({ x: 15, y: -70, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+  <AppPopup type="square" x="right" y="center" :zoom-factor="zoomFactor" @next="handleMove">
     <Text :anchor="titleText.anchor" :style="titleText.style" :x="titleText.x" :y="titleText.y" :scale="titleText.scale">
       Would you store your\nmultiple online profiles \nand data securely in a\nsingle vault?
     </Text>
-    <!--  <Sprite
-      v-for="{ type, frames, state } of options"
-      :key="String(type)"
-      :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions"
-      :x="state.x"
-      :y="state.y"
-      :scale="state.scale"
-      cursor="pointer"
-      @pointerdown="onClick(type)" /> -->
     <AppButton v-for="{ key, value, state } of options" :key="String(key)" type="short" :text="value" :x="state.x" :y="state.y" :scale="1" :is-pressed="key === selectedOption" @click="onClick(key)" />
-  </Container>
+  </AppPopup>
 </template>

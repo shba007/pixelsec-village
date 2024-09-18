@@ -9,7 +9,6 @@ const props = defineProps<{
   y: number
   scale: number
   isPressed: boolean
-  fontSize?: number
 }>()
 
 const emit = defineEmits<{
@@ -36,9 +35,9 @@ const button = computed(() => {
     scale: 1,
     style: {
       fontFamily: 'LAN',
-      fontSize: props.fontSize ?? 44,
+      fontSize: 44,
       align: 'center',
-      lineHeight: props.fontSize * 1.2 ?? 36,
+      lineHeight: 36,
       stroke: 1,
       strokeThickness: 1,
       fill: props.isPressed ? '#506745' : 'black',

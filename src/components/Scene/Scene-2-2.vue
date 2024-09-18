@@ -47,19 +47,15 @@ function handleMove() {
   gameStore.nextTimeline({ id: 10 })
 }
 
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
-
 const titleText = reactive({ x: 0, y: 0, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 
 <template>
-  <AppPopup type="square" x="right" y="center" :zoom-factor="zoomFactor" @next="handleMove">
+  <AppPopup type="square" x="right" y="center" :popup-x="titleText.x" :zoom-factor="zoomFactor" @next="handleMove">
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">How will you spend\nyour time on the tram?\n\nPick more than one.</Text>
     </Container>
-    <Container :x="-300">
+    <Container :x="-240">
       <Sprite texture="mobileTexture" :texture-options="textureOptions" :anchor="0.5" :scale="1" />
       <Sprite
         v-for="{ type, frames, state } of options"

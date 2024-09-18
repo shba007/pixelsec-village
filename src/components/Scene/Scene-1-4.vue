@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 import { useGameStore, type Character } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
@@ -30,10 +30,6 @@ function setCharacter(type: Character) {
 function handleMove() {
   gameStore.nextTimeline({ id: 4 })
 }
-
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
 
 const titleText = reactive({ x: 0, y: -120, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'center', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>

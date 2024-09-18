@@ -1,25 +1,18 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { useWindowSize, watchDebounced } from '@vueuse/core'
+import { ref } from 'vue'
 
 import { useDataStore, type dataExchangeChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/AppSettings.vue'
-import AppCheckbox from '@/components/AppCheckbox.vue'
 
-const props = defineProps<{
+import AppCheckbox from '@/components/AppCheckbox.vue'
+import AppPopup from '@/components/AppPopup.vue'
+
+defineProps<{
   zoomFactor: number
 }>()
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-
-const modal = computed(() => ({
-  texture: 'popupBgSquare',
-  state: { x: (screenWidth.value * 1) / 4, y: 0, scale: 1.0 * props.zoomFactor },
-}))
 
 const options: {
   type: dataExchangeChoice
@@ -44,22 +37,15 @@ function onClick(option: dataExchangeChoice) {
   else selectedOptions.value.add(option)
 }
 
-watchDebounced(() => [...selectedOptions.value.values()], onComplete, { debounce: 2000 })
-
-function onComplete() {
+function handleMove() {
   // DATA-COLLECT
   dataStore.setDataExchange([...selectedOptions.value.values()])
   gameStore.nextTimeline({ id: 25 })
 }
-
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+  <AppPopup type="square" x="right" y="center" :zoom-factor="zoomFactor" @next="handleMove">
     <AppCheckbox v-for="{ type, value, state } of options" :key="type" :text="value" :x="state.x - 220" :y="state.y + 50" :scale="1" :is-checked="selectedOptions.has(type)" @click="onClick(type)" />
-  </Container>
+  </AppPopup>
 </template>

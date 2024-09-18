@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
+import { reactive } from 'vue'
 
 import { useGameStore } from '@/stores/game'
 import AppPopup from '@/components/AppPopup.vue'
@@ -13,10 +13,6 @@ const gameStore = useGameStore()
 function handleMove() {
   gameStore.nextTimeline({ id: 3 })
 }
-
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
 
 const titleText = reactive({ x: 0, y: 50, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'center', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>

@@ -103,19 +103,6 @@ export const useGameStore = defineStore('game', () => {
   const currentCharacterIndex = computed(() => timeline[timelineIndex.value]?.character)
   const characterSkin = ref<Character>()
 
-  /*   watch(currentScreenIndex, (value) => {
-      console.log({ currentScreenIndex: value })
-    })
-    watch(currentPopupIndex, (value) => {
-      console.log({ currentPopupIndex: value })
-    })
-    watch(currentSceneIndex, (value) => {
-      console.log({ currentSceneIndex: value })
-    })
-    watch(currentCharacterIndex, (value) => {
-      console.log({ currentCharacterIndex: value })
-    }) */
-
   const $motionBlur = ref(false)
   const motionBlur = computed(() => $motionBlur.value)
 
@@ -309,13 +296,13 @@ export const useGameStore = defineStore('game', () => {
       playBgm({ id })
     } else {
       try {
-        soundBgm.value.fade(0.4, 0, 500)
-        setTimeout(() => {
-          soundBgm.value.fade(0, 0.4, 500)
-        }, 500)
-        setTimeout(() => {
-          playBgm({ id })
-        }, 1000)
+        // soundBgm.value.fade(0.4, 0, 500)
+        /*         setTimeout(() => {
+                  soundBgm.value.fade(0, 0.4, 500)
+                }, 500) */
+        /*         setTimeout(() => {
+                }, 1000) */
+        playBgm({ id })
       } catch (error) {
         console.log('Test fade failed')
       }

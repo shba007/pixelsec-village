@@ -39,10 +39,6 @@ function handleMove() {
   gameStore.nextTimeline(selectedOption.value ? { screen: 1, id: 5 } : { screen: 2, id: 6 })
 }
 
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
-
 const titleText = reactive({ x: 10, y: -85, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'center', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>
 

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { useWindowSize } from '@vueuse/core'
+import { ref } from 'vue'
 
 import { useDataStore, type annoyingPointChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/AppSettings.vue'
-import AppCheckbox from '@/components/AppCheckbox.vue'
 
-const props = defineProps<{
+import AppCheckbox from '@/components/AppCheckbox.vue'
+import AppPopup from '@/components/AppPopup.vue'
+
+defineProps<{
   zoomFactor: number
 }>()
 
@@ -17,13 +17,6 @@ const emit = defineEmits<{
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-
-const modal = computed(() => ({
-  texture: 'popupBgLandscape', //'popupScene62',
-  state: { x: (screenWidth.value * 1) / 2, y: (screenHeight.value * 1) / 2, scale: 1.0 * props.zoomFactor },
-}))
 
 const options: {
   key: annoyingPointChoice
@@ -49,26 +42,16 @@ function onClick(option: annoyingPointChoice) {
   selectedOption.value = option
   dataStore.setAnnoyingPoint(option)
   gameStore.playSFXSound('buttonPress')
-
-  setTimeout(() => {
-    emit('update')
-    showPopup.value = false
-  }, 300)
 }
 
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
-
-// const frames = ['buttonSquare', 'buttonSquarePressed']
+function handleMove() {
+  emit('update')
+  showPopup.value = false
+}
 </script>
 
 <template>
-  <Container v-if="showPopup" :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-    <!--     <Sprite v-for="{ type, value,  state } of options" :key="String(type)" :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="1" cursor="pointer"
-      @pointerdown="onClick(type)" /> -->
+  <AppPopup v-if="showPopup" type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
     <AppCheckbox
       v-for="{ key, value, state } of options"
       :key="key"
@@ -77,8 +60,8 @@ onMounted(() => {
       :y="state.y + 60"
       :scale="0.75"
       :is-checked="selectedOption === key"
-      :font-size="56"
+      :font-size="54"
       :gap="50"
       @click="onClick(key)" />
-  </Container>
+  </AppPopup>
 </template>

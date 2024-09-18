@@ -4,21 +4,16 @@ import { storeToRefs } from 'pinia'
 
 import { useDataStore, type dataResponsibilityChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/AppSettings.vue'
 import AppCheckbox from '@/components/AppCheckbox.vue'
+import AppPopup from '@/components/AppPopup.vue'
 
-const props = defineProps<{
+defineProps<{
   zoomFactor: number
 }>()
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
 const { currentPopupIndex } = storeToRefs(gameStore)
-
-const modal = computed(() => ({
-  texture: 'popupBgLandscape',
-  state: { x: 0, y: 0, scale: 1.0 * props.zoomFactor },
-}))
 
 const options = ref<
   {
@@ -43,10 +38,10 @@ function onClick(value: dataResponsibilityChoice) {
   selectedOption.value = value
   dataStore.setDataResponsibility(value)
   gameStore.playSFXSound('buttonPress', 2)
+}
 
-  setTimeout(() => {
-    gameStore.nextTimeline(currentPopupIndex.value === 14 ? { screen: 2, id: 35 } : { screen: 1, id: 36 })
-  }, 300)
+function handleMove() {
+  gameStore.nextTimeline(currentPopupIndex.value === 14 ? { screen: 2, id: 35 } : { screen: 1, id: 36 })
 }
 
 onMounted(() => {
@@ -57,19 +52,15 @@ const titleText = reactive({ x: 0, y: -150, anchor: 0.5, scale: 1, style: { font
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
     <Container>
-      <Text v-if="currentPopupIndex === 14" :x="titleText.x - 30" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"
-        >Your data could be compromised. Who\ndo you think should protect your data?</Text
-      >
-      <Text v-else :x="titleText.x - 30" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"
-        >That was close! Who do you think\nshould protect your data?</Text
-      >
+      <Text v-if="currentPopupIndex === 14" :x="titleText.x - 30" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
+        Your data could be compromised. Who\ndo you think should protect your data?
+      </Text>
+      <Text v-else :x="titleText.x - 30" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
+        That was close! Who do you think\nshould protect your data?
+      </Text>
       <AppCheckbox v-for="{ type, value, state } of options" :key="type" :text="value" :x="state.x + 40" :y="state.y + 50" :scale="1" :is-checked="selectedOption === type" @click="onClick(type)" />
     </Container>
-    <!--  <Sprite v-for="{ type, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
-      @pointerdown="onClick(type)" /> -->
-  </Container>
+  </AppPopup>
 </template>

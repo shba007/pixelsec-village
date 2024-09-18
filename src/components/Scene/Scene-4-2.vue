@@ -2,22 +2,17 @@
 import { computed, onMounted, ref, reactive, onBeforeUnmount } from 'vue'
 import { useInterval } from '@vueuse/core'
 
-import { textureOptions } from '@/components/AppSettings.vue'
 import { useDataStore, type dataBreachActionChoice } from '@/stores/data'
 import { useGameStore } from '@/stores/game'
 import AppButton from '@/components/AppButton.vue'
+import AppPopup from '@/components/AppPopup.vue'
 
-const props = defineProps<{
+defineProps<{
   zoomFactor: number
 }>()
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-
-const modal = computed(() => ({
-  texture: 'popupBgLandscape',
-  state: { x: 0, y: 0, scale: 1.0 * props.zoomFactor },
-}))
 
 const options: {
   key: dataBreachActionChoice
@@ -64,21 +59,20 @@ function onClick(value: dataBreachActionChoice) {
   selectedOption.value = value
   dataStore.setDataBreachAction(value)
   gameStore.playSFXSound('buttonPress')
+}
 
-  setTimeout(() => {
-    gameStore.nextTimeline({ screen: 2, id: 34 })
-  }, 300)
+function handleMove() {
+  gameStore.nextTimeline({ screen: 2, id: 34 })
 }
 
 onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
   gameStore.playBGMSound('countdown')
   gameStore.playSFXSound('countdown', 2)
 })
 
 onBeforeUnmount(() => {
   gameStore.stopSFXSound(2)
-  gameStore.playBGMSound('panic')
+  // gameStore.playBGMSound('panic')
   gameStore.playSFXSound('alarmLight')
 })
 
@@ -87,8 +81,7 @@ const timerText = reactive({ x: -180, y: -175, scale: 1, style: { fontFamily: 'I
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="modal.state.scale">
-    <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
+  <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" @next="handleMove">
     <Container :x="timerText.x" :y="timerText.y">
       <Text :x="titleText.x" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">Countdown timer:</Text>
       <template v-for="(digits, digitsIndex) of timer" :key="digitsIndex">
@@ -104,9 +97,6 @@ const timerText = reactive({ x: -180, y: -175, scale: 1, style: { fontFamily: 'I
         <Text v-if="digitsIndex !== 2" :x="165 * digitsIndex + 110" :y="-2" :scale="timerText.scale" :anchor="0.5" :style="timerText.style">:</Text>
       </template>
     </Container>
-    <!-- <Sprite v-for="{ type, frames, state } of options" :key="type" :texture="frames[Number(selectedOption === type)]"
-      :texture-options="textureOptions" :anchor="0.5" :x="state.x" :y="state.y" :scale="state.scale" cursor="pointer"
-      @pointerdown="onClick(type)" /> -->
     <AppButton
       v-for="{ key, value, state, type } of options"
       :key="key"
@@ -117,6 +107,5 @@ const timerText = reactive({ x: -180, y: -175, scale: 1, style: { fontFamily: 'I
       :scale="1.375"
       :is-pressed="selectedOption === key"
       @click="onClick(key)" />
-    <!-- :font-size="36" -->
-  </Container>
+  </AppPopup>
 </template>

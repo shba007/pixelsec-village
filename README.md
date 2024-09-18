@@ -16,3 +16,6 @@
 | 1        | 9       | Spend Your Time                           |
 | 2        | 10      | Need Transition                           |
 | 2        | 10      | Need Transition                           |
+
+
+import { textureOptions } from '@/components/AppSettings.vue'

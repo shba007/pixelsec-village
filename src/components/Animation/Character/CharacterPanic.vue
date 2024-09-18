@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
-import { reactive, ref } from 'vue'
+import { onMounted, watch, reactive, ref } from 'vue'
+import { useIntervalFn } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { onTick } from 'vue3-pixi'
-import { useIntervalFn } from '@vueuse/core'
 
-import { textureOptions } from '@/components/AppSettings.vue'
-import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 import { useGameStore } from '@/stores/game'
+import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 const props = defineProps<{
   place: 'map' | 'bank'
@@ -22,7 +20,7 @@ const props = defineProps<{
 }>()
 
 const gameStore = useGameStore()
-const { currentPopupIndex } = storeToRefs(gameStore)
+const { currentPopupIndex, textureOptions } = storeToRefs(gameStore)
 
 const activeCharacter = reactive<any>({
   loaded: false,
@@ -103,7 +101,7 @@ onMounted(() => {
 <template>
   <AppAnimatedSprite
     :textures="textures[place]"
-    :texture-options="textureOptions"
+    :texture-options="textureOptions.blur"
     :anchor="0.5"
     :x="activeCharacter.state.x"
     :y="activeCharacter.state.y"

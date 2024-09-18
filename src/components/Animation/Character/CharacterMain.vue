@@ -3,14 +3,10 @@ import { reactive, watch, computed, ref } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import type { State } from '@/utils/types'
-import { textureOptions } from '@/components/AppSettings.vue'
-import { useGameStore } from '@/stores/game'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
+import { useGameStore } from '@/stores/game'
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
-
-const gameStore = useGameStore()
-const { rotationStop } = storeToRefs(gameStore)
 
 interface Character {
   loaded: boolean
@@ -36,6 +32,9 @@ const props = withDefaults(
 const emit = defineEmits<{
   (e: 'update', stateIndex: number, state: 'init' | 'started' | 'finished'): void
 }>()
+
+const gameStore = useGameStore()
+const { rotationStop, textureOptions } = storeToRefs(gameStore)
 
 function capitalizeFirstLetter(word: string): string {
   if (!word) return word
@@ -168,7 +167,7 @@ onTick((delta) => {
     <AppAnimatedSprite
       v-if="activeCharacter.animation === 'started'"
       :textures="activeTrail.aliases"
-      :texture-options="textureOptions"
+      :texture-options="textureOptions.blur"
       :anchor="0.5"
       :x="activeTrail.x"
       :y="activeTrail.y"
@@ -176,7 +175,7 @@ onTick((delta) => {
       :alpha="1"
       :playing="true"
       :animation-speed="0.08" />
-    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="true" :animation-speed="0.08" />
+    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="true" :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

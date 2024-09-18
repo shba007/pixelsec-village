@@ -4,16 +4,15 @@ import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
 import type { State } from '@/utils/types'
-import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
-
-const gameStore = useGameStore()
-const { currentSceneIndex } = storeToRefs(gameStore)
 
 const props = defineProps<{
   state: State
   place: 'map' | 'park'
 }>()
+
+const gameStore = useGameStore()
+const { currentSceneIndex, textureOptions } = storeToRefs(gameStore)
 
 const textures = {
   map: ['mapCharacterIcecreamVendor1', 'mapCharacterIcecreamVendor2'],

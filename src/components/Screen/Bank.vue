@@ -131,9 +131,6 @@ watch(currentPopupIndex, (value) => {
 onMounted(() => {
   gameStore.playBGMSound('panic')
   gameStore.playSFXSound('alarmLight')
-  setTimeout(() => {
-    gameStore.nextTimeline({ id: 31 })
-  }, 2000)
 })
 
 const sceneRef = ref<any>(null)
@@ -152,9 +149,7 @@ function resize() {
 
 watchArray([screenWidth, screenHeight], resize)
 
-onMounted(() => {
-  setTimeout(resize, 50)
-})
+onMounted(() => setTimeout(resize, 50))
 </script>
 
 <template>
@@ -172,12 +167,10 @@ onMounted(() => {
     <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <CharacterGuard :state="characterGuard" place="bank" />
   </Container>
-  <Container v-if="!rotationStop" :x="screenWidth / 2" :y="screenHeight / 2" :scale="1">
+  <Container v-if="!rotationStop">
     <Scene1 v-if="currentPopupIndex === 12" :zoom-factor="zoomFactor" />
     <Scene2 v-else-if="currentPopupIndex === 13" :zoom-factor="zoomFactor" />
     <Scene3 v-else-if="currentPopupIndex === 14 || currentPopupIndex === 15" :zoom-factor="zoomFactor" />
-  </Container>
-  <Container>
     <AppProtip v-if="currentPopupIndex === 16" title="3" x="left" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->

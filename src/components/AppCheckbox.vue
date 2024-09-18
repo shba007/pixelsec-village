@@ -14,6 +14,7 @@ const props = withDefaults(
   }>(),
   {
     gap: 0,
+    fontSize: 44,
   }
 )
 
@@ -24,7 +25,7 @@ const emit = defineEmits<{
 const checkbox = computed(() => {
   let texture = !props.isChecked ? 'buttonSquare' : 'buttonSquarePressed'
 
-  return { texture, scale: 1, style: { fontFamily: 'LAN', fontSize: props.fontSize ?? 44, align: 'left', lineHeight: props.fontSize * 1.2 ?? 36, stroke: 1, strokeThickness: 1 } }
+  return { texture, scale: 1, style: { fontFamily: 'LAN', fontSize: props.fontSize, align: 'left', lineHeight: props.fontSize * 1.2, stroke: 1, strokeThickness: 1 } }
 })
 
 function onClick() {
