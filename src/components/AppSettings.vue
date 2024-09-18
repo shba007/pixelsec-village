@@ -25,9 +25,11 @@ onMounted(() => {
 })
 
 onTick(() => {
+  const canvas = document.querySelector<HTMLCanvasElement>('canvas')!
   if (!isLandscape.value) {
-    const canvas = document.querySelector<HTMLCanvasElement>('canvas')!
     canvas.style.touchAction = 'auto'
+  } else {
+    canvas.style.touchAction = 'none'
   }
 })
 </script>
