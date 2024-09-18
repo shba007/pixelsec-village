@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref } from 'vue'
+import { computed, onBeforeMount, ref, watch } from 'vue'
 import { Application, Loader } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -29,12 +29,12 @@ function preloadAudio(url: string) {
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }
-        return response.blob()
+        return response.blob() // Get the blob (audio data)
       })
-      .then(() => {
-        setTimeout(() => {
-          resolve(true)
-        }, 1000)
+      .then((blob) => {
+        // Optionally, create an object URL for the blob (if you want to use it later)
+        const audioUrl = URL.createObjectURL(blob)
+        resolve(audioUrl) // Resolve with the URL for the audio
       })
       .catch((error) => {
         reject(false)
@@ -48,19 +48,26 @@ const isStarted = ref(false)
 const isPressed = ref(false)
 
 onBeforeMount(async () => {
-  await Promise.all(Object.values(resources.sound).map((sound) => preloadAudio(sound)))
-  isLoaded.value = true
+  try {
+    await preloadAudio(resources.sound.bgmSprite)
+    isLoaded.value = true
+  } catch (error) {
+    console.error('Error preloading sounds:', error)
+  }
 })
 
 function onClick() {
   if (!isLoaded.value) return
 
   isPressed.value = true
-  setTimeout(() => {
-    gameStore.playBGMSound('normal')
-    isStarted.value = true
-  }, 200)
 }
+
+watch(isPressed, () => {
+  gameStore.playBGMSound('normal')
+  setTimeout(() => {
+    isStarted.value = true
+  }, 1000)
+})
 
 function onResolve() {
   // gameStore.toggleHardStop(true)
@@ -70,7 +77,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 </script>
 
 <template>
-  <main class="relative bg-black" :class="{ 'overflow-hidden portrait:h-[130vh]': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop) }">
+  <main class="relative bg-black" :class="{ 'overflow-hidden portrait:h-[130vh]': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop) }" @click="onClick">
     <Application :width="screenWidth" :height="screenHeight" :antialias="motionBlur" power-preference="high-performance" class="relative z-10">
       <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
         <template #fallback="{ progress }">
@@ -78,8 +85,8 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
         </template>
         <template #default>
           <template v-if="!isStarted">
-            <Container v-if="isLoaded" :x="loadingText.x" :y="loadingText.y" :scale="0.75">
-              <AppButton type="long" text="Start Game" :x="0" :y="0" :scale="1" :is-pressed="isPressed" @click="onClick" />
+            <Container v-if="isLoaded" :x="loadingText.x" :y="loadingText.y" :scale="0.65">
+              <AppButton type="long" text="Start Game" :x="0" :y="0" :scale="1" :is-pressed="isPressed" />
             </Container>
             <Text v-else :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... 99% </Text>
             <AppSettings />
@@ -107,7 +114,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
       class="absolute left-0 top-0 landscape:hidden" />
     <!-- DEBUG -->
     <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-      <p>v0.4.59</p>
+      <p>v0.4.60</p>
       <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
       <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
       <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>

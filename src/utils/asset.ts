@@ -2,8 +2,16 @@
 // fonts
 import fontINET from '/fonts/INET.ttf'
 import fontLAN from '/fonts/LAN.ttf'
-import fontDogica from '/fonts/Dogica/dogica.ttf'
-import fontDogicaBold from '/fonts/Dogica/dogicabold.ttf'
+//
+import bgmSprite from '/sound/bgm-sprite.mp3'
+import sfxSprite from '/sound/sfx-sprite.mp3'
+//
+import IconFacebook from '@/assets/image/popup/icon-social-facebook.png'
+import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
+import IconX from '@/assets/image/popup/icon-social-x.png'
+import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
+import PlaceholderEmail2 from '@/assets/image/popup/placeholder-email-focus.png'
+import BgImage from '/images/image-bg.png'
 // asset
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
 import portipIcon1Texture from '@/assets/image/popup/protip-1.png'
@@ -346,22 +354,10 @@ import resultMansionBgTexture from '@/assets/image/mansion/bg.png'
 import resultMansionDog1Texture from '@/assets/image/mansion/dog/1.png'
 import resultMansionDog2Texture from '@/assets/image/mansion/dog/2.png'
 
-import bgmSprite from '/sound/bgm-sprite.mp3'
-import sfxSprite from '/sound/sfx-sprite.mp3'
-
-import IconFacebook from '@/assets/image/popup/icon-social-facebook.png'
-import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
-import IconX from '@/assets/image/popup/icon-social-x.png'
-import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
-import PlaceholderEmail2 from '@/assets/image/popup/placeholder-email-focus.png'
-import BgImage from '/images/image-bg.png'
-
 export const resources = {
   font: {
     INET: fontINET,
     LAN: fontLAN,
-    Dogica: fontDogica,
-    DogicaBold: fontDogicaBold,
   },
   sound: {
     bgmSprite,
