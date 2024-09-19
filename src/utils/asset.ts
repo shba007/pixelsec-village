@@ -353,6 +353,13 @@ import resultMansionBgTexture from '@/assets/image/mansion/bg.png'
 //
 import resultMansionDog1Texture from '@/assets/image/mansion/dog/1.png'
 import resultMansionDog2Texture from '@/assets/image/mansion/dog/2.png'
+//
+import popupPositionBottom from "@/assets/image/popup/position/bottom.png";
+import popupPositionLeft from "@/assets/image/popup/position/left.png";
+import popupPositionRight from "@/assets/image/popup/position/right.png";
+import popupPositionTop from "@/assets/image/popup/position/top.png";
+import popupPositionCenterLandscape from "@/assets/image/popup/position/center-landscape.png";
+import popupPositionCenterPortrait from "@/assets/image/popup/position/center-portrait.png";
 
 export const resources = {
   font: {
@@ -364,6 +371,13 @@ export const resources = {
     sfxSprite,
   },
   image: {
+    popupPositionBottom,
+    popupPositionLeft,
+    popupPositionRight,
+    popupPositionTop,
+    popupPositionCenterLandscape,
+    popupPositionCenterPortrait,
+    //
     BgImage,
     // popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,

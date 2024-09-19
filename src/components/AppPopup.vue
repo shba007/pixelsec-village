@@ -21,6 +21,10 @@ const props = withDefaults(
   }
 )
 
+const portraitZoomFactor = computed(() => {
+  return screenHeight.value / 720
+})
+
 const emit = defineEmits<{ next: [] }>()
 
 const gameStore = useGameStore()
@@ -32,40 +36,36 @@ function capitalizeFirstLetter(string: string) {
 }
 
 const modal = computed(() => {
-  let xFactor = 320,
-    yFactor = 160
-
   let x = 0,
     y = 0
 
   switch (props.x) {
     case 'left':
-      x = -1 * xFactor
+      x = -1 * 320
       break
     case 'center':
-      x = 0 * xFactor
+      x = 0 * 320
       break
     case 'right':
-      x = 1 * xFactor
+      x = 1 * 320
       break
     default:
-      x = 0 * xFactor
+      x = 0 * 320
       break
   }
 
   switch (props.y) {
     case 'top':
-      y = -1 * yFactor
+      y = -1 * 160
       break
     case 'center':
-      yFactor = -160
-      y = 0.1 * yFactor
+      y = 0
       break
     case 'bottom':
-      y = 1 * yFactor
+      y = 1 * 160
       break
     default:
-      y = 0 * yFactor
+      y = 0
       break
   }
 
@@ -114,14 +114,18 @@ function handleButtonPress() {
 </script>
 
 <template>
-  <Container v-if="ready" :x="screenWidth * 0.5" :y="screenHeight * 0.5" :scale="zoomFactor">
+  <Container v-if="ready" :x="screenWidth * 0.5" :y="screenHeight * 0.5"
+    :scale="type === 'portrait' ? portraitZoomFactor * 0.5625 : zoomFactor">
     <Container :x="modal.state.x" :y="modal.state.y">
       <slot name="popupBg" />
       <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-      <AppButton v-if="button.isShow" type="arrow" :x="button.x" :y="button.y" :scale="button.scale" :is-pressed="button.isPressed" @click="handleButtonPress" />
+      <AppButton v-if="button.isShow" type="arrow" :x="button.x" :y="button.y" :scale="button.scale"
+        :is-pressed="button.isPressed" @click="handleButtonPress" />
     </Container>
     <Container :x="modal.state.x" :y="modal.state.y">
       <slot />
     </Container>
+    <Sprite texture="popupPositionCenterLandscape" :texture-options="textureOptions" :anchor="0.5" :scale="4"
+      :alpha="0.8" />
   </Container>
 </template>

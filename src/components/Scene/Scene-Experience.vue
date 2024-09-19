@@ -36,7 +36,7 @@ const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { f
 </script>
 
 <template>
-  <AppPopup v-if="ready" type="portrait" x="center" y="center" :zoom-factor="zoomFactor * 1.5" :show-button="false">
+  <AppPopup v-if="ready" type="portrait" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
     <Container :x="titleText.x" :y="titleText.y">
       <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> FOR BEST\nVIEWING\nEXPERIENCE </Text>
