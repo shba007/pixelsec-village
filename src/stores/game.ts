@@ -120,7 +120,7 @@ export const useGameStore = defineStore('game', () => {
   function initAudio() {
     if (audioInitialized.value) return
     audioInitialized.value = true
-    alert("initAudio")
+    // alert("initAudio")
     soundBgm.value.mute(false)
     soundSfx1.value.mute(false)
     soundSfx2.value.mute(false)
@@ -134,14 +134,14 @@ export const useGameStore = defineStore('game', () => {
   watch(gamePause, (value) => {
     if (debugPause.value || inactivePause.value) {
       console.log('Sound Disabled')
-      alert('Sound Muted in gamePause')
+      // alert('Sound Muted in gamePause')
       soundBgm.value.mute(true)
       soundSfx1.value.mute(true)
       soundSfx2.value.mute(true)
       soundSfx3.value.mute(true)
     } else {
       console.log('Sound Enabled')
-      alert('Sound Unmuted in gamePause')
+      // alert('Sound Unmuted in gamePause')
       soundBgm.value.mute(false)
       soundSfx1.value.mute(false)
       soundSfx2.value.mute(false)
@@ -297,26 +297,26 @@ export const useGameStore = defineStore('game', () => {
     soundEnabled: soundEnabledBgm,
     ...bgmSettings,
     onplay: () => {
-      alert("BGM on play")
+      // alert("BGM on play")
     },
     onplayerror: () => {
-      alert("BGM on play error")
+      // alert("BGM on play error")
     },
     onpause: () => {
-      alert("BGM on pause")
+      // alert("BGM on pause")
     },
     onstop: () => {
-      alert("BGM on stop")
+      // alert("BGM on stop")
     },
     onmute: () => {
-      alert("BGM on mute")
+      // alert("BGM on mute")
     },
     onvolume: () => {
-      alert("BGM on volume")
+      // alert("BGM on volume")
     },
     onload: () => {
       console.log('Bgm Loaded')
-      alert('Bgm Sound Unmuted onload')
+      // alert('Bgm Sound Unmuted onload')
       soundStatus.bgm = 'loaded'
       soundBgm.value.mute(false)
     },
@@ -356,7 +356,7 @@ export const useGameStore = defineStore('game', () => {
     ...sfxSettings,
     onload: () => {
       console.log('Sfx Loaded')
-      alert('Sfx Sound Unmuted onload')
+      // alert('Sfx Sound Unmuted onload')
       soundStatus.sfx = 'loaded'
       soundSfx1.value.mute(false)
       soundSfx2.value.mute(false)
