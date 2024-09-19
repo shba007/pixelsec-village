@@ -115,26 +115,25 @@ export const useGameStore = defineStore('game', () => {
   const rotatePause = computed(() => currentSceneIndex.value > 0 && !isLandscape.value)
   const gamePause = computed(() => debugPause.value || inactivePause.value || rotatePause.value)
 
-  function checkUserInteraction() {
-    if (!hasUserInteracted.value) {
-      document.addEventListener(
-        'click',
-        () => {
-          hasUserInteracted.value = true
-          alert('Sound Unmuted in checkUserInteraction')
-          soundBgm.value.mute(false)
-          soundSfx1.value.mute(false)
-          soundSfx2.value.mute(false)
-          soundSfx3.value.mute(false)
-          console.log('User interaction detected. Sound Enabled.')
-        },
-        { once: true }
-      )
-    }
+  // Initialize audio only after user interaction
+  const audioInitialized = ref(false)
+
+  function initAudio() {
+    if (audioInitialized.value) return
+    audioInitialized.value = true
+
+    soundBgm.value.mute(false)
+    soundSfx1.value.mute(false)
+    soundSfx2.value.mute(false)
+    soundSfx3.value.mute(false)
   }
 
+  // Call initAudio on user interaction
+  useEventListener(document, 'click', initAudio, { once: true })
+  useEventListener(document, 'touchstart', initAudio, { once: true })
+
   watch(gamePause, (value) => {
-    if (value) {
+    if (debugPause.value || inactivePause.value) {
       console.log('Sound Disabled')
       alert('Sound Muted in gamePause')
       soundBgm.value.mute(true)
@@ -161,7 +160,6 @@ export const useGameStore = defineStore('game', () => {
   })
 
   onMounted(() => {
-    checkUserInteraction()
     console.table([
       ['inactivePause', inactivePause.value],
       ['debugPause', debugPause.value],
