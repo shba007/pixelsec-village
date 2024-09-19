@@ -20,18 +20,19 @@ import AppButton from '@/components/AppButton.vue'
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const gameStore = useGameStore()
-const { currentScreenIndex, rotationStop, motionBlur, isSoundLoaded } = storeToRefs(gameStore)
-
-const isStarted = ref(false)
-const isPressed = ref(false)
+const { currentScreenIndex, rotationStop, motionBlur, isSoundLoaded, isStarted, isPressed } = storeToRefs(gameStore)
 
 function onClick() {
   if (!isSoundLoaded.value) return
 
+  console.log('On Click Triggerd')
   isPressed.value = true
 }
 
-watch(isPressed, () => {
+watch(isPressed, (value) => {
+  if (!value) return
+
+  console.log('isPressed Triggerd')
   gameStore.playBGMSound('normal')
   setTimeout(() => {
     isStarted.value = true
@@ -46,7 +47,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 </script>
 
 <template>
-  <main class="relative bg-black" :class="{ 'overflow-hidden portrait:h-[130vh]': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop) }" @click="onClick">
+  <main class="bg-yellow relative" :class="{ 'overflow-hidden portrait:h-[130vh]': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || rotationStop) }" @click="onClick">
     <Application :width="screenWidth" :height="screenHeight" :antialias="motionBlur" power-preference="high-performance" class="relative z-10">
       <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
         <template #fallback="{ progress }">
@@ -83,7 +84,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
       class="absolute left-0 top-0 landscape:hidden" />
     <!-- DEBUG -->
     <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-      <p>v0.4.65</p>
+      <p>v0.4.67</p>
       <!--       <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
       <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
       <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>

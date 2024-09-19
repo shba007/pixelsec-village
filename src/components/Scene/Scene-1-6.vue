@@ -25,6 +25,8 @@ function onNext() {
 }
 
 function autoScroll() {
+  if (interval) return
+
   interval = setInterval(() => {
     y.value += 2000
   }, 75)
