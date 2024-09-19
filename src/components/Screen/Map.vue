@@ -104,7 +104,7 @@ const screen = reactive<Asset>({
     { x: -1570, y: -2510, scale: 1.8, alpha: 1, time: 86.1225 * globalSpeedFactor },
     { x: -980, y: -2220, scale: 0.8, alpha: 1, time: 87.7475 * globalSpeedFactor },
   ],
-  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
+  state: { x: 0, y: 0, scale: 0, alpha: 1, time: 0 },
   animation: 'init',
 })
 
@@ -424,7 +424,6 @@ function updateScreen(data: { x: number; y: number; scale: number; alpha: number
 }
 
 function onLoad() {
-  console.log('Map loaded')
   updateScreen(screen.states[0])
   screen.loaded = true
   screen.animation = 'started'
@@ -445,30 +444,28 @@ watch(
   }
 )
 
-const lastScene = reactive<{
-  x: number
-  y: number
-  scale: number
-  alpha: number
-  time: number
-  animation: 'init' | 'started' | 'finished'
-}>({ x: 0, y: 0, scale: 1, alpha: 0, time: 0, animation: 'init' })
+const lastScene = ref<
+  | {
+      x: number
+      y: number
+      scale: number
+      alpha: number
+      time: number
+      animation: 'init' | 'started' | 'finished'
+    }
+  | undefined
+>(undefined)
 
 watch(gamePause, (value) => {
   if (value) {
-    lastScene.x = screen.state.x
-    lastScene.y = screen.state.y
-    lastScene.scale = screen.state.scale
-    lastScene.alpha = screen.state.alpha
-    lastScene.time = screen.state.time
-    lastScene.animation = screen.animation
+    lastScene.value = { x: screen.state.x, y: screen.state.y, scale: screen.state.scale, alpha: screen.state.alpha, time: screen.state.time, animation: screen.animation }
 
-    updateScreen(screen.states[0])
     screen.animation = 'init'
+    updateScreen(screen.states[0])
   } else {
-    if (lastScene) {
-      updateScreen(lastScene)
-      screen.animation = lastScene.animation
+    if (lastScene.value) {
+      screen.animation = lastScene.value.animation
+      updateScreen(lastScene.value)
     }
   }
 })
