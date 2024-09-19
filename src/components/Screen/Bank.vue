@@ -18,7 +18,7 @@ import Scene3 from '@/components/Scene/Scene-4-3.vue'
 import AppProtip from '@/components/AppProtip.vue'
 
 const gameStore = useGameStore()
-const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
+const { currentSceneIndex, currentPopupIndex, gamePause } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
@@ -93,7 +93,7 @@ let progress = 0
 const currentStateIndex = ref(0)
 
 onTick((delta) => {
-  if (!rotationStop.value && screen.animation === 'started') {
+  if (!gamePause.value && screen.animation === 'started') {
     totalElapsedTime += delta / 100
     const dt = screen.states[currentStateIndex.value + 1].time - screen.states[currentStateIndex.value].time
     const dx = screen.states[currentStateIndex.value + 1].x - screen.states[currentStateIndex.value].x
@@ -165,7 +165,7 @@ onMounted(() => {
     </Container>
     <Door :x="door.x" :y="door.y" :scale="door.scale" place="bank" :playing="true" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" place="bank" />
-    <template v-if="!rotationStop">
+    <template v-if="!gamePause">
       <CharacterPanic
         v-for="({ type, states }, index) of charactersPanic"
         :key="index"
@@ -177,7 +177,7 @@ onMounted(() => {
     <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <CharacterGuard :state="characterGuard" place="bank" />
   </Container>
-  <Container v-if="!rotationStop">
+  <Container v-if="!gamePause">
     <Scene1 v-if="currentPopupIndex === 12" :zoom-factor="zoomFactor" />
     <Scene2 v-else-if="currentPopupIndex === 13" :zoom-factor="zoomFactor" />
     <Scene3 v-else-if="currentPopupIndex === 14 || currentPopupIndex === 15" :zoom-factor="zoomFactor" />

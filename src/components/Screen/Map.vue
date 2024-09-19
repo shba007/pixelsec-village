@@ -45,11 +45,11 @@ defineProps<{
 }>()
 
 const gameStore = useGameStore()
-const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, rotationStop, characterSkin, textureOptions } = storeToRefs(gameStore)
+const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, gamePause, characterSkin, textureOptions } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactorMap = computed(() => {
-  if (currentScreenIndex.value === 0 || rotationStop.value) return screenWidth.value / 1280
+  if (currentScreenIndex.value === 0 || gamePause.value) return screenWidth.value / 1280
   else return screenHeight.value / 720
 })
 const zoomFactor = computed(() => {
@@ -424,6 +424,7 @@ function updateScreen(data: { x: number; y: number; scale: number; alpha: number
 }
 
 function onLoad() {
+  console.log('Map loaded')
   updateScreen(screen.states[0])
   screen.loaded = true
   screen.animation = 'started'
@@ -453,7 +454,7 @@ const lastScene = reactive<{
   animation: 'init' | 'started' | 'finished'
 }>({ x: 0, y: 0, scale: 1, alpha: 0, time: 0, animation: 'init' })
 
-watch(rotationStop, (value) => {
+watch(gamePause, (value) => {
   if (value) {
     lastScene.x = screen.state.x
     lastScene.y = screen.state.y
@@ -462,20 +463,11 @@ watch(rotationStop, (value) => {
     lastScene.time = screen.state.time
     lastScene.animation = screen.animation
 
-    screen.state.x = screen.states[0].x
-    screen.state.y = screen.states[0].y
-    screen.state.scale = screen.states[0].scale
-    screen.state.alpha = screen.states[0].alpha
-    screen.state.time = screen.states[0].time
+    updateScreen(screen.states[0])
     screen.animation = 'init'
   } else {
     if (lastScene) {
-      screen.state.x = lastScene.x
-      screen.state.y = lastScene.y
-      screen.state.scale = lastScene.scale
-      screen.state.alpha = lastScene.alpha
-      screen.state.time = lastScene.time
-      screen.animation = lastScene.animation
+      updateScreen(lastScene)
     }
   }
 })
@@ -483,8 +475,15 @@ watch(rotationStop, (value) => {
 let totalElapsedTime = 0
 let progress = 0
 
+watch(
+  () => screen.animation,
+  () => {
+    console.log('screen.animation', screen.animation)
+  }
+)
+
 onTick((delta) => {
-  if (!rotationStop.value && screen.animation === 'started' && currentSceneIndex.value < screen.states.length - 1) {
+  if (!gamePause.value && screen.animation === 'started' && currentSceneIndex.value < screen.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = screen.states[currentSceneIndex.value + 1].time - screen.states[currentSceneIndex.value].time
     const dx = screen.states[currentSceneIndex.value + 1].x - screen.states[currentSceneIndex.value].x
@@ -569,7 +568,7 @@ function handleResponse(value: number) {
     <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction as -1 | 1" />
     <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
   </Container>
-  <Container :renderable="isLoad && !rotationStop">
+  <Container :renderable="isLoad && !gamePause">
     <AppProtip v-if="currentPopupIndex === 11" title="2" :zoom-factor="zoomFactor" />
     <Scene8 v-else-if="respondedSceneIndex < 17 && (currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'" :zoom-factor="zoomFactor" @next="handleResponse(17)" />
     <Scene9 v-else-if="(currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'" :zoom-factor="zoomFactor" @next="handleResponse(18)" />
@@ -582,11 +581,11 @@ function handleResponse(value: number) {
   <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactorMap" :y="screen.state.y * screen.state.scale * zoomFactorMap" :scale="screen.state.scale * zoomFactorMap">
     <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
     <CharacterSus :states="characterSus.states" />
-    <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" />
+    <MapTram :states="tram.states" :animation="gamePause ? 'finished' : tram.animation" initialOrientation="right" />
     <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
     <CharacterStationMaster place="map" :state="characterStationMaster.state" />
   </Container>
-  <Container :renderable="isLoad && !rotationStop">
+  <Container :renderable="isLoad && !gamePause">
     <Scene1 v-if="currentPopupIndex === 0 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
     <Scene2 v-else-if="currentPopupIndex === 0.5 && screen.animation === 'finished'" />
     <Scene3 v-else-if="currentPopupIndex === 1 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />

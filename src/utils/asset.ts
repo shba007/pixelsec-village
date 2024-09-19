@@ -9,9 +9,9 @@ import sfxSprite from '/sound/sfx-sprite.mp3'
 import IconFacebook from '@/assets/image/popup/icon-social-facebook.png'
 import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
 import IconX from '@/assets/image/popup/icon-social-x.png'
-import PlaceholderPlay from '@/assets/image/popup/placeholder-play-unfocus.png'
-import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
-import PlaceholderEmail2 from '@/assets/image/popup/placeholder-email-focus.png'
+// import PlaceholderPlay from '@/assets/image/popup/placeholder-play-unfocus.png'
+// import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
+import InputPlaceholder from '@/assets/image/popup/input-placeholder.png'
 import BgImage from '/images/image-bg.png'
 // asset
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
@@ -730,8 +730,6 @@ export const resources = {
     IconFacebook,
     IconInstagram,
     IconX,
-    PlaceholderPlay,
-    PlaceholderEmail1,
-    PlaceholderEmail2,
+    InputPlaceholder,
   },
 }

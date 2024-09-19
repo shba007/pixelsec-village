@@ -16,7 +16,7 @@ import Scene1 from '@/components/Scene/Scene-2-1.vue'
 import Scene2 from '@/components/Scene/Scene-2-2.vue'
 
 const gameStore = useGameStore()
-const { currentSceneIndex, currentPopupIndex, rotationStop } = storeToRefs(gameStore)
+const { currentSceneIndex, currentPopupIndex, gamePause } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
@@ -94,7 +94,7 @@ useTimeoutFn(() => {
     <CharacterStationMaster :state="characterStationMaster.state" place="station" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pegion" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
-  <Container :renderable="!rotationStop">
+  <Container :renderable="!gamePause">
     <Scene1 v-if="currentPopupIndex === 5" :zoom-factor="zoomFactor" />
     <Scene2 v-else-if="currentPopupIndex === 6" :zoom-factor="zoomFactor" />
   </Container>

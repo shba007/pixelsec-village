@@ -13,7 +13,7 @@ defineProps<{
 }>()
 
 const gameStore = useGameStore()
-const { rotationStop } = storeToRefs(gameStore)
+const { gamePause } = storeToRefs(gameStore)
 
 const targetElem = ref<HTMLParagraphElement | null>(null)
 const { arrivedState, y } = useScroll(targetElem, { behavior: 'instant' })
@@ -103,7 +103,7 @@ export default {
     </Container>
     <Sprite ref="boxPlaceholderRef" texture="popupScene05BG" :texture-options="textureOptions" :anchor="0.5" :x="boxPlaceholder.x" :y="boxPlaceholder.y" :scale="boxPlaceholder.scale" />
     <External
-      v-if="!rotationStop"
+      v-if="!gamePause"
       v-prevent-zoom
       class="fixed z-10"
       :style="{ left: boxDiv.x + 'px', top: boxDiv.y + 'px', width: boxDiv.width + 'px', height: boxDiv.height + 'px', opacity: boxDiv.alpha }">

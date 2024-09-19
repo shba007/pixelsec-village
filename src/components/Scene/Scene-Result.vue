@@ -18,7 +18,7 @@ const props = defineProps<{
 const dataStore = useDataStore()
 const gameStore = useGameStore()
 const { score } = storeToRefs(dataStore)
-const { characterSkin, rotationStop } = storeToRefs(gameStore)
+const { characterSkin, gamePause } = storeToRefs(gameStore)
 
 const secondScreen = ref(false)
 const wolf = reactive({ x: 280, y: 190, scale: 1.25, alpha: 1 })
@@ -114,7 +114,7 @@ function playAgain() {
 </script>
 
 <template>
-  <template v-if="!rotationStop">
+  <template v-if="!gamePause">
     <AppPopup v-if="!secondScreen" :show-popup="!secondScreen" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
       <Container :x="titleText.x" :y="titleText.y">
         <template v-if="place === 'strawhut'">
@@ -151,7 +151,7 @@ function playAgain() {
         </template>
       </Container>
       <Container :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
-        <Sprite ref="emailPlaceholderRef" :texture="'PlaceholderEmail2'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" />
+        <Sprite ref="emailPlaceholderRef" :texture="'InputPlaceholder'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" />
         <Sprite :texture="textures[Number(!!email?.length)]" :texture-options="textureOptions" :anchor="0.5" :x="440" :y="-0" :scale="2.5" cursor="pointer" @pointerdown="onSubmit(inputEmail!)" />
         <External class="absolute z-20 touch-none" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
           <input

@@ -11,7 +11,7 @@ import SceneResult from '@/components/Scene/Scene-Result.vue'
 import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 
 const gameStore = useGameStore()
-const { characterSkin, currentPopupIndex, currentCharacterIndex, currentSceneIndex: currentGlobalSceneIndex, rotationStop } = storeToRefs(gameStore)
+const { characterSkin, currentPopupIndex, currentCharacterIndex, currentSceneIndex: currentGlobalSceneIndex, gamePause } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
@@ -63,7 +63,7 @@ let progress = 0
 const currentSceneIndex = computed(() => currentGlobalSceneIndex.value - 35)
 
 onTick((delta) => {
-  if (!rotationStop.value && map.animation === 'started' && currentSceneIndex.value < map.states.length - 1) {
+  if (!gamePause.value && map.animation === 'started' && currentSceneIndex.value < map.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = map.states[currentSceneIndex.value + 1].time - map.states[currentSceneIndex.value].time
     const dx = map.states[currentSceneIndex.value + 1].x - map.states[currentSceneIndex.value].x

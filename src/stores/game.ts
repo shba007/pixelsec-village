@@ -1,6 +1,6 @@
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
-import { useDocumentVisibility, useEventListener, useFullscreen, useScreenOrientation, useWakeLock, useWindowSize } from '@vueuse/core'
+import { useDocumentVisibility, useEventListener, useFullscreen, useScreenOrientation, useWakeLock, useWindowSize, watchArray } from '@vueuse/core'
 import { useSound } from '@vueuse/sound'
 
 import { resources } from '@/utils/asset'
@@ -95,7 +95,7 @@ export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
-  const timelineIndex = ref(62)
+  const timelineIndex = ref(0)
   const isStarted = ref(false)
   const isPressed = ref(false)
 
@@ -108,22 +108,57 @@ export const useGameStore = defineStore('game', () => {
   const $motionBlur = ref(false)
   const motionBlur = computed(() => $motionBlur.value)
 
-  const $hardStop = ref(false)
-  const hardStop = computed(() => $hardStop.value)
+  const $debugPause = ref(false)
+  const inactivePause = ref(false)
+  const debugPause = computed(() => $debugPause.value)
+  const rotatePause = computed(() => currentSceneIndex.value > 0 && !isLandscape.value)
+  const gamePause = computed(() => debugPause.value || inactivePause.value || rotatePause.value)
+
+  watch(gamePause, (value) => {
+    if (value) {
+      soundBgm.value.mute(true)
+      soundSfx1.value.mute(true)
+      soundSfx2.value.mute(true)
+      soundSfx3.value.mute(true)
+      console.log('Sound Disabled')
+    } else {
+      soundBgm.value.mute(false)
+      soundSfx1.value.mute(false)
+      soundSfx2.value.mute(false)
+      soundSfx3.value.mute(false)
+      console.log('Sound Enabled')
+    }
+  })
+
+  watchArray([inactivePause, debugPause, rotatePause], () => {
+    console.table([
+      ['inactivePause', inactivePause.value],
+      ['debugPause', debugPause.value],
+      ['rotatePause', rotatePause.value],
+      ['gamePause', gamePause.value],
+    ])
+  })
+
+  onMounted(() => {
+    console.table([
+      ['inactivePause', inactivePause.value],
+      ['debugPause', debugPause.value],
+      ['rotatePause', rotatePause.value],
+      ['gamePause', gamePause.value],
+    ])
+  })
 
   const textureOptions = computed(() => ({
     normal: { scaleMode: 0 },
     blur: { scaleMode: motionBlur.value ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST },
   }))
 
-  const rotationStop = computed(() => $hardStop.value || (currentSceneIndex.value > 0 && !isLandscape.value))
-
   const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
   const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
   const { isSupported: isWakeLockSupported, request, release } = useWakeLock()
 
-  function toggleHardStop(value: boolean) {
-    $hardStop.value = value
+  function toggleDebugPause(value: boolean) {
+    $debugPause.value = value
   }
 
   function toggleMotionBlur(value: boolean) {
@@ -208,7 +243,6 @@ export const useGameStore = defineStore('game', () => {
   }
   const {
     play: playBgm,
-    pause: pauseBgm,
     stop: stopBgm,
     sound: soundBgm,
   } = useSound(resources.sound.bgmSprite, {
@@ -246,7 +280,11 @@ export const useGameStore = defineStore('game', () => {
     autoplay: true,
   }
 
-  const { play: playSfx1, stop: stopSfx1 } = useSound(resources.sound.sfxSprite, {
+  const {
+    play: playSfx1,
+    stop: stopSfx1,
+    sound: soundSfx1,
+  } = useSound(resources.sound.sfxSprite, {
     volume: volumeSfx,
     playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
@@ -259,7 +297,11 @@ export const useGameStore = defineStore('game', () => {
       activeSoundList.sfx[1] = null
     },
   })
-  const { play: playSfx2, stop: stopSfx2 } = useSound(resources.sound.sfxSprite, {
+  const {
+    play: playSfx2,
+    stop: stopSfx2,
+    sound: soundSfx2,
+  } = useSound(resources.sound.sfxSprite, {
     volume: volumeSfx,
     playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
@@ -268,7 +310,11 @@ export const useGameStore = defineStore('game', () => {
       activeSoundList.sfx[2] = null
     },
   })
-  const { play: playSfx3, stop: stopSfx3 } = useSound(resources.sound.sfxSprite, {
+  const {
+    play: playSfx3,
+    stop: stopSfx3,
+    sound: soundSfx3,
+  } = useSound(resources.sound.sfxSprite, {
     volume: volumeSfx,
     playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
@@ -318,28 +364,15 @@ export const useGameStore = defineStore('game', () => {
   }
 
   const visibility = useDocumentVisibility()
-  const isVisible = ref(true)
 
   function handleVisibilityChange(current: string, previous: string) {
     if (!(current === 'visible' && previous === 'hidden')) {
-      // pauseBgm({ id: activeSoundList.bgm[1] })
-      soundBgm.value.mute(true, { id: activeSoundList.bgm[1] })
-      isVisible.value = false
-      console.log('Sound Disabled', isVisible.value)
+      inactivePause.value = true
     }
   }
 
-  watch(isVisible, (value) => {
-    console.log('Is visiable', value)
-  })
-
   function resume() {
-    setTimeout(() => {
-      // playBgm()
-      soundBgm.value.mute(false, { id: activeSoundList.bgm[1] })
-      isVisible.value = true
-      console.log('Sound Enabled')
-    }, 100)
+    inactivePause.value = false
   }
 
   watch(visibility, (current, previous) => {
@@ -359,11 +392,12 @@ export const useGameStore = defineStore('game', () => {
     isPressed,
     isLandscape,
     isMobile,
-    rotationStop,
-    motionBlur,
-    hardStop,
     isSoundLoaded,
-    isVisible,
+    motionBlur,
+    debugPause,
+    rotatePause,
+    inactivePause,
+    gamePause,
     textureOptions,
     timelineIndex,
     currentScreenIndex,
@@ -373,7 +407,7 @@ export const useGameStore = defineStore('game', () => {
     characterSkin,
     resume,
     restart,
-    toggleHardStop,
+    toggleDebugPause,
     toggleMotionBlur,
     toggleGameMode,
     setCharacterSkin,

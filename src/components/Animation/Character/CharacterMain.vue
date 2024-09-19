@@ -35,7 +35,7 @@ const emit = defineEmits<{
 }>()
 
 const gameStore = useGameStore()
-const { rotationStop, textureOptions } = storeToRefs(gameStore)
+const { gamePause, textureOptions } = storeToRefs(gameStore)
 
 function capitalizeFirstLetter(word: string): string {
   if (!word) return word
@@ -90,7 +90,7 @@ watch(
 )
 
 let lastAnimationState = ref<'init' | 'started' | 'finished'>()
-watch(rotationStop, (value) => {
+watch(gamePause, (value) => {
   if (value) {
     lastAnimationState.value = activeCharacter.animation
     activeCharacter.animation = 'init'

@@ -16,7 +16,7 @@ import Scene3 from '@/components/Scene/Scene-3-3.vue'
 import Fountain from '../Animation/Fountain.vue'
 
 const gameStore = useGameStore()
-const { currentPopupIndex, rotationStop } = storeToRefs(gameStore)
+const { currentPopupIndex, gamePause } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
@@ -76,7 +76,7 @@ onBeforeMount(onLoad)
     <Sprite texture="parkTruck" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
   </Container>
-  <Container v-if="!rotationStop">
+  <Container v-if="!gamePause">
     <Scene1 v-if="currentPopupIndex === 8" :zoom-factor="zoomFactor" />
     <Scene2 v-else-if="currentPopupIndex === 9" :zoom-factor="zoomFactor" />
     <Scene3 v-else-if="currentPopupIndex === 10" :zoom-factor="zoomFactor" />

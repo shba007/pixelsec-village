@@ -19,7 +19,7 @@ interface Character {
 }
 
 const gameStore = useGameStore()
-const { currentCharacterIndex: currentMCCharacterIndex, rotationStop } = storeToRefs(gameStore)
+const { currentCharacterIndex: currentMCCharacterIndex, gamePause } = storeToRefs(gameStore)
 
 const props = defineProps<{
   states: State[]
@@ -70,7 +70,7 @@ watch(currentMCCharacterIndex, (value) => {
 })
 
 let lastAnimationState = ref<'init' | 'started' | 'finished'>()
-watch(rotationStop, (value) => {
+watch(gamePause, (value) => {
   if (value) {
     lastAnimationState.value = activeCharacter.animation
     activeCharacter.animation = 'init'
