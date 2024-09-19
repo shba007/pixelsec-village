@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, onMounted } from 'vue'
+import { computed, reactive, onMounted, ref } from 'vue'
 import { useTimeout, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
@@ -36,47 +36,37 @@ function capitalizeFirstLetter(string: string) {
 }
 
 const modal = computed(() => {
-  let x = 0,
-    y = 0
+  let xCord = 0,
+    yCord = 0
 
-  switch (props.x) {
-    case 'left':
-      x = -1 * 320
-      break
-    case 'center':
-      x = 0 * 320
-      break
-    case 'right':
-      x = 1 * 320
-      break
-    default:
-      x = 0 * 320
-      break
-  }
-
-  switch (props.y) {
-    case 'top':
-      y = -1 * 160
-      break
-    case 'center':
-      y = 0
-      break
-    case 'bottom':
-      y = 1 * 160
-      break
-    default:
-      y = 0
-      break
+  if (props.x === 'center' && props.y === 'center' && props.type === 'landscape') {
+    xCord = 0
+    yCord = -15
+  } else if (props.x === 'center' && props.y === 'center' && props.type === 'portrait') {
+    xCord = 0
+    yCord = 0
+  } else if (props.x === 'center' && props.y === 'top') {
+    xCord = 0
+    // yCord = -145
+    yCord = -190
+  } else if (props.x === 'center' && props.y === 'bottom') {
+    xCord = 0
+    yCord = 140
+  } else if (props.x === 'left' && props.y === 'center') {
+    xCord = -275
+    yCord = -20
+  } else if (props.x === 'right' && props.y === 'center') {
+    xCord = 285
+    yCord = -20
   }
 
   return {
     texture: 'popupBg' + capitalizeFirstLetter(props.type),
-    state: { x, y },
+    state: { x: xCord, y: yCord },
   }
 })
 
 const button = reactive({ x: 350, y: 180, scale: 0.5, isPressed: false, isShow: props.showButton })
-
 const ready = useTimeout(200)
 
 onMounted(() => {
@@ -125,7 +115,6 @@ function handleButtonPress() {
     <Container :x="modal.state.x" :y="modal.state.y">
       <slot />
     </Container>
-    <Sprite texture="popupPositionCenterLandscape" :texture-options="textureOptions" :anchor="0.5" :scale="4"
-      :alpha="0.8" />
+    <!-- <Sprite texture="popupPositionRight" :texture-options="textureOptions" :anchor="0.5" :scale="4" :alpha="0.8" /> -->
   </Container>
 </template>

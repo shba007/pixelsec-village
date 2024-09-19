@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Application, Loader } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -20,44 +20,13 @@ import AppButton from '@/components/AppButton.vue'
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const gameStore = useGameStore()
-const { currentScreenIndex, rotationStop, motionBlur } = storeToRefs(gameStore)
+const { currentScreenIndex, rotationStop, motionBlur, isSoundLoaded } = storeToRefs(gameStore)
 
-function preloadAudio(url: string) {
-  return new Promise((resolve, reject) => {
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-        return response.blob() // Get the blob (audio data)
-      })
-      .then((blob) => {
-        // Optionally, create an object URL for the blob (if you want to use it later)
-        const audioUrl = URL.createObjectURL(blob)
-        resolve(audioUrl) // Resolve with the URL for the audio
-      })
-      .catch((error) => {
-        reject(false)
-        console.error('Error downloading the audio:', error)
-      })
-  })
-}
-
-const isLoaded = ref(false)
 const isStarted = ref(false)
 const isPressed = ref(false)
 
-onBeforeMount(async () => {
-  try {
-    await preloadAudio(resources.sound.bgmSprite)
-    isLoaded.value = true
-  } catch (error) {
-    console.error('Error preloading sounds:', error)
-  }
-})
-
 function onClick() {
-  if (!isLoaded.value) return
+  if (!isSoundLoaded.value) return
 
   isPressed.value = true
 }
@@ -66,7 +35,7 @@ watch(isPressed, () => {
   gameStore.playBGMSound('normal')
   setTimeout(() => {
     isStarted.value = true
-  }, 1000)
+  }, 300)
 })
 
 function onResolve() {
@@ -85,7 +54,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
         </template>
         <template #default>
           <template v-if="!isStarted">
-            <Container v-if="isLoaded" :x="loadingText.x" :y="loadingText.y" :scale="0.65">
+            <Container v-if="isSoundLoaded" :x="loadingText.x" :y="loadingText.y" :scale="0.65">
               <AppButton type="long" text="Start Game" :x="0" :y="0" :scale="1" :is-pressed="isPressed" />
             </Container>
             <Text v-else :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... 99% </Text>
@@ -114,7 +83,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
       class="absolute left-0 top-0 landscape:hidden" />
     <!-- DEBUG -->
     <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-      <p>v0.4.61</p>
+      <p>v0.4.62</p>
       <!--       <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
       <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
       <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>

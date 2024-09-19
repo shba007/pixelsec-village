@@ -570,13 +570,13 @@ function handleResponse(value: number) {
     <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
   </Container>
   <Container :renderable="isLoad && !rotationStop">
-    <AppProtip v-if="currentPopupIndex === 11" title="2" y="top" :zoom-factor="zoomFactor" />
+    <AppProtip v-if="currentPopupIndex === 11" title="2" :zoom-factor="zoomFactor" />
     <Scene8 v-else-if="respondedSceneIndex < 17 && (currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'" :zoom-factor="zoomFactor" @next="handleResponse(17)" />
     <Scene9 v-else-if="(currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'" :zoom-factor="zoomFactor" @next="handleResponse(18)" />
-    <AppProtip v-else-if="currentPopupIndex === 19" title="4" y="top" :zoom-factor="zoomFactor" />
+    <AppProtip v-else-if="currentPopupIndex === 19" title="4" :zoom-factor="zoomFactor" />
     <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
     <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <AppProtip v-else-if="currentPopupIndex === 22" title="5" x="left" :zoom-factor="zoomFactor" />
+    <AppProtip v-else-if="currentPopupIndex === 22" title="5" :zoom-factor="zoomFactor" />
     <Scene12 v-else-if="currentPopupIndex === 23" :zoom-factor="zoomFactor" />
   </Container>
   <Container :renderable="isLoad" :x="screen.state.x * screen.state.scale * zoomFactorMap" :y="screen.state.y * screen.state.scale * zoomFactorMap" :scale="screen.state.scale * zoomFactorMap">
@@ -593,7 +593,7 @@ function handleResponse(value: number) {
     <Scene4 v-else-if="currentPopupIndex === 2 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
     <Scene5 v-else-if="currentPopupIndex === 3 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
     <Scene6 v-else-if="currentPopupIndex === 4 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <AppProtip v-else-if="currentPopupIndex === 7" title="1" y="top" :zoom-factor="zoomFactor" />
+    <AppProtip v-else-if="currentPopupIndex === 7" title="1" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

@@ -58,7 +58,7 @@ const titleText = reactive({ x: 0, y: 0, anchor: 0.5, scale: 1, style: { fontFam
     <Container :x="titleText.x" :y="titleText.y">
       <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">How will you spend\nyour time on the tram?\n\nPick more than one.</Text>
     </Container>
-    <Container :x="-240">
+    <Container :x="-230" :y="20">
       <Sprite texture="mobileTexture" :texture-options="textureOptions" :anchor="0.5" :scale="1" />
       <Sprite
         v-for="{ type, frames, state } of options"

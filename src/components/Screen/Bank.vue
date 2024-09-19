@@ -181,7 +181,7 @@ onMounted(() => {
     <Scene1 v-if="currentPopupIndex === 12" :zoom-factor="zoomFactor" />
     <Scene2 v-else-if="currentPopupIndex === 13" :zoom-factor="zoomFactor" />
     <Scene3 v-else-if="currentPopupIndex === 14 || currentPopupIndex === 15" :zoom-factor="zoomFactor" />
-    <AppProtip v-if="currentPopupIndex === 16" title="3" x="left" :zoom-factor="zoomFactor" />
+    <AppProtip v-if="currentPopupIndex === 16" title="3" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

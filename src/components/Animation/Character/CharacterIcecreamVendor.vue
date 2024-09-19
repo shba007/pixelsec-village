@@ -1,27 +1,22 @@
 <script setup lang="ts">
-import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
 import type { State } from '@/utils/types'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
-const props = defineProps<{
+defineProps<{
   state: State
   place: 'map' | 'park'
 }>()
 
 const gameStore = useGameStore()
-const { currentSceneIndex, textureOptions } = storeToRefs(gameStore)
+const { textureOptions } = storeToRefs(gameStore)
 
 const textures = {
   map: ['mapCharacterIcecreamVendor1', 'mapCharacterIcecreamVendor2'],
   park: ['parkCharacterIcecreamVendorWave1', 'parkCharacterIcecreamVendorWave2'],
 }
-
-watch(currentSceneIndex, (value) => {
-  if (props.place !== 'map') console.log({ currentSceneIndex: value })
-})
 </script>
 
 <template>

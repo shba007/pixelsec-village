@@ -2,14 +2,10 @@
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
-import { onTick, useApplication } from 'vue3-pixi'
-// import { isMobile } from 'pixi.js'
+import { onTick } from 'vue3-pixi'
 
 const gameStore = useGameStore()
 const { isLandscape } = storeToRefs(gameStore)
-
-const app = useApplication()
-// app.value.renderer.options.antialias = true
 
 onMounted(() => {
   const canvas = document.querySelector<HTMLCanvasElement>('canvas')!
@@ -18,19 +14,11 @@ onMounted(() => {
   if (!ctx) return
   ctx.mozImageSmoothingEnabled = true
   ctx.webkitImageSmoothingEnabled = true
-
-  console.log(app.value.renderer.options.antialias)
-  // app.value.stage.sortableChildren = true
-  // app.value.renderer.options.powerPreference = 'high-performance'
 })
 
 onTick(() => {
   const canvas = document.querySelector<HTMLCanvasElement>('canvas')!
-  if (!isLandscape.value) {
-    canvas.style.touchAction = 'auto'
-  } else {
-    canvas.style.touchAction = 'none'
-  }
+  canvas.style.touchAction = !isLandscape.value ? 'auto' : 'none'
 })
 </script>
 

@@ -1,78 +1,49 @@
 <script setup lang="ts">
 import { onMounted, computed, reactive } from 'vue'
-import { useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
 import { textureOptions } from '@/components/AppSettings.vue'
 import ProtipIcon from '@/components/Animation/ProtipIcon.vue'
+import AppPopup from '@/components/AppPopup.vue'
 
-const props = withDefaults(
-  defineProps<{
-    title: string
-    x?: 'left' | 'center' | 'right' | 'default'
-    y?: 'top' | 'center' | 'bottom' | 'default'
-    zoomFactor: number
-  }>(),
-  {
-    x: 'center',
-    y: 'center',
-  }
-)
+const props = defineProps<{
+  title: '1' | '2' | '3' | '4' | '5'
+  zoomFactor: number
+}>()
 
 const gameStore = useGameStore()
 
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-
 const modal = computed(() => {
-  let texture = ''
+  let type = '',
+    x = 'center',
+    y = 'center'
   switch (props.title) {
     case '1':
-      texture = 'popupBgSlim'
+      type = 'slim'
+      y = 'top'
       break
     case '2':
-      texture = 'popupBgSlim'
+      type = 'slim'
+      y = 'top'
       break
     case '3':
-      texture = 'popupBgSquare'
+      type = 'square'
+      x = 'left'
       break
     case '4':
-      texture = 'popupBgSlim'
+      type = 'slim'
+      y = 'top'
       break
     case '5':
-      texture = 'popupBgSquare'
-      break
-  }
-
-  let xFactor = 2 / 4,
-    yFactor = 2 / 4
-  switch (props.x) {
-    case 'left':
-      xFactor = 1 / 4
-      break
-    case 'center':
-      xFactor = 2 / 4
-      break
-    case 'right':
-      xFactor = 3 / 4
-      break
-  }
-  switch (props.y) {
-    case 'top':
-      yFactor = 1 / 4
-      break
-    case 'center':
-      yFactor = 2 / 4
-      break
-    case 'bottom':
-      yFactor = 3 / 4
+      type = 'square'
+      x = 'left'
       break
   }
 
   return {
-    texture,
-    state: { x: screenWidth.value * xFactor, y: screenHeight.value * yFactor },
-    xFactor: xFactor * 100 + '%',
-    yFactor: yFactor * 100 + '%',
+    type,
+    x,
+    y,
   }
 })
 
@@ -89,9 +60,8 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
 </script>
 
 <template>
-  <Container :x="modal.state.x" :y="modal.state.y" :scale="zoomFactor">
+  <AppPopup :type="modal.type" :x="modal.x" :y="modal.y" :zoom-factor="zoomFactor" :show-button="false">
     <template v-if="title === '1'">
-      <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
       <ProtipIcon :x="-375" :y="-50" :scale="1" />
       <Container :x="title1Text.x" :y="title1Text.y">
         <Text :x="-230" :y="120" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="{ ...title1Text.style, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
@@ -102,7 +72,6 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
       </Container>
     </template>
     <template v-else-if="title === '2'">
-      <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
       <ProtipIcon :x="-375" :y="-50" :scale="1" />
       <Container :x="title2Text.x" :y="title2Text.y">
         <Text :x="-230" :y="120" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="{ ...title2Text.style, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
@@ -114,7 +83,6 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
       </Container>
     </template>
     <template v-else-if="title === '3'">
-      <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
       <ProtipIcon :x="50" :y="-180" :scale="1.1" />
       <Container :x="title3Text.x" :y="title3Text.y">
         <Text :x="0" :y="-100" :anchor="title3Text.anchor" :scale="title3Text.scale" :style="{ ...title3Text.style, fontSize: 54, lineHeight: 64, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
@@ -123,7 +91,6 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
       </Container>
     </template>
     <template v-else-if="title === '4'">
-      <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
       <ProtipIcon :x="-375" :y="-50" :scale="1" />
       <Container :x="title4Text.x" :y="title4Text.y">
         <Text :x="-230" :y="120" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="{ ...title4Text.style, fontSize: 54, lineHeight: 64, fill: '#9C38FB', stroke: '#9C38FB' }"
@@ -136,7 +103,6 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
       </Container>
     </template>
     <template v-else-if="title === '5'">
-      <Sprite :texture="'popupBgSquare'" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
       <ProtipIcon :x="50" :y="-180" :scale="1.1" />
       <Container :x="title5Text.x" :y="title5Text.y">
         <Text :x="0" :y="-100" :anchor="title5Text.anchor" :scale="title5Text.scale" :style="{ ...title5Text.style, fontSize: 54, lineHeight: 64, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
@@ -144,5 +110,5 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
         <Text :x="176" :y="64" :anchor="title5Text.anchor" :scale="title4Text.scale" :style="{ ...title5Text.style, fill: '#3464FD', stroke: '#3464FD' }">MONETISE</Text>
       </Container>
     </template>
-  </Container>
+  </AppPopup>
 </template>
