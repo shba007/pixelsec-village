@@ -468,19 +468,13 @@ watch(gamePause, (value) => {
   } else {
     if (lastScene) {
       updateScreen(lastScene)
+      screen.animation = lastScene.animation
     }
   }
 })
 
 let totalElapsedTime = 0
 let progress = 0
-
-watch(
-  () => screen.animation,
-  () => {
-    console.log('screen.animation', screen.animation)
-  }
-)
 
 onTick((delta) => {
   if (!gamePause.value && screen.animation === 'started' && currentSceneIndex.value < screen.states.length - 1) {
