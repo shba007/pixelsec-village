@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { useWindowSize, watchArray } from '@vueuse/core'
+import { useIntervalFn } from '@vueuse/core'
 import { External } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
@@ -18,7 +18,7 @@ const props = defineProps<{
 const dataStore = useDataStore()
 const gameStore = useGameStore()
 const { score } = storeToRefs(dataStore)
-const { timelineIndex, characterSkin, rotationStop } = storeToRefs(gameStore)
+const { characterSkin, rotationStop } = storeToRefs(gameStore)
 
 const secondScreen = ref(false)
 const wolf = reactive({ x: 280, y: 190, scale: 1.25, alpha: 1 })
@@ -70,12 +70,12 @@ function resize() {
   }
 }
 
-const { width: screenWidth, height: screenHeight } = useWindowSize()
-watchArray([screenWidth, screenHeight], resize)
+useIntervalFn(() => {
+  resize()
+}, 100)
 
 onMounted(() => {
   gameStore.playSFXSound('dialogBox')
-  setTimeout(resize, 300)
 })
 
 const inputEmail = ref<string>()
@@ -104,7 +104,7 @@ function onSubmit(value: string) {
 const textures = ['buttonArrow', 'buttonArrowPressed']
 const inputRef = ref<any>()
 
-const titleText = reactive({ x: -240, y: -30, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 50, align: 'left', lineHeight: 60, stroke: 1, strokeThickness: 1.5 } })
+const titleText = reactive({ x: -240, y: -30, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 44, align: 'left', lineHeight: 60, stroke: 1, strokeThickness: 1.5 } })
 const contectText = reactive({ anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 34, align: 'left', lineHeight: 40, stroke: 1, strokeThickness: 1 } })
 
 function playAgain() {
@@ -169,7 +169,7 @@ function playAgain() {
       <template v-slot:popupBg>
         <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
       </template>
-      <Text :x="titleText.x - 20" :y="titleText.y - 150" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">SHARE WITH YOUR\nFRIENDS AND SEE WHAT\nHOUSE THEY LIVE IN</Text>
+      <Text :x="titleText.x" :y="titleText.y - 200" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">SHARE WITH YOUR\nFRIENDS AND SEE WHAT\nHOUSE THEY LIVE IN</Text>
       <Sprite
         v-for="{ type, texture, x, y, scale } of socials"
         :key="type"

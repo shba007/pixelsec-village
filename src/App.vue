@@ -15,6 +15,7 @@ import ScreenPark from '@/components/Screen/Park.vue'
 import ScreenBank from '@/components/Screen/Bank.vue'
 import ScreenResult from '@/components/Screen/Result.vue'
 import SceneExperience from '@/components/Scene/Scene-Experience.vue'
+import SceneResume from '@/components/Scene/Scene-Resume.vue'
 import AppButton from '@/components/AppButton.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
@@ -25,14 +26,12 @@ const { currentScreenIndex, rotationStop, motionBlur, isSoundLoaded, isStarted, 
 function onClick() {
   if (!isSoundLoaded.value) return
 
-  console.log('On Click Triggerd')
   isPressed.value = true
 }
 
 watch(isPressed, (value) => {
   if (!value) return
 
-  console.log('isPressed Triggerd')
   gameStore.playBGMSound('normal')
   setTimeout(() => {
     isStarted.value = true
@@ -68,6 +67,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
             <ScreenBank v-else-if="currentScreenIndex === 5" />
             <ScreenResult v-else-if="currentScreenIndex === 7" />
             <SceneExperience v-if="rotationStop" />
+            <SceneResume />
             <AppSettings />
           </template>
         </template>

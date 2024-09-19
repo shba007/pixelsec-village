@@ -95,7 +95,7 @@ export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
 
-  const timelineIndex = ref(0)
+  const timelineIndex = ref(62)
   const isStarted = ref(false)
   const isPressed = ref(false)
 
@@ -208,6 +208,7 @@ export const useGameStore = defineStore('game', () => {
   }
   const {
     play: playBgm,
+    pause: pauseBgm,
     stop: stopBgm,
     sound: soundBgm,
   } = useSound(resources.sound.bgmSprite, {
@@ -317,17 +318,28 @@ export const useGameStore = defineStore('game', () => {
   }
 
   const visibility = useDocumentVisibility()
+  const isVisible = ref(true)
 
   function handleVisibilityChange(current: string, previous: string) {
-    if (current === 'visible' && previous === 'hidden') {
-      volumeBgm.value = 0.4
-      volumeSfx.value = 1
-      console.log('Sound Enabled')
-    } else {
-      volumeBgm.value = 0
-      volumeSfx.value = 0
-      console.log('Sound Disabled')
+    if (!(current === 'visible' && previous === 'hidden')) {
+      // pauseBgm({ id: activeSoundList.bgm[1] })
+      soundBgm.value.mute(true, { id: activeSoundList.bgm[1] })
+      isVisible.value = false
+      console.log('Sound Disabled', isVisible.value)
     }
+  }
+
+  watch(isVisible, (value) => {
+    console.log('Is visiable', value)
+  })
+
+  function resume() {
+    setTimeout(() => {
+      // playBgm()
+      soundBgm.value.mute(false, { id: activeSoundList.bgm[1] })
+      isVisible.value = true
+      console.log('Sound Enabled')
+    }, 100)
   }
 
   watch(visibility, (current, previous) => {
@@ -351,6 +363,7 @@ export const useGameStore = defineStore('game', () => {
     motionBlur,
     hardStop,
     isSoundLoaded,
+    isVisible,
     textureOptions,
     timelineIndex,
     currentScreenIndex,
@@ -358,6 +371,7 @@ export const useGameStore = defineStore('game', () => {
     currentSceneIndex,
     currentCharacterIndex,
     characterSkin,
+    resume,
     restart,
     toggleHardStop,
     toggleMotionBlur,

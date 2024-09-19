@@ -20,6 +20,7 @@ import portipIcon2Texture from '@/assets/image/popup/protip-2.png'
 // import popupSceneInstallTexture from '@/assets/image/popup/scene-install.png'
 // import popupSceneRotateTexture from '@/assets/image/popup/scene-rotate.png'
 import popupSceneRotateOverlayTexture from '@/assets/image/popup/scene-rotate-overlay.png'
+import popupResumeButtonTexture from '@/assets/image/popup/play.png'
 import popupBgSlimTexture from '@/assets/image/popup/bg-slim.png'
 import popupBgLandscapeTexture from '@/assets/image/popup/bg-landscape.png'
 import popupBgSquareTexture from '@/assets/image/popup/bg-square.png'
@@ -386,6 +387,7 @@ export const resources = {
     portipIcon2: portipIcon2Texture,
     // popupSceneRotate: popupSceneRotateTexture,
     popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
+    popupResumeButton: popupResumeButtonTexture,
     popupBgSlim: popupBgSlimTexture,
     popupBgLandscape: popupBgLandscapeTexture,
     popupBgPortrait: popupBgPortraitTexture,
