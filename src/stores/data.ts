@@ -180,6 +180,7 @@ export const useDataStore = defineStore('data', () => {
 
   return {
     resultHouse,
+    score,
     setReadTC,
     setAge,
     setSpendTime,

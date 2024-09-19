@@ -9,6 +9,7 @@ import sfxSprite from '/sound/sfx-sprite.mp3'
 import IconFacebook from '@/assets/image/popup/icon-social-facebook.png'
 import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
 import IconX from '@/assets/image/popup/icon-social-x.png'
+import PlaceholderPlay from '@/assets/image/popup/placeholder-play-unfocus.png'
 import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
 import PlaceholderEmail2 from '@/assets/image/popup/placeholder-email-focus.png'
 import BgImage from '/images/image-bg.png'
@@ -720,14 +721,15 @@ export const resources = {
     resultMansionDog1: resultMansionDog1Texture,
     resultMansionDog2: resultMansionDog2Texture,
     //
-    IconFacebook,
-    IconInstagram,
-    IconX,
-    PlaceholderEmail1,
-    PlaceholderEmail2,
-    //
     mapWolve1: mapWolve1Texture,
     mapWolve2: mapWolve2Texture,
     mapWolve3: mapWolve3Texture,
+    //
+    IconFacebook,
+    IconInstagram,
+    IconX,
+    PlaceholderPlay,
+    PlaceholderEmail1,
+    PlaceholderEmail2,
   },
 }

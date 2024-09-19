@@ -12,10 +12,12 @@ const props = withDefaults(
     x: 'left' | 'center' | 'right'
     y: 'top' | 'center' | 'bottom'
     zoomFactor: number
+    showPopup?: boolean
     showButton?: boolean
     buttonDisabled?: boolean
   }>(),
   {
+    showPopup: true,
     showButton: true,
     buttonDisabled: false,
   }
@@ -105,11 +107,13 @@ function handleButtonPress() {
 </script>
 
 <template>
-  <Container v-if="ready" :x="screenWidth * 0.5" :y="screenHeight * 0.5" :scale="type === 'portrait' ? portraitZoomFactor * 0.5625 : zoomFactor">
+  <Container v-if="ready" :x="screenWidth * 0.5" :y="screenHeight * 0.5"
+    :scale="type === 'portrait' ? portraitZoomFactor * 0.5625 : zoomFactor" :alpha="showPopup ? 1 : 0">
     <Container :x="modal.state.x" :y="modal.state.y">
       <slot name="popupBg" />
       <Sprite :texture="modal.texture" :texture-options="textureOptions" :anchor="0.5" :scale="0.5" />
-      <AppButton v-if="button.isShow" type="arrow" :x="button.x" :y="button.y" :scale="button.scale" :is-pressed="button.isPressed" @click="handleButtonPress" />
+      <AppButton v-if="button.isShow" type="arrow" :x="button.x" :y="button.y" :scale="button.scale"
+        :is-pressed="button.isPressed" @click="handleButtonPress" />
     </Container>
     <Container :x="modal.state.x" :y="modal.state.y">
       <slot />
