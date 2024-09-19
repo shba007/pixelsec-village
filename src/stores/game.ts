@@ -8,7 +8,7 @@ import { SCALE_MODES } from '@/utils/types'
 
 export type Character = 'black' | 'blue' | 'red' | 'violate'
 
-export const timeline: {
+const timeline: {
   screen: number
   popup: number
   scene: number
@@ -98,6 +98,7 @@ export const useGameStore = defineStore('game', () => {
   const timelineIndex = ref(0)
   const isStarted = ref(false)
   const isPressed = ref(false)
+  const hasUserInteracted = ref(false) // New state for tracking user interaction
 
   const currentScreenIndex = computed(() => timeline[timelineIndex.value]?.screen)
   const currentPopupIndex = computed(() => timeline[timelineIndex.value]?.popup)
@@ -113,6 +114,23 @@ export const useGameStore = defineStore('game', () => {
   const debugPause = computed(() => $debugPause.value)
   const rotatePause = computed(() => currentSceneIndex.value > 0 && !isLandscape.value)
   const gamePause = computed(() => debugPause.value || inactivePause.value || rotatePause.value)
+
+  function checkUserInteraction() {
+    if (!hasUserInteracted.value) {
+      document.addEventListener(
+        'click',
+        () => {
+          hasUserInteracted.value = true
+          soundBgm.value.mute(false)
+          soundSfx1.value.mute(false)
+          soundSfx2.value.mute(false)
+          soundSfx3.value.mute(false)
+          console.log('User interaction detected. Sound Enabled.')
+        },
+        { once: true }
+      )
+    }
+  }
 
   watch(gamePause, (value) => {
     if (value) {
@@ -140,6 +158,7 @@ export const useGameStore = defineStore('game', () => {
   })
 
   onMounted(() => {
+    checkUserInteraction()
     console.table([
       ['inactivePause', inactivePause.value],
       ['debugPause', debugPause.value],
