@@ -51,7 +51,7 @@ function onShare(type: 'facebook' | 'instagram' | 'x') {
   window.open(finalShare, '_blank')
 }
 
-const emailPlaceholder = reactive({ x: 0, y: 200, scale: 0.5 })
+const emailPlaceholder = reactive({ x: 0, y: 190, scale: 0.5 })
 const emailPlaceholderRef = ref<any>(null)
 const emailInputBox = reactive({ x: 0, y: 0, width: 0, height: 0 })
 
@@ -109,7 +109,7 @@ function onSubmit(value: string) {
 const textures = ['buttonArrow', 'buttonArrowPressed']
 const inputRef = ref<any>()
 
-const titleText = reactive({ x: -250, y: -50, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 50, align: 'left', lineHeight: 60, stroke: 1, strokeThickness: 1 } })
+const titleText = reactive({ x: -250, y: -50, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 50, align: 'left', lineHeight: 56, stroke: 1, strokeThickness: 1 } })
 const contectText = reactive({ x: -250, y: -50, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 35, align: 'left', lineHeight: 42, stroke: 1, strokeThickness: 1 } })
 </script>
 

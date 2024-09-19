@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, onMounted, ref } from 'vue'
+import { computed, reactive, onMounted } from 'vue'
 import { useTimeout, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
@@ -46,6 +46,7 @@ const modal = computed(() => {
     xCord = 0
     yCord = 0
   } else if (props.x === 'center' && props.y === 'top') {
+    // FIXME: zoom
     xCord = 0
     // yCord = -145
     yCord = -190

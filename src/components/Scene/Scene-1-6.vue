@@ -1322,7 +1322,7 @@ export default {
         </div>
       </section>
       <button
-        class="absolute bottom-4 left-1/2 aspect-square -translate-x-1/2 rounded-full bg-slate-100 px-3 py-0.5 text-2xl shadow-md"
+        class="absolute bottom-4 left-1/2 aspect-square -translate-x-1/2 rounded-full bg-slate-100 px-3 py-0.5 text-2xl shadow-md touch-none"
         @click="autoScroll">↓</button>
     </External>
   </AppPopup>
@@ -1335,6 +1335,10 @@ export default {
   height: 100%;
   overflow-y: scroll;
   background-color: #eeeeeeb2;
-  touch-action: manipulation
+}
+
+button,
+.policy-section {
+  touch-action: manipulation;
 }
 </style>
