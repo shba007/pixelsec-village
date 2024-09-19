@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 
-import { useGameStore } from '@/stores/game'
 import AppPopup from '@/components/AppPopup.vue'
 
 defineProps<{
   zoomFactor: number
 }>()
 
-const gameStore = useGameStore()
+const emit = defineEmits<{
+  (event: 'next'): void
+}>()
 
 function onNext() {
-  gameStore.nextTimeline({ id: 26 })
+  emit('next')
 }
 
 const titleText = reactive({ x: 0, y: -5, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'center', lineHeight: 64, stroke: 1, strokeThickness: 1 } })

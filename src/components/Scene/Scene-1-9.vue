@@ -12,7 +12,7 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'update'): void
+  (event: 'next'): void
 }>()
 
 const dataStore = useDataStore()
@@ -47,7 +47,7 @@ function onClick(option: annoyingPointChoice) {
 
 function onNext() {
   setTimeout(() => {
-    emit('update')
+    emit('next')
     showPopup.value = false
   }, 100)
 }

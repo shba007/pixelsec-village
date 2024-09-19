@@ -412,12 +412,8 @@ const characterBaloonVendor = reactive({
   state: { x: 1180, y: 2750, scale: 0.5, alpha: 1, time: 0 },
 })
 
-watch(
-  () => screen.animation,
-  (value) => {
-    gameStore.toggleMotionBlur(value === 'started')
-  }
-)
+const door = reactive({ x: 1137, y: 1716, scale: 1 })
+const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
 
 function updateScreen(data: { x: number; y: number; scale: number; alpha: number; time: number }) {
   screen.state.x = data.x
@@ -440,6 +436,13 @@ onBeforeMount(onLoad)
 watch(currentSceneIndex, () => {
   screen.animation = 'started'
 })
+
+watch(
+  () => screen.animation,
+  (value) => {
+    gameStore.toggleMotionBlur(value === 'started')
+  }
+)
 
 const lastScene = reactive<{
   x: number
@@ -539,9 +542,6 @@ const respondedSceneIndex = ref(0)
 function handleResponse(value: number) {
   respondedSceneIndex.value = value
 }
-
-const door = reactive({ x: 1137, y: 1716, scale: 1 })
-const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
 </script>
 
 <template>
@@ -552,16 +552,11 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" place="map" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
     <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
-    <!-- <MapTram :states="tram.states" :animation="rotationStop ? 'finished' : tram.animation" initialOrientation="right" /> -->
-    <!-- <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y"
-      :scale="station.fg.scale" :anchor="0" /> -->
-    <!-- @vue-ignore -->
     <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
     <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y" :scale="fence.scale" />
     <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
     <Wolf :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="1" type="map" />
     <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
-    <!-- <CharacterStationMaster place="map" :state="characterStationMaster.state" /> -->
     <Door :x="door.x" :y="door.y" :scale="door.scale" :playing="currentCharacterIndex === 16" place="map" />
     <template v-if="currentCharacterIndex === 16">
       <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :play-sound="type === 'purple'" :type="type as 'purple' | 'green'" place="map" />
@@ -573,12 +568,11 @@ const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
     <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
     <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction as -1 | 1" />
     <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
-    <!-- <BlurFilter :blur="motionBlur ? 0.9 : 0" /> -->
   </Container>
   <Container :renderable="isLoad && !rotationStop">
     <AppProtip v-if="currentPopupIndex === 11" title="2" y="top" :zoom-factor="zoomFactor" />
-    <Scene8 v-else-if="currentPopupIndex === 17 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
-    <Scene9 v-else-if="currentPopupIndex === 18 && screen.animation === 'finished'" :zoom-factor="zoomFactor" @update="handleResponse(18)" />
+    <Scene8 v-else-if="respondedSceneIndex < 17 && (currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'" :zoom-factor="zoomFactor" @next="handleResponse(17)" />
+    <Scene9 v-else-if="(currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'" :zoom-factor="zoomFactor" @next="handleResponse(18)" />
     <AppProtip v-else-if="currentPopupIndex === 19" title="4" y="top" :zoom-factor="zoomFactor" />
     <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
     <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />

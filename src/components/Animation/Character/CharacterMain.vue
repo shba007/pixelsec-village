@@ -2,9 +2,10 @@
 import { reactive, watch, computed, ref } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
+
+import { useGameStore } from '@/stores/game'
 import type { State } from '@/utils/types'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
-import { useGameStore } from '@/stores/game'
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
 

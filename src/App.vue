@@ -114,8 +114,8 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
       class="absolute left-0 top-0 landscape:hidden" />
     <!-- DEBUG -->
     <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-      <p>v0.4.60</p>
-      <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+      <p>v0.4.61</p>
+      <!--       <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
       <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
       <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
       <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
