@@ -121,6 +121,7 @@ export const useGameStore = defineStore('game', () => {
         'click',
         () => {
           hasUserInteracted.value = true
+          alert('Sound Unmuted in checkUserInteraction')
           soundBgm.value.mute(false)
           soundSfx1.value.mute(false)
           soundSfx2.value.mute(false)
@@ -134,12 +135,14 @@ export const useGameStore = defineStore('game', () => {
 
   watch(gamePause, (value) => {
     if (value) {
+      alert('Sound Muted in gamePause')
       soundBgm.value.mute(true)
       soundSfx1.value.mute(true)
       soundSfx2.value.mute(true)
       soundSfx3.value.mute(true)
       console.log('Sound Disabled')
     } else {
+      alert('Sound Unmuted in gamePause')
       soundBgm.value.mute(false)
       soundSfx1.value.mute(false)
       soundSfx2.value.mute(false)
@@ -280,27 +283,26 @@ export const useGameStore = defineStore('game', () => {
     resultWin: [251210, 160880 - 100, true],
     resultLost: [7270, 20020 - 100, true],
   }
-  const volumeBgm = ref(0.4)
   const playbackRateBgm = ref(1)
   const soundEnabledBgm = ref(true)
   const bgmSettings = {
     interrupt: true,
     sprite: bgmSpriteMap,
     autoplay: true,
+    volume: 0.4,
   }
   const {
     play: playBgm,
     stop: stopBgm,
     sound: soundBgm,
   } = useSound(resources.sound.bgmSprite, {
-    volume: volumeBgm,
     playBackRate: playbackRateBgm,
     soundEnabled: soundEnabledBgm,
     ...bgmSettings,
     onload: () => {
-      volumeBgm.value = 0.4
       console.log('Bgm Loaded')
       soundStatus.bgm = 'loaded'
+      alert('Sound Muted in gamePause')
       soundBgm.value.mute(false)
     },
     onend: () => {
@@ -320,13 +322,13 @@ export const useGameStore = defineStore('game', () => {
     alarmLight: [14230 + 250, 7810 - 1000, true],
     countdown: [5280, 4000 - 1000, true],
   }
-  const volumeSfx = ref(1)
   const playbackRateSfx = ref(1)
   const soundEnabledSfx = ref(true)
   const sfxSettings = {
     interrupt: true,
     sprite: sfxSpriteMap,
     autoplay: true,
+    volume: 1,
   }
 
   const {
@@ -334,7 +336,6 @@ export const useGameStore = defineStore('game', () => {
     stop: stopSfx1,
     sound: soundSfx1,
   } = useSound(resources.sound.sfxSprite, {
-    volume: volumeSfx,
     playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
@@ -344,7 +345,6 @@ export const useGameStore = defineStore('game', () => {
       soundSfx1.value.mute(false)
       soundSfx2.value.mute(false)
       soundSfx3.value.mute(false)
-      volumeSfx.value = 1
     },
     onend: () => {
       activeSoundList.sfx[1] = null
@@ -355,7 +355,6 @@ export const useGameStore = defineStore('game', () => {
     stop: stopSfx2,
     sound: soundSfx2,
   } = useSound(resources.sound.sfxSprite, {
-    volume: volumeSfx,
     playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
@@ -368,7 +367,6 @@ export const useGameStore = defineStore('game', () => {
     stop: stopSfx3,
     sound: soundSfx3,
   } = useSound(resources.sound.sfxSprite, {
-    volume: volumeSfx,
     playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,

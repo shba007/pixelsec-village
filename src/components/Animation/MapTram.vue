@@ -4,7 +4,6 @@ import { onTick, External } from 'vue3-pixi'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 import { useGameStore } from '@/stores/game'
-import { useDebounceFn } from '@vueuse/core'
 
 interface Route {
   x: number
@@ -87,10 +86,14 @@ const currentTramStateIndex = ref(0)
 let totalElapsedTime = 0
 let progress = 0
 
-const debouncedPlaySFXSound = useDebounceFn(() => {
-  // console.log('Play sound tram', currentTramStateIndex.value)
+/* const debouncedPlaySFXSound = useDebounceFn(() => {
+  console.log('Play sound tram', currentTramStateIndex.value)
   gameStore.playSFXSound('tram', 2)
-}, 500)
+}, 500) */
+
+function playSound(state: number) {
+  if (state == 2 || state == 6 || state == 8) gameStore.playSFXSound('tram', 2)
+}
 
 onTick((delta) => {
   if (tram.animation === 'started' && currentTramStateIndex.value >= 0 && currentTramStateIndex.value < props.states.length - 1) {
@@ -118,7 +121,7 @@ onTick((delta) => {
       tram.animation = 'finished'
       totalElapsedTime = 0
       currentTramStateIndex.value++
-      if (currentTramStateIndex.value <= 7) debouncedPlaySFXSound()
+      playSound(currentTramStateIndex.value)
 
       if (currentTramStateIndex.value < props.states.length - 1) tram.animation = 'started'
     }

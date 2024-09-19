@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { Application, Loader } from 'vue3-pixi'
 import { useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -80,12 +80,12 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
       <div v-if="gameStore.rotatePause" class="absolute left-0 top-0 h-full w-full bg-white/40 landscape:hidden" />
       <!-- DEBUG -->
       <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-        <p>v0.4.70</p>
-        <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+        <p>v0.4.71</p>
+        <!--         <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
         <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
         <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
         <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
-        <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p>
+        <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
       </div>
       <!-- <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
       <button @click="gameStore.toggleDebugPause(!debugPause)">debugPause {{ debugPause }}</button>
