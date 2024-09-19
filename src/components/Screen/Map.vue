@@ -586,17 +586,17 @@ function handleResponse(value: number) {
     <AppProtip v-else-if="currentPopupIndex === 7" title="1" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
+  <External>
     <div class="fixed left-1/2 top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
-      <div class="flex flex-col gap-2">
+      <!-- <div class="flex flex-col gap-2">
         <input v-model="screen.state.x" type="number" min="-10000" max="10000" step="10" />
         <input v-model="screen.state.y" type="number" min="-10000" max="10000" step="10" />
         <input v-model="screen.state.scale" type="number" min="0" max="10" step="0.01" />
         <input v-model="screen.state.time" type="number" min="0" max="10" step="0.01" />
         <span class="bg-white">{{ screen.animation }}</span>
         <span class="bg-white">{{ currentSceneIndex }}</span>
-      </div>
+      </div> -->
     </div>
-  </External> -->
+  </External>
 </template>

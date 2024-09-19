@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
   gameStore.playSFXSound('alarmLight')
 })
 
-const titleText = reactive({ x: 185, y: -52, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 44, align: 'left', lineHeight: 54, stroke: 1, strokeThickness: 1 } })
+const titleText = reactive({ x: 185, y: -52, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 34, align: 'left', lineHeight: 54, stroke: 1, strokeThickness: 1 } })
 const timerText = reactive({ x: -180, y: -175, scale: 1, style: { fontFamily: 'INET', fontSize: 88, lineHeight: 64, stroke: 0, strokeThickness: 0 } })
 </script>
 

@@ -2,7 +2,7 @@
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
-import { useWindowSize } from '@vueuse/core'
+import { useIntervalFn, useWindowSize, watchArray } from '@vueuse/core'
 import { textureOptions } from '@/components/AppSettings.vue'
 import { useGameStore } from '@/stores/game'
 
@@ -31,10 +31,10 @@ const screen = reactive<any>({
   loaded: false,
   alias: { bg: 'bankSky', fg: 'bankBackground' },
   states: [
-    { x: 0, y: 200, scale: 1, alpha: 1, time: 0 },
-    { x: 0, y: 200, scale: 1, alpha: 1, time: 3 },
+    { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
+    { x: 0, y: 0, scale: 1, alpha: 1, time: 3 },
   ],
-  state: { x: 0, y: 200, scale: 1, alpha: 1, time: 0 },
+  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'init',
 })
 
@@ -93,7 +93,7 @@ let progress = 0
 const currentStateIndex = ref(0)
 
 onTick((delta) => {
-  if (!gamePause.value && screen.animation === 'started') {
+  if (!gamePause.value && screen.animation === 'started' && currentStateIndex.value < screen.states.length) {
     totalElapsedTime += delta / 100
     const dt = screen.states[currentStateIndex.value + 1].time - screen.states[currentStateIndex.value].time
     const dx = screen.states[currentStateIndex.value + 1].x - screen.states[currentStateIndex.value].x
@@ -109,6 +109,7 @@ onTick((delta) => {
     if (progress == 1) {
       totalElapsedTime = 0
       screen.animation = 'finished'
+      currentStateIndex.value++
       gameStore.nextTimeline({ id: 36 })
     }
   }
@@ -122,9 +123,26 @@ watch(currentSceneIndex, (value) => {
   }
 })
 
-watch(currentPopupIndex, (value) => {
-  if (value === 16) {
-    setTimeout(() => gameStore.nextTimeline({ id: 37 }), 5000)
+let timer: any
+watchArray([gamePause, currentPopupIndex], () => {
+  if (!gamePause.value && currentPopupIndex.value === 16) {
+    timer = setTimeout(() => gameStore.nextTimeline({ id: 37 }), 5000)
+  }
+})
+
+const lastScreen = ref()
+watch(gamePause, (value) => {
+  if (value) {
+    lastScreen.value = { x: screen.state.x, y: screen.state.y, time: screen.state.time, animation: screen.animation }
+    screen.animation = 'init'
+    if (timer) clearTimeout(timer)
+  } else {
+    if (lastScreen.value) {
+      screen.state.x = lastScreen.value.x
+      screen.state.y = lastScreen.value.y
+      screen.state.time = lastScreen.value.time
+      screen.animation = lastScreen.value.animation
+    }
   }
 })
 
@@ -147,7 +165,20 @@ function resize() {
   }
 }
 
-onTick(resize)
+watch(
+  screen.states,
+  () => {
+    screen.state.x = screen.states[currentStateIndex.value].x
+    screen.state.y = screen.states[currentStateIndex.value].y
+    screen.state.scale = screen.states[currentStateIndex.value].scale
+    screen.state.time = screen.states[currentStateIndex.value].time
+  },
+  { deep: true }
+)
+
+useIntervalFn(() => {
+  resize()
+}, 100)
 
 onMounted(() => {
   setTimeout(() => {
@@ -159,7 +190,7 @@ onMounted(() => {
 <template>
   <Container :x="screenWidth / 2 + screen.state.x" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container>
-      <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-200" :scale="screen.state.scale" :anchor="0.5" />
+      <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-350" :scale="screen.state.scale" :anchor="0.5" />
       <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
       <Sprite ref="sceneRef" :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale" :anchor="0.5" />
     </Container>
