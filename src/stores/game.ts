@@ -15,79 +15,79 @@ const timeline: {
   character: number
   time?: number
 }[] = [
-  { screen: 0, popup: 0, scene: 0, character: 0, time: 0 }, // welcome
-  { screen: 0, popup: 0.5, scene: 1, character: 0, time: 0 }, //
-  { screen: 0, popup: 1, scene: 2, character: 0, time: 0 }, // lets start
-  { screen: 0, popup: 2, scene: 3, character: 0, time: 0 }, // choose avatar
-  { screen: 0, popup: 3, scene: 4, character: 0, time: 0 }, // read t&c
-  { screen: 0, popup: 4, scene: 4, character: 0, time: 0 }, // t&c
-  { screen: 0, popup: -1, scene: 5, character: 0, time: 0 }, // zoom
-  { screen: 1, popup: -1, scene: 5, character: 0, time: 0 }, // in to the station
-  { screen: 1, popup: 5, scene: 5, character: 0, time: 0 }, // your age
-  { screen: 1, popup: 6, scene: 5, character: 0, time: 0 }, // your used app
-  { screen: 2, popup: 7, scene: 5, character: 1, time: 0.25 }, // out of the station in the map
-  { screen: 2, popup: 7, scene: 6, character: 2, time: 0.5 }, //
-  { screen: 2, popup: 7, scene: 7, character: 3, time: 0.5 }, //
-  { screen: 2, popup: 7, scene: 8, character: 4, time: 1.25 }, // changed
-  { screen: 2, popup: -1, scene: 9, character: 5, time: 3 },
-  { screen: 2, popup: -1, scene: 10, character: 6, time: 6 },
-  { screen: 2, popup: -1, scene: 11, character: 7, time: 9 },
-  { screen: 2, popup: -1, scene: 12, character: 8, time: 12 },
-  { screen: 2, popup: -1, scene: 13, character: 9, time: 14.25 },
-  { screen: 2, popup: -1, scene: 14, character: 10, time: 15 },
-  { screen: 2, popup: -1, scene: 15, character: 11, time: 16.5 },
-  { screen: 2, popup: -1, scene: 16, character: 12 },
-  { screen: 3, popup: -1, scene: 16, character: 12 },
-  { screen: 3, popup: 8, scene: 16, character: 12 },
-  { screen: 3, popup: 9, scene: 16, character: 12 },
-  { screen: 3, popup: 10, scene: 16, character: 12 },
-  { screen: 4, popup: 11, scene: 17, character: 13 },
-  { screen: 4, popup: 11, scene: 18, character: 14 },
-  { screen: 4, popup: 11, scene: 19, character: 15 },
-  { screen: 4, popup: -1, scene: 20, character: 16 },
-  //
-  { screen: 5, popup: -1, scene: 20, character: 17 },
-  { screen: 5, popup: 12, scene: 20, character: 17 },
-  { screen: 5, popup: 13, scene: 20, character: 17 },
-  { screen: 5, popup: 14, scene: 20, character: 17 }, // either
-  { screen: 5, popup: 15, scene: 20, character: 17 }, // or
-  { screen: 5, popup: -1, scene: 21, character: 17 }, // issue when coutdown finished
-  { screen: 5, popup: 16, scene: 21, character: 17 },
-  //
-  { screen: 6, popup: 16, scene: 22, character: 18 },
-  { screen: 6, popup: -1, scene: 23, character: 19 },
-  { screen: 6, popup: -1, scene: 24, character: 20 },
-  { screen: 6, popup: -1, scene: 24, character: 21 },
-  { screen: 6, popup: -1, scene: 24, character: 22 },
-  { screen: 6, popup: -1, scene: 24, character: 23 },
-  { screen: 6, popup: -1, scene: 24, character: 24 },
-  { screen: 6, popup: -1, scene: 24, character: 25 },
-  { screen: 6, popup: 17, scene: 24, character: 26 },
-  { screen: 6, popup: 17, scene: 24, character: 27 },
-  { screen: 6, popup: 18, scene: 24, character: 28 },
-  { screen: 6, popup: 18, scene: 24, character: 29 },
-  { screen: 6, popup: -1, scene: 25, character: 30 },
-  // loop start
-  { screen: 6, popup: -1, scene: 26, character: 31 },
-  { screen: 6, popup: -1, scene: 27, character: 32 },
-  { screen: 6, popup: -1, scene: 28, character: 33 },
-  { screen: 6, popup: 19, scene: 29, character: 34 },
-  { screen: 6, popup: 20, scene: 30, character: 35 },
-  { screen: 6, popup: 20, scene: 30, character: 35 },
-  { screen: 6, popup: -1, scene: 31, character: 36 },
-  { screen: 6, popup: 21, scene: 31, character: 36 },
-  //
-  { screen: 6, popup: -1, scene: 32, character: 37 },
-  { screen: 6, popup: 22, scene: 32, character: 38 },
-  { screen: 6, popup: -1, scene: 33, character: 39 },
-  { screen: 6, popup: 23, scene: 34, character: 40 },
-  // ***
-  { screen: 7, popup: -1, scene: 34, character: 41 },
-  { screen: 7, popup: -1, scene: 35, character: 42 },
-  { screen: 7, popup: 24, scene: 36, character: 43 },
-  { screen: 7, popup: 24, scene: 36, character: 44 },
-  { screen: 7, popup: 24, scene: 36, character: 44 },
-]
+    { screen: 0, popup: 0, scene: 0, character: 0, time: 0 }, // welcome
+    { screen: 0, popup: 0.5, scene: 1, character: 0, time: 0 }, //
+    { screen: 0, popup: 1, scene: 2, character: 0, time: 0 }, // lets start
+    { screen: 0, popup: 2, scene: 3, character: 0, time: 0 }, // choose avatar
+    { screen: 0, popup: 3, scene: 4, character: 0, time: 0 }, // read t&c
+    { screen: 0, popup: 4, scene: 4, character: 0, time: 0 }, // t&c
+    { screen: 0, popup: -1, scene: 5, character: 0, time: 0 }, // zoom
+    { screen: 1, popup: -1, scene: 5, character: 0, time: 0 }, // in to the station
+    { screen: 1, popup: 5, scene: 5, character: 0, time: 0 }, // your age
+    { screen: 1, popup: 6, scene: 5, character: 0, time: 0 }, // your used app
+    { screen: 2, popup: 7, scene: 5, character: 1, time: 0.25 }, // out of the station in the map
+    { screen: 2, popup: 7, scene: 6, character: 2, time: 0.5 }, //
+    { screen: 2, popup: 7, scene: 7, character: 3, time: 0.5 }, //
+    { screen: 2, popup: 7, scene: 8, character: 4, time: 1.25 }, // changed
+    { screen: 2, popup: -1, scene: 9, character: 5, time: 3 },
+    { screen: 2, popup: -1, scene: 10, character: 6, time: 6 },
+    { screen: 2, popup: -1, scene: 11, character: 7, time: 9 },
+    { screen: 2, popup: -1, scene: 12, character: 8, time: 12 },
+    { screen: 2, popup: -1, scene: 13, character: 9, time: 14.25 },
+    { screen: 2, popup: -1, scene: 14, character: 10, time: 15 },
+    { screen: 2, popup: -1, scene: 15, character: 11, time: 16.5 },
+    { screen: 2, popup: -1, scene: 16, character: 12 },
+    { screen: 3, popup: -1, scene: 16, character: 12 },
+    { screen: 3, popup: 8, scene: 16, character: 12 },
+    { screen: 3, popup: 9, scene: 16, character: 12 },
+    { screen: 3, popup: 10, scene: 16, character: 12 },
+    { screen: 4, popup: 11, scene: 17, character: 13 },
+    { screen: 4, popup: 11, scene: 18, character: 14 },
+    { screen: 4, popup: 11, scene: 19, character: 15 },
+    { screen: 4, popup: -1, scene: 20, character: 16 },
+    //
+    { screen: 5, popup: -1, scene: 20, character: 17 },
+    { screen: 5, popup: 12, scene: 20, character: 17 },
+    { screen: 5, popup: 13, scene: 20, character: 17 },
+    { screen: 5, popup: 14, scene: 20, character: 17 }, // either
+    { screen: 5, popup: 15, scene: 20, character: 17 }, // or
+    { screen: 5, popup: -1, scene: 21, character: 17 }, // issue when coutdown finished
+    { screen: 5, popup: 16, scene: 21, character: 17 },
+    //
+    { screen: 6, popup: 16, scene: 22, character: 18 },
+    { screen: 6, popup: -1, scene: 23, character: 19 },
+    { screen: 6, popup: -1, scene: 24, character: 20 },
+    { screen: 6, popup: -1, scene: 24, character: 21 },
+    { screen: 6, popup: -1, scene: 24, character: 22 },
+    { screen: 6, popup: -1, scene: 24, character: 23 },
+    { screen: 6, popup: -1, scene: 24, character: 24 },
+    { screen: 6, popup: -1, scene: 24, character: 25 },
+    { screen: 6, popup: 17, scene: 24, character: 26 },
+    { screen: 6, popup: 17, scene: 24, character: 27 },
+    { screen: 6, popup: 18, scene: 24, character: 28 },
+    { screen: 6, popup: 18, scene: 24, character: 29 },
+    { screen: 6, popup: -1, scene: 25, character: 30 },
+    // loop start
+    { screen: 6, popup: -1, scene: 26, character: 31 },
+    { screen: 6, popup: -1, scene: 27, character: 32 },
+    { screen: 6, popup: -1, scene: 28, character: 33 },
+    { screen: 6, popup: 19, scene: 29, character: 34 },
+    { screen: 6, popup: 20, scene: 30, character: 35 },
+    { screen: 6, popup: 20, scene: 30, character: 35 },
+    { screen: 6, popup: -1, scene: 31, character: 36 },
+    { screen: 6, popup: 21, scene: 31, character: 36 },
+    //
+    { screen: 6, popup: -1, scene: 32, character: 37 },
+    { screen: 6, popup: 22, scene: 32, character: 38 },
+    { screen: 6, popup: -1, scene: 33, character: 39 },
+    { screen: 6, popup: 23, scene: 34, character: 40 },
+    // ***
+    { screen: 7, popup: -1, scene: 34, character: 41 },
+    { screen: 7, popup: -1, scene: 35, character: 42 },
+    { screen: 7, popup: 24, scene: 36, character: 43 },
+    { screen: 7, popup: 24, scene: 36, character: 44 },
+    { screen: 7, popup: 24, scene: 36, character: 44 },
+  ]
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
@@ -135,19 +135,19 @@ export const useGameStore = defineStore('game', () => {
 
   watch(gamePause, (value) => {
     if (value) {
+      console.log('Sound Disabled')
       alert('Sound Muted in gamePause')
       soundBgm.value.mute(true)
       soundSfx1.value.mute(true)
       soundSfx2.value.mute(true)
       soundSfx3.value.mute(true)
-      console.log('Sound Disabled')
     } else {
+      console.log('Sound Enabled')
       alert('Sound Unmuted in gamePause')
       soundBgm.value.mute(false)
       soundSfx1.value.mute(false)
       soundSfx2.value.mute(false)
       soundSfx3.value.mute(false)
-      console.log('Sound Enabled')
     }
   })
 
@@ -301,8 +301,8 @@ export const useGameStore = defineStore('game', () => {
     ...bgmSettings,
     onload: () => {
       console.log('Bgm Loaded')
+      alert('Bgm Sound Unmuted onload')
       soundStatus.bgm = 'loaded'
-      alert('Sound Muted in gamePause')
       soundBgm.value.mute(false)
     },
     onend: () => {
@@ -341,6 +341,7 @@ export const useGameStore = defineStore('game', () => {
     ...sfxSettings,
     onload: () => {
       console.log('Sfx Loaded')
+      alert('Sfx Sound Unmuted onload')
       soundStatus.sfx = 'loaded'
       soundSfx1.value.mute(false)
       soundSfx2.value.mute(false)
