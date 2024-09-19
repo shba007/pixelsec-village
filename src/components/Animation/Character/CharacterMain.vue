@@ -89,7 +89,7 @@ watch(
   }
 )
 
-let lastAnimationState = ref<'init' | 'started' | 'finished'>()
+const lastAnimationState = ref<'init' | 'started' | 'finished'>()
 watch(gamePause, (value) => {
   if (value) {
     lastAnimationState.value = activeCharacter.animation
@@ -176,7 +176,16 @@ onTick((delta) => {
       :alpha="1"
       :playing="true"
       :animation-speed="0.08" />
-    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="true" :animation-speed="0.08" />
+    <AppAnimatedSprite
+      :textures="activeCharacter.aliases"
+      :texture-options="textureOptions.blur"
+      :anchor="0.5"
+      :x="0"
+      :y="0"
+      :scale="1"
+      :alpha="1"
+      :playing="activeCharacter.animation === 'started'"
+      :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <!-- <External>

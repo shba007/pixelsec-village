@@ -196,6 +196,45 @@ export const useGameStore = defineStore('game', () => {
     timelineIndex.value += screen
   }
 
+  const visibility = useDocumentVisibility()
+
+  function handleVisibilityChange(current: string, previous: string) {
+    if (!(current === 'visible' && previous === 'hidden')) {
+      inactivePause.value = true
+    }
+  }
+
+  function resume() {
+    inactivePause.value = false
+  }
+
+  watch(visibility, (current, previous) => {
+    handleVisibilityChange(current, previous)
+  })
+
+  useEventListener(document, 'focus', () => {
+    handleVisibilityChange('visible', 'hidden')
+  })
+
+  useEventListener(document, 'blur', () => {
+    handleVisibilityChange('visible', 'hidden')
+  })
+
+  const reset = ref(true)
+
+  function restart() {
+    timelineIndex.value = 0
+    stopBGM('resultWin')
+    stopBGM('resultLost')
+    stopBGM('normal')
+    reset.value = false
+    setTimeout(() => {
+      isStarted.value = false
+      isPressed.value = false
+      reset.value = true
+    }, 300)
+  }
+
   const soundStatus = reactive({ bgm: 'init', sfx: 'init' })
   const isSoundLoaded = computed(() => soundStatus.bgm !== 'init' && soundStatus.sfx !== 'init')
 
@@ -212,17 +251,6 @@ export const useGameStore = defineStore('game', () => {
     bgm: { 1: null },
     sfx: { 1: null, 2: null, 3: null },
   })
-
-  function restart() {
-    timelineIndex.value = 0
-    stopBGM('resultWin')
-    stopBGM('resultLost')
-    stopBGM('normal')
-    setTimeout(() => {
-      isStarted.value = false
-      isPressed.value = false
-    }, 300)
-  }
 
   type BGMSounds = 'normal' | 'panic' | 'countdown' | 'susGuy' | 'resultWin' | 'resultLost'
   const bgmSpriteMap = {
@@ -251,8 +279,10 @@ export const useGameStore = defineStore('game', () => {
     soundEnabled: soundEnabledBgm,
     ...bgmSettings,
     onload: () => {
+      volumeBgm.value = 0.4
       console.log('Bgm Loaded')
       soundStatus.bgm = 'loaded'
+      soundBgm.value.mute(false)
     },
     onend: () => {
       activeSoundList.bgm[1] = null
@@ -292,6 +322,10 @@ export const useGameStore = defineStore('game', () => {
     onload: () => {
       console.log('Sfx Loaded')
       soundStatus.sfx = 'loaded'
+      soundSfx1.value.mute(false)
+      soundSfx2.value.mute(false)
+      soundSfx3.value.mute(false)
+      volumeSfx.value = 1
     },
     onend: () => {
       activeSoundList.sfx[1] = null
@@ -363,31 +397,8 @@ export const useGameStore = defineStore('game', () => {
     activeSoundList.bgm[1] = null
   }
 
-  const visibility = useDocumentVisibility()
-
-  function handleVisibilityChange(current: string, previous: string) {
-    if (!(current === 'visible' && previous === 'hidden')) {
-      inactivePause.value = true
-    }
-  }
-
-  function resume() {
-    inactivePause.value = false
-  }
-
-  watch(visibility, (current, previous) => {
-    handleVisibilityChange(current, previous)
-  })
-
-  useEventListener(document, 'focus', () => {
-    handleVisibilityChange('visible', 'hidden')
-  })
-
-  useEventListener(document, 'blur', () => {
-    handleVisibilityChange('visible', 'hidden')
-  })
-
   return {
+    reset,
     isStarted,
     isPressed,
     isLandscape,

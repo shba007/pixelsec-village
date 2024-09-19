@@ -105,9 +105,9 @@ export default {
     <External
       v-if="!gamePause"
       v-prevent-zoom
-      class="fixed z-10"
+      class="fixed z-10 touch-pan-down"
       :style="{ left: boxDiv.x + 'px', top: boxDiv.y + 'px', width: boxDiv.width + 'px', height: boxDiv.height + 'px', opacity: boxDiv.alpha }">
-      <section ref="targetElem" class="policy-section cms-content section-legal touch-pan-down">
+      <section ref="targetElem" class="policy-section cms-content section-legal">
         <div class="container">
           <article>
             <p>Version 2.2 - May 2024</p>
