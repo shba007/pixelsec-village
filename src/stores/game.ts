@@ -98,7 +98,6 @@ export const useGameStore = defineStore('game', () => {
   const timelineIndex = ref(0)
   const isStarted = ref(false)
   const isPressed = ref(false)
-  const hasUserInteracted = ref(false) // New state for tracking user interaction
 
   const currentScreenIndex = computed(() => timeline[timelineIndex.value]?.screen)
   const currentPopupIndex = computed(() => timeline[timelineIndex.value]?.popup)
@@ -121,7 +120,7 @@ export const useGameStore = defineStore('game', () => {
   function initAudio() {
     if (audioInitialized.value) return
     audioInitialized.value = true
-
+    alert("initAudio")
     soundBgm.value.mute(false)
     soundSfx1.value.mute(false)
     soundSfx2.value.mute(false)
@@ -297,6 +296,24 @@ export const useGameStore = defineStore('game', () => {
     playBackRate: playbackRateBgm,
     soundEnabled: soundEnabledBgm,
     ...bgmSettings,
+    onplay: () => {
+      alert("BGM on play")
+    },
+    onplayerror: () => {
+      alert("BGM on play error")
+    },
+    onpause: () => {
+      alert("BGM on pause")
+    },
+    onstop: () => {
+      alert("BGM on stop")
+    },
+    onmute: () => {
+      alert("BGM on mute")
+    },
+    onvolume: () => {
+      alert("BGM on volume")
+    },
     onload: () => {
       console.log('Bgm Loaded')
       alert('Bgm Sound Unmuted onload')
