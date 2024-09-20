@@ -23,18 +23,11 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
 const { currentScreenIndex, gamePause, motionBlur, isSoundLoaded, isStarted, isPressed, reset } = storeToRefs(gameStore)
 
-let isSoundPlaying = false
-
 function onClick() {
   if (!isSoundLoaded.value) return
 
   isPressed.value = true
-
-  // Play the actual game sound immediately after unlocking
-  if (!isSoundPlaying) {
-    gameStore.playBGMSound('normal')
-    isSoundPlaying = true // Set the flag to true after starting the sound
-  }
+  gameStore.playBGMSound('normal')
 
   // Try playing a short, silent audio to unlock the audio context
   const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
@@ -102,7 +95,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
       <div v-if="gameStore.rotatePause" class="absolute left-0 top-0 h-full w-full bg-white/40 landscape:hidden" />
       <!-- DEBUG -->
       <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-        <p>v0.4.80</p>
+        <p>v0.4.81</p>
         <!--         <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
         <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
         <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>

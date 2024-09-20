@@ -160,6 +160,14 @@ onTick((delta) => {
     emit('update', currentCharacterIndex.value, 'finished')
   }
 })
+
+const isPlaying = computed(() => (characterAnimations.value.frontStill[0] === activeCharacter.aliases[0] ? true : activeCharacter.animation === 'started'))
+
+watch(isPlaying, (value) => {
+  if (!value) {
+    activeCharacter.aliases = characterAnimations.value.frontStill
+  }
+})
 </script>
 
 <template>
@@ -176,16 +184,7 @@ onTick((delta) => {
       :alpha="1"
       :playing="true"
       :animation-speed="0.08" />
-    <AppAnimatedSprite
-      :textures="activeCharacter.aliases"
-      :texture-options="textureOptions.blur"
-      :anchor="0.5"
-      :x="0"
-      :y="0"
-      :scale="1"
-      :alpha="1"
-      :playing="characterAnimations.frontStill[0] === activeCharacter.aliases[0] ? true : activeCharacter.animation === 'started'"
-      :animation-speed="0.08" />
+    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="isPlaying" :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <!--   <External>
