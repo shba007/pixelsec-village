@@ -26,10 +26,10 @@ const map = reactive<any>({
   loaded: false,
   alias: { bg: 'resultMansionBg', fg: 'resultMansionBg' },
   states: [
-    { x: 50, y: 40, scale: 1.2, alpha: 1, time: 0 },
-    { x: -10, y: 40, scale: 1.25, alpha: 1, time: 2 },
+    { x: 50, y: 40, scale: 1.25, alpha: 1, time: 0 },
+    { x: -150, y: 40, scale: 1.25, alpha: 1, time: 2 },
   ],
-  state: { x: -100, y: 40, scale: 1.25, alpha: 1, time: 0 },
+  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'started',
 })
 
@@ -40,9 +40,9 @@ const characterMain = reactive<Asset>({
   alias: 'characterMain',
   states: [
     { x: -100, y: 150, scale: 3.155, alpha: 1, time: 0 },
-    { x: 250, y: 150, scale: 3.155, alpha: 1, time: 2.5 },
-    { x: 100, y: 150, scale: 3.155, alpha: 1, time: 4 },
-    { x: 250, y: 150, scale: 3.155, alpha: 1, time: 5.5 },
+    { x: 250 + 50, y: 150, scale: 3.155, alpha: 1, time: 2.5 },
+    { x: 100 + 75, y: 150, scale: 3.155, alpha: 1, time: 4 },
+    { x: 250 + 50, y: 150, scale: 3.155, alpha: 1, time: 5.5 },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'started',
@@ -92,10 +92,10 @@ onMounted(() => {
   gameStore.nextTimeline({ id: 60 })
 })
 
-const dog = reactive({ x: 400, y: 220, scale: 1 })
+const dog = reactive({ x: 400, y: 220 - 10, scale: 1 })
 
 const characterGuard = reactive({
-  state: { x: 460, y: 200, scale: 1, alpha: 1, time: 0 },
+  state: { x: 460, y: 200 - 10, scale: 1, alpha: 1, time: 0 },
 })
 </script>
 
@@ -112,7 +112,7 @@ const characterGuard = reactive({
     <SceneResult v-if="currentPopupIndex == 24" :place="modal.place" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
-  <!--   <External>
+  <!--  <External>
     <div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="map.state.x" type="number" min="-10000" max="10000" step="10" />

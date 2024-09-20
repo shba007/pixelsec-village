@@ -184,11 +184,11 @@ onTick((delta) => {
       :y="0"
       :scale="1"
       :alpha="1"
-      :playing="activeCharacter.animation === 'started'"
+      :playing="characterAnimations.frontStill[0] === activeCharacter.aliases[0] ? true : activeCharacter.animation === 'started'"
       :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
-  <!-- <External>
+  <!--   <External>
     <div class="absolute bottom-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="activeCharacter.state.x" type="number" min="-10000" max="10000" step="10" />

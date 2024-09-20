@@ -50,8 +50,8 @@ const modal = computed(() => {
   } else if (props.x === 'center' && props.y === 'top') {
     // FIXME: zoom
     xCord = 0
-    // yCord = -145
-    yCord = -190
+    yCord = -145
+    // yCord = -190
   } else if (props.x === 'center' && props.y === 'bottom') {
     xCord = 0
     yCord = 140

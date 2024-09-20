@@ -24,10 +24,10 @@ const map = reactive<any>({
   loaded: false,
   alias: { bg: 'resultTownHouseBg', fg: 'resultTownHouseBg' },
   states: [
-    { x: 0, y: 80, scale: 1.4, alpha: 1, time: 0 },
-    { x: 0, y: 80, scale: 1.4, alpha: 1, time: 2 },
+    { x: -60, y: 110, scale: 1.29, alpha: 1, time: 0 },
+    { x: -60, y: 110, scale: 1.29, alpha: 1, time: 2 },
   ],
-  state: { x: 0, y: 0, scale: 1.5, alpha: 1, time: 0 },
+  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'started',
 })
 
@@ -102,7 +102,7 @@ onMounted(() => {
     <SceneResult v-if="currentPopupIndex == 24" :place="modal.place" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <!--   <External>
     <div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="map.state.x" type="number" min="-10000" max="10000" step="10" />

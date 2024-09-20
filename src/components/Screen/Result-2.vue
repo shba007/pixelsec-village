@@ -24,10 +24,10 @@ const map = reactive<any>({
   loaded: false,
   alias: { bg: 'resultLogHouseBg', fg: 'resultLogHouseBg' },
   states: [
-    { x: -20, y: 40, scale: 1.5, alpha: 1, time: 0 },
-    { x: -20, y: 40, scale: 1.5, alpha: 1, time: 2 },
+    { x: -180, y: 60, scale: 1.37, alpha: 1, time: 0 },
+    { x: -180, y: 60, scale: 1.37, alpha: 1, time: 2 },
   ],
-  state: { x: 0, y: 0, scale: 1.5, alpha: 1, time: 0 },
+  state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'started',
 })
 

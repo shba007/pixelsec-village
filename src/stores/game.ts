@@ -208,6 +208,7 @@ export const useGameStore = defineStore('game', () => {
     const { screen = 1, id } = data ?? { screen: 1, id: -1 }
 
     console.log({ id: id })
+    // alert(id)
     if (timelineIndex.value + screen > timeline.length - 1) {
       console.warn('Timeline out of scope', timelineIndex.value + screen)
     }

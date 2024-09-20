@@ -169,7 +169,7 @@ function playAgain() {
       <template v-slot:popupBg>
         <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
       </template>
-      <Text :x="titleText.x" :y="titleText.y - 200" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">SHARE WITH YOUR\nFRIENDS AND SEE WHAT\nHOUSE THEY LIVE IN</Text>
+      <Text :x="titleText.x" :y="titleText.y - 190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">SHARE WITH YOUR\nFRIENDS AND SEE WHAT\nHOUSE THEY LIVE IN</Text>
       <Sprite
         v-for="{ type, texture, x, y, scale } of socials"
         :key="type"
