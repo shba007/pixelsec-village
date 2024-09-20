@@ -14,20 +14,20 @@ const positionAll = ref(screenWidth.value); // Start off-screen right
 const positionLast = ref(screenWidth.value + 200); // Start just off-screen
 
 // Animation speed
-const scrollSpeed = 5;
+const scrollSpeed = 9;
 
 // Function to handle the scrolling animation
 function updatePosition() {
   positionAll.value -= scrollSpeed;
   positionLast.value -= scrollSpeed;
 
-  // Reset position when the image goes off screen
-  if (positionAll.value <= -200) {
-    positionAll.value = screenWidth.value;
-  }
-  if (positionLast.value <= -200) {
-    positionLast.value = screenWidth.value + 200; // Reset for the second image
-  }
+  // // Reset position when the image goes off screen
+  // if (positionAll.value <= -200) {
+  //   positionAll.value = screenWidth.value;
+  // }
+  // if (positionLast.value <= -200) {
+  //   positionLast.value = screenWidth.value + 200; // Reset for the second image
+  // }
 }
 
 // Create a ticker instance for the animation loop
