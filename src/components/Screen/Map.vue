@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
-import { useWindowSize } from '@vueuse/core'
+import { useIntervalFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
@@ -45,7 +45,7 @@ defineProps<{
 }>()
 
 const gameStore = useGameStore()
-const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, gamePause, characterSkin, textureOptions } = storeToRefs(gameStore)
+const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, gamePause, characterSkin, textureOptions, isLandscape } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
@@ -415,6 +415,12 @@ const characterBaloonVendor = reactive({
 const door = reactive({ x: 1137, y: 1716, scale: 1 })
 const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
 
+useIntervalFn(() => {
+  screen.states[0].y = isLandscape.value ? -250 : -1000
+  screen.states[1].y = isLandscape.value ? -250 : -1000
+  if (currentSceneIndex.value === 0) updateScreen(screen.states[0])
+}, 50)
+
 function updateScreen(data: { x: number; y: number; scale: number; alpha: number; time: number }) {
   screen.state.x = data.x
   screen.state.y = data.y
@@ -457,6 +463,8 @@ const lastScene = ref<
 >(undefined)
 
 watch(gamePause, (value) => {
+  screen.states[0].y = isLandscape.value ? -250 : -1000
+  screen.states[1].y = isLandscape.value ? -250 : -1000
   if (value) {
     lastScene.value = { x: screen.state.x, y: screen.state.y, scale: screen.state.scale, alpha: screen.state.alpha, time: screen.state.time, animation: screen.animation }
 
