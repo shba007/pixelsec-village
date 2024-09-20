@@ -23,33 +23,33 @@ const gameStore = useGameStore()
 const { currentScreenIndex, gamePause, motionBlur, isSoundLoaded, isStarted, isPressed, reset } = storeToRefs(gameStore)
 
 function onClick() {
-  if (!isSoundLoaded.value) return;
-
-  isPressed.value = true;
+  if (!isSoundLoaded.value) return
+  isPressed.value = true
 
   // Try playing a short, silent audio to unlock the audio context
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-  const unlock = () => {
-    const buffer = audioContext.createBuffer(1, 1, 22050);
-    const source = audioContext.createBufferSource();
-    source.buffer = buffer;
-    source.connect(audioContext.destination);
-    source.start(0);
-
-    // Play the actual game sound immediately after unlocking
-    gameStore.playBGMSound('normal');
-  };
-
-  // Resume the context if in suspended state and then play sound
-  if (audioContext.state === 'suspended') {
-    audioContext.resume().then(unlock);
-  } else {
-    unlock();
-  }
+  /*   const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+    const unlock = () => {
+      const buffer = audioContext.createBuffer(1, 1, 22050)
+      const source = audioContext.createBufferSource()
+      source.buffer = buffer
+      source.connect(audioContext.destination)
+      source.start(0)
+  
+      // Play the actual game sound immediately after unlocking
+      gameStore.playBGMSound('normal')
+    }
+  
+    // Resume the context if in suspended state and then play sound
+    if (audioContext.state === 'suspended') {
+      audioContext.resume().then(unlock)
+    } else {
+      unlock()
+    }
+   */
 
   setTimeout(() => {
-    isStarted.value = true;
-  }, 300);
+    isStarted.value = true
+  }, 300)
 }
 
 function onResolve() {
@@ -60,7 +60,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 </script>
 
 <template>
-  <main class="relative" :class="{ 'overflow-hidden portrait:h-[130vh]': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) }" @click="onClick">
+  <main class="relative bg-black" :class="{ 'overflow-hidden portrait:h-[130vh]': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) }" @click="onClick">
     <Application :width="screenWidth" :height="screenHeight" :antialias="motionBlur" power-preference="high-performance" class="relative z-10">
       <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
         <template #fallback="{ progress }">
