@@ -22,35 +22,41 @@ const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
 const { currentScreenIndex, gamePause, motionBlur, isSoundLoaded, isStarted, isPressed, reset } = storeToRefs(gameStore)
 
+let isSoundPlaying = false;
+
 function onClick() {
-  if (!isSoundLoaded.value) return
-  isPressed.value = true
+  if (!isSoundLoaded.value) return;
+
+  isPressed.value = true;
+
+  // Play the actual game sound immediately after unlocking
+  if (!isSoundPlaying) {
+    gameStore.playBGMSound('normal');
+    isSoundPlaying = true; // Set the flag to true after starting the sound
+  }
 
   // Try playing a short, silent audio to unlock the audio context
-  /*   const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-    const unlock = () => {
-      const buffer = audioContext.createBuffer(1, 1, 22050)
-      const source = audioContext.createBufferSource()
-      source.buffer = buffer
-      source.connect(audioContext.destination)
-      source.start(0)
-  
-      // Play the actual game sound immediately after unlocking
-      gameStore.playBGMSound('normal')
-    }
-  
-    // Resume the context if in suspended state and then play sound
-    if (audioContext.state === 'suspended') {
-      audioContext.resume().then(unlock)
-    } else {
-      unlock()
-    }
-   */
+  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+  const unlock = () => {
+    const buffer = audioContext.createBuffer(1, 1, 22050);
+    const source = audioContext.createBufferSource();
+    source.buffer = buffer;
+    source.connect(audioContext.destination);
+    source.start(0);
+  };
+
+  // Resume the context if in suspended state and then play sound
+  if (audioContext.state === 'suspended') {
+    audioContext.resume().then(unlock);
+  } else {
+    unlock();
+  }
 
   setTimeout(() => {
     isStarted.value = true
   }, 300)
 }
+
 
 function onResolve() {
   // gameStore.toggleDebugPause(true)
