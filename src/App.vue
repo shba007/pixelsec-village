@@ -16,6 +16,7 @@ import ScreenBank from '@/components/Screen/Bank.vue'
 import ScreenResult from '@/components/Screen/Result.vue'
 import SceneExperience from '@/components/Scene/Scene-Experience.vue'
 import AppButton from '@/components/AppButton.vue'
+import AppLoader from '@/components/AppLoader.vue'
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
@@ -57,7 +58,6 @@ function onClick() {
   }, 300)
 }
 
-
 function onResolve() {
   // gameStore.toggleDebugPause(true)
 }
@@ -67,6 +67,7 @@ const loadingText = computed(() => ({ x: screenWidth.value / 2, y: screenHeight.
 
 <template>
   <main class="relative bg-black" :class="{ 'overflow-hidden portrait:h-[130vh]': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) }" @click="onClick">
+    <AppLoader v-if="!isStarted" />
     <Application :width="screenWidth" :height="screenHeight" :antialias="motionBlur" power-preference="high-performance" class="relative z-10">
       <Loader :resources="{ ...resources.font, ...resources.image }" :on-resolved="onResolve">
         <template #fallback="{ progress }">
