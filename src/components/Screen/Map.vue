@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
-import { useWindowSize } from '@vueuse/core'
+import { useIntervalFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
@@ -45,7 +45,7 @@ defineProps<{
 }>()
 
 const gameStore = useGameStore()
-const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, gamePause, characterSkin, textureOptions } = storeToRefs(gameStore)
+const { currentScreenIndex, currentPopupIndex, currentSceneIndex, currentCharacterIndex, gamePause, characterSkin, textureOptions, isLandscape } = storeToRefs(gameStore)
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
@@ -415,6 +415,12 @@ const characterBaloonVendor = reactive({
 const door = reactive({ x: 1137, y: 1716, scale: 1 })
 const wolf = reactive({ x: 2479, y: 2387, scale: 1 })
 
+useIntervalFn(() => {
+  screen.states[0].y = isLandscape.value ? -250 : -1000
+  screen.states[1].y = isLandscape.value ? -250 : -1000
+  if (currentSceneIndex.value === 0 || gamePause.value) updateScreen(screen.states[0])
+}, 50)
+
 function updateScreen(data: { x: number; y: number; scale: number; alpha: number; time: number }) {
   screen.state.x = data.x
   screen.state.y = data.y
@@ -446,13 +452,13 @@ watch(
 
 const lastScene = ref<
   | {
-      x: number
-      y: number
-      scale: number
-      alpha: number
-      time: number
-      animation: 'init' | 'started' | 'finished'
-    }
+    x: number
+    y: number
+    scale: number
+    alpha: number
+    time: number
+    animation: 'init' | 'started' | 'finished'
+  }
   | undefined
 >(undefined)
 
@@ -548,48 +554,62 @@ function transformScale(scale: number) {
 </script>
 
 <template>
-  <Container :renderable="isLoad" :x="screenWidth * 0.5" :y="screenHeight * 0.5" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screenWidth * 0.5" :y="screenHeight * 0.5"
+    :scale="screen.state.scale * zoomFactor">
     <Container :x="transformX(screen.state.x)" :y="transformY(screen.state.y)">
       <Sprite texture="mapBg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" />
       <Sprite texture="mapFg" :texture-options="textureOptions.blur" :x="0" :y="0" :scale="1" :anchor="0" />
-      <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y" :scale="station.bg.scale" :anchor="0" />
+      <Sprite texture="mapStationBg" :texture-options="textureOptions.blur" :x="station.bg.x" :y="station.bg.y"
+        :scale="station.bg.scale" :anchor="0" />
       <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" place="map" />
-      <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+      <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale"
+        :flip="flip" />
       <Flag v-for="({ type, x, y, scale }, index) in flags" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
       <StreetLamp v-for="({ x, y, scale }, index) in streetLamp" :key="index" :x="x" :y="y" :scale="scale" />
-      <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y" :scale="fence.scale" />
-      <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
+      <Sprite :texture="fence.alias" :texture-options="textureOptions.blur" :x="fence.x" :y="fence.y"
+        :scale="fence.scale" />
+      <Sprite :texture="palmTrees.alias" :texture-options="textureOptions.blur" :x="palmTrees.x" :y="palmTrees.y"
+        :scale="palmTrees.scale" />
       <Wolf :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="1" type="map" />
-      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
+      <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true"
+        place="map" />
       <Door :x="door.x" :y="door.y" :scale="door.scale" :playing="currentCharacterIndex === 16" place="map" />
       <template v-if="currentCharacterIndex === 16">
-        <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :play-sound="type === 'purple'" :type="type as 'purple' | 'green'" place="map" />
+        <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states"
+          :play-sound="type === 'purple'" :type="type as 'purple' | 'green'" place="map" />
       </template>
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <CharacterGuard place="map" :state="characterGuard.state" />
       <CharacterBaloonVendor :state="characterBaloonVendor.state" />
       <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
       <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
-      <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction as -1 | 1" />
+      <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange"
+        :direction="car.direction as -1 | 1" />
       <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
     </Container>
   </Container>
   <Container :renderable="isLoad && !gamePause">
     <AppProtip v-if="currentPopupIndex === 11" title="2" :zoom-factor="zoomFactor" />
-    <Scene8 v-else-if="respondedSceneIndex < 17 && (currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'" :zoom-factor="zoomFactor" @next="handleResponse(17)" />
-    <Scene9 v-else-if="(currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'" :zoom-factor="zoomFactor" @next="handleResponse(18)" />
+    <Scene8
+      v-else-if="respondedSceneIndex < 17 && (currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'"
+      :zoom-factor="zoomFactor" @next="handleResponse(17)" />
+    <Scene9 v-else-if="(currentPopupIndex === 17 || currentPopupIndex === 18) && screen.animation === 'finished'"
+      :zoom-factor="zoomFactor" @next="handleResponse(18)" />
     <AppProtip v-else-if="currentPopupIndex === 19" title="4" :zoom-factor="zoomFactor" />
     <Scene10 v-else-if="currentPopupIndex === 20 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
     <Scene11 v-else-if="currentPopupIndex === 21 && screen.animation === 'finished'" :zoom-factor="zoomFactor" />
     <AppProtip v-else-if="currentPopupIndex === 22" title="5" :zoom-factor="zoomFactor" />
     <Scene12 v-else-if="currentPopupIndex === 23" :zoom-factor="zoomFactor" />
   </Container>
-  <Container :renderable="isLoad" :x="screenWidth * 0.5" :y="screenHeight * 0.5" :scale="screen.state.scale * zoomFactor">
+  <Container :renderable="isLoad" :x="screenWidth * 0.5" :y="screenHeight * 0.5"
+    :scale="screen.state.scale * zoomFactor">
     <Container :renderable="isLoad" :x="transformX(screen.state.x)" :y="transformY(screen.state.y)">
-      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
+      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin"
+        @update="handleMCUpdate" />
       <CharacterSus :states="characterSus.states" />
       <MapTram :states="tram.states" :animation="gamePause ? 'finished' : tram.animation" initialOrientation="right" />
-      <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
+      <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y"
+        :scale="station.fg.scale" :anchor="0" />
       <CharacterStationMaster place="map" :state="characterStationMaster.state" />
     </Container>
   </Container>
