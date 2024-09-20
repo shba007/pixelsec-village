@@ -49,7 +49,7 @@ function onNext() {
   setTimeout(() => {
     emit('next')
     showPopup.value = false
-  }, 100)
+  }, 300)
 }
 </script>
 
