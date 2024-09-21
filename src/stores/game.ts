@@ -228,7 +228,7 @@ export const useGameStore = defineStore('game', () => {
 
   const isReset = ref(false)
 
-  function restart() {
+  function reset() {
     stopBGM('resultWin')
     stopBGM('resultLost')
     stopBGM('normal')
@@ -289,8 +289,10 @@ export const useGameStore = defineStore('game', () => {
     ...bgmSettings,
     onload: () => {
       console.log('Bgm Loaded')
-      soundStatus.bgm = 'loaded'
       soundBgm.value.mute(false)
+      setTimeout(() => {
+        soundStatus.bgm = 'loaded'
+      }, 600)
     },
     onend: () => {
       activeSoundList.bgm[1] = null
@@ -329,8 +331,10 @@ export const useGameStore = defineStore('game', () => {
     ...sfxSettings,
     onload: () => {
       console.log('Sfx1 Loaded')
-      soundStatus.sfx = 'loaded'
       soundSfx1.value.mute(false)
+      setTimeout(() => {
+        soundStatus.sfx = 'loaded'
+      }, 600)
     },
     onend: () => {
       activeSoundList.sfx[1] = null
@@ -347,8 +351,10 @@ export const useGameStore = defineStore('game', () => {
     ...sfxSettings,
     onload: () => {
       console.log('Sfx2 Loaded')
-      soundStatus.sfx = 'loaded'
       soundSfx2.value.mute(false)
+      setTimeout(() => {
+        soundStatus.sfx = 'loaded'
+      }, 600)
     },
     onend: () => {
       activeSoundList.sfx[2] = null
@@ -365,8 +371,10 @@ export const useGameStore = defineStore('game', () => {
     ...sfxSettings,
     onload: () => {
       console.log('Sfx3 Loaded')
-      soundStatus.sfx = 'loaded'
       soundSfx3.value.mute(false)
+      setTimeout(() => {
+        soundStatus.sfx = 'loaded'
+      }, 600)
     },
     onend: () => {
       activeSoundList.sfx[3] = null
@@ -432,7 +440,7 @@ export const useGameStore = defineStore('game', () => {
     currentCharacterIndex,
     characterSkin,
     resume,
-    restart,
+    reset,
     toggleDebugPause,
     toggleMotionBlur,
     toggleGameMode,

@@ -17,7 +17,6 @@ const props = defineProps<{
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-const { score } = storeToRefs(dataStore)
 const { characterSkin, gamePause } = storeToRefs(gameStore)
 
 const secondScreen = ref(false)
@@ -70,13 +69,9 @@ function resize() {
   }
 }
 
-useIntervalFn(() => {
-  resize()
-}, 100)
+useIntervalFn(resize, 100)
 
-onMounted(() => {
-  gameStore.playSFXSound('dialogBox')
-})
+onMounted(() => gameStore.playSFXSound('dialogBox'))
 
 const inputEmail = ref<string>()
 const email = ref<string>()
@@ -108,8 +103,8 @@ const titleText = reactive({ x: -240, y: -30, anchor: 0, scale: 1, style: { font
 const contectText = reactive({ anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 34, align: 'left', lineHeight: 40, stroke: 1, strokeThickness: 1 } })
 
 function playAgain() {
-  score.value = 0
-  gameStore.restart()
+  dataStore.reset()
+  gameStore.reset()
 }
 </script>
 
