@@ -22,7 +22,7 @@ function handleStart() {
 }
 
 const ready = useTimeout(250)
-const rotate = reactive({ x: 0, y: 305, scale: 0.3 })
+const rotate = reactive({ x: 0, y: 295, scale: 0.3 })
 
 let count = 0
 
@@ -44,15 +44,22 @@ function handleResume() {
     <AppPopup v-if="gameStore.rotatePause" type="portrait" x="center" y="center" :zoom-factor="1" :show-button="false">
       <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
       <Container :x="titleText.x" :y="titleText.y">
-        <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> FOR BEST\nVIEWING\nEXPERIENCE </Text>
-        <Text :y="-80" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"> Rotate your\nscreen to\ncontinue </Text>
-        <Text v-if="!isMobile.apple.phone" :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10" :y="330" :style="fullscreenText.style">Tap to Full screen</Text>
-        <Text v-else :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10" :y="330" :style="fullscreenText.style">Swipe up and rotate!</Text>
+        <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale"
+          :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> FOR
+          BEST\nVIEWING\nEXPERIENCE </Text>
+        <Text :y="-80" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"> Rotate your\nscreen
+          to\ncontinue </Text>
+        <Text v-if="!isMobile.apple.phone" :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10"
+          :y="330" :style="fullscreenText.style">Tap to Full screen</Text>
+        <Text v-else :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10" :y="330"
+          :style="fullscreenText.style">Swipe up and rotate!</Text>
       </Container>
-      <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer" @pointerdown="handleStart" />
+      <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer"
+        @pointerdown="handleStart" />
     </AppPopup>
     <!--  -->
-    <Container v-if="gameStore.inactivePause" :x="screenWidth * 0.5" :y="screenHeight * 0.5" :scale="zoomFactor" cursor="pointer" @pointerdown="handleResume">
+    <Container v-if="gameStore.inactivePause" :x="screenWidth * 0.5" :y="screenHeight * 0.5" :scale="zoomFactor"
+      cursor="pointer" @pointerdown="handleResume">
       <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
       <Sprite texture="popupResumeButton" :anchor="0.5" :scale="1" />
     </Container>
