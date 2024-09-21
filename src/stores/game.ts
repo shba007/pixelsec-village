@@ -232,13 +232,15 @@ export const useGameStore = defineStore('game', () => {
     stopBGM('resultWin')
     stopBGM('resultLost')
     stopBGM('normal')
-    nextTimeline({ screen: 0, id: 999, absolute: true })
     isReset.value = true
+
+    nextTimeline({ screen: 0, id: 999, absolute: true })
+
     setTimeout(() => {
       isReset.value = false
       isStarted.value = false
       isPressed.value = false
-    }, 500)
+    }, 400)
   }
 
   const soundStatus = reactive({ bgm: 'init', sfx: 'init' })
