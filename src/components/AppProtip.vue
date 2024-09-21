@@ -2,7 +2,6 @@
 import { onMounted, computed, reactive } from 'vue'
 
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/AppSettings.vue'
 import ProtipIcon from '@/components/Animation/ProtipIcon.vue'
 import AppPopup from '@/components/AppPopup.vue'
 

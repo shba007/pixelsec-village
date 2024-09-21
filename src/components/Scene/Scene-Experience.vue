@@ -7,18 +7,18 @@ import { useTimeout, useWindowSize } from '@vueuse/core'
 import { useGameStore } from '@/stores/game'
 import AppPopup from '@/components/AppPopup.vue'
 
+const gameStore = useGameStore()
+
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
   const aspectRatio = screenWidth.value / screenHeight.value
   return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280
 })
 
-const gameStore = useGameStore()
-
 function handleStart() {
   setTimeout(async () => {
     await gameStore.toggleGameMode(true)
-  }, 100)
+  }, 300)
 }
 
 const ready = useTimeout(250)
@@ -41,7 +41,7 @@ function handleResume() {
 
 <template>
   <template v-if="ready">
-    <AppPopup v-if="gameStore.rotatePause" type="portrait" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
+    <AppPopup v-if="gameStore.rotatePause" type="portrait" x="center" y="center" :zoom-factor="1" :show-button="false">
       <Sprite texture="popupSceneRotateOverlay" :anchor="0.5" :scale="10" />
       <Container :x="titleText.x" :y="titleText.y">
         <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> FOR BEST\nVIEWING\nEXPERIENCE </Text>

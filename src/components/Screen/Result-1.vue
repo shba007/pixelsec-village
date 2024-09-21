@@ -11,10 +11,10 @@ import CharacterMain from '@/components/Animation/Character/CharacterMain.vue'
 import Wolf from '@/components/Animation/Wolf.vue'
 import SceneResult from '@/components/Scene/Scene-Result.vue'
 
-const { width: screenWidth, height: screenHeight } = useWindowSize()
 const gameStore = useGameStore()
 const { characterSkin, currentPopupIndex, currentCharacterIndex, currentSceneIndex: currentGlobalSceneIndex, gamePause } = storeToRefs(gameStore)
 
+const { width: screenWidth, height: screenHeight } = useWindowSize()
 const zoomFactor = computed(() => {
   const aspectRatio = screenWidth.value / screenHeight.value
   return aspectRatio > 1280 / 720 ? screenHeight.value / 720 : screenWidth.value / 1280

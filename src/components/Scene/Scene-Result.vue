@@ -98,7 +98,7 @@ function onSubmit(value: string) {
 
   setTimeout(() => {
     secondScreen.value = true
-  }, 500)
+  }, 300)
 }
 
 const textures = ['buttonArrow', 'buttonArrowPressed']

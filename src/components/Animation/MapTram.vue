@@ -86,13 +86,9 @@ const currentTramStateIndex = ref(0)
 let totalElapsedTime = 0
 let progress = 0
 
-/* const debouncedPlaySFXSound = useDebounceFn(() => {
-  console.log('Play sound tram', currentTramStateIndex.value)
-  gameStore.playSFXSound('tram', 2)
-}, 500) */
-
 function playSound(state: number) {
-  if (state == 2 || state == 6 || state == 8) gameStore.playSFXSound('tram', 2)
+  // || state == 8
+  if (state == 2 || state == 6) gameStore.playSFXSound('tram', 2)
 }
 
 onTick((delta) => {

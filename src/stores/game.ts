@@ -90,7 +90,6 @@ const timeline: {
 ]
 
 const { width: screenWidth, height: screenHeight } = useWindowSize()
-
 export const useGameStore = defineStore('game', () => {
   const isLandscape = computed(() => screenWidth.value > screenHeight.value)
   const isMobile = computed(() => !(Math.min(screenWidth.value, screenHeight.value) > 640))
@@ -113,41 +112,6 @@ export const useGameStore = defineStore('game', () => {
   const debugPause = computed(() => $debugPause.value)
   const rotatePause = computed(() => currentSceneIndex.value > 0 && !isLandscape.value)
   const gamePause = computed(() => debugPause.value || inactivePause.value || rotatePause.value)
-
-  // Initialize audio only after user interaction
-  const audioInitialized = ref(false)
-
-  function initAudio() {
-    if (audioInitialized.value) return
-    audioInitialized.value = true
-    // alert("initAudio")
-    soundBgm.value.mute(false)
-    soundSfx1.value.mute(false)
-    soundSfx2.value.mute(false)
-    soundSfx3.value.mute(false)
-  }
-
-  // Call initAudio on user interaction
-  useEventListener(document, 'click', initAudio, { once: true })
-  useEventListener(document, 'touchstart', initAudio, { once: true })
-
-  watch(gamePause, (value) => {
-    if (debugPause.value || inactivePause.value) {
-      console.log('Sound Disabled')
-      // alert('Sound Muted in gamePause')
-      soundBgm.value.mute(true)
-      soundSfx1.value.mute(true)
-      soundSfx2.value.mute(true)
-      soundSfx3.value.mute(true)
-    } else {
-      console.log('Sound Enabled')
-      // alert('Sound Unmuted in gamePause')
-      soundBgm.value.mute(false)
-      soundSfx1.value.mute(false)
-      soundSfx2.value.mute(false)
-      soundSfx3.value.mute(false)
-    }
-  })
 
   watchArray([inactivePause, debugPause, rotatePause], () => {
     console.table([
@@ -204,16 +168,21 @@ export const useGameStore = defineStore('game', () => {
     characterSkin.value = value
   }
 
-  function nextTimeline(data?: { screen?: number; id: number }) {
-    const { screen = 1, id } = data ?? { screen: 1, id: -1 }
+  function nextTimeline(data?: { screen?: number; id: number; absolute?: boolean }) {
+    const { screen = 1, id, absolute = false } = data ?? { screen: 1, id: -1, absolute: false }
 
     console.log({ id: id })
     // alert(id)
-    if (timelineIndex.value + screen > timeline.length - 1) {
-      console.warn('Timeline out of scope', timelineIndex.value + screen)
-    }
 
-    timelineIndex.value += screen
+    if (!absolute) {
+      if (timelineIndex.value + screen > timeline.length - 1) {
+        console.warn('Timeline out of scope', timelineIndex.value + screen)
+      }
+
+      timelineIndex.value += screen
+    } else {
+      timelineIndex.value = screen
+    }
   }
 
   const visibility = useDocumentVisibility()
@@ -222,10 +191,6 @@ export const useGameStore = defineStore('game', () => {
     if (!(current === 'visible' && previous === 'hidden')) {
       inactivePause.value = true
     }
-  }
-
-  function resume() {
-    inactivePause.value = false
   }
 
   watch(visibility, (current, previous) => {
@@ -240,23 +205,45 @@ export const useGameStore = defineStore('game', () => {
     handleVisibilityChange('visible', 'hidden')
   })
 
-  const reset = ref(true)
+  function resume() {
+    inactivePause.value = false
+  }
+
+  watch(gamePause, (value) => {
+    if (value) {
+      console.log('Sound Disabled')
+      // alert('Sound Muted in gamePause')
+      soundBgm.value.mute(true)
+      soundSfx1.value.mute(true)
+      soundSfx2.value.mute(true)
+      soundSfx3.value.mute(true)
+    } else {
+      console.log('Sound Enabled')
+      soundBgm.value.mute(false)
+      soundSfx1.value.mute(false)
+      soundSfx2.value.mute(false)
+      soundSfx3.value.mute(false)
+    }
+  })
+
+  const isReset = ref(false)
 
   function restart() {
-    timelineIndex.value = 0
     stopBGM('resultWin')
     stopBGM('resultLost')
     stopBGM('normal')
-    reset.value = false
+    nextTimeline({ screen: 0, id: 999, absolute: true })
+    isReset.value = true
     setTimeout(() => {
+      isReset.value = false
       isStarted.value = false
       isPressed.value = false
-      reset.value = true
-    }, 300)
+    }, 500)
   }
 
   const soundStatus = reactive({ bgm: 'init', sfx: 'init' })
   const isSoundLoaded = computed(() => soundStatus.bgm !== 'init' && soundStatus.sfx !== 'init')
+  const isSoundPlayed = computed(() => isPlayingBgm.value || isPlayingSfx1.value || isPlayingSfx2.value || isPlayingSfx3.value)
 
   const activeSoundList = reactive<{
     bgm: {
@@ -292,32 +279,14 @@ export const useGameStore = defineStore('game', () => {
   const {
     play: playBgm,
     stop: stopBgm,
+    isPlaying: isPlayingBgm,
     sound: soundBgm,
   } = useSound(resources.sound.bgmSprite, {
     playBackRate: playbackRateBgm,
     soundEnabled: soundEnabledBgm,
     ...bgmSettings,
-    onplay: () => {
-      // alert("BGM on play")
-    },
-    onplayerror: () => {
-      // alert("BGM on play error")
-    },
-    onpause: () => {
-      // alert("BGM on pause")
-    },
-    onstop: () => {
-      // alert("BGM on stop")
-    },
-    onmute: () => {
-      // alert("BGM on mute")
-    },
-    onvolume: () => {
-      // alert("BGM on volume")
-    },
     onload: () => {
       console.log('Bgm Loaded')
-      // alert('Bgm Sound Unmuted onload')
       soundStatus.bgm = 'loaded'
       soundBgm.value.mute(false)
     },
@@ -350,18 +319,16 @@ export const useGameStore = defineStore('game', () => {
   const {
     play: playSfx1,
     stop: stopSfx1,
+    isPlaying: isPlayingSfx1,
     sound: soundSfx1,
   } = useSound(resources.sound.sfxSprite, {
     playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
     onload: () => {
-      console.log('Sfx Loaded')
-      // alert('Sfx Sound Unmuted onload')
+      console.log('Sfx1 Loaded')
       soundStatus.sfx = 'loaded'
       soundSfx1.value.mute(false)
-      soundSfx2.value.mute(false)
-      soundSfx3.value.mute(false)
     },
     onend: () => {
       activeSoundList.sfx[1] = null
@@ -370,11 +337,17 @@ export const useGameStore = defineStore('game', () => {
   const {
     play: playSfx2,
     stop: stopSfx2,
+    isPlaying: isPlayingSfx2,
     sound: soundSfx2,
   } = useSound(resources.sound.sfxSprite, {
     playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
+    onload: () => {
+      console.log('Sfx2 Loaded')
+      soundStatus.sfx = 'loaded'
+      soundSfx2.value.mute(false)
+    },
     onend: () => {
       activeSoundList.sfx[2] = null
     },
@@ -382,11 +355,17 @@ export const useGameStore = defineStore('game', () => {
   const {
     play: playSfx3,
     stop: stopSfx3,
+    isPlaying: isPlayingSfx3,
     sound: soundSfx3,
   } = useSound(resources.sound.sfxSprite, {
     playbackRate: playbackRateSfx,
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
+    onload: () => {
+      console.log('Sfx3 Loaded')
+      soundStatus.sfx = 'loaded'
+      soundSfx3.value.mute(false)
+    },
     onend: () => {
       activeSoundList.sfx[3] = null
     },
@@ -432,19 +411,19 @@ export const useGameStore = defineStore('game', () => {
   }
 
   return {
-    reset,
+    isReset,
     isStarted,
     isPressed,
     isLandscape,
     isMobile,
     isSoundLoaded,
+    isSoundPlayed,
     motionBlur,
     debugPause,
     rotatePause,
     inactivePause,
     gamePause,
     textureOptions,
-    timelineIndex,
     currentScreenIndex,
     currentPopupIndex,
     currentSceneIndex,

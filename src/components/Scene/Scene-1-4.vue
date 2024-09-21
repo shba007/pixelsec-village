@@ -31,7 +31,7 @@ function setCharacter(type: Character) {
 }
 
 function onNext() {
-  setTimeout(() => gameStore.nextTimeline({ id: 4 }), 100)
+  setTimeout(() => gameStore.nextTimeline({ id: 4 }), 300)
 }
 
 const titleText = reactive({ x: 0, y: -120, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'center', lineHeight: 64, stroke: 1, strokeThickness: 1 } })

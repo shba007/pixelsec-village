@@ -1,70 +1,51 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import { useWindowSize } from '@vueuse/core';
+import { ref, watch } from 'vue'
+import { useElementSize, useIntervalFn, useWindowSize } from '@vueuse/core'
 
-// Import images
-import characterAll from '@/assets/image/loader/character-all.png';
-import characterLast from '@/assets/image/loader/character-last.png';
+const props = defineProps<{
+  progress: number
+}>()
 
-// Get screen size
-const { width: screenWidth } = useWindowSize();
+const { width: screenWidth } = useWindowSize()
 
-// Positions for the images
-const positionAll = ref(screenWidth.value); // Start off-screen right
-const positionLast = ref(screenWidth.value + 200); // Start just off-screen
+const characterAllElem = ref<HTMLImageElement>()
+const characterLastElem = ref<HTMLImageElement>()
 
-// Animation speed
-const scrollSpeed = 5;
+const { width: characterAllElemWidth } = useElementSize(characterAllElem)
+const { width: characterLastElemWidth } = useElementSize(characterLastElem)
 
-// Function to handle the scrolling animation
-function updatePosition() {
-  positionAll.value -= scrollSpeed;
-  positionLast.value -= scrollSpeed;
+const positionAll = ref(screenWidth.value)
+const positionLast = ref(screenWidth.value + characterAllElemWidth.value)
 
-  // Reset position when the image goes off screen
-  if (positionAll.value <= -200) {
-    positionAll.value = screenWidth.value;
-  }
-  if (positionLast.value <= -200) {
-    positionLast.value = screenWidth.value + 200; // Reset for the second image
-  }
-}
+const scrollSpeed = 5
+let delta = 0
 
-// Create a ticker instance for the animation loop
-const ticker = setInterval(updatePosition, 1000 / 60); // ~60 FPS
+useIntervalFn(() => {
+  delta += scrollSpeed * 0.3
+  positionAll.value = Math.max(screenWidth.value - delta, -characterAllElemWidth.value * 1.01)
+  positionLast.value = Math.max(screenWidth.value + characterAllElemWidth.value * 1.03 - delta, (screenWidth.value - characterLastElemWidth.value) / 2)
+}, 1000 / 60)
 
-onMounted(() => {
-  // Start the animation
-});
-
-onUnmounted(() => {
-  clearInterval(ticker); // Stop the animation
-});
+/* watch(() => props.progress, (value, oldValue) => {
+  delta += (value - oldValue) * scrollSpeed * 3.12
+  positionAll.value = Math.max(screenWidth.value - delta, -characterAllElemWidth.value)
+  positionLast.value = Math.max(screenWidth.value + characterAllElemWidth.value * 1.03 - delta, (screenWidth.value - characterLastElemWidth.value) / 2)
+}) */
 </script>
 
 <template>
-  <div
-    :style="{ overflow: 'hidden', position: 'absolute', width: '100%', zIndex: '99', display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }">
-    <img :style="{ position: 'relative', left: positionAll + 'px', top: '0', width: '70%' }" :src="characterAll"
+  <div class="absolute z-50 flex h-1/2 w-full items-center overflow-hidden">
+    <img
+      ref="characterAllElem"
+      class="absolute bottom-0 h-[20vh] max-w-max ease-linear landscape:h-[40vh]"
+      :style="{ left: positionAll + 'px' }"
+      src="/images/loader/character-all.png"
       alt="Character All" />
-    <img :style="{ position: 'relative', left: positionLast + 'px', top: '0', width: '5.6%' }" :src="characterLast"
+    <img
+      ref="characterLastElem"
+      class="absolute bottom-0 h-[20vh] max-w-max ease-linear landscape:h-[40vh]"
+      :style="{ left: positionLast + 'px' }"
+      src="/images/loader/character-last.png"
       alt="Character Last" />
-
-  </div>
-  <div
-    :style="{ overflow: 'hidden', position: 'absolute', width: '100%', zIndex: '99', display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }">
-    <img :style="{ position: 'relative', left: positionAll + 'px', top: '0', width: '70%' }" :src="characterAll"
-      alt="Character All" />
-    <img :style="{ position: 'relative', left: positionLast + 'px', top: '0', width: '5.6%' }" :src="characterLast"
-      alt="Character Last" />
-
   </div>
 </template>
-
-<style scoped>
-/* Optional styling if needed */
-</style>
-
-<style scoped>
-/* Optional styling if needed */
-</style>

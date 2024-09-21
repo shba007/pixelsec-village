@@ -148,26 +148,26 @@ onTick((delta) => {
 
     if (progress == 1) {
       totalElapsedTime = 0
+      activeCharacter.animation = 'finished'
+      emit('update', currentCharacterIndex.value, 'finished')
       timer = setTimeout(() => {
         activeCharacter.aliases = characterAnimations.value['frontStill']
       }, 100)
-      activeCharacter.animation = 'finished'
-      emit('update', currentCharacterIndex.value, 'finished')
     }
   } else if (!(currentCharacterIndex.value < props.states.length - 1)) {
-    activeCharacter.aliases = characterAnimations.value['frontStill']
-    activeCharacter.animation = 'finished'
-    emit('update', currentCharacterIndex.value, 'finished')
+    setTimeout(() => {
+      activeCharacter.animation = 'finished'
+      emit('update', currentCharacterIndex.value, 'finished')
+      activeCharacter.aliases = characterAnimations.value['frontStill']
+    }, 100)
+  } else {
+    setTimeout(() => {
+      activeCharacter.aliases = characterAnimations.value['frontStill']
+    }, 100)
   }
 })
 
 const isPlaying = computed(() => (characterAnimations.value.frontStill[0] === activeCharacter.aliases[0] ? true : activeCharacter.animation === 'started'))
-
-watch(isPlaying, (value) => {
-  if (!value) {
-    activeCharacter.aliases = characterAnimations.value.frontStill
-  }
-})
 </script>
 
 <template>

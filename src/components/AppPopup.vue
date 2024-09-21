@@ -24,7 +24,8 @@ const props = withDefaults(
 )
 
 const portraitZoomFactor = computed(() => {
-  return screenHeight.value / 720
+  const aspectRatio = screenWidth.value / screenHeight.value
+  return aspectRatio > 0.5 ? screenHeight.value / 720 : (screenWidth.value / 1440) * 3.5
 })
 
 const emit = defineEmits<{ next: [] }>()
