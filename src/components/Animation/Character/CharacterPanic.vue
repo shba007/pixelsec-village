@@ -51,7 +51,7 @@ const textures = {
 
 const currentCharacterStateIndex = ref(0)
 const playing = true
-const speed = 0.07
+const speed = 0.1
 // Move Character
 let totalElapsedTime = 0
 let progress = 0

@@ -46,13 +46,13 @@ const timeline: {
   { screen: 4, popup: 11, scene: 19, character: 15 },
   { screen: 4, popup: -1, scene: 20, character: 16 },
   //
-  { screen: 5, popup: -1, scene: 20, character: 17 },
-  { screen: 5, popup: 12, scene: 20, character: 17 },
-  { screen: 5, popup: 13, scene: 20, character: 17 },
-  { screen: 5, popup: 14, scene: 20, character: 17 }, // either
-  { screen: 5, popup: 15, scene: 20, character: 17 }, // or
-  { screen: 5, popup: -1, scene: 21, character: 17 }, // issue when coutdown finished
-  { screen: 5, popup: 16, scene: 21, character: 17 },
+  { screen: 5, popup: -1, scene: 20, character: 16 },
+  { screen: 5, popup: 12, scene: 20, character: 16 },
+  { screen: 5, popup: 13, scene: 20, character: 16 },
+  { screen: 5, popup: 14, scene: 20, character: 16 }, // either
+  { screen: 5, popup: 15, scene: 20, character: 16 }, // or
+  { screen: 5, popup: -1, scene: 21, character: 16 }, // issue when coutdown finished
+  { screen: 5, popup: 16, scene: 21, character: 16 },
   //
   { screen: 6, popup: 16, scene: 22, character: 18 },
   { screen: 6, popup: -1, scene: 23, character: 19 },
@@ -240,7 +240,7 @@ export const useGameStore = defineStore('game', () => {
       isReset.value = false
       isStarted.value = false
       isPressed.value = false
-    }, 400)
+    }, 800)
   }
 
   const soundStatus = reactive({ bgm: 'init', sfx: 'init' })

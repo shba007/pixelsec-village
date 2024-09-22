@@ -370,21 +370,21 @@ const charactersPanic = ref([
   {
     type: 'green',
     states: [
-      { x: 1040, y: 1752.5, scale: 0.425, alpha: 0, time: 0 * panicSpeedFactor },
-      { x: 1030, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: 0.25 * panicSpeedFactor },
-      { x: 950, y: 1752.5 - 5, scale: 0.425, alpha: 1, time: 2.75 * panicSpeedFactor },
-      { x: 1030, y: 1752.5 + 10, scale: 0.425, alpha: 1, time: 3.5 * panicSpeedFactor },
-      { x: 1040, y: 1752.5, scale: 0.425, alpha: 0, time: 4 * panicSpeedFactor },
+      { x: 1110, y: 1752.5, scale: 0.425, alpha: 1, time: 0.2 * panicSpeedFactor },
+      { x: 1030, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: (0.25 + 0.7) * panicSpeedFactor },
+      { x: 840, y: 1782.5 - 5, scale: 0.425, alpha: 1, time: (2.75 + 0.7) * panicSpeedFactor },
+      { x: 1030, y: 1752.5 + 10, scale: 0.425, alpha: 1, time: (3.5 + 0.7) * panicSpeedFactor },
+      { x: 1120, y: 1752.5, scale: 0.425, alpha: 0, time: (4 + 0.7) * panicSpeedFactor },
     ],
   },
   {
     type: 'purple',
     states: [
-      { x: 1090, y: 1752.5, scale: 0.425, alpha: 0, time: 0 * panicSpeedFactor },
-      { x: 1080, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: 0.25 * panicSpeedFactor },
-      { x: 900, y: 1752.5 - 5, scale: 0.425, alpha: 1, time: 2.75 * panicSpeedFactor },
-      { x: 1080, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: 3.5 * panicSpeedFactor },
-      { x: 1090, y: 1752.5, scale: 0.425, alpha: 0, time: 4 * panicSpeedFactor },
+      { x: 1140, y: 1752.5, scale: 0.425, alpha: 0, time: 0 * panicSpeedFactor },
+      { x: 1080, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: (0.25 + 0.8) * panicSpeedFactor },
+      { x: 820, y: 1792.5 - 5, scale: 0.425, alpha: 1, time: (2.75 + 1.2) * panicSpeedFactor },
+      { x: 1080, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: (3.5 + 1.2) * panicSpeedFactor },
+      { x: 1140, y: 1752.5, scale: 0.425, alpha: 0, time: (4 + 0.4) * panicSpeedFactor },
     ],
   },
 ])
@@ -547,10 +547,6 @@ function transformX(x: number) {
 function transformY(y: number) {
   return y - 140
 }
-
-function transformScale(scale: number) {
-  return scale
-}
 </script>
 
 <template>
@@ -574,7 +570,7 @@ function transformScale(scale: number) {
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <CharacterGuard place="map" :state="characterGuard.state" />
       <CharacterBaloonVendor :state="characterBaloonVendor.state" />
-      <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" />
+      <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" place="map" />
       <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
       <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction as -1 | 1" />
       <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
@@ -609,7 +605,7 @@ function transformScale(scale: number) {
     <AppProtip v-else-if="currentPopupIndex === 7" title="1" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
-  <!--   <External>
+  <!-- <External>
     <div class="fixed left-1/2 top-1/2 z-50 size-1 -translate-x-1/2 -translate-y-1/2 bg-red-500" />
     <div class="fixed bottom-0 left-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">

@@ -71,7 +71,10 @@ function resize() {
 
 useIntervalFn(resize, 100)
 
-onMounted(() => gameStore.playSFXSound('dialogBox'))
+onMounted(() => {
+  gameStore.playSFXSound('dialogBox')
+  resize()
+})
 
 const inputEmail = ref<string>()
 const email = ref<string>()

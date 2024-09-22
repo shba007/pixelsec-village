@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
-import { useScroll, useTimeoutFn } from '@vueuse/core'
-import { External, onTick } from 'vue3-pixi'
+import { onBeforeUnmount, reactive, ref, watch } from 'vue'
+import { useInterval, useIntervalFn, useScroll, useTimeoutFn } from '@vueuse/core'
+import { External } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
@@ -16,35 +16,35 @@ const gameStore = useGameStore()
 const { gamePause } = storeToRefs(gameStore)
 
 const targetElem = ref<HTMLParagraphElement | null>(null)
-const { arrivedState, y } = useScroll(targetElem, { behavior: 'instant' })
+const { arrivedState, y } = useScroll(targetElem, { behavior: 'smooth' })
+const { counter, resume, pause } = useInterval(75, { immediate: false, controls: true })
 
-let interval: any
+const isNext = ref(false)
 
 function onNext() {
+  if (isNext.value) return
+
+  isNext.value = true
   gameStore.nextTimeline({ id: 6 })
 }
 
-function autoScroll() {
-  if (interval) return
+watch(counter, (value) => {
+  y.value = value * 2000
+})
 
-  interval = setInterval(() => {
-    y.value += 2000
-  }, 75)
+function autoScroll() {
+  resume()
 }
 
 watch(
   () => arrivedState.bottom,
   (value) => {
     if (value) {
-      clearInterval(interval)
+      pause()
       useTimeoutFn(onNext, 3000)
     }
   }
 )
-
-onBeforeUnmount(() => {
-  if (interval) clearInterval(interval)
-})
 
 const boxPlaceholder = reactive({ x: 0, y: 60, scale: 0.5 })
 const boxPlaceholderRef = ref<any>(null)
@@ -69,7 +69,7 @@ function resize() {
   }
 }
 
-onTick(resize)
+useIntervalFn(resize, 100)
 
 const titleText = reactive({ x: 0, y: -170, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 54, align: 'left', lineHeight: 64, stroke: 1, strokeThickness: 1 } })
 </script>

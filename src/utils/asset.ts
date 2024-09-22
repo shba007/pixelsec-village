@@ -12,7 +12,7 @@ import IconX from '@/assets/image/popup/icon-social-x.png'
 // import PlaceholderPlay from '@/assets/image/popup/placeholder-play-unfocus.png'
 // import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
 import InputPlaceholder from '@/assets/image/popup/input-placeholder.png'
-import BgImage from '/images/image-bg.png'
+// import BgImage from '/images/image-bg.png'
 // asset
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
 import portipIcon1Texture from '@/assets/image/popup/protip-1.png'
@@ -280,8 +280,18 @@ import flagStation2Texture from '@/assets/image/map/flags/station-2.png'
 // import wave4Texture from '@/assets/image/map/waves/4.png'
 // import wave5Texture from '@/assets/image/map/waves/5.png'
 // Baloon Stand
-import baloonStand1Texture from '@/assets/image/map/baloon-stand/1.png'
-import baloonStand2Texture from '@/assets/image/map/baloon-stand/2.png'
+import mapBaloon1Texture from '@/assets/image/baloon/map-1.png'
+import mapBaloon2Texture from '@/assets/image/baloon/map-2.png'
+//
+import parkBaloon1Texture from '@/assets/image/baloon/park-1.png'
+import parkBaloon2Texture from '@/assets/image/baloon/park-2.png'
+import parkBaloon3Texture from '@/assets/image/baloon/park-3.png'
+import parkBaloon4Texture from '@/assets/image/baloon/park-4.png'
+import parkBaloon5Texture from '@/assets/image/baloon/park-5.png'
+import parkBaloon6Texture from '@/assets/image/baloon/park-6.png'
+import parkBaloon7Texture from '@/assets/image/baloon/park-7.png'
+import parkBaloon8Texture from '@/assets/image/baloon/park-8.png'
+import parkBaloon9Texture from '@/assets/image/baloon/park-9.png'
 // Store App Sign
 import appSign1Texture from '@/assets/image/map/app-sign/1.png'
 import appSign2Texture from '@/assets/image/map/app-sign/2.png'
@@ -380,7 +390,7 @@ export const resources = {
     // popupPositionCenterLandscape,
     // popupPositionCenterPortrait,
     //
-    BgImage,
+    // BgImage,
     // popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,
     portipIcon1: portipIcon1Texture,
@@ -544,8 +554,18 @@ export const resources = {
     mapStationBgTexture: mapStationBgTexture,
     mapStationFgTexture: mapStationBgTexture,
     //
-    baloon1: baloonStand1Texture,
-    baloon2: baloonStand2Texture,
+    mapBaloon1: mapBaloon1Texture,
+    mapBaloon2: mapBaloon2Texture,
+    //
+    parkBaloon1: parkBaloon1Texture,
+    parkBaloon2: parkBaloon2Texture,
+    parkBaloon3: parkBaloon3Texture,
+    parkBaloon4: parkBaloon4Texture,
+    parkBaloon5: parkBaloon5Texture,
+    parkBaloon6: parkBaloon6Texture,
+    parkBaloon7: parkBaloon7Texture,
+    parkBaloon8: parkBaloon8Texture,
+    parkBaloon9: parkBaloon9Texture,
     //
     appSign1: appSign1Texture,
     appSign2: appSign2Texture,

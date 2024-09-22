@@ -5,15 +5,36 @@ import { getRandomInteger } from '@/utils/helper'
 import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
-defineProps<{
+const props = defineProps<{
   x: number
   y: number
   scale: number
+  place: 'map' | 'park'
 }>()
 
-const textures = ['baloon1', 'baloon2']
+const textures =
+  props.place === 'map'
+    ? ['mapBaloon1', 'mapBaloon2']
+    : [
+        'parkBaloon1',
+        'parkBaloon2',
+        'parkBaloon3',
+        'parkBaloon4',
+        'parkBaloon5',
+        'parkBaloon6',
+        'parkBaloon7',
+        'parkBaloon8',
+        'parkBaloon9',
+        'parkBaloon8',
+        'parkBaloon7',
+        'parkBaloon6',
+        'parkBaloon5',
+        'parkBaloon4',
+        'parkBaloon3',
+        'parkBaloon2',
+      ]
 const playing = useTimeout(getRandomInteger(100, 2000))
-const speed = ref(getRandomInteger(1000, 2000) / 50000)
+const speed = ref((props.place === 'map' ? 1 : 2) * (getRandomInteger(100, 200) / 2500))
 </script>
 
 <template>

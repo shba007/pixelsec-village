@@ -1,4 +1,4 @@
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { ofetch } from 'ofetch'
 import { nanoid } from 'nanoid'
@@ -81,7 +81,7 @@ export const useDataStore = defineStore('data', () => {
     readTC: null,
     age: null,
     spendTime: [],
-    dataExchange: null,
+    dataExchange: [],
     collectData: null,
     dataBreachAction: null,
     dataResponsibility: null,
@@ -111,7 +111,7 @@ export const useDataStore = defineStore('data', () => {
     { deep: true }
   )
 
-  const score = ref(0)
+  const score = ref(35)
 
   const resultHouse = computed(() => {
     if (score.value < 9) return 1

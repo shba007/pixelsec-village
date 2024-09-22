@@ -15,7 +15,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "build-only": "vite build",
     "preview": "vite preview",
-    "tunnel": "untun tunnel --port 4173 http://localhost:4173/"
+    "tunnel": "untun tunnel --port 5173 http://localhost:5173/"
   },
   "dependencies": {
     "@vueuse/core": "^11.1.0",
@@ -24,7 +24,7 @@
     "ofetch": "^1.4.0",
     "pinia": "^2.2.2",
     "pixi.js": "^8.4.1",
-    "vue": "^3.5.7",
+    "vue": "^3.5.8",
     "vue3-pixi": "^0.9.3"
   },
   "devDependencies": {
