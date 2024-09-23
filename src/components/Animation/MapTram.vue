@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { onTick, External } from 'vue3-pixi'
-import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 import { useGameStore } from '@/stores/game'
 
@@ -42,6 +42,7 @@ const emit = defineEmits<{
 }>()
 
 const gameStore = useGameStore()
+const { textureOptions } = storeToRefs(gameStore)
 
 const animations = {
   frontStill: ['tramFront'],
@@ -128,7 +129,7 @@ onTick((delta) => {
 <template>
   <AppAnimatedSprite
     :textures="tram.aliases"
-    :texture-options="textureOptions"
+    :texture-options="textureOptions.blur"
     :anchor="0.5"
     :x="tram.state.x"
     :y="tram.state.y"
