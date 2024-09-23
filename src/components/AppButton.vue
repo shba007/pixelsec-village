@@ -45,7 +45,7 @@ const button = computed(() => {
       align: 'center',
       lineHeight: props.fontSize * 1.2,
       stroke: 1,
-      strokeThickness: 1,
+      strokeThickness: 2,
       fill: props.isPressed ? '#506745' : 'black',
     },
   }

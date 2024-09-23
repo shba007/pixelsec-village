@@ -6,14 +6,14 @@ import fontLAN from '/fonts/LAN.ttf'
 import bgmSprite from '/sound/bgm-sprite.mp3'
 import sfxSprite from '/sound/sfx-sprite.mp3'
 //
+// asset
 import IconFacebook from '@/assets/image/popup/icon-social-facebook.png'
 import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
 import IconX from '@/assets/image/popup/icon-social-x.png'
 // import PlaceholderPlay from '@/assets/image/popup/placeholder-play-unfocus.png'
 // import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
-import InputPlaceholder from '@/assets/image/popup/input-placeholder.png'
 // import BgImage from '/images/image-bg.png'
-// asset
+import InputPlaceholder from '@/assets/image/popup/input-placeholder.png'
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
 import portipIcon1Texture from '@/assets/image/popup/protip-1.png'
 import portipIcon2Texture from '@/assets/image/popup/protip-2.png'
@@ -365,6 +365,8 @@ import resultMansionBgTexture from '@/assets/image/mansion/bg.png'
 //
 import resultMansionDog1Texture from '@/assets/image/mansion/dog/1.png'
 import resultMansionDog2Texture from '@/assets/image/mansion/dog/2.png'
+//
+import resultMansionGateTexture from '@/assets/image/mansion/gate.png'
 //
 // import popupPositionLeft from '@/assets/image/popup/position/left.png'
 // import popupPositionRight from '@/assets/image/popup/position/right.png'
@@ -742,6 +744,7 @@ export const resources = {
     resultMansionBg: resultMansionBgTexture,
     resultMansionDog1: resultMansionDog1Texture,
     resultMansionDog2: resultMansionDog2Texture,
+    resultMansionGate: resultMansionGateTexture,
     //
     mapWolve1: mapWolve1Texture,
     mapWolve2: mapWolve2Texture,

@@ -76,15 +76,15 @@ function onStart() {
       <div v-if="gameStore.rotatePause" class="absolute left-0 top-0 h-full w-full bg-white/40 landscape:hidden" /> -->
       <!-- DEBUG -->
       <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-        <p>v0.4.86</p>
+        <p>v0.4.87</p>
         <!--   <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
         <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
         <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
         <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
       </div>
-      <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
+      <!--  <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
         <button @click="gameStore.nextTimeline({ id: 666 })">Next Scene</button>
-      </div>
+      </div> -->
     </section>
     <AppLoader v-if="!isStarted" :progress="progress * 100" />
     <Application

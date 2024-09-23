@@ -106,7 +106,7 @@ onMounted(() => {
 
 <template>
   <Container :x="screenWidth / 2 + map.state.x" :y="screenHeight / 2 + map.state.y" :scale="map.state.scale * zoomFactor">
-    <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
+    <Sprite :texture="map.alias.bg" :anchor="0.5" :scale="1" :texture-options="textureOptions" />
     <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
     <Sprite :texture="palmTrees.alias" :texture-options="textureOptions" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
     <Wolf :x="wolves.x" :y="wolves.y" :scale="wolves.scale" :anchor="0.5" :alpha="1" :animation-speed="0.03" type="strawhut" />
@@ -115,7 +115,7 @@ onMounted(() => {
     <SceneResult v-if="currentPopupIndex == 24" :place="modal.place" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
-  <!--   <External>
+  <!--  <External>
     <div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="map.state.x" type="number" min="-10000" max="10000" step="10" />

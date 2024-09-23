@@ -24,8 +24,8 @@ const map = reactive<any>({
   loaded: false,
   alias: { bg: 'resultLogHouseBg', fg: 'resultLogHouseBg' },
   states: [
-    { x: -180, y: 60, scale: 1.37, alpha: 1, time: 0 },
-    { x: -180, y: 60, scale: 1.37, alpha: 1, time: 2 },
+    { x: -180 + 200, y: 60, scale: 1.37, alpha: 1, time: 0 },
+    { x: -180 + 200, y: 60, scale: 1.37, alpha: 1, time: 2 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'started',
@@ -94,7 +94,7 @@ onMounted(() => {
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container :x="map.state.x" :y="map.state.y" :scale="map.state.scale">
-      <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
+      <Sprite :texture="map.alias.bg" :scale="0.8" :texture-options="textureOptions" :anchor="0.5" />
       <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
     </Container>
   </Container>

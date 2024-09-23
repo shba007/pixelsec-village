@@ -111,7 +111,7 @@ export const useDataStore = defineStore('data', () => {
     { deep: true }
   )
 
-  const score = ref(35)
+  const score = ref(0)
 
   const resultHouse = computed(() => {
     if (score.value < 9) return 1

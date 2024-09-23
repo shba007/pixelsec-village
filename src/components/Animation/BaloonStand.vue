@@ -34,7 +34,7 @@ const textures =
         'parkBaloon2',
       ]
 const playing = useTimeout(getRandomInteger(100, 2000))
-const speed = ref((props.place === 'map' ? 1 : 2) * (getRandomInteger(100, 200) / 2500))
+const speed = ref(getRandomInteger(100, 200) / 2500)
 </script>
 
 <template>

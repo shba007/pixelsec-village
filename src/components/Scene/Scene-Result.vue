@@ -30,7 +30,7 @@ const socials = ref([
 ])
 
 function onShare(type: 'facebook' | 'instagram' | 'x') {
-  const shareURL = 'https://affinidi-game-poc.onrender.com' + `/html/${props.place}-${characterSkin.value}`
+  const shareURL = 'https://affinididataville.webspiders.com' + `/html/${props.place}-${characterSkin.value}`
   let finalShare = ''
 
   switch (type) {
@@ -135,14 +135,14 @@ const isPlayAgainPressed = ref(false)
           <Text :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">
             ‎&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VULNERABLE\nSTRAW HUT</Text
           >
-          <Text :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style">
+          <Text :y="-20" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style">
             Identity and data protection are\nnew to you. This makes you an\neasy target for your valuable\ninformation to be exposed.
           </Text>
         </template>
         <template v-else-if="place === 'loghouse'">
           <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
           <Text :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;&nbsp;BASIC LOG HOUSE</Text>
-          <Text :y="-50" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style">
+          <Text :y="-70" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style">
             You have a good foundation in\nunderstanding data privacy but\nneed better security as you leave\nyour data in the hands of third-\nparties and dated systems.
           </Text>
         </template>
@@ -151,14 +151,14 @@ const isPlayAgainPressed = ref(false)
           <Text :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">
             ‎&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONVENIENT\nTOWNHOUSE</Text
           >
-          <Text :y="-0" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style"
+          <Text :y="-20" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style"
             >You enjoy the openness of\ntechnology and often share your data\nfor ease of access but that might put\nyour data in the wrong hands.
           </Text>
         </template>
         <template v-else-if="place === 'mansion'">
           <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
           <Text :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;GUARDED MANSION</Text>
-          <Text :y="-60" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style"
+          <Text :y="-70" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style"
             >Your digital fortress is heavily\nguarded with high-level knowledge\nand high security in place. But even\nthe most secure mansion could\nbenefit from the latest upgrades.
           </Text>
         </template>
@@ -186,14 +186,14 @@ const isPlayAgainPressed = ref(false)
       <template v-slot:popupBg>
         <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
       </template>
-      <Text :x="titleText.x" :y="titleText.y - 160" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">SHARE WITH YOUR\nFRIENDS AND SEE WHAT\nHOUSE THEY\nLIVE IN</Text>
+      <Text :x="titleText.x" :y="titleText.y - 160" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">SHARE WITH YOUR\nFRIENDS AND SEE WHAT\nHOUSE THEY LIVE IN</Text>
       <Sprite
         v-for="{ type, texture, x, y, scale } of socials"
         :key="type"
         :texture="texture"
         :texture-options="textureOptions"
         :x="x"
-        :y="y"
+        :y="y - 50"
         :scale="scale"
         :anchor="0.5"
         cursor="pointer"
