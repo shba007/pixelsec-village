@@ -19,7 +19,7 @@ import ScreenResult from '@/components/Screen/Result.vue'
 import SceneExperience from '@/components/Scene/Scene-Experience.vue'
 
 const gameStore = useGameStore()
-const { currentScreenIndex, gamePause, motionBlur, isLandscape, isSoundLoaded, isSoundPlayed, isStarted, isPressed, isReset } = storeToRefs(gameStore)
+const { currentScreenIndex, gamePause, motionBlur, isLandscape, isSoundLoaded, isSoundPlayed, isStarted, isPressed } = storeToRefs(gameStore)
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
 const loadingText = computed(() => ({
@@ -65,6 +65,9 @@ function onStart() {
     }, 600)
   }
 }
+
+const isLoaderLoaded = ref(false)
+const isAllLoaded = computed(() => isSoundLoaded.value && isLoaderLoaded.value)
 </script>
 
 <template>
@@ -76,8 +79,8 @@ function onStart() {
       <div v-if="gameStore.rotatePause" class="absolute left-0 top-0 h-full w-full bg-white/40 landscape:hidden" /> -->
       <!-- DEBUG -->
       <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-        <p>v0.4.88</p>
-        <!--         <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
+        <p>v0.4.89</p>
+        <!--  <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
         <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
         <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
         <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
@@ -86,7 +89,7 @@ function onStart() {
         <button @click="gameStore.nextTimeline({ id: 666 })">Next Scene</button>
       </div> -->
     </section>
-    <AppLoader v-if="!isStarted" :progress="progress * 100" />
+    <AppLoader v-if="!isStarted" :progress="progress * 100" @loaded="isLoaderLoaded = true" />
     <Application
       class="relative z-10"
       :width="screenWidth"
@@ -99,9 +102,10 @@ function onStart() {
           <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{ Math.floor(progress * 99) }}% </Text>
         </template>
         <template #default>
-          <Container v-if="!isReset" :scale="1">
+          <!-- v-if="!isReset" -->
+          <Container :scale="1">
             <template v-if="!isStarted">
-              <Text v-if="!isSoundLoaded" :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style">Loading... 99%</Text>
+              <Text v-if="!isAllLoaded" :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style">Loading... 99%</Text>
               <Container v-else :x="loadingText.x" :y="loadingText.y" :scale="0.65">
                 <AppButton type="long" text="Start Game" :x="0" :y="0" :scale="1" :is-pressed="isPressed" />
               </Container>

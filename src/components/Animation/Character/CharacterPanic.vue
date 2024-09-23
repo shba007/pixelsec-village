@@ -24,7 +24,7 @@ const props = withDefaults(
 )
 
 const gameStore = useGameStore()
-const { currentPopupIndex, textureOptions } = storeToRefs(gameStore)
+const { currentSceneIndex, textureOptions } = storeToRefs(gameStore)
 
 const activeCharacter = reactive<any>({
   loaded: false,
@@ -80,8 +80,9 @@ onTick((delta) => {
   }
 })
 
-watch(currentPopupIndex, (value) => {
-  if (value >= 16) {
+watch(currentSceneIndex, (value) => {
+  if (value >= 20) {
+    gameStore.stopSFXSound(3)
     pause()
   }
 })

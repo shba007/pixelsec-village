@@ -114,6 +114,7 @@ function playAgain() {
   setTimeout(() => {
     dataStore.reset()
     gameStore.reset()
+    location.reload()
   }, 100)
 }
 

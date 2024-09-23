@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useElementSize, useIntervalFn, useWindowSize } from '@vueuse/core'
+import { ref } from 'vue'
+import { useElementSize, useIntervalFn, useWindowSize, watchDebounced } from '@vueuse/core'
 
-const props = defineProps<{
+defineProps<{
   progress: number
+}>()
+
+const emit = defineEmits<{
+  loaded: []
 }>()
 
 const { width: screenWidth } = useWindowSize()
@@ -26,11 +30,13 @@ useIntervalFn(() => {
   positionLast.value = Math.max(screenWidth.value + characterAllElemWidth.value * 1.03 - delta, (screenWidth.value - characterLastElemWidth.value) / 2)
 }, 1000 / 60)
 
-/* watch(() => props.progress, (value, oldValue) => {
-  delta += (value - oldValue) * scrollSpeed * 3.12
-  positionAll.value = Math.max(screenWidth.value - delta, -characterAllElemWidth.value)
-  positionLast.value = Math.max(screenWidth.value + characterAllElemWidth.value * 1.03 - delta, (screenWidth.value - characterLastElemWidth.value) / 2)
-}) */
+watchDebounced(
+  positionLast,
+  () => {
+    emit('loaded')
+  },
+  { debounce: 300 }
+)
 </script>
 
 <template>

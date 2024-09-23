@@ -73,8 +73,8 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   gameStore.stopSFXSound(2)
-  // gameStore.playBGMSound('panic')
-  gameStore.playSFXSound('alarmLight')
+  gameStore.playBGMSound('panic')
+  gameStore.playSFXSound('alarmLight', 2)
 })
 
 const titleText = reactive({ x: 185, y: -52, anchor: 0.5, scale: 1, style: { fontFamily: 'LAN', fontSize: 34, align: 'left', lineHeight: 54, stroke: 1, strokeThickness: 1 } })

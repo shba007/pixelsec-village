@@ -234,9 +234,8 @@ export const useGameStore = defineStore('game', () => {
     stopBGM('normal')
     isReset.value = true
 
-    nextTimeline({ screen: 0, id: 999, absolute: true })
-
     setTimeout(() => {
+      // nextTimeline({ screen: 0, id: 999, absolute: true })
       isReset.value = false
       isStarted.value = false
       isPressed.value = false

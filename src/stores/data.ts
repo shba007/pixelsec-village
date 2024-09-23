@@ -2,6 +2,7 @@ import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { ofetch } from 'ofetch'
 import { nanoid } from 'nanoid'
+import { useStorage } from '@vueuse/core'
 
 export type CharacterSkin = 'blue' | 'gray' | 'pink' | 'violate'
 
@@ -76,7 +77,7 @@ const apiKey = 'b0vQG5LaMa5AKAgvngkHeakXmyShdVGo8FxVUkdt'
 const checkNonNullValue = (obj: any) => Object.values(obj).some((value) => value !== null && !(Array.isArray(value) && value.length === 0))
 
 export const useDataStore = defineStore('data', () => {
-  const key = nanoid()
+  const key = useStorage('key', nanoid())
   const choices = ref<Choice>({
     readTC: null,
     age: null,
