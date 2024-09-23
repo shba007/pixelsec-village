@@ -4,7 +4,6 @@ import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import type { State } from '@/utils/types'
 import { useGameStore } from '@/stores/game'
-import { textureOptions } from '@/components/AppSettings.vue'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 
 // type Orientation = 'front' | 'back' | 'left' | 'right'
@@ -18,12 +17,12 @@ interface Character {
   animation: 'init' | 'started' | 'finished'
 }
 
-const gameStore = useGameStore()
-const { currentCharacterIndex: currentMCCharacterIndex, gamePause } = storeToRefs(gameStore)
-
 const props = defineProps<{
   states: State[]
 }>()
+
+const gameStore = useGameStore()
+const { currentCharacterIndex: currentMCCharacterIndex, gamePause, textureOptions } = storeToRefs(gameStore)
 
 const characterAnimations = {
   frontStill: ['characterSusGuyFishing1', 'characterSusGuyFishing2'],
@@ -128,7 +127,7 @@ onTick((delta) => {
   <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
     <AppAnimatedSprite
       :textures="activeCharacter.aliases"
-      :texture-options="textureOptions"
+      :texture-options="textureOptions.blur"
       :anchor="0.5"
       :x="0"
       :y="0"

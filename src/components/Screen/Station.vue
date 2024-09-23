@@ -72,11 +72,10 @@ watchEffect(() => {
   }
 })
 
-function onLoad() {
+onBeforeMount(() => {
   characterStationMaster.state = characterStationMaster.states[0]
-}
+})
 
-onBeforeMount(onLoad)
 useTimeoutFn(() => {
   gameStore.nextTimeline({ id: 8 })
 }, 2000)

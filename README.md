@@ -18,6 +18,10 @@
 | 2        | 10      | Need Transition                           |
 
 
+Replace
+
 import { textureOptions } from '@/components/AppSettings.vue'
 
-Test push
+Use 
+
+@pixi/sound

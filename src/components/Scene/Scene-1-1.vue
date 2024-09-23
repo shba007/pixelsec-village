@@ -18,10 +18,10 @@ function handleStart() {
   setTimeout(async () => {
     await gameStore.toggleGameMode(true)
     gameStore.nextTimeline({ id: 1 })
-  }, 100)
+  }, 300)
 }
 
-const rotate = reactive({ x: 0, y: 305, scale: 0.3 })
+const rotate = reactive({ x: 0, y: 295, scale: 0.3 })
 
 let count = 0
 

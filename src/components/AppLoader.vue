@@ -1,8 +1,51 @@
 <script setup lang="ts">
-import chactererAll from 'image/loader/character-all.png'
-import chactererLast from 'image/loader/character-all.png'
+import { ref, watch } from 'vue'
+import { useElementSize, useIntervalFn, useWindowSize } from '@vueuse/core'
+
+const props = defineProps<{
+  progress: number
+}>()
+
+const { width: screenWidth } = useWindowSize()
+
+const characterAllElem = ref<HTMLImageElement>()
+const characterLastElem = ref<HTMLImageElement>()
+
+const { width: characterAllElemWidth } = useElementSize(characterAllElem)
+const { width: characterLastElemWidth } = useElementSize(characterLastElem)
+
+const positionAll = ref(screenWidth.value)
+const positionLast = ref(screenWidth.value + characterAllElemWidth.value)
+
+const scrollSpeed = 5
+let delta = 0
+
+useIntervalFn(() => {
+  delta += scrollSpeed * 0.3
+  positionAll.value = Math.max(screenWidth.value - delta, -characterAllElemWidth.value * 1.01)
+  positionLast.value = Math.max(screenWidth.value + characterAllElemWidth.value * 1.03 - delta, (screenWidth.value - characterLastElemWidth.value) / 2)
+}, 1000 / 60)
+
+/* watch(() => props.progress, (value, oldValue) => {
+  delta += (value - oldValue) * scrollSpeed * 3.12
+  positionAll.value = Math.max(screenWidth.value - delta, -characterAllElemWidth.value)
+  positionLast.value = Math.max(screenWidth.value + characterAllElemWidth.value * 1.03 - delta, (screenWidth.value - characterLastElemWidth.value) / 2)
+}) */
 </script>
 
 <template>
-  <!-- Loader Code -->
+  <div class="absolute z-50 flex h-1/2 w-full items-center overflow-hidden">
+    <img
+      ref="characterAllElem"
+      class="absolute bottom-0 h-[20vh] max-w-max ease-linear landscape:h-[40vh]"
+      :style="{ left: positionAll + 'px' }"
+      src="/images/loader/character-all.png"
+      alt="Character All" />
+    <img
+      ref="characterLastElem"
+      class="absolute bottom-0 h-[20vh] max-w-max ease-linear landscape:h-[40vh]"
+      :style="{ left: positionLast + 'px' }"
+      src="/images/loader/character-last.png"
+      alt="Character Last" />
+  </div>
 </template>

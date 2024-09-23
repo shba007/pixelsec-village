@@ -1,4 +1,4 @@
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { ofetch } from 'ofetch'
 import { nanoid } from 'nanoid'
@@ -73,13 +73,15 @@ const scoreCard = {
 const apiBaseURL = 'https://h13p701h52.execute-api.ap-south-1.amazonaws.com/dev/affinidi-dataville-log'
 const apiKey = 'b0vQG5LaMa5AKAgvngkHeakXmyShdVGo8FxVUkdt'
 
+const checkNonNullValue = (obj: any) => Object.values(obj).some((value) => value !== null && !(Array.isArray(value) && value.length === 0))
+
 export const useDataStore = defineStore('data', () => {
   const key = nanoid()
-  const choices = reactive<Choice>({
+  const choices = ref<Choice>({
     readTC: null,
     age: null,
     spendTime: [],
-    dataExchange: null,
+    dataExchange: [],
     collectData: null,
     dataBreachAction: null,
     dataResponsibility: null,
@@ -93,6 +95,7 @@ export const useDataStore = defineStore('data', () => {
     choices,
     async (value) => {
       try {
+        if (!checkNonNullValue(value)) return
         await ofetch(apiBaseURL, {
           method: 'POST',
           headers: { 'x-api-key': apiKey },
@@ -118,20 +121,20 @@ export const useDataStore = defineStore('data', () => {
   })
 
   function setReadTC(value: boolean) {
-    choices.readTC = value
+    choices.value.readTC = value
     score.value += scoreCard.readTC[String(value) as 'true' | 'false']
   }
 
   function setAge(value: ageChoice) {
-    choices.age = value
+    choices.value.age = value
   }
 
   function setSpendTime(value: spendTimeChoice[]) {
-    choices.spendTime = value
+    choices.value.spendTime = value
   }
 
   function setDataExchange(value: dataExchangeChoice[]) {
-    choices.dataExchange = value
+    choices.value.dataExchange = value
 
     for (const v of value) {
       score.value += scoreCard.dataExchange[v]
@@ -139,48 +142,64 @@ export const useDataStore = defineStore('data', () => {
   }
 
   function setCollectData(value: boolean) {
-    choices.collectData = value
+    choices.value.collectData = value
 
     score.value += scoreCard.collectData[String(value) as 'true' | 'false']
   }
 
   function setDataBreachAction(value: dataBreachActionChoice) {
-    choices.dataBreachAction = value
+    choices.value.dataBreachAction = value
 
     score.value += scoreCard.dataBreachAction[value]
   }
 
   function setDataResponsibility(value: dataResponsibilityChoice) {
-    choices.dataResponsibility = value
+    choices.value.dataResponsibility = value
 
     score.value += scoreCard.dataResponsibility[value]
   }
 
   function setAnnoyingPoint(value: annoyingPointChoice) {
-    choices.annoyingPoint = value
+    choices.value.annoyingPoint = value
 
     score.value += scoreCard.annoyingPoint[value]
   }
 
   function setDataVault(value: boolean) {
-    choices.dataVault = value
+    choices.value.dataVault = value
 
     score.value += scoreCard.dataVault[String(value) as 'true' | 'false']
   }
 
   function setDataRewardsTradeoff(value: boolean) {
-    choices.dataRewardsTradeoff = value
+    choices.value.dataRewardsTradeoff = value
 
     score.value += scoreCard.dataRewardsTradeoff[String(value) as 'true' | 'false']
   }
 
   function setEmail(value: string) {
-    choices.email = value
+    choices.value.email = value
+  }
+
+  function reset() {
+    score.value = 0
+    choices.value = {
+      readTC: null,
+      age: null,
+      spendTime: [],
+      dataExchange: null,
+      collectData: null,
+      dataBreachAction: null,
+      dataResponsibility: null,
+      annoyingPoint: null,
+      dataVault: null,
+      dataRewardsTradeoff: null,
+      email: null,
+    }
   }
 
   return {
     resultHouse,
-    score,
     setReadTC,
     setAge,
     setSpendTime,
@@ -192,5 +211,6 @@ export const useDataStore = defineStore('data', () => {
     setDataVault,
     setDataRewardsTradeoff,
     setEmail,
+    reset,
   }
 })

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onBeforeMount, onMounted, reactive, ref, watch } from 'vue'
 import { External, onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
-import { useIntervalFn, useWindowSize, watchArray } from '@vueuse/core'
+import { useIntervalFn, useTimeoutFn, useWindowSize, watchArray } from '@vueuse/core'
 import { textureOptions } from '@/components/AppSettings.vue'
 import { useGameStore } from '@/stores/game'
 
@@ -88,9 +88,9 @@ const characterGuard = reactive({
   time: 0,
 })
 
+const currentStateIndex = ref(0)
 let totalElapsedTime = 0
 let progress = 0
-const currentStateIndex = ref(0)
 
 onTick((delta) => {
   if (!gamePause.value && screen.animation === 'started' && currentStateIndex.value < screen.states.length) {
@@ -146,11 +146,6 @@ watch(gamePause, (value) => {
   }
 })
 
-onMounted(() => {
-  gameStore.playBGMSound('panic')
-  gameStore.playSFXSound('alarmLight')
-})
-
 const sceneRef = ref<any>(null)
 
 function resize() {
@@ -176,15 +171,20 @@ watch(
   { deep: true }
 )
 
-useIntervalFn(() => {
-  resize()
-}, 100)
+useIntervalFn(resize, 100)
+
+onBeforeMount(() => {
+  screen.state.x = screen.states[0].x
+})
 
 onMounted(() => {
-  setTimeout(() => {
-    screen.state.x = screen.states[0].x
-  }, 50)
+  gameStore.playBGMSound('panic')
+  gameStore.playSFXSound('alarmLight')
 })
+
+useTimeoutFn(() => {
+  gameStore.nextTimeline({ id: 44 })
+}, 2000)
 </script>
 
 <template>

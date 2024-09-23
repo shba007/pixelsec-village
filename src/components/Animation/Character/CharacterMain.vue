@@ -148,16 +148,22 @@ onTick((delta) => {
 
     if (progress == 1) {
       totalElapsedTime = 0
+      activeCharacter.animation = 'finished'
+      emit('update', currentCharacterIndex.value, 'finished')
       timer = setTimeout(() => {
         activeCharacter.aliases = characterAnimations.value['frontStill']
       }, 100)
-      activeCharacter.animation = 'finished'
-      emit('update', currentCharacterIndex.value, 'finished')
     }
   } else if (!(currentCharacterIndex.value < props.states.length - 1)) {
-    activeCharacter.aliases = characterAnimations.value['frontStill']
-    activeCharacter.animation = 'finished'
-    emit('update', currentCharacterIndex.value, 'finished')
+    setTimeout(() => {
+      activeCharacter.animation = 'finished'
+      emit('update', currentCharacterIndex.value, 'finished')
+      activeCharacter.aliases = characterAnimations.value['frontStill']
+    }, 100)
+  } else {
+    setTimeout(() => {
+      activeCharacter.aliases = characterAnimations.value['frontStill']
+    }, 100)
   }
 })
 
@@ -171,20 +177,16 @@ watch(isPlaying, (value) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
+    :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AppAnimatedSprite
-      v-if="activeCharacter.animation === 'started'"
-      :textures="activeTrail.aliases"
-      :texture-options="textureOptions.blur"
-      :anchor="0.5"
-      :x="activeTrail.x"
-      :y="activeTrail.y"
-      :scale="1"
-      :alpha="1"
-      :playing="true"
-      :animation-speed="0.08" />
-    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="isPlaying" :animation-speed="0.08" />
+    <AppAnimatedSprite v-if="activeCharacter.animation === 'started'" :textures="activeTrail.aliases"
+      :texture-options="textureOptions.blur" :anchor="0.5" :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1"
+      :playing="true" :animation-speed="0.08" />
+    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0"
+      :y="0" :scale="1" :alpha="1" :playing="isPlaying" :animation-speed="0.08" />
+    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0"
+      :y="0" :scale="1" :alpha="1" :playing="isPlaying" :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <!--   <External>

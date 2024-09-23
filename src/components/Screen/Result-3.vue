@@ -94,7 +94,7 @@ onMounted(() => {
 <template>
   <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
     <Container :x="map.state.x" :y="map.state.y" :scale="map.state.scale">
-      <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
+      <Sprite :scale="0.8" :anchor="0.5" :texture="map.alias.bg" :texture-options="textureOptions" />
       <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
     </Container>
   </Container>

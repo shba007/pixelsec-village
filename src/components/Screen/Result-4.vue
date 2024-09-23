@@ -26,8 +26,8 @@ const map = reactive<any>({
   loaded: false,
   alias: { bg: 'resultMansionBg', fg: 'resultMansionBg' },
   states: [
-    { x: 50, y: 40, scale: 1.25, alpha: 1, time: 0 },
-    { x: -150, y: 40, scale: 1.25, alpha: 1, time: 2 },
+    { x: 50 - 750, y: 100, scale: 1.25, alpha: 1, time: 0 },
+    { x: -50 - 750 - 50, y: 100, scale: 1.25, alpha: 1, time: 2 },
   ],
   state: { x: 0, y: 0, scale: 1, alpha: 1, time: 0 },
   animation: 'started',
@@ -39,14 +39,18 @@ const characterMain = reactive<Asset>({
   loaded: false,
   alias: 'characterMain',
   states: [
-    { x: -100, y: 150, scale: 3.155, alpha: 1, time: 0 },
-    { x: 250 + 50, y: 150, scale: 3.155, alpha: 1, time: 2.5 },
-    { x: 100 + 75, y: 150, scale: 3.155, alpha: 1, time: 4 },
-    { x: 250 + 50, y: 150, scale: 3.155, alpha: 1, time: 5.5 },
+    { x: -100, y: 140, scale: 3.155, alpha: 1, time: 0 },
+    { x: 250 + 50, y: 140, scale: 3.155, alpha: 1, time: 2.5 },
+    { x: 100 + 75, y: 140, scale: 3.155, alpha: 1, time: 4 },
+    { x: 250 + 50, y: 140, scale: 3.155, alpha: 1, time: 5.5 },
   ],
   state: { x: 0, y: 0, scale: 0, alpha: 0, time: 0 },
   animation: 'started',
 })
+
+const dog = reactive({ state: { x: 325, y: 20, scale: 0.95 } })
+const characterGuard = reactive({ state: { x: 480, y: 120, scale: 1, alpha: 1, time: 0 } })
+const gate = reactive({ x: 320, y: 90, scale: 0.8, texture: 'resultMansionGate' })
 
 function handleMCUpdate(stateIndex: number, state: 'init' | 'started' | 'finished') {
   if (state === 'finished') {
@@ -91,20 +95,15 @@ onMounted(() => {
   gameStore.playBGMSound('resultWin')
   gameStore.nextTimeline({ id: 60 })
 })
-
-const dog = reactive({ x: 400, y: 220 - 10, scale: 1 })
-
-const characterGuard = reactive({
-  state: { x: 460, y: 200 - 10, scale: 1, alpha: 1, time: 0 },
-})
 </script>
 
 <template>
-  <Container :x="screenWidth / 2" :y="screenHeight / 2" :scale="1 * zoomFactor">
+  <Container :x="screenWidth" :y="screenHeight / 2" :scale="zoomFactor">
     <Container :x="map.state.x" :y="map.state.y" :scale="map.state.scale">
-      <Sprite :texture="map.alias.bg" :texture-options="textureOptions" :anchor="0.5" />
+      <Sprite :anchor="0.5" :texture="map.alias.bg" :scale="0.8" :texture-options="textureOptions" />
+      <Dog :x="dog.state.x" :y="dog.state.y" :scale="dog.state.scale" />
+      <Sprite :x="gate.x" :y="gate.y" :scale="gate.scale" :anchor="0.5" :texture="gate.texture" :texture-options="textureOptions" />
       <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
-      <Dog :x="dog.x" :y="dog.y" :scale="dog.scale" />
       <CharacterGuard place="map" :state="characterGuard.state" />
     </Container>
   </Container>
@@ -112,12 +111,12 @@ const characterGuard = reactive({
     <SceneResult v-if="currentPopupIndex == 24" :place="modal.place" :zoom-factor="zoomFactor" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <!-- <External>
     <div class="absolute bottom-0 left-32 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
-        <input v-model="map.state.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="map.state.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="map.state.scale" type="number" min="0" max="10" step="0.01" />
+        <input v-model="gate.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="gate.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="gate.scale" type="number" min="0" max="10" step="0.01" />
       </div>
     </div>
   </External> -->

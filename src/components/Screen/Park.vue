@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, reactive, ref } from 'vue'
 import { External } from 'vue3-pixi'
-import { useWindowSize } from '@vueuse/core'
+import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'
@@ -14,6 +14,7 @@ import Scene1 from '@/components/Scene/Scene-3-1.vue'
 import Scene2 from '@/components/Scene/Scene-3-2.vue'
 import Scene3 from '@/components/Scene/Scene-3-3.vue'
 import Fountain from '../Animation/Fountain.vue'
+import BaloonStand from '../Animation/BaloonStand.vue'
 
 const gameStore = useGameStore()
 const { currentPopupIndex, gamePause } = storeToRefs(gameStore)
@@ -58,13 +59,13 @@ const characterIcecreamVendor = reactive({
   state: { x: -90, y: 170, scale: 1, alpha: 1, time: 0 },
 })
 
-function onLoad() {
-  setTimeout(() => {
-    gameStore.nextTimeline({ id: 23 })
-  }, 2000)
-}
+const baloonStand = reactive({ x: -560, y: -120, scale: 1.37 })
 
-onBeforeMount(onLoad)
+onBeforeMount(() => {})
+
+useTimeoutFn(() => {
+  gameStore.nextTimeline({ id: 23 })
+}, 2000)
 </script>
 
 <template>
@@ -75,6 +76,7 @@ onBeforeMount(onLoad)
     <Fountain :x="fountain.x" :y="fountain.y" :scale="fountain.scale" place="park" />
     <Sprite texture="parkTruck" :texture-options="textureOptions" :x="park.state.x" :y="park.state.y" :scale="park.state.scale" :anchor="0.5" />
     <Pigeon v-for="({ x, y, scale, flip }, index) in pigeons" :key="index" :x="x" :y="y" :scale="scale" :flip="flip" />
+    <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" place="park" />
   </Container>
   <Container v-if="!gamePause">
     <Scene1 v-if="currentPopupIndex === 8" :zoom-factor="zoomFactor" />
@@ -85,7 +87,7 @@ onBeforeMount(onLoad)
     <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <!-- <External>
     <div class="absolute bottom-0 left-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="park.state.x" type="number" min="-10000" max="10000" step="10" />
@@ -93,9 +95,9 @@ onBeforeMount(onLoad)
         <input v-model="park.state.scale" type="number" min="0" max="10" step="0.01" />
       </div>
       <div class="flex flex-col gap-2">
-        <input v-model="fountain.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="fountain.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="fountain.scale" type="number" min="0" max="20" step="0.01" />
+        <input v-model="baloonStand.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="baloonStand.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="baloonStand.scale" type="number" min="0" max="20" step="0.01" />
       </div>
     </div>
   </External> -->
