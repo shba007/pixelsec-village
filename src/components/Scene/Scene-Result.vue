@@ -9,7 +9,7 @@ import { useDataStore } from '@/stores/data'
 import { textureOptions } from '@/components/AppSettings.vue'
 import Wolf from '@/components/Animation/Wolf.vue'
 import AppPopup from '@/components/AppPopup.vue'
-import AppButton from '../AppButton.vue'
+import AppButton from '@/components/AppButton.vue'
 
 const props = defineProps<{
   place: 'strawhut' | 'loghouse' | 'townhouse' | 'mansion'
@@ -24,9 +24,9 @@ const secondScreen = ref(false)
 const wolf = reactive({ x: 280, y: 190, scale: 1.25, alpha: 1 })
 
 const socials = ref([
-  { type: 'facebook' as const, texture: 'IconFacebook', x: -89 - 100, y: 83, scale: 0.24 },
-  { type: 'instagram' as const, texture: 'IconInstagram', x: -3 - 100, y: 83, scale: 0.24 },
-  { type: 'x' as const, texture: 'IconX', x: 76 - 100, y: 83, scale: 0.24 },
+  { type: 'facebook' as const, texture: 'IconFacebook', x: -89 - 115, y: 83, scale: 0.24 },
+  { type: 'instagram' as const, texture: 'IconInstagram', x: -3 - 115, y: 83, scale: 0.24 },
+  { type: 'x' as const, texture: 'IconX', x: 76 - 115, y: 83, scale: 0.24 },
 ])
 
 function onShare(type: 'facebook' | 'instagram' | 'x') {

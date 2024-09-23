@@ -100,16 +100,18 @@ watch(gamePause, (value) => {
 })
 
 watch(currentCharacterIndex, () => {
+  clearTimeout(timer)
+  timer = undefined
   activeCharacter.animation = 'started'
 })
 
 // Move Character
 let totalElapsedTime = 0
 let progress = 0
-let timer: any
+let timer: any = undefined
 
 onTick((delta) => {
-  if (activeCharacter.animation === 'started' && currentCharacterIndex.value < props.states.length - 1) {
+  if (timer === undefined && activeCharacter.animation === 'started' && currentCharacterIndex.value < props.states.length - 1) {
     totalElapsedTime += delta / 100
     const dt = props.states[currentCharacterIndex.value + 1].time - props.states[currentCharacterIndex.value].time
     const dx = props.states[currentCharacterIndex.value + 1].x - props.states[currentCharacterIndex.value].x
@@ -122,7 +124,6 @@ onTick((delta) => {
     activeCharacter.state.scale = props.states[currentCharacterIndex.value].scale + ds * progress
     activeCharacter.state.alpha = props.states[currentCharacterIndex.value].alpha + da * progress
     activeCharacter.state.time = props.states[currentCharacterIndex.value].time + dt * progress
-    if (timer) clearTimeout(timer)
 
     if (dy > 0) {
       activeCharacter.aliases = characterAnimations.value['frontWalk']
@@ -148,22 +149,20 @@ onTick((delta) => {
 
     if (progress == 1) {
       totalElapsedTime = 0
-      activeCharacter.animation = 'finished'
-      emit('update', currentCharacterIndex.value, 'finished')
       timer = setTimeout(() => {
         activeCharacter.aliases = characterAnimations.value['frontStill']
+        activeCharacter.animation = 'finished'
       }, 100)
+      emit('update', currentCharacterIndex.value, 'finished')
     }
   } else if (!(currentCharacterIndex.value < props.states.length - 1)) {
-    setTimeout(() => {
+    timer = setTimeout(() => {
+      activeCharacter.aliases = characterAnimations.value['frontStill']
       activeCharacter.animation = 'finished'
-      emit('update', currentCharacterIndex.value, 'finished')
-      activeCharacter.aliases = characterAnimations.value['frontStill']
     }, 100)
+    emit('update', currentCharacterIndex.value, 'finished')
   } else {
-    setTimeout(() => {
-      activeCharacter.aliases = characterAnimations.value['frontStill']
-    }, 100)
+    activeCharacter.aliases = characterAnimations.value['frontStill']
   }
 })
 
@@ -177,16 +176,21 @@ watch(isPlaying, (value) => {
 </script>
 
 <template>
-  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale"
-    :alpha="activeCharacter.state.alpha">
+  <Container :x="activeCharacter.state.x" :y="activeCharacter.state.y" :scale="activeCharacter.state.scale" :alpha="activeCharacter.state.alpha">
     <!-- v-if="activeTrail.aliases.length > 0 && animation && activeCharacter.animation === 'started'" -->
-    <AppAnimatedSprite v-if="activeCharacter.animation === 'started'" :textures="activeTrail.aliases"
-      :texture-options="textureOptions.blur" :anchor="0.5" :x="activeTrail.x" :y="activeTrail.y" :scale="1" :alpha="1"
-      :playing="true" :animation-speed="0.08" />
-    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0"
-      :y="0" :scale="1" :alpha="1" :playing="isPlaying" :animation-speed="0.08" />
-    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0"
-      :y="0" :scale="1" :alpha="1" :playing="isPlaying" :animation-speed="0.08" />
+    <AppAnimatedSprite
+      v-if="activeCharacter.animation === 'started'"
+      :textures="activeTrail.aliases"
+      :texture-options="textureOptions.blur"
+      :anchor="0.5"
+      :x="activeTrail.x"
+      :y="activeTrail.y"
+      :scale="1"
+      :alpha="1"
+      :playing="true"
+      :animation-speed="0.08" />
+    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="isPlaying" :animation-speed="0.08" />
+    <AppAnimatedSprite :textures="activeCharacter.aliases" :texture-options="textureOptions.blur" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" :playing="isPlaying" :animation-speed="0.08" />
   </Container>
   <!-- DEBUG -->
   <!--   <External>
