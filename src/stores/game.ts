@@ -226,17 +226,13 @@ export const useGameStore = defineStore('game', () => {
     }
   })
 
-  const isReset = ref(false)
-
   function reset() {
     stopBGM('resultWin')
     stopBGM('resultLost')
     stopBGM('normal')
-    isReset.value = true
 
     setTimeout(() => {
       // nextTimeline({ screen: 0, id: 999, absolute: true })
-      isReset.value = false
       isStarted.value = false
       isPressed.value = false
     }, 800)
@@ -420,7 +416,6 @@ export const useGameStore = defineStore('game', () => {
   }
 
   return {
-    isReset,
     isStarted,
     isPressed,
     isLandscape,

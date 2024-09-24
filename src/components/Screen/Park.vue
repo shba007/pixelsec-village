@@ -87,7 +87,7 @@ useTimeoutFn(() => {
     <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />
   </Container>
   <!-- DEBUG -->
-  <External>
+  <!--  <External>
     <div class="absolute bottom-0 left-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="park.state.x" type="number" min="-10000" max="10000" step="10" />
@@ -100,5 +100,5 @@ useTimeoutFn(() => {
         <input v-model="baloonStand.scale" type="number" min="0" max="20" step="0.01" />
       </div>
     </div>
-  </External>
+  </External> -->
 </template>
