@@ -10,5 +10,5 @@ User-agent: AdsBot-Google
 Disallow: /
 
 # Example 2: Block all crawlers except AdsBot and Facebook's crawler
-User-agent: *
-Disallow: /
+# User-agent: *
+# Disallow: /
