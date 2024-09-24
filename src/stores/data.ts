@@ -25,6 +25,7 @@ interface Choice {
   dataVault: boolean | null
   dataRewardsTradeoff: boolean | null
   email: string | null
+  houseType: 'strawhut' | 'loghouse' | 'townhouse' | 'mansion' | null
 }
 
 const scoreCard = {
@@ -90,6 +91,7 @@ export const useDataStore = defineStore('data', () => {
     dataVault: null,
     dataRewardsTradeoff: null,
     email: null,
+    houseType: null,
   })
 
   watch(
@@ -101,24 +103,23 @@ export const useDataStore = defineStore('data', () => {
           method: 'POST',
           headers: { 'x-api-key': apiKey },
           body: {
-            key,
+            key: key.value,
             data: value,
           },
         })
       } catch (error) {
-        console.warn('API Request Failed')
+        console.warn('API Request Failed', error)
       }
     },
     { deep: true }
   )
 
   const score = ref(0)
-
   const resultHouse = computed(() => {
-    if (score.value < 9) return 1
-    else if (score.value < 19) return 2
-    else if (score.value < 29) return 3
-    else return 4
+    if (score.value < 9) return 'strawhut'
+    else if (score.value < 19) return 'loghouse'
+    else if (score.value < 29) return 'townhouse'
+    else return 'mansion'
   })
 
   function setReadTC(value: boolean) {
@@ -180,6 +181,8 @@ export const useDataStore = defineStore('data', () => {
 
   function setEmail(value: string) {
     choices.value.email = value
+
+    choices.value.houseType = resultHouse.value
   }
 
   function reset() {
@@ -196,6 +199,7 @@ export const useDataStore = defineStore('data', () => {
       dataVault: null,
       dataRewardsTradeoff: null,
       email: null,
+      houseType: null,
     }
   }
 

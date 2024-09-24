@@ -13,9 +13,9 @@ const { resultHouse } = storeToRefs(dataStore)
 </script>
 
 <template>
-  <Result1 v-if="resultHouse === 1" />
-  <Result2 v-else-if="resultHouse === 2" />
-  <Result3 v-else-if="resultHouse === 3" />
+  <Result1 v-if="resultHouse === 'strawhut'" />
+  <Result2 v-else-if="resultHouse === 'loghouse'" />
+  <Result3 v-else-if="resultHouse === 'townhouse'" />
   <Result4 v-else />
   <External class="fixed right-0 top-0 z-50 h-[10vh] portrait:hidden">
     <img src="/logo-full.png" class="unpixelated h-full object-contain" />
