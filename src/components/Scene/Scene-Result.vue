@@ -18,7 +18,7 @@ const props = defineProps<{
 
 const dataStore = useDataStore()
 const gameStore = useGameStore()
-const { characterSkin, gamePause } = storeToRefs(gameStore)
+const { gamePause } = storeToRefs(gameStore)
 
 const secondScreen = ref(false)
 const wolf = reactive({ x: 280, y: 190, scale: 1.25, alpha: 1 })
@@ -30,7 +30,7 @@ const socials = ref([
 ])
 
 function onShare(type: 'facebook' | 'instagram' | 'x') {
-  const shareURL = 'https://affinididataville.webspiders.com' + `/html/${props.place}-${characterSkin.value}`
+  const shareURL = 'https://affinididataville.webspiders.com' + `/html/${props.place}`
   let finalShare = ''
 
   switch (type) {

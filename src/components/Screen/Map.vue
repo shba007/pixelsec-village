@@ -186,8 +186,8 @@ const characterSus = reactive<Asset>({
     { x: 1020 - 20, y: 2150 + 20 + 50, scale: 0.45, alpha: 1, time: (2.75 + 38.79 * susSpeedFactor) * globalSpeedFactor },
     { x: 1220 - 20, y: 2150 + 20 + 50, scale: 0.45, alpha: 1, time: (2.75 + 47.59 * susSpeedFactor) * globalSpeedFactor },
     //
-    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: (2.75 + 47.59 * susSpeedFactor + 1) * globalSpeedFactor },
-    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: (2.75 + 47.59 * susSpeedFactor + 2) * globalSpeedFactor },
+    { x: 1320 - 20, y: 2080 + 20, scale: 0.45, alpha: 1, time: (2.75 + 47.59 * susSpeedFactor + 1.5) * globalSpeedFactor },
+    { x: 1250 - 20, y: 1990 + 20, scale: 0.45, alpha: 1, time: (2.75 + 47.59 * susSpeedFactor + 2.5) * globalSpeedFactor },
   ],
   state: { x: 1230, y: 2010, scale: 0.45, alpha: 1, time: 1 },
   animation: 'init',

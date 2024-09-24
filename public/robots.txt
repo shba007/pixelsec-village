@@ -2,15 +2,13 @@
 User-agent: facebookexternalhit
 Allow: /
 
-# Example 1: Block only Googlebot
+# Example 1: Block Googlebot and AdsBot-Google
 User-agent: Googlebot
 Disallow: /
 
-# Example 2: Block Googlebot and Adsbot
-User-agent: Googlebot
 User-agent: AdsBot-Google
 Disallow: /
 
-# Example 3: Block all crawlers except AdsBot and Facebook's crawler
+# Example 2: Block all crawlers except AdsBot and Facebook's crawler
 User-agent: *
 Disallow: /
