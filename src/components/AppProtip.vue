@@ -74,11 +74,12 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
       <ProtipIcon :x="-375" :y="-50" :scale="1" />
       <Container :x="title2Text.x" :y="title2Text.y">
         <Text :x="-230" :y="120" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="{ ...title2Text.style, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
-        <Text :y="-30" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="title2Text.style"
-          >You can &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; all your\npersonal info from your digital\nfootprint for a 360-degree unified\nview
-          of your digital self.
-        </Text>
-        <Text :x="182" :y="-30" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="{ ...title2Text.style, fill: '#3464FD', stroke: '#3464FD' }">COLLECT</Text>
+        <Text :x="0" :y="-30" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">You can</Text>
+        <Text :x="188" :y="-30" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="{ ...title1Text.style, fill: '#3464FD', stroke: '#3464FD' }">COLLECT</Text>
+        <Text :x="427" :y="-30" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">all your</Text>
+        <Text :x="0" :y="30" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style"
+          >personal info from your digital\nfootprint for a 360-degree unified\nview of your digital self.</Text
+        >
       </Container>
     </template>
     <template v-else-if="title === '3'">
@@ -95,10 +96,12 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
         <Text :x="-230" :y="120" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="{ ...title4Text.style, fontSize: 54, lineHeight: 64, fill: '#9C38FB', stroke: '#9C38FB' }"
           >PRO TIP:</Text
         >
-        <Text :y="-15" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style"
-          >You can choose how and who you\nwant to &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; what data with\nanytime. It's easy to give consent\nwith Affinidi.</Text
-        >
-        <Text :x="142" :y="40" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="{ ...title4Text.style, fill: '#3464FD', stroke: '#3464FD' }">SHARE</Text>
+        <Text :x="0" :y="-15" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style">You can choose how and who you</Text>
+        <Text :x="0" :y="39" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style">want to</Text>
+        <Text :x="151" :y="39" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="{ ...title4Text.style, fill: '#3464FD', stroke: '#3464FD' }">SHARE</Text>
+        <Text :x="289" :y="39" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style">what data with</Text>
+        <Text :x="0" :y="93" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style">anytime. It's easy to give consent</Text>
+        <Text :x="0" :y="147" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style">with Affinidi.</Text>
       </Container>
     </template>
     <template v-else-if="title === '5'">
