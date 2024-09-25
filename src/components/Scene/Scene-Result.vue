@@ -163,7 +163,7 @@ const isPlayAgainPressed = ref(false)
       </Container>
       <Container v-else :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
         <Sprite ref="emailPlaceholderRef" :texture="'InputPlaceholder'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" />
-        <AppButton type="arrow" :x="440" :y="0" :scale="0.65" :is-pressed="!!email?.length" @click="onSubmit(inputEmail!)" />
+        <AppButton v-if="inputEmail?.length" type="arrow" :x="440" :y="0" :scale="0.65" :is-pressed="!!email?.length" @click="onSubmit(inputEmail!)" />
         <External class="absolute z-20 touch-none" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
           <input
             ref="inputRef"
@@ -171,7 +171,7 @@ const isPlayAgainPressed = ref(false)
             v-model="inputEmail"
             @keydown.enter="onSubmit(inputEmail!)"
             placeholder="ENTER EMAIL FOR FULL REPORT"
-            class="border-0 bg-transparent px-2 py-2 font-bold tracking-wide outline-none placeholder:text-[#3b5df8]"
+            class="border-0 bg-transparent px-4 py-2 font-bold tracking-wide outline-none placeholder:text-[#3b5df8]"
             :style="{ width: emailInputBox.width * 0.875 + 'px', height: emailInputBox.height + 'px', fontSize: emailInputBox.height * 0.5 + 'px' }" />
         </External>
       </Container>
