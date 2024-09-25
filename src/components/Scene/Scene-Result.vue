@@ -101,21 +101,14 @@ function onSubmit(value: string) {
   }, 300)
 }
 
-const textures = ['buttonArrow', 'buttonArrowPressed']
 const inputRef = ref<any>()
 
 const titleText = reactive({ x: -240, y: -30, anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 44, align: 'left', lineHeight: 60, stroke: 1, strokeThickness: 1.5 } })
 const contactText = reactive({ anchor: 0, scale: 1, style: { fontFamily: 'LAN', fontSize: 34, align: 'left', lineHeight: 40, stroke: 1, strokeThickness: 1 } })
 
 function playAgain() {
-  console.log('Play again clicked')
   isPlayAgainPressed.value = true
-
-  setTimeout(() => {
-    dataStore.reset()
-    gameStore.reset()
-    location.reload()
-  }, 100)
+  location.reload()
 }
 
 const isGetYourFullReportPressed = ref(false)
@@ -170,7 +163,7 @@ const isPlayAgainPressed = ref(false)
       </Container>
       <Container v-else :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
         <Sprite ref="emailPlaceholderRef" :texture="'InputPlaceholder'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" />
-        <Sprite :texture="textures[Number(!!email?.length)]" :texture-options="textureOptions" :anchor="0.5" :x="440" :y="-0" :scale="2.5" cursor="pointer" @pointerdown="onSubmit(inputEmail!)" />
+        <AppButton type="arrow" :x="440" :y="0" :scale="0.65" :is-pressed="!!email?.length" @click="onSubmit(inputEmail!)" />
         <External class="absolute z-20 touch-none" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
           <input
             ref="inputRef"

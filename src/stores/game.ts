@@ -416,6 +416,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   return {
+    timelineIndex,
     isStarted,
     isPressed,
     isLandscape,

@@ -89,7 +89,7 @@ let progress = 0
 
 function playSound(state: number) {
   // || state == 8
-  if (state == 2 || state == 6) gameStore.playSFXSound('tram', 3)
+  if (state == 2 || state == 3 || state == 4 || state == 5 || state == 6) gameStore.playSFXSound('tram', 3)
 }
 
 onTick((delta) => {

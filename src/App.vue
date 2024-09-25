@@ -77,8 +77,9 @@ const isAllLoaded = computed(() => progress.value === 1 && isSoundLoaded.value &
   <main class="relative bg-black" :class="{ 'overflow-hidden': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) }" @click="onStart">
     <section>
       <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-        <p>v0.4.101</p>
-        <!--  <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
+        <p>v0.4.102</p>
+        <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+        <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
         <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
         <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
         <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
