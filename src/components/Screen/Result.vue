@@ -18,6 +18,6 @@ const { resultHouse } = storeToRefs(dataStore)
   <Result3 v-else-if="resultHouse === 'townhouse'" />
   <Result4 v-else />
   <External class="fixed right-0 top-0 z-50 h-[10vh] portrait:hidden">
-    <img src="/logo-full.png" class="unpixelated h-full object-contain" />
+    <img src="/logo-full.svg" class="unpixelated h-full object-contain" />
   </External>
 </template>

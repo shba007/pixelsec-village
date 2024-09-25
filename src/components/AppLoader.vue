@@ -18,16 +18,16 @@ const characterLastElem = ref<HTMLImageElement>()
 const { width: characterAllElemWidth } = useElementSize(characterAllElem)
 const { width: characterLastElemWidth } = useElementSize(characterLastElem)
 
-const positionAll = ref(screenWidth.value)
-const positionLast = ref(screenWidth.value + characterAllElemWidth.value)
+const positionAll = ref(screenWidth.value / 2)
+const positionLast = ref(screenWidth.value / 2 + characterAllElemWidth.value)
 
-const scrollSpeed = 10
+const scrollSpeed = 15
 let delta = 0
 
 useIntervalFn(() => {
   delta += scrollSpeed * 0.3
-  positionAll.value = Math.max(screenWidth.value - delta, -characterAllElemWidth.value * 1.01)
-  positionLast.value = Math.max(screenWidth.value + characterAllElemWidth.value * 1.03 - delta, (screenWidth.value - characterLastElemWidth.value) / 2)
+  positionAll.value = Math.max(screenWidth.value / 2 - delta, -characterAllElemWidth.value * 1.01)
+  positionLast.value = Math.max(screenWidth.value / 2 + characterAllElemWidth.value * 1.03 - delta, (screenWidth.value - characterLastElemWidth.value) / 2)
 }, 1000 / 60)
 
 watchDebounced(
