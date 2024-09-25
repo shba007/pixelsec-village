@@ -190,21 +190,22 @@ useTimeoutFn(() => {
 <template>
   <Container :x="screenWidth / 2 + screen.state.x" :y="screenHeight / 2" :scale="zoomFactor">
     <Container>
-      <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-350" :scale="screen.state.scale"
-        :anchor="0.5" />
-      <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth"
-        :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
-      <Sprite ref="sceneRef" :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0"
-        :scale="screen.state.scale" :anchor="0.5" />
+      <Sprite :texture="screen.alias.bg" :texture-options="textureOptions" :x="0" :y="-350" :scale="screen.state.scale" :anchor="0.5" />
+      <Cloud v-for="({ size, x, y, direction }, index) in clouds" :key="index" place="bank" :width-range="screenWidth" :size="size" :x="x" :y="y" :scale="1" :direction="direction" />
+      <Sprite ref="sceneRef" :texture="screen.alias.fg" :texture-options="textureOptions" :x="0" :y="0" :scale="screen.state.scale" :anchor="0.5" />
     </Container>
     <Door :x="door.x" :y="door.y" :scale="door.scale" place="bank" :playing="true" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" place="bank" />
     <template v-if="!gamePause">
-      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank"
-        :play-sound="screen.animation === 'init' && type === 'purple'" :type="type as 'purple' | 'green'" />
+      <CharacterPanic
+        v-for="({ type, states }, index) of charactersPanic"
+        :key="index"
+        :states="states"
+        place="bank"
+        :play-sound="screen.animation === 'init' && type === 'purple'"
+        :type="type as 'purple' | 'green'" />
     </template>
-    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y"
-      :scale="scale" />
+    <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <CharacterGuard :state="characterGuard" place="bank" />
   </Container>
   <Container v-if="!gamePause">
