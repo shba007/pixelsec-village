@@ -22,12 +22,12 @@ const gameStore = useGameStore()
 const { currentScreenIndex, gamePause, motionBlur, isLandscape, isSoundLoaded, isSoundPlayed, isStarted, isPressed } = storeToRefs(gameStore)
 const { width: screenWidth, height: screenHeight } = useWindowSize()
 
+const progress = ref(0)
 const loadingText = computed(() => ({
   x: screenWidth.value * 0.5,
   y: screenHeight.value * (isLandscape.value ? 0.65 : 0.57),
   style: { fontFamily: 'INET', fontSize: 44, lineHeight: 54, fill: 'white' },
 }))
-const progress = ref(0)
 
 function onProgress(value: number) {
   progress.value = value
@@ -55,22 +55,23 @@ function onStart() {
     unlock()
   }
 
-  if (!isAllLoaded.value) return
+  if (!isAllLoaded.value && isPressed.value) return
 
-  if (progress.value == 1 && isSoundLoaded.value && !isPressed.value) {
-    gameStore.playBGMSound('normal')
-    if (!isSoundPlayed.value) return
+  gameStore.playBGMSound('normal')
 
-    isPressed.value = true
-    setTimeout(() => {
-      isStarted.value = true
-    }, 600)
-  }
+  if (!isSoundPlayed.value) return
+
+  gameStore.resume()
+
+  isPressed.value = true
+  setTimeout(() => {
+    isStarted.value = true
+  }, 600)
 }
 
 const isLoaderLoaded = ref(false)
 // isLoaderLoaded.value
-const isAllLoaded = computed(() => isSoundLoaded.value && true)
+const isAllLoaded = computed(() => progress.value === 1 && isSoundLoaded.value && true)
 </script>
 
 <template>
@@ -82,7 +83,7 @@ const isAllLoaded = computed(() => isSoundLoaded.value && true)
       <div v-if="gameStore.rotatePause" class="absolute left-0 top-0 h-full w-full bg-white/40 landscape:hidden" /> -->
       <!-- DEBUG -->
       <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
-        <p>v0.4.95</p>
+        <p>v0.4.96</p>
         <!--  <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
         <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
         <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>

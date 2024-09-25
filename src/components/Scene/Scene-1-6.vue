@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onBeforeUnmount, reactive, ref, watch } from 'vue'
-import { useInterval, useIntervalFn, useScroll, useTimeoutFn } from '@vueuse/core'
+import { reactive, ref, watch } from 'vue'
+import { useIntervalFn, useScroll, useTimeoutFn } from '@vueuse/core'
 import { External } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
@@ -17,7 +17,7 @@ const { gamePause } = storeToRefs(gameStore)
 
 const targetElem = ref<HTMLParagraphElement | null>(null)
 const { arrivedState, y } = useScroll(targetElem, { behavior: 'smooth' })
-const { counter, resume, pause } = useInterval(75, { immediate: false, controls: true })
+// const { counter, resume, pause } = useInterval(75*4, { immediate: false, controls: true })
 
 const isNext = ref(false)
 
@@ -28,19 +28,19 @@ function onNext() {
   gameStore.nextTimeline({ id: 6 })
 }
 
-watch(counter, (value) => {
-  y.value = value * 2000
-})
+/* watch(counter, (value) => {
+  y.value = value * 2000 * 4
+}) */
 
 function autoScroll() {
-  resume()
+  // resume()
+  y.value = targetElem.value?.scrollHeight ?? 0
 }
 
 watch(
   () => arrivedState.bottom,
   (value) => {
     if (value) {
-      pause()
       useTimeoutFn(onNext, 3000)
     }
   }
