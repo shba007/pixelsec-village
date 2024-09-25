@@ -95,7 +95,7 @@ export default {
 <template>
   <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container :x="titleText.x" :y="titleText.y">
-      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> TERMS AND CONDITIONS FOR\nAFIINIDI SERVICES </Text>
+      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">TERMS AND CONDITIONS FOR\nAFFINIDI SERVICES</Text>
     </Container>
     <Sprite ref="boxPlaceholderRef" texture="popupScene05BG" :texture-options="textureOptions" :anchor="0.5" :x="boxPlaceholder.x" :y="boxPlaceholder.y" :scale="boxPlaceholder.scale" />
     <External
