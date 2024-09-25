@@ -64,7 +64,7 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
       <ProtipIcon :x="-375" :y="-50" :scale="1" />
       <Container :x="title1Text.x" :y="title1Text.y">
         <Text :x="-230" :y="120" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="{ ...title1Text.style, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
-        <Text :x="0" :y="0" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">You can DISCOVER your</Text>
+        <Text :x="0" :y="0" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">You can</Text>
         <Text :x="188" :y="0" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="{ ...title1Text.style, fill: '#3464FD', stroke: '#3464FD' }">DISCOVER</Text>
         <Text :x="433" :y="0" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">your</Text>
         <Text :x="0" :y="60" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">fragmented data across the\ndigital realm with Affinidi.</Text>
