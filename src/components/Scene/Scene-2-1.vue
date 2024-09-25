@@ -53,7 +53,7 @@ const titleText = reactive({ x: 120, y: -30, anchor: 0.5, scale: 1, style: { fon
 <template>
   <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container :x="titleText.x" :y="titleText.y">
-      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Please verify your age\nfor tram ticket purchase </Text>
+      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale"> Please verify your age\nfor tram ticket purchase. </Text>
     </Container>
     <CharacterStationMaster :state="characterStationMaster" place="station" />
     <AppButton

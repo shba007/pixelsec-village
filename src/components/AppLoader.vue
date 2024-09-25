@@ -21,7 +21,7 @@ const { width: characterLastElemWidth } = useElementSize(characterLastElem)
 const positionAll = ref(screenWidth.value)
 const positionLast = ref(screenWidth.value + characterAllElemWidth.value)
 
-const scrollSpeed = 5
+const scrollSpeed = 10
 let delta = 0
 
 useIntervalFn(() => {

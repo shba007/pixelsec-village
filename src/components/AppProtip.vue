@@ -75,7 +75,7 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
       <Container :x="title2Text.x" :y="title2Text.y">
         <Text :x="-230" :y="120" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="{ ...title2Text.style, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
         <Text :y="-30" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="title2Text.style"
-          >You can &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; all your\n personal info from your digital\nfootprint for a 360-degree unified\nview
+          >You can &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; all your\npersonal info from your digital\nfootprint for a 360-degree unified\nview
           of your digital self.
         </Text>
         <Text :x="182" :y="-30" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="{ ...title2Text.style, fill: '#3464FD', stroke: '#3464FD' }">COLLECT</Text>
