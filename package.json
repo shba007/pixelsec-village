@@ -1,6 +1,6 @@
 {
   "name": "affinidi-dataville",
-  "version": "0.4.103",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "volta": {
