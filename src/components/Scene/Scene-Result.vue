@@ -31,20 +31,15 @@ const socials = ref([
 
 async function downloadImage(imageUrl: string, imageName: string) {
   try {
-    console.log(imageUrl)
-    // Fetch the image as a blob
     const response = await fetch(imageUrl)
     const blob = await response.blob()
 
-    // Create a temporary link element
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
     link.download = imageName
 
-    // Programmatically trigger the download
     link.click()
 
-    // Clean up the object URL
     URL.revokeObjectURL(link.href)
   } catch (error) {
     console.error('Error downloading the image:', error)
@@ -52,8 +47,7 @@ async function downloadImage(imageUrl: string, imageName: string) {
 }
 
 async function onShare(type: 'facebook' | 'instagram' | 'x') {
-  const baseURL = 'https://d3lg3xucv0o7h8.cloudfront.net'
-  const shareURL = baseURL + `/html/${props.place}`
+  const shareURL = import.meta.env.VITE_BASE_URL + `/html/${props.place}`
   const shareImageURL = `/images/${props.place}.jpg`
   let finalShare = ''
 

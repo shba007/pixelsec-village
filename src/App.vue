@@ -38,7 +38,7 @@ function onResolve() {
 }
 
 function onStart() {
-  console.log('onstart Triggered')
+  console.log('onstart Called')
 
   const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
   function unlock() {

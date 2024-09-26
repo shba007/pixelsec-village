@@ -171,8 +171,7 @@ export const useGameStore = defineStore('game', () => {
   function nextTimeline(data?: { screen?: number; id: number; absolute?: boolean }) {
     const { screen = 1, id, absolute = false } = data ?? { screen: 1, id: -1, absolute: false }
 
-    console.log({ id: id })
-    // alert(id)
+    // console.log({ id: id })
 
     if (!absolute) {
       if (timelineIndex.value + screen > timeline.length - 1) {
@@ -211,14 +210,13 @@ export const useGameStore = defineStore('game', () => {
 
   watch(gamePause, (value) => {
     if (value) {
-      console.log('Sound Disabled')
-      // alert('Sound Muted in gamePause')
+      // console.log('Sound Disabled')
       soundBgm.value.mute(true)
       soundSfx1.value.mute(true)
       soundSfx2.value.mute(true)
       soundSfx3.value.mute(true)
     } else {
-      console.log('Sound Enabled')
+      // console.log('Sound Enabled')
       soundBgm.value.mute(false)
       soundSfx1.value.mute(false)
       soundSfx2.value.mute(false)
@@ -283,7 +281,7 @@ export const useGameStore = defineStore('game', () => {
     soundEnabled: soundEnabledBgm,
     ...bgmSettings,
     onload: () => {
-      console.log('Bgm Loaded')
+      // console.log('Bgm Loaded')
       soundBgm.value.mute(false)
       setTimeout(() => {
         soundStatus.bgm = 'loaded'
@@ -325,7 +323,7 @@ export const useGameStore = defineStore('game', () => {
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
     onload: () => {
-      console.log('Sfx1 Loaded')
+      // console.log('Sfx1 Loaded')
       soundSfx1.value.mute(false)
       setTimeout(() => {
         soundStatus.sfx = 'loaded'
@@ -345,7 +343,7 @@ export const useGameStore = defineStore('game', () => {
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
     onload: () => {
-      console.log('Sfx2 Loaded')
+      // console.log('Sfx2 Loaded')
       soundSfx2.value.mute(false)
       setTimeout(() => {
         soundStatus.sfx = 'loaded'
@@ -365,7 +363,7 @@ export const useGameStore = defineStore('game', () => {
     soundEnabled: soundEnabledSfx,
     ...sfxSettings,
     onload: () => {
-      console.log('Sfx3 Loaded')
+      // console.log('Sfx3 Loaded')
       soundSfx3.value.mute(false)
       setTimeout(() => {
         soundStatus.sfx = 'loaded'

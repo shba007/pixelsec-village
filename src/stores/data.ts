@@ -72,8 +72,8 @@ const scoreCard = {
   },
 }
 
-const apiBaseURL = 'https://h13p701h52.execute-api.ap-south-1.amazonaws.com/dev/affinidi-dataville-log'
-const apiKey = 'b0vQG5LaMa5AKAgvngkHeakXmyShdVGo8FxVUkdt'
+const apiBaseURL = import.meta.env.VITE_API_BASE_URL
+const apiKey = import.meta.env.VITE_API_KEY
 
 const checkNonNullValue = (obj: any) => Object.values(obj).some((value) => value !== null && !(Array.isArray(value) && value.length === 0))
 
@@ -191,7 +191,7 @@ export const useDataStore = defineStore('data', () => {
       readTC: null,
       age: null,
       spendTime: [],
-      dataExchange: null,
+      dataExchange: [],
       collectData: null,
       dataBreachAction: null,
       dataResponsibility: null,
