@@ -52,7 +52,7 @@ async function downloadImage(imageUrl: string, imageName: string) {
 }
 
 async function onShare(type: 'facebook' | 'instagram' | 'x') {
-  const baseURL = 'https://affinididataville.webspiders.com'
+  const baseURL = 'https://d3lg3xucv0o7h8.cloudfront.net'
   const shareURL = baseURL + `/html/${props.place}`
   const shareImageURL = `/images/${props.place}.jpg`
   let finalShare = ''
