@@ -47,7 +47,7 @@ const titleText = reactive({ x: -10, y: -125, anchor: 0.5, scale: 1, style: { fo
 <template>
   <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Text :anchor="titleText.anchor" :style="titleText.style" :x="titleText.x" :y="titleText.y" :scale="titleText.scale">
-      Would you like to collect all your\ndata from one place for\nconvenience
+      Would you like to collect all your\ndata from one place for\nconvenience?
     </Text>
     <AppCheckbox v-for="{ type, value, state } of options" :key="String(type)" :text="value" :x="state.x" :y="state.y" :scale="1" :is-checked="selectedOption === type" @click="onClick(type)" />
   </AppPopup>

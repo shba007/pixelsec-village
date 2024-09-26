@@ -79,7 +79,7 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
           >PRO TIP:</Text
         >
         <Text :x="0" :y="-15" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="title2Text.style">You can</Text>
-        <Text :x="188 - 40" :y="-15" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="{ ...title2Text.style, fill: '#3464FD', stroke: '#3464FD' }">COLLECT</Text>
+        <Text :x="188 - 40 + 2" :y="-15" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="{ ...title2Text.style, fill: '#3464FD', stroke: '#3464FD' }">COLLECT</Text>
         <Text :x="427 - 85" :y="-15" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="title2Text.style">all your</Text>
         <Text :x="0" :y="39" :anchor="title2Text.anchor" :scale="title2Text.scale" :style="title2Text.style"
           >personal info from your digital\nfootprint for a 360-degree unified\nview of your digital self.</Text

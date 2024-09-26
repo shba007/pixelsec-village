@@ -55,8 +55,8 @@ const pigeons = ref([
 ])
 
 const characterIcecreamVendor = reactive({
-  states: [{ x: -90, y: 170, scale: 1, alpha: 1, time: 0 }],
-  state: { x: -90, y: 170, scale: 1, alpha: 1, time: 0 },
+  states: [{ x: -240, y: 170, scale: 1, alpha: 1, time: 0 }],
+  state: { x: -240, y: 170, scale: 1, alpha: 1, time: 0 },
 })
 
 const baloonStand = reactive({ x: -560, y: -120, scale: 1.05 })
@@ -87,7 +87,7 @@ useTimeoutFn(() => {
     <CharacterIcecreamVendor place="park" :state="characterIcecreamVendor.state" />
   </Container>
   <!-- DEBUG -->
-  <!--  <External>
+  <!-- <External>
     <div class="absolute bottom-0 left-0 right-0 z-50 flex w-fit items-center gap-8">
       <div class="flex flex-col gap-2">
         <input v-model="park.state.x" type="number" min="-10000" max="10000" step="10" />
@@ -95,9 +95,9 @@ useTimeoutFn(() => {
         <input v-model="park.state.scale" type="number" min="0" max="10" step="0.01" />
       </div>
       <div class="flex flex-col gap-2">
-        <input v-model="baloonStand.x" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="baloonStand.y" type="number" min="-10000" max="10000" step="10" />
-        <input v-model="baloonStand.scale" type="number" min="0" max="20" step="0.01" />
+        <input v-model="characterIcecreamVendor.state.x" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="characterIcecreamVendor.state.y" type="number" min="-10000" max="10000" step="10" />
+        <input v-model="characterIcecreamVendor.state.scale" type="number" min="0" max="20" step="0.01" />
       </div>
     </div>
   </External> -->
