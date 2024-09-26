@@ -51,7 +51,7 @@ const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { f
       </Container>
       <Sprite texture="popupIconRotate" :x="rotate.x" :y="rotate.y" :scale="rotate.scale" :anchor="0.5" cursor="pointer" @pointerdown="handleStart" />
     </template>
-    <template v-else type="landscape" x="center" y="center" :zoom-factor="zoomFactor">
+    <template v-else>
       <Container :x="0" :y="20">
         <Text :y="-160" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> WELCOME TO DATAVILLE </Text>
         <Text :y="0" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"> Where your online habits and\nchoices will shape the kind\nof house you live in. Let's go!</Text>
