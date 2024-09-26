@@ -71,12 +71,14 @@ const modal = computed(() => {
 })
 
 const button = reactive({ x: 350, y: 180, scale: 0.5, isPressed: false, isShow: props.showButton })
-const ready = useTimeout(200)
+const {ready, start, stop} = useTimeout(200, {controls: true})
 
 watch(
   () => props.showButton,
   (value) => {
     button.isShow = value
+    stop()
+    start()
   }
 )
 
