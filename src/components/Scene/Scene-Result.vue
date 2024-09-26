@@ -169,7 +169,7 @@ const isPlayAgainPressed = ref(false)
             v-model="inputEmail"
             @keydown.enter="onSubmit(inputEmail!)"
             placeholder="ENTER EMAIL FOR FULL REPORT"
-            class="border-0 bg-transparent px-4 py-2 font-bold tracking-wide outline-none placeholder:text-[#3b5df8]"
+            class="border-0 bg-transparent px-4 py-2 font-bold tracking-normal outline-none placeholder:text-[#3b5df8]"
             :style="{ width: emailInputBox.width * (inputEmail?.length ? 0.85 : 1) + 'px', height: emailInputBox.height + 'px', fontSize: emailInputBox.height * 0.5 + 'px' }" />
         </External>
       </Container>
