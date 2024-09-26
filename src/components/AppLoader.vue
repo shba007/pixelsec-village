@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useElementSize, useIntervalFn, useWindowSize, watchDebounced } from '@vueuse/core'
+import { useGameStore } from '@/stores/game'
+import { storeToRefs } from 'pinia'
 
 defineProps<{
   progress: number
@@ -9,6 +11,9 @@ defineProps<{
 const emit = defineEmits<{
   loaded: []
 }>()
+
+const gameStore = useGameStore()
+const { isLandscape } = storeToRefs(gameStore)
 
 const { width: screenWidth } = useWindowSize()
 
@@ -21,11 +26,11 @@ const { width: characterLastElemWidth } = useElementSize(characterLastElem)
 const positionAll = ref(screenWidth.value / 2)
 const positionLast = ref(screenWidth.value / 2 + characterAllElemWidth.value)
 
-const scrollSpeed = 15
+const scrollSpeed = computed(() => (isLandscape.value ? 15 : 8))
 let delta = 0
 
 useIntervalFn(() => {
-  delta += scrollSpeed * 0.3
+  delta += scrollSpeed.value * 0.3
   positionAll.value = Math.max(screenWidth.value / 2 - delta, -characterAllElemWidth.value * 1.01)
   positionLast.value = Math.max(screenWidth.value / 2 + characterAllElemWidth.value * 1.03 - delta, (screenWidth.value - characterLastElemWidth.value) / 2)
 }, 1000 / 60)
