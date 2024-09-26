@@ -1,6 +1,6 @@
 # Allow Facebook's crawlers to access the entire site
 User-agent: facebookexternalhit
-Allow: /
+Disallow:
 
 # Example 1: Block Googlebot and AdsBot-Google
 User-agent: Googlebot
