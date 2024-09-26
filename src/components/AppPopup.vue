@@ -71,18 +71,18 @@ const modal = computed(() => {
 })
 
 const button = reactive({ x: 350, y: 180, scale: 0.5, isPressed: false, isShow: props.showButton })
-const { ready, start } = useTimeout(200, { controls: true })
+const ready = useTimeout(200)
 
-watch(
-  () => props.showButton,
-  (value) => {
-    button.isShow = value
-    start()
-  }
-)
+watch(() => props.showButton, onRender)
 
 onMounted(() => {
   gameStore.playSFXSound('dialogBox')
+
+  onRender()
+})
+
+function onRender() {
+  button.isShow = props.showButton
 
   switch (props.type) {
     case 'portrait':
@@ -102,7 +102,7 @@ onMounted(() => {
       button.y = 80
       break
   }
-})
+}
 
 function handleButtonPress() {
   if (button.isPressed || props.buttonDisabled) return
@@ -125,6 +125,5 @@ function handleButtonPress() {
     <Container :x="modal.state.x" :y="modal.state.y">
       <slot />
     </Container>
-    <!-- <Sprite texture="popupPositionRight" :texture-options="textureOptions" :anchor="0.5" :scale="4" :alpha="0.8" /> -->
   </Container>
 </template>
