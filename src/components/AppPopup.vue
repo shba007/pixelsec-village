@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, onMounted } from 'vue'
+import { computed, reactive, onMounted, watch } from 'vue'
 import { useTimeout, useWindowSize } from '@vueuse/core'
 
 import { useGameStore } from '@/stores/game'
@@ -72,6 +72,13 @@ const modal = computed(() => {
 
 const button = reactive({ x: 350, y: 180, scale: 0.5, isPressed: false, isShow: props.showButton })
 const ready = useTimeout(200)
+
+watch(
+  () => props.showButton,
+  (value) => {
+    button.isShow = value
+  }
+)
 
 onMounted(() => {
   gameStore.playSFXSound('dialogBox')
