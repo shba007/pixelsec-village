@@ -125,33 +125,31 @@ const isPlayAgainPressed = ref(false)
       </template>
       <Container :x="titleText.x" :y="titleText.y">
         <template v-if="place === 'strawhut'">
-          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE\nIN A </Text>
-          <Text :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">
-            ‎&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VULNERABLE\nSTRAW HUT</Text
-          >
+          <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE\nIN A</Text>
+          <Text :x="83" :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">VULNERABLE</Text>
+          <Text :y="-130 + 60" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">STRAW HUT</Text>
           <Text :y="-20" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style">
             Identity and data protection are\nnew to you. This makes you an\neasy target for your valuable\ninformation to be exposed.
           </Text>
         </template>
         <template v-else-if="place === 'loghouse'">
           <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
-          <Text :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;&nbsp;BASIC LOG HOUSE</Text>
+          <Text :x="39" :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">BASIC LOG HOUSE</Text>
           <Text :y="-70" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style">
             You have a good foundation in\nunderstanding data privacy but\nneed better security as you leave\nyour data in the hands of third-\nparties and dated systems.
           </Text>
         </template>
         <template v-else-if="place === 'townhouse'">
           <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE\nIN A</Text>
-          <Text :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">
-            ‎&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONVENIENT\nTOWNHOUSE</Text
-          >
+          <Text :x="85" :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">CONVENIENT</Text>
+          <Text :y="-130 + 60" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">TOWNHOUSE</Text>
           <Text :y="-20" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style"
             >You enjoy the openness of\ntechnology and often share your data\nfor ease of access but that might put\nyour data in the wrong hands.
           </Text>
         </template>
         <template v-else-if="place === 'mansion'">
           <Text :y="-190" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">YOUR DATA LIVE IN\nA</Text>
-          <Text :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }"> ‎&nbsp;&nbsp;&nbsp;GUARDED MANSION</Text>
+          <Text :x="36" :y="-130" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, fill: '#3b5df8', stroke: '#3b5df8' }">GUARDED MANSION</Text>
           <Text :y="-70" :anchor="contactText.anchor" :scale="contactText.scale" :style="contactText.style"
             >Your digital fortress is heavily\nguarded with high-level knowledge\nand high security in place. But even\nthe most secure mansion could\nbenefit from the latest upgrades.
           </Text>
@@ -172,7 +170,7 @@ const isPlayAgainPressed = ref(false)
             @keydown.enter="onSubmit(inputEmail!)"
             placeholder="ENTER EMAIL FOR FULL REPORT"
             class="border-0 bg-transparent px-4 py-2 font-bold tracking-wide outline-none placeholder:text-[#3b5df8]"
-            :style="{ width: emailInputBox.width * 0.875 + 'px', height: emailInputBox.height + 'px', fontSize: emailInputBox.height * 0.5 + 'px' }" />
+            :style="{ width: emailInputBox.width * 1 + 'px', height: emailInputBox.height + 'px', fontSize: emailInputBox.height * 0.5 + 'px' }" />
         </External>
       </Container>
     </AppPopup>
