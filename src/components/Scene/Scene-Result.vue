@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { resetApp } from '../../main'
 import { ref, reactive, onMounted } from 'vue'
 import { debouncedRef, useIntervalFn } from '@vueuse/core'
 import { External } from 'vue3-pixi'
@@ -47,7 +48,7 @@ async function downloadImage(imageUrl: string, imageName: string) {
 }
 
 async function onShare(type: 'facebook' | 'instagram' | 'x') {
-  const shareURL = import.meta.env.VITE_BASE_URL + `/html/${props.place}`
+  const shareURL = import.meta.env.VITE_BASE_URL + `/html/${props.place}.html`
   const shareImageURL = `/images/${props.place}.jpg`
   let finalShare = ''
 
@@ -127,7 +128,12 @@ const contactText = reactive({ anchor: 0, scale: 1, style: { fontFamily: 'LAN', 
 
 function playAgain() {
   isPlayAgainPressed.value = true
-  location.reload()
+
+  setTimeout(() => {
+    gameStore.reset()
+    dataStore.reset()
+    resetApp()
+  }, 300)
 }
 
 const isGetYourFullReportPressed = ref(false)

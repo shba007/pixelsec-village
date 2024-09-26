@@ -38,8 +38,7 @@ function onResolve() {
 }
 
 function onStart() {
-  console.log('onstart Called')
-
+  // console.log('onStart Called')
   const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
   function unlock() {
     const buffer = audioContext.createBuffer(1, 1, 22050)

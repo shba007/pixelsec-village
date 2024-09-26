@@ -3,8 +3,23 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import './assets/css/style.css'
 
-const app = createApp(App)
+let app: any
 
-app.use(createPinia())
+function mountApp() {
+  app = createApp(App)
+  app.use(createPinia())
+  app.mount('#app')
+}
 
-app.mount('#app')
+function unmountApp() {
+  if (app) app.unmount()
+}
+
+// Initial mount
+mountApp()
+
+// Example usage: Unmount and Remount
+export function resetApp() {
+  unmountApp()
+  mountApp()
+}
