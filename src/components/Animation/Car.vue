@@ -12,21 +12,21 @@ const props = defineProps<{
 }>()
 
 const car = reactive({
+  texture: 'mapCar',
   x: props.x,
   y: props.y,
   scale: props.scale,
-  speed: 0.015,
+  speed: 0.5,
   direction: props.widthRange,
 })
 
-const texture = 'mapCar'
-
 onTick((delta) => {
-  car.x = car.x + delta * car.speed * car.direction
-  if (!(props.x < car.x && car.x < props.x + props.widthRange)) car.direction *= -1
+  if (car.x <= props.x) car.direction = 1
+  else if (car.x >= props.x + props.widthRange) car.direction = -1
+  car.x += car.speed * car.direction * delta
 })
 </script>
 
 <template>
-  <Sprite :texture="texture" :texture-options="textureOptions" :x="car.x" :y="car.y" :anchor="0.5" :scale="car.scale" />
+  <Sprite :texture="car.texture" :texture-options="textureOptions" :x="car.x" :y="car.y" :anchor="0.5" :scale="car.scale" />
 </template>

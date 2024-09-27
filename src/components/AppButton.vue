@@ -64,7 +64,7 @@ function onClick() {
   <Container :x="x" :y="y" :scale="1" cursor="pointer" @pointerdown="onClick">
     <Sprite :texture="button.texture" :texture-options="textureOptions.normal" :anchor="0.5" :scale="scale" />
     <template v-if="type !== 'arrow'">
-      <Text :x="0" :y="-5" :scale="button.scale" :anchor="0.5" :style="button.style">{{ text }}</Text>
+      <Text :x="0" :y="isPressed ? 0 : -5" :scale="button.scale" :anchor="0.5" :style="button.style">{{ text }}</Text>
     </template>
   </Container>
 </template>
