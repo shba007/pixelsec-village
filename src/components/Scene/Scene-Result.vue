@@ -128,6 +128,7 @@ const contactText = reactive({ anchor: 0, scale: 1, style: { fontFamily: 'LAN', 
 
 function playAgain() {
   isPlayAgainPressed.value = true
+  gameStore.playSFXSound('buttonPress')
 
   setTimeout(() => {
     gameStore.reset()
@@ -140,6 +141,11 @@ const isGetYourFullReportPressed = ref(false)
 const isGetYourFullReportPressedDelayed = debouncedRef(isGetYourFullReportPressed, 300)
 
 const isPlayAgainPressed = ref(false)
+
+function handleGetfullReport() {
+  isGetYourFullReportPressed.value = true
+  gameStore.playSFXSound('buttonPress')
+}
 </script>
 
 <template>
@@ -181,7 +187,7 @@ const isPlayAgainPressed = ref(false)
         </template>
       </Container>
       <Container v-if="!isGetYourFullReportPressedDelayed" :x="-100" :y="170" :scale="0.8">
-        <AppButton :x="0" :y="0" :scale="1.2" :font-size="34" text="GET FULL REPORT" type="long" :is-pressed="isGetYourFullReportPressed" @click="isGetYourFullReportPressed = true" />
+        <AppButton :x="0" :y="0" :scale="1.2" :font-size="34" text="GET FULL REPORT" type="long" :is-pressed="isGetYourFullReportPressed" @click="handleGetfullReport" />
         <AppButton :x="375 - 60" :y="0" :scale="1.2" :font-size="34" text="PLAY\nAGAIN" type="short" :is-pressed="isPlayAgainPressed" @click="playAgain" />
       </Container>
       <Container v-else :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
