@@ -57,12 +57,10 @@ const titleText = reactive({ x: 0, y: -150, anchor: 0.5, scale: 1, style: { font
 <template>
   <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container>
-      <Text v-if="currentPopupIndex === 14" :x="titleText.x - 30" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
+      <Text v-if="currentPopupIndex === 14" :x="-30" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
         Your data could be compromised. Who\ndo you think should protect your data?
       </Text>
-      <Text v-else :x="titleText.x - 30" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">
-        That was close! Who do you think\nshould protect your data?
-      </Text>
+      <Text v-else :x="-70" :y="titleText.y" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"> That was close! Who do you think\nshould protect your data? </Text>
       <AppCheckbox v-for="{ type, value, state } of options" :key="type" :text="value" :x="state.x + 40" :y="state.y + 50" :scale="1" :is-checked="selectedOption === type" @click="onClick(type)" />
     </Container>
   </AppPopup>
