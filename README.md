@@ -49,6 +49,8 @@
 
             - Do the above steps in strawhut.html
 
-2. Run the commend `npm run build-only`
+2. In src dir file App.vue remove line 77 to 89 for removing the version number
 
-3. Upload the dist
+3. Run the commend `npm run build-only`
+
+4. Upload the dist
