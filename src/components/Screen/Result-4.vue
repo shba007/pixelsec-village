@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive } from 'vue'
 import { useWindowSize } from '@vueuse/core'
-import { External, onTick } from 'vue3-pixi'
+import { onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/stores/game'
 
@@ -103,7 +103,7 @@ onMounted(() => {
       <Sprite :anchor="0.5" :texture="map.alias.bg" :scale="0.8" :texture-options="textureOptions" />
       <Dog :x="dog.state.x" :y="dog.state.y" :scale="dog.state.scale" />
       <Sprite :x="gate.x" :y="gate.y" :scale="gate.scale" :anchor="0.5" :texture="gate.texture" :texture-options="textureOptions" />
-      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
+      <CharacterMain :states="characterMain.states" :current-character-index="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
       <CharacterGuard place="map" :state="characterGuard.state" />
     </Container>
   </Container>

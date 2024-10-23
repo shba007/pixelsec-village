@@ -136,9 +136,9 @@ export const useGameStore = defineStore('game', () => {
     blur: { scaleMode: motionBlur.value ? SCALE_MODES.LINEAR : SCALE_MODES.NEAREST },
   }))
 
-  const { isSupported: isFullscreenSupported, enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
-  const { isSupported: isOrientationSupported, lockOrientation, unlockOrientation } = useScreenOrientation()
-  const { isSupported: isWakeLockSupported, request, release } = useWakeLock()
+  const { enter: enterFullscreen, exit: exitFullscreen } = useFullscreen()
+  const { lockOrientation, unlockOrientation } = useScreenOrientation()
+  const { request, release } = useWakeLock()
 
   function toggleDebugPause(value: boolean) {
     $debugPause.value = value
@@ -159,7 +159,7 @@ export const useGameStore = defineStore('game', () => {
         unlockOrientation()
         release()
       }
-    } catch (error) {
+    } catch {
       // console.log(error)
     }
   }
@@ -169,9 +169,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function nextTimeline(data?: { screen?: number; id: number; absolute?: boolean }) {
-    const { screen = 1, id, absolute = false } = data ?? { screen: 1, id: -1, absolute: false }
-
-    // console.log({ id: id })
+    const { screen = 1, absolute = false } = data ?? { screen: 1, id: -1, absolute: false }
 
     if (!absolute) {
       if (timelineIndex.value + screen > timeline.length - 1) {

@@ -17,6 +17,7 @@ const props = withDefaults(
     fontSize?: number
   }>(),
   {
+    text: '',
     fontSize: 44,
   }
 )

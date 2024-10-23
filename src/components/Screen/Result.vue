@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useDataStore } from '@/stores/data'
 import { storeToRefs } from 'pinia'
-import { External } from 'vue3-pixi'
 
 import Result1 from '@/components/Screen/Result-1.vue'
 import Result2 from '@/components/Screen/Result-2.vue'

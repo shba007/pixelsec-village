@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
-import { External, onTick } from 'vue3-pixi'
+import { onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import type { State } from '@/utils/types'
 import { useGameStore } from '@/stores/game'
@@ -68,7 +68,7 @@ watch(currentMCCharacterIndex, (value) => {
   }
 })
 
-let lastAnimationState = ref<'init' | 'started' | 'finished'>()
+const lastAnimationState = ref<'init' | 'started' | 'finished'>()
 watch(gamePause, (value) => {
   if (value) {
     lastAnimationState.value = activeCharacter.animation

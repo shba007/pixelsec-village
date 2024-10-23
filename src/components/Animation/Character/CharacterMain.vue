@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive, watch, computed, ref } from 'vue'
-import { External, onTick } from 'vue3-pixi'
+import { onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
 import { useGameStore } from '@/stores/game'

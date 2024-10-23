@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { onTick, External } from 'vue3-pixi'
+import { onTick } from 'vue3-pixi'
 import AppAnimatedSprite from '@/components/AppAnimatedSprite.vue'
 import { useGameStore } from '@/stores/game'
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, onMounted, reactive, ref, watch } from 'vue'
-import { External, onTick } from 'vue3-pixi'
+import { onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import { useIntervalFn, useTimeoutFn, useWindowSize, watchArray } from '@vueuse/core'
 import { textureOptions } from '@/components/AppSettings.vue'

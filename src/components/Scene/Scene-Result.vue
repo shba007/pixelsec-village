@@ -151,7 +151,7 @@ function handleGetfullReport() {
 <template>
   <template v-if="!gamePause">
     <AppPopup v-if="!secondScreen" :show-popup="!secondScreen" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
-      <template v-slot:popupBg>
+      <template #popupBg>
         <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
       </template>
       <Container :x="titleText.x" :y="titleText.y">
@@ -196,17 +196,17 @@ function handleGetfullReport() {
         <External class="absolute z-20 touch-none" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
           <input
             ref="inputRef"
-            type="email"
             v-model="inputEmail"
-            @keydown.enter="onSubmit(inputEmail!)"
+            type="email"
             placeholder="ENTER EMAIL FOR FULL REPORT"
             class="border-0 bg-transparent px-4 py-2 font-bold tracking-normal outline-none placeholder:text-[#3b5df8]"
-            :style="{ width: emailInputBox.width * (inputEmail?.length ? 0.85 : 1) + 'px', height: emailInputBox.height + 'px', fontSize: emailInputBox.height * 0.5 + 'px' }" />
+            :style="{ width: emailInputBox.width * (inputEmail?.length ? 0.85 : 1) + 'px', height: emailInputBox.height + 'px', fontSize: emailInputBox.height * 0.5 + 'px' }"
+            @keydown.enter="onSubmit(inputEmail!)" />
         </External>
       </Container>
     </AppPopup>
     <AppPopup :show-popup="secondScreen" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
-      <template v-slot:popupBg>
+      <template #popupBg>
         <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
       </template>
       <Text :x="titleText.x" :y="titleText.y - 160" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style">SHARE WITH YOUR\nFRIENDS AND SEE WHAT\nHOUSE THEY LIVE IN</Text>

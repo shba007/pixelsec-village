@@ -35,14 +35,14 @@ const counter = useInterval(10)
 const timer = computed(() => {
   const number = Math.max(8 * 100 - counter.value, 0)
 
-  let minutes = Math.floor(number / 10000)
-  let seconds = Math.floor((number % 10000) / 100)
-  let milliseconds = number % 100
+  const minutes = Math.floor(number / 10000)
+  const seconds = Math.floor((number % 10000) / 100)
+  const milliseconds = number % 100
 
   // Pad with leading zeros if necessary
-  let formattedMinutes = minutes.toString().padStart(2, '0')
-  let formattedSeconds = seconds.toString().padStart(2, '0')
-  let formattedMilliseconds = milliseconds.toString().padStart(2, '0')
+  const formattedMinutes = minutes.toString().padStart(2, '0')
+  const formattedSeconds = seconds.toString().padStart(2, '0')
+  const formattedMilliseconds = milliseconds.toString().padStart(2, '0')
 
   if (number === 1) {
     onNext(true)

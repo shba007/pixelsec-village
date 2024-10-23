@@ -2,7 +2,6 @@
 import { computed, reactive } from 'vue'
 import { onTick } from 'vue3-pixi'
 import { textureOptions } from '@/components/AppSettings.vue'
-import { reverseSawTooth, sawTooth } from '@/utils/helper'
 
 const props = defineProps<{
   place: 'map' | 'station' | 'park' | 'bank'
@@ -36,7 +35,7 @@ const texture = computed(() => {
 })
 
 const speed = computed(() => {
-  let factor = 0.03125
+  const factor = 0.03125
 
   switch (props.size) {
     case 'lg':

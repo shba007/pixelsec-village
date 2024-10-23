@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, reactive, ref } from 'vue'
-import { External } from 'vue3-pixi'
 import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 

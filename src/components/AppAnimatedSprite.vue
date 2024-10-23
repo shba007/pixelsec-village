@@ -40,5 +40,5 @@ watch(
 </script>
 
 <template>
-  <Sprite :texture="textures[textureIndex]" :key="textureIndex" :texture-options="inheritedTextureOptions" :x="x" :y="y" :scale="scale" :alpha="alpha" :anchor="anchor" cursor="pointer" />
+  <Sprite :key="textureIndex" :texture="textures[textureIndex]" :texture-options="inheritedTextureOptions" :x="x" :y="y" :scale="scale" :alpha="alpha" :anchor="anchor" cursor="pointer" />
 </template>

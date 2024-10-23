@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, reactive, ref, watch } from 'vue'
-import { External, onTick } from 'vue3-pixi'
+import { onTick } from 'vue3-pixi'
 import { useIntervalFn, useWindowSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
@@ -588,9 +588,9 @@ function transformY(y: number) {
   </Container>
   <Container :renderable="isLoad" :x="screenWidth * 0.5" :y="screenHeight * 0.5" :scale="screen.state.scale * zoomFactor">
     <Container :renderable="isLoad" :x="transformX(screen.state.x)" :y="transformY(screen.state.y)">
-      <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
+      <CharacterMain :states="characterMain.states" :current-character-index="currentCharacterIndex" :skin="characterSkin" @update="handleMCUpdate" />
       <CharacterSus :states="characterSus.states" />
-      <MapTram :states="tram.states" :animation="gamePause ? 'finished' : tram.animation" initialOrientation="right" />
+      <MapTram :states="tram.states" :animation="gamePause ? 'finished' : tram.animation" initial-orientation="right" />
       <Sprite texture="mapStationFg" :texture-options="textureOptions.blur" :x="station.fg.x" :y="station.fg.y" :scale="station.fg.scale" :anchor="0" />
       <CharacterStationMaster place="map" :state="characterStationMaster.state" />
     </Container>

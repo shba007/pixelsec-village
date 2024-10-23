@@ -23,7 +23,7 @@ const emit = defineEmits<{
 }>()
 
 const checkbox = computed(() => {
-  let texture = !props.isChecked ? 'buttonSquare' : 'buttonSquarePressed'
+  const texture = !props.isChecked ? 'buttonSquare' : 'buttonSquarePressed'
 
   return { texture, scale: 1, style: { fontFamily: 'LAN', fontSize: props.fontSize, align: 'left', lineHeight: props.fontSize * 1.2, stroke: 1, strokeThickness: 1 } }
 })

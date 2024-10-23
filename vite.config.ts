@@ -61,14 +61,14 @@ export default defineConfig({
         suppressWarnings: false,
         navigateFallback: undefined,
       },
-    },)
+    }),
   ],
   optimizeDeps: {
-    exclude: ['vue-demi']
+    exclude: ['vue-demi'],
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
 })

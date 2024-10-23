@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive } from 'vue'
 import { useWindowSize } from '@vueuse/core'
-import { External, onTick } from 'vue3-pixi'
+import { onTick } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/stores/game'
 
@@ -107,7 +107,7 @@ onMounted(() => {
 <template>
   <Container :x="screenWidth / 2 + map.state.x" :y="screenHeight / 2 + map.state.y" :scale="map.state.scale * zoomFactor">
     <Sprite :texture="map.alias.bg" :anchor="0.5" :scale="1" :texture-options="textureOptions" />
-    <CharacterMain :states="characterMain.states" :currentCharacterIndex="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
+    <CharacterMain :states="characterMain.states" :current-character-index="currentCharacterIndex - 42" :skin="characterSkin" @update="handleMCUpdate" />
     <Sprite :texture="palmTrees.alias" :texture-options="textureOptions" :x="palmTrees.x" :y="palmTrees.y" :scale="palmTrees.scale" />
     <Wolf :x="wolves.x" :y="wolves.y" :scale="wolves.scale" :anchor="0.5" :alpha="1" :animation-speed="0.03" type="strawhut" />
   </Container>
