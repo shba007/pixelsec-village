@@ -15,11 +15,9 @@ function unmountApp() {
   if (app) app.unmount()
 }
 
-// Initial mount
-mountApp()
-
-// Example usage: Unmount and Remount
 export function resetApp() {
   unmountApp()
   mountApp()
 }
+
+mountApp()

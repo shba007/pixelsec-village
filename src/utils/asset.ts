@@ -5,20 +5,14 @@ import fontLAN from '/fonts/LAN.ttf'
 //
 import bgmSprite from '/sound/bgm-sprite.mp3'
 import sfxSprite from '/sound/sfx-sprite.mp3'
-//
 // asset
 import IconFacebook from '@/assets/image/popup/icon-social-facebook.png'
 import IconInstagram from '@/assets/image/popup/icon-social-instagram.png'
 import IconX from '@/assets/image/popup/icon-social-x.png'
-// import PlaceholderPlay from '@/assets/image/popup/placeholder-play-unfocus.png'
-// import PlaceholderEmail1 from '@/assets/image/popup/placeholder-email-unfocus.png'
-// import BgImage from '/images/image-bg.png'
 import InputPlaceholder from '@/assets/image/popup/input-placeholder.png'
 import popupIconRotateTexture from '@/assets/image/popup/icon-rotate.png'
 import portipIcon1Texture from '@/assets/image/popup/protip-1.png'
 import portipIcon2Texture from '@/assets/image/popup/protip-2.png'
-// import popupSceneInstallTexture from '@/assets/image/popup/scene-install.png'
-// import popupSceneRotateTexture from '@/assets/image/popup/scene-rotate.png'
 import popupSceneRotateOverlayTexture from '@/assets/image/popup/scene-rotate-overlay.png'
 import popupResumeButtonTexture from '@/assets/image/popup/play.png'
 import popupBgSlimTexture from '@/assets/image/popup/bg-slim.png'
@@ -32,19 +26,6 @@ import buttonShortTexture from '@/assets/image/buttons/short/unpressed.png'
 import buttonShortPressedTexture from '@/assets/image/buttons/short/pressed.png'
 import buttonSquareTexture from '@/assets/image/buttons/square/unpressed.png'
 import buttonSquarePressedTexture from '@/assets/image/buttons/square/pressed.png'
-//
-// import popupScene04Button11Texture from '@/assets/image/popup/scene-0-4-button-1-1.png'
-// import popupScene04Button12Texture from '@/assets/image/popup/scene-0-4-button-1-2.png'
-// import popupScene04Button21Texture from '@/assets/image/popup/scene-0-4-button-2-1.png'
-// import popupScene04Button22Texture from '@/assets/image/popup/scene-0-4-button-2-2.png'
-// import popupScene11Button11Texture from '@/assets/image/popup/scene-1-1-button-1-1.png'
-// import popupScene11Button12Texture from '@/assets/image/popup/scene-1-1-button-1-2.png'
-// import popupScene11Button21Texture from '@/assets/image/popup/scene-1-1-button-2-1.png'
-// import popupScene11Button22Texture from '@/assets/image/popup/scene-1-1-button-2-2.png'
-// import popupScene11Button31Texture from '@/assets/image/popup/scene-1-1-button-3-1.png'
-// import popupScene11Button32Texture from '@/assets/image/popup/scene-1-1-button-3-2.png'
-// import popupScene11Button41Texture from '@/assets/image/popup/scene-1-1-button-4-1.png'
-// import popupScene11Button42Texture from '@/assets/image/popup/scene-1-1-button-4-2.png'
 //
 import smartphoneBankingHighlighted from '@/assets/image/station/smartphone/banking-highlighted.png'
 import smartphoneBanking from '@/assets/image/station/smartphone/banking.png'
@@ -63,61 +44,9 @@ import smartphoneShopping from '@/assets/image/station/smartphone/shopping.png'
 import smartphoneSocialHighlighted from '@/assets/image/station/smartphone/social-highlighted.png'
 import smartphoneSocial from '@/assets/image/station/smartphone/social.png'
 //
-// import popupScene01LandscapeTexture from '@/assets/image/popup/scene-0-1-landscape.png'
-// import popupScene01PortraitTexture from '@/assets/image/popup/scene-0-1-portrait.png'
-// import popupScene02Texture from '@/assets/image/popup/scene-0-2.png'
-// import popupScene03Texture from '@/assets/image/popup/scene-0-3.png'
-// import popupScene04Texture from '@/assets/image/popup/scene-0-4.png'
-// import popupScene05Texture from '@/assets/image/popup/scene-0-5.png'
-//
 import popupScene05BGTexture from '@/assets/image/popup/scene-0-5-bg.png'
-// import popupScene11Texture from '@/assets/image/popup/scene-1-1.png'
 import mobileTexture from '@/assets/image/popup/mobile.png'
-// import popupScene31Texture from '@/assets/image/popup/scene-3-1.png'
-// import popupScene32Texture from '@/assets/image/popup/scene-3-2.png'
-// import popupScene33Texture from '@/assets/image/popup/scene-3-3.png'
-// import popupScene34Texture from '@/assets/image/popup/scene-3-4.png'
-// import popupScene51Texture from '@/assets/image/popup/scene-5-1.png'
-// import popupScene52Texture from '@/assets/image/popup/scene-5-2.png'
-// import popupScene52Button11Texture from '@/assets/image/popup/scene-5-2-button-1-1.png'
-// import popupScene52Button12Texture from '@/assets/image/popup/scene-5-2-button-1-2.png'
-// import popupScene52Button21Texture from '@/assets/image/popup/scene-5-2-button-2-1.png'
-// import popupScene52Button22Texture from '@/assets/image/popup/scene-5-2-button-2-2.png'
-// import popupScene52Button31Texture from '@/assets/image/popup/scene-5-2-button-3-1.png'
-// import popupScene52Button32Texture from '@/assets/image/popup/scene-5-2-button-3-2.png'
-// import popupScene52Button41Texture from '@/assets/image/popup/scene-5-2-button-4-1.png'
-// import popupScene52Button42Texture from '@/assets/image/popup/scene-5-2-button-4-2.png'
-// import popupScene53Texture from '@/assets/image/popup/scene-5-3.png'
-// import popupScene54Texture from '@/assets/image/popup/scene-5-4.png'
-// import popupScene61Texture from '@/assets/image/popup/scene-6-1.png'
-// import popupScene62Texture from '@/assets/image/popup/scene-6-2.png'
-// import popupScene63Texture from '@/assets/image/popup/scene-6-3.png'
-// import popupScene63Button11Texture from '@/assets/image/popup/scene-6-3-button-1-1.png'
-// import popupScene63Button12Texture from '@/assets/image/popup/scene-6-3-button-1-2.png'
-// import popupScene63Button21Texture from '@/assets/image/popup/scene-6-3-button-2-1.png'
-// import popupScene63Button22Texture from '@/assets/image/popup/scene-6-3-button-2-2.png'
-// import popupScene64Texture from '@/assets/image/popup/scene-6-4.png'
-// import popupScene65Texture from '@/assets/image/popup/scene-6-5.png'
-// import popupScene71Texture from '@/assets/image/popup/scene-7-1.png'
-// import popupScene72Texture from '@/assets/image/popup/scene-7-2.png'
-// import popupScene73Texture from '@/assets/image/popup/scene-7-3.png'
-// import popupScene74Texture from '@/assets/image/popup/scene-7-4.png'
-// import popupScene8Texture from '@/assets/image/popup/scene-8.png'
-//
-// import popupProtip11Texture from '@/assets/image/popup/protip-1-1.png'
-// import popupProtip12Texture from '@/assets/image/popup/protip-1-2.png'
-// import popupProtip21Texture from '@/assets/image/popup/protip-2-1.png'
-// import popupProtip22Texture from '@/assets/image/popup/protip-2-2.png'
-// import popupProtip31Texture from '@/assets/image/popup/protip-3-1.png'
-// import popupProtip32Texture from '@/assets/image/popup/protip-3-2.png'
-// import popupProtip41Texture from '@/assets/image/popup/protip-4-1.png'
-// import popupProtip42Texture from '@/assets/image/popup/protip-4-2.png'
-// import popupProtip51Texture from '@/assets/image/popup/protip-5-1.png'
-// import popupProtip52Texture from '@/assets/image/popup/protip-5-2.png'
-//
-// import mapCloudLargeTexture from '@/assets/image/clouds/map-large.png'
-// import mapCloudMediumTexture from '@/assets/image/clouds/map-medium.png'
-// import mapCloudSmallTexture from '@/assets/image/clouds/map-small.png'
+
 import stationCloudLargeTexture from '@/assets/image/clouds/station-large.png'
 import stationCloudMediumTexture from '@/assets/image/clouds/station-medium.png'
 import stationCloudSmallTexture from '@/assets/image/clouds/station-small.png'
@@ -274,11 +203,6 @@ import flagSchoolRed2Texture from '@/assets/image/map/flags/school-red-2.png'
 import flagStation1Texture from '@/assets/image/map/flags/station-1.png'
 import flagStation2Texture from '@/assets/image/map/flags/station-2.png'
 // Wave
-// import wave1Texture from '@/assets/image/map/waves/1.png'
-// import wave2Texture from '@/assets/image/map/waves/2.png'
-// import wave3Texture from '@/assets/image/map/waves/3.png'
-// import wave4Texture from '@/assets/image/map/waves/4.png'
-// import wave5Texture from '@/assets/image/map/waves/5.png'
 // Baloon Stand
 import mapBaloon1Texture from '@/assets/image/baloon/map-1.png'
 import mapBaloon2Texture from '@/assets/image/baloon/map-2.png'
@@ -307,7 +231,7 @@ import wolfRight2Texture from '@/assets/image/map/wolf/right-2.png'
 import tramFrontTexture from '@/assets/image/map/tram/front.png'
 import tramBackTexture from '@/assets/image/map/tram/back.png'
 import tramRightTexture from '@/assets/image/map/tram/right.png'
-// import tramLeftTexture from '@/assets/image/map/tram/left.png'
+
 import mapBoat1Texture from '@/assets/image/map/boat/1.png'
 import mapBoat2Texture from '@/assets/image/map/boat/2.png'
 //
@@ -368,12 +292,6 @@ import resultMansionDog2Texture from '@/assets/image/mansion/dog/2.png'
 //
 import resultMansionGateTexture from '@/assets/image/mansion/gate.png'
 //
-// import popupPositionLeft from '@/assets/image/popup/position/left.png'
-// import popupPositionRight from '@/assets/image/popup/position/right.png'
-// import popupPositionBottom from '@/assets/image/popup/position/bottom.png'
-// import popupPositionTop from '@/assets/image/popup/position/top.png'
-// import popupPositionCenterLandscape from '@/assets/image/popup/position/center-landscape.png'
-// import popupPositionCenterPortrait from '@/assets/image/popup/position/center-portrait.png'
 
 export const resources = {
   font: {
@@ -385,45 +303,16 @@ export const resources = {
     sfxSprite,
   },
   image: {
-    // popupPositionLeft,
-    // popupPositionRight,
-    // popupPositionBottom,
-    // popupPositionTop,
-    // popupPositionCenterLandscape,
-    // popupPositionCenterPortrait,
-    //
-    // BgImage,
-    // popupSceneInstall: popupSceneInstallTexture,
     popupIconRotate: popupIconRotateTexture,
     portipIcon1: portipIcon1Texture,
     portipIcon2: portipIcon2Texture,
-    // popupSceneRotate: popupSceneRotateTexture,
     popupSceneRotateOverlay: popupSceneRotateOverlayTexture,
     popupResumeButton: popupResumeButtonTexture,
     popupBgSlim: popupBgSlimTexture,
     popupBgLandscape: popupBgLandscapeTexture,
     popupBgPortrait: popupBgPortraitTexture,
     popupBgSquare: popupBgSquareTexture,
-    // popupScene01Landscape: popupScene01LandscapeTexture,
-    // popupScene01Portrait: popupScene01PortraitTexture,
-    // popupScene02: popupScene02Texture,
-    // popupScene03: popupScene03Texture,
-    // popupScene04: popupScene04Texture,
-    // popupScene04Button11: popupScene04Button11Texture,
-    // popupScene04Button12: popupScene04Button12Texture,
-    // popupScene04Button21: popupScene04Button21Texture,
-    // popupScene04Button22: popupScene04Button22Texture,
-    // popupScene05: popupScene05Texture,
     popupScene05BG: popupScene05BGTexture,
-    // popupScene11: popupScene11Texture,
-    // popupScene11Button11: popupScene11Button11Texture,
-    // popupScene11Button12: popupScene11Button12Texture,
-    // popupScene11Button21: popupScene11Button21Texture,
-    // popupScene11Button22: popupScene11Button22Texture,
-    // popupScene11Button31: popupScene11Button31Texture,
-    // popupScene11Button32: popupScene11Button32Texture,
-    // popupScene11Button41: popupScene11Button41Texture,
-    // popupScene11Button42: popupScene11Button42Texture,
     mobileTexture: mobileTexture,
     smartphoneBanking,
     smartphoneBankingHighlighted,
@@ -441,47 +330,6 @@ export const resources = {
     smartphoneShoppingHighlighted,
     smartphoneSocial,
     smartphoneSocialHighlighted,
-    // popupScene31: popupScene31Texture,
-    // popupScene32: popupScene32Texture,
-    // popupScene33: popupScene33Texture,
-    // popupScene34: popupScene34Texture,
-    // popupScene51: popupScene51Texture,
-    // popupScene52: popupScene52Texture,
-    // popupScene52Button11: popupScene52Button11Texture,
-    // popupScene52Button12: popupScene52Button12Texture,
-    // popupScene52Button21: popupScene52Button21Texture,
-    // popupScene52Button22: popupScene52Button22Texture,
-    // popupScene52Button31: popupScene52Button31Texture,
-    // popupScene52Button32: popupScene52Button32Texture,
-    // popupScene52Button41: popupScene52Button41Texture,
-    // popupScene52Button42: popupScene52Button42Texture,
-    // popupScene53: popupScene53Texture,
-    // popupScene54: popupScene54Texture,
-    // popupScene61: popupScene61Texture,
-    // popupScene62: popupScene62Texture,
-    // popupScene63: popupScene63Texture,
-    // popupScene64: popupScene64Texture,
-    // popupScene63Button11: popupScene63Button11Texture,
-    // popupScene63Button12: popupScene63Button12Texture,
-    // popupScene63Button21: popupScene63Button21Texture,
-    // popupScene63Button22: popupScene63Button22Texture,
-    // popupScene65: popupScene65Texture,
-    // popupScene71: popupScene71Texture,
-    // popupScene72: popupScene72Texture,
-    // popupScene73: popupScene73Texture,
-    // popupScene74: popupScene74Texture,
-    // popupScene8: popupScene8Texture,
-    //
-    // popupProtip11: popupProtip11Texture,
-    // popupProtip12: popupProtip12Texture,
-    // popupProtip21: popupProtip21Texture,
-    // popupProtip22: popupProtip22Texture,
-    // popupProtip31: popupProtip31Texture,
-    // popupProtip32: popupProtip32Texture,
-    // popupProtip41: popupProtip41Texture,
-    // popupProtip42: popupProtip42Texture,
-    // popupProtip51: popupProtip51Texture,
-    // popupProtip52: popupProtip52Texture,
     //
     buttonSquare: buttonSquareTexture,
     buttonSquarePressed: buttonSquarePressedTexture,
@@ -535,16 +383,6 @@ export const resources = {
     flagSchoolRed2: flagSchoolRed2Texture,
     flagStation1: flagStation1Texture,
     flagStation2: flagStation2Texture,
-    //
-    // wave1: wave1Texture,
-    // wave2: wave2Texture,
-    // wave3: wave3Texture,
-    // wave4: wave4Texture,
-    // wave5: wave5Texture,
-    //
-    // mapCloudLarge: mapCloudLargeTexture,
-    // mapCloudMedium: mapCloudMediumTexture,
-    // mapCloudSmall: mapCloudSmallTexture,
     //
     tramFront: tramFrontTexture,
     tramBack: tramBackTexture,
