@@ -270,6 +270,8 @@ import bankAlarmLightRight2Texture from '@/assets/image/bank/alarm-light/right-2
 //
 import buttonArrowTexture from '@/assets/image/buttons/arrow/unpressed.png'
 import buttonArrowPressedTexture from '@/assets/image/buttons/arrow/pressed.png'
+import buttonSkipTexture from '@/assets/image/buttons/skip/unpressed.png'
+import buttonSkipPressedTexture from '@/assets/image/buttons/skip/pressed.png'
 //
 import resultStrawHutBgTexture from '@/assets/image/strawhut/bg.png'
 import resultStrawHutFgTexture from '@/assets/image/strawhut/palm-trees.png'
@@ -335,6 +337,8 @@ export const resources = {
     buttonSquarePressed: buttonSquarePressedTexture,
     buttonArrow: buttonArrowTexture,
     buttonArrowPressed: buttonArrowPressedTexture,
+    buttonSkip: buttonSkipTexture,
+    buttonSkipPressed: buttonSkipPressedTexture,
     buttonShort: buttonShortTexture,
     buttonShortPressed: buttonShortPressedTexture,
     buttonLong: buttonLongTexture,

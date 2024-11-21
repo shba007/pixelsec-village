@@ -21,7 +21,7 @@ const dataStore = useDataStore()
 const gameStore = useGameStore()
 const { gamePause } = storeToRefs(gameStore)
 
-const secondScreen = ref(false)
+const popupIndex = ref(0)
 const wolf = reactive({ x: 280, y: 190, scale: 1.25, alpha: 1 })
 
 const socials = ref([
@@ -68,7 +68,7 @@ async function onShare(type: 'facebook' | 'instagram' | 'x') {
   window.open(finalShare, '_blank')
 }
 
-const emailPlaceholder = reactive({ x: 0, y: 190, scale: 0.5 })
+const emailPlaceholder = reactive({ x: 0, y: -200, scale: 0.5 })
 const emailPlaceholderRef = ref<any>(null)
 const emailInputBox = reactive({ x: 0, y: 0, width: 0, height: 0 })
 
@@ -117,7 +117,7 @@ function onSubmit(value: string) {
 
   setTimeout(() => {
     gameStore.playSFXSound('dialogBox')
-    secondScreen.value = true
+    popupIndex.value = 2
   }, 300)
 }
 
@@ -137,20 +137,31 @@ function playAgain() {
   }, 300)
 }
 
+function skip() {
+  isSkipPressed.value = true
+  gameStore.playSFXSound('buttonPress')
+
+  setTimeout(() => {
+    popupIndex.value = 2
+  }, 300)
+}
+
 const isGetYourFullReportPressed = ref(false)
-const isGetYourFullReportPressedDelayed = debouncedRef(isGetYourFullReportPressed, 300)
+// const isGetYourFullReportPressedDelayed = debouncedRef(isGetYourFullReportPressed, 300)
 
 const isPlayAgainPressed = ref(false)
+const isSkipPressed = ref(false)
 
 function handleGetfullReport() {
   isGetYourFullReportPressed.value = true
   gameStore.playSFXSound('buttonPress')
+  popupIndex.value = 1
 }
 </script>
 
 <template>
   <template v-if="!gamePause">
-    <AppPopup v-if="!secondScreen" :show-popup="!secondScreen" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
+    <AppPopup v-if="popupIndex == 0" :show-popup="popupIndex == 0" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
       <template #popupBg>
         <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
       </template>
@@ -186,11 +197,19 @@ function handleGetfullReport() {
           </Text>
         </template>
       </Container>
-      <Container v-if="!isGetYourFullReportPressedDelayed" :x="-100" :y="170" :scale="0.8">
+      <Container :x="-100" :y="170" :scale="0.8">
         <AppButton :x="0" :y="0" :scale="1.2" :font-size="34" text="GET FULL REPORT" type="long" :is-pressed="isGetYourFullReportPressed" @click="handleGetfullReport" />
         <AppButton :x="375 - 60" :y="0" :scale="1.2" :font-size="34" text="PLAY\nAGAIN" type="short" :is-pressed="isPlayAgainPressed" @click="playAgain" />
       </Container>
-      <Container v-else :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
+    </AppPopup>
+    <AppPopup v-else-if="popupIndex == 1" :show-popup="popupIndex == 1" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="true" button-type="skip" @next="popupIndex = 2">
+      <Container :x="titleText.x" :y="titleText.y - 120" :scale="contactText.scale">
+        <Text :x="0" :y="0" :style="contactText.style">
+          By providing your email above, you \nprovide consent to Affinidi to share \nthe latest services and offerings with \nyou by email, post or telephone. You \ncan unsubscribe from these
+          \ncommunications at any time by \nfollowing the instructions in the \ncommunications received.
+        </Text>
+      </Container>
+      <Container :x="emailPlaceholder.x" :y="emailPlaceholder.y" :scale="emailPlaceholder.scale">
         <Sprite ref="emailPlaceholderRef" :texture="'InputPlaceholder'" :texture-options="textureOptions" :anchor="0.5" :x="0" :y="0" :scale="1" :alpha="1" />
         <AppButton v-if="inputEmail?.length" type="arrow" :x="440" :y="0" :scale="0.65" :is-pressed="!!email?.length" @click="onSubmit(inputEmail!)" />
         <External class="absolute z-20 touch-none" :style="{ left: emailInputBox.x + 'px', top: emailInputBox.y + 'px' }">
@@ -205,7 +224,7 @@ function handleGetfullReport() {
         </External>
       </Container>
     </AppPopup>
-    <AppPopup :show-popup="secondScreen" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
+    <AppPopup v-else-if="popupIndex == 2" :show-popup="popupIndex == 2" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="false">
       <template #popupBg>
         <Wolf v-if="place === 'strawhut'" :x="wolf.x" :y="wolf.y" :scale="wolf.scale" :alpha="wolf.alpha" :flip="false" type="single" />
       </template>
@@ -221,7 +240,7 @@ function handleGetfullReport() {
         :anchor="0.5"
         cursor="pointer"
         @pointerdown="onShare(type)" />
-      <Container v-if="secondScreen" :x="-100" :y="170" :scale="0.8">
+      <Container v-if="popupIndex == 2" :x="-100" :y="170" :scale="0.8">
         <AppButton :x="375 - 60" :y="0" :scale="1.2" :font-size="34" text="PLAY\nAGAIN" type="short" :is-pressed="isPlayAgainPressed" @click="playAgain" />
       </Container>
     </AppPopup>

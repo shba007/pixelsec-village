@@ -8,7 +8,7 @@ const { textureOptions } = storeToRefs(gameStore)
 
 const props = withDefaults(
   defineProps<{
-    type: 'arrow' | 'short' | 'long'
+    type: 'arrow' | 'skip' | 'short' | 'long'
     text?: string
     x: number
     y: number
@@ -32,6 +32,9 @@ const button = computed(() => {
   switch (props.type) {
     case 'arrow':
       texture = !props.isPressed ? 'buttonArrow' : 'buttonArrowPressed'
+      break
+    case 'skip':
+      texture = !props.isPressed ? 'buttonSkip' : 'buttonSkipPressed'
       break
     case 'short':
       texture = !props.isPressed ? 'buttonShort' : 'buttonShortPressed'
