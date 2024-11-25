@@ -75,14 +75,14 @@ const isAllLoaded = computed(() => progress.value === 1 && isSoundLoaded.value &
 <template>
   <main class="relative bg-black" :class="{ 'overflow-hidden': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) }" @click="onStart">
     <section>
-      <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
+      <!-- <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
         <p>v0.5.8</p>
-        <!--  <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
+        <p>TimelineIndex: {{ gameStore.timelineIndex }}</p>
         <p>ScreenIndex: {{ gameStore.currentScreenIndex }}</p>
         <p>PopupIndex: {{ gameStore.currentPopupIndex }}</p>
         <p>SceneIndex: {{ gameStore.currentSceneIndex }}</p>
-        <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p> -->
-      </div>
+        <p>CharacterIndex: {{ gameStore.currentCharacterIndex }}</p>
+      </div> -->
       <!--  <div class="fixed right-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
         <button @click="gameStore.nextTimeline({ id: 666 })">Next Scene</button>
       </div> -->

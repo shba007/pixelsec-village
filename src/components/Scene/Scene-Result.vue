@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { resetApp } from '../../main'
+import { resetApp } from '@/main'
 import { ref, reactive, onMounted } from 'vue'
-import { debouncedRef, useIntervalFn } from '@vueuse/core'
+import { useIntervalFn } from '@vueuse/core'
 import { External } from 'vue3-pixi'
 import { storeToRefs } from 'pinia'
 
@@ -202,7 +202,7 @@ function handleGetfullReport() {
         <AppButton :x="375 - 60" :y="0" :scale="1.2" :font-size="34" text="PLAY\nAGAIN" type="short" :is-pressed="isPlayAgainPressed" @click="playAgain" />
       </Container>
     </AppPopup>
-    <AppPopup v-else-if="popupIndex == 1" :show-popup="popupIndex == 1" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="true" button-type="skip" @next="popupIndex = 2">
+    <AppPopup v-else-if="popupIndex == 1" :show-popup="popupIndex == 1" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="true" button-type="skip" @next="skip">
       <Container :x="titleText.x" :y="titleText.y - 120" :scale="contactText.scale">
         <Text :x="0" :y="0" :style="contactText.style">
           By providing your email above, you \nprovide consent to Affinidi to share \nthe latest services and offerings with \nyou by email, post or telephone. You \ncan unsubscribe from these
