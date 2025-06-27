@@ -205,7 +205,7 @@ function handleGetfullReport() {
     <AppPopup v-else-if="popupIndex == 1" :show-popup="popupIndex == 1" type="square" x="left" y="center" :zoom-factor="zoomFactor" :show-button="true" button-type="skip" @next="skip">
       <Container :x="titleText.x" :y="titleText.y - 120" :scale="contactText.scale">
         <Text :x="0" :y="0" :style="contactText.style">
-          By providing your email above, you \nprovide consent to Affinidi to share \nthe latest services and offerings with \nyou by email, post or telephone. You \ncan unsubscribe from these
+          By providing your email above, you \nprovide consent to Algostract to share \nthe latest services and offerings with \nyou by email, post or telephone. You \ncan unsubscribe from these
           \ncommunications at any time by \nfollowing the instructions in the \ncommunications received.
         </Text>
       </Container>

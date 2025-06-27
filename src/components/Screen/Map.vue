@@ -59,7 +59,7 @@ const screen = reactive<Asset>({
   alias: 'mapBg',
   states: [
     { x: -540, y: -250, scale: 1.64, alpha: 1, time: 0 * globalSpeedFactor },
-    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 1 * globalSpeedFactor }, // Welcome to Dataville
+    { x: -540, y: -250, scale: 1.64, alpha: 1, time: 1 * globalSpeedFactor }, // Welcome to PixelSec Village
     { x: -990, y: -560, scale: 1.96, alpha: 1, time: 5 * globalSpeedFactor },
     { x: -790, y: -630, scale: 2.02, alpha: 1, time: 6.55 * globalSpeedFactor }, // let the adventure begin
     { x: -715, y: -430, scale: 2.02, alpha: 1, time: 8.12 * globalSpeedFactor }, // choose your avater

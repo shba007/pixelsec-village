@@ -69,7 +69,7 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
         <Text :x="0" :y="0" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">You can</Text>
         <Text :x="188" :y="0" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="{ ...title1Text.style, fill: '#3464FD', stroke: '#3464FD' }">DISCOVER</Text>
         <Text :x="433" :y="0" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">your</Text>
-        <Text :x="0" :y="60" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">fragmented data across the\ndigital realm with Affinidi.</Text>
+        <Text :x="0" :y="60" :anchor="title1Text.anchor" :scale="title1Text.scale" :style="title1Text.style">fragmented data across the\ndigital realm with Algostract.</Text>
       </Container>
     </template>
     <template v-else-if="title === '2'">
@@ -90,7 +90,7 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
       <ProtipIcon :x="50" :y="-180 + 30" :scale="1.1" />
       <Container :x="title3Text.x" :y="title3Text.y + 30">
         <Text :x="0" :y="-100" :anchor="title3Text.anchor" :scale="title3Text.scale" :style="{ ...title3Text.style, fontSize: 54, lineHeight: 64, fill: '#9C38FB', stroke: '#9C38FB' }">PRO TIP:</Text>
-        <Text :y="0" :anchor="title3Text.anchor" :scale="title3Text.scale" :style="title3Text.style">You can\nyour data securely in\nAffinidi Vault and be\nin control.</Text>
+        <Text :y="0" :anchor="title3Text.anchor" :scale="title3Text.scale" :style="title3Text.style">You can\nyour data securely in\nAlgostract Vault and be\nin control.</Text>
         <Text :x="180" :y="0" :anchor="title3Text.anchor" :scale="title3Text.scale" :style="{ ...title3Text.style, fill: '#3464FD', stroke: '#3464FD' }">STORE</Text>
       </Container>
     </template>
@@ -104,7 +104,7 @@ const title5Text = reactive({ x: -225, y: -100, anchor: 0, scale: 1, style: { fo
         <Text :x="0" :y="39" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style">want to</Text>
         <Text :x="151" :y="39" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="{ ...title4Text.style, fill: '#3464FD', stroke: '#3464FD' }">SHARE</Text>
         <Text :x="289" :y="39" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style">what data with</Text>
-        <Text :x="0" :y="93" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style">anytime. It's easy to give consent\nwith Affinidi.</Text>
+        <Text :x="0" :y="93" :anchor="title4Text.anchor" :scale="title4Text.scale" :style="title4Text.style">anytime. It's easy to give consent\nwith Algostract.</Text>
       </Container>
     </template>
     <template v-else-if="title === '5'">

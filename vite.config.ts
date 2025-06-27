@@ -24,9 +24,9 @@ export default defineConfig({
       injectRegister: 'auto',
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Affindi Dataville',
-        short_name: 'Dataville',
-        description: 'Affindi Dataville',
+        name: 'PixelSec Village',
+        short_name: 'PixelSec Village',
+        description: 'PixelSec Village',
         theme_color: '#000000',
         background_color: '#000000',
         orientation: 'landscape',

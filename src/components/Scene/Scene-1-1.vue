@@ -44,7 +44,7 @@ const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { f
   <AppPopup :type="isLandscape ? 'landscape' : 'portrait'" x="center" y="center" :zoom-factor="zoomFactor" :show-button="isLandscape" @next="onNext">
     <template v-if="!isLandscape">
       <Container :x="titleText.x" :y="titleText.y">
-        <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> WELCOME TO\nDATAVILLE </Text>
+        <Text :y="-300" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> WELCOME TO\nPIXELSEC VILLAGE </Text>
         <Text :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"> Where your online\nhabits and choices\nwill shape the kind\nof house you live\nin. Let's go! </Text>
         <Text v-if="!isMobile.apple.phone" :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10" :y="330" :style="fullscreenText.style">Tap to full screen</Text>
         <Text v-else :anchor="fullscreenText.anchor" :scale="fullscreenText.scale" :x="10" :y="330" :style="fullscreenText.style">Swipe up and rotate!</Text>
@@ -53,7 +53,7 @@ const fullscreenText = reactive({ x: 0, y: 25, anchor: 0.5, scale: 1, style: { f
     </template>
     <template v-else>
       <Container :x="0" :y="20">
-        <Text :y="-160" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> WELCOME TO DATAVILLE </Text>
+        <Text :y="-160" :anchor="titleText.anchor" :scale="titleText.scale" :style="{ ...titleText.style, strokeThickness: titleText.style.strokeThickness * 2 }"> WELCOME TO PIXELSEC VILLAGE </Text>
         <Text :y="0" :anchor="titleText.anchor" :scale="titleText.scale" :style="titleText.style"> Where your online habits and\nchoices will shape the kind\nof house you live in. Let's go!</Text>
       </Container>
     </template>

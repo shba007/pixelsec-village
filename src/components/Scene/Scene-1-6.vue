@@ -95,7 +95,7 @@ export default {
 <template>
   <AppPopup type="landscape" x="center" y="center" :zoom-factor="zoomFactor" :show-button="false">
     <Container :x="titleText.x" :y="titleText.y">
-      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">TERMS AND CONDITIONS FOR\nAFFINIDI SERVICES</Text>
+      <Text :anchor="titleText.anchor" :style="titleText.style" :scale="titleText.scale">TERMS AND CONDITIONS FOR\nALGOSTRACT SERVICES</Text>
     </Container>
     <Sprite ref="boxPlaceholderRef" texture="popupScene05BG" :texture-options="textureOptions" :anchor="0.5" :x="boxPlaceholder.x" :y="boxPlaceholder.y" :scale="boxPlaceholder.scale" />
     <External
@@ -110,8 +110,8 @@ export default {
             <p class="paragraph sbold"><span>1.</span>General</p>
             <div class="ms-md-5 ms-4">
               <p class="paragraph">
-                <span>1.1.</span> <a href="index.html" class="link">www.affinidi.com</a> is a website operated by Affinity Pte. Ltd. (UEN: 202009233R) registered under the laws of the Republic of
-                Singapore. Together with its related entities from time to time, Affinity ID Network Pte. Ltd. shall be referred to as “Affinidi”, “our”, “us” and “we” in this Terms of Use.
+                <span>1.1.</span> <a href="index.html" class="link">www.algostract.com</a> is a website operated by Algostract registered under the laws of the Republic of
+                Singapore. Together with its related entities from time to time, Affinity ID Network Pte. Ltd. shall be referred to as “Algostract”, “our”, “us” and “we” in this Terms of Use.
               </p>
               <p class="paragraph">
                 <span>1.2.</span>
@@ -174,7 +174,7 @@ export default {
               </p>
               <p class="paragraph">
                 <span>3.4.</span>
-                In no event shall Affinidi be liable for any damages arising out of the use or inability to use the content on our website.
+                In no event shall Algostract be liable for any damages arising out of the use or inability to use the content on our website.
               </p>
             </div>
 
@@ -205,7 +205,7 @@ export default {
             <div class="ms-md-5 ms-4">
               <p class="paragraph">
                 <span>6.1.</span>
-                Affinidi may revise these terms of service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of
+                Algostract may revise these terms of service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of
                 service. Every time you wish to use our website, please check these terms to ensure you understand the terms that apply at that time. These terms were most recently updated on 16
                 October 2020.
               </p>

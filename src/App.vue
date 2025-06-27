@@ -73,7 +73,9 @@ const isAllLoaded = computed(() => progress.value === 1 && isSoundLoaded.value &
 </script>
 
 <template>
-  <main class="relative bg-black" :class="{ 'overflow-hidden': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) }" @click="onStart">
+  <main class="relative bg-black"
+    :class="{ 'overflow-hidden': isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) }"
+    @click="onStart">
     <section>
       <!-- <div class="fixed left-0 top-0 z-[99999] flex flex-col gap-2 bg-white p-2">
         <p>v0.5.8</p>
@@ -88,28 +90,26 @@ const isAllLoaded = computed(() => progress.value === 1 && isSoundLoaded.value &
       </div> -->
     </section>
     <AppLoader v-if="!isStarted" :progress="progress * 100" @loaded="isLoaderLoaded = true" />
-    <Application
-      class="relative z-10"
-      :width="screenWidth"
+    <Application class="relative z-10" :width="screenWidth"
       :height="screenHeight * (!isLandscape && isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) ? 1.3 : 1)"
-      :resolution="2"
-      :antialias="motionBlur"
-      power-preference="high-performance"
-      :clear-before-render="true">
+      :resolution="2" :antialias="motionBlur" power-preference="high-performance" :clear-before-render="true">
       <Loader :resources="{ ...resources.font, ...resources.image }" :on-progress="onProgress" :on-resolved="onResolve">
         <template #fallback>
-          <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{ Math.floor(progress * 99) }}% </Text>
+          <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{
+            Math.floor(progress * 99) }}% </Text>
         </template>
         <template #default>
           <Container :scale="1">
             <template v-if="!isStarted">
-              <Text v-if="!isAllLoaded" :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style">Loading... 99%</Text>
+              <Text v-if="!isAllLoaded" :x="loadingText.x" :y="loadingText.y" :anchor="0.5"
+                :style="loadingText.style">Loading... 99%</Text>
               <Container v-else :x="loadingText.x" :y="loadingText.y" :scale="0.65">
                 <AppButton type="long" text="Start Game" :x="0" :y="0" :scale="1" :is-pressed="isPressed" />
               </Container>
             </template>
             <template v-else>
-              <ScreenMap v-if="currentScreenIndex <= 6" :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
+              <ScreenMap v-if="currentScreenIndex <= 6"
+                :is-load="currentScreenIndex === 0 || currentScreenIndex === 2 || currentScreenIndex === 4 || currentScreenIndex === 6" />
               <ScreenStation v-if="currentScreenIndex === 1" />
               <ScreenPark v-else-if="currentScreenIndex === 3" />
               <ScreenBank v-else-if="currentScreenIndex === 5" />
