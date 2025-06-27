@@ -92,7 +92,7 @@ const isAllLoaded = computed(() => progress.value === 1 && isSoundLoaded.value &
     <AppLoader v-if="!isStarted" :progress="progress * 100" @loaded="isLoaderLoaded = true" />
     <Application class="relative z-10" :width="screenWidth"
       :height="screenHeight * (!isLandscape && isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) ? 1.3 : 1)"
-      :resolution="2" :antialias="motionBlur" power-preference="high-performance" :clear-before-render="true">
+      :resolution="1" :antialias="motionBlur" power-preference="high-performance" :clear-before-render="true">
       <Loader :resources="{ ...resources.font, ...resources.image }" :on-progress="onProgress" :on-resolved="onResolve">
         <template #fallback>
           <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{
