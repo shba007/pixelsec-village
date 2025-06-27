@@ -17,10 +17,17 @@ import ScreenPark from '@/components/Screen/Park.vue'
 import ScreenBank from '@/components/Screen/Bank.vue'
 import ScreenResult from '@/components/Screen/Result.vue'
 import SceneExperience from '@/components/Scene/Scene-Experience.vue'
+import { watchArray } from '@vueuse/core'
 
 const gameStore = useGameStore()
 const { currentScreenIndex, gamePause, motionBlur, isLandscape, isSoundLoaded, isSoundPlayed, isStarted, isPressed } = storeToRefs(gameStore)
 const { width: screenWidth, height: screenHeight } = useWindowSize()
+
+const isWindowResized = ref(false)
+
+watchArray([screenWidth, screenHeight], () => {
+  isWindowResized.value = true
+})
 
 const progress = ref(0)
 const loadingText = computed(() => ({
@@ -92,14 +99,14 @@ const isAllLoaded = computed(() => progress.value === 1 && isSoundLoaded.value &
     <AppLoader v-if="!isStarted" :progress="progress * 100" @loaded="isLoaderLoaded = true" />
     <Application class="relative z-10" :width="screenWidth"
       :height="screenHeight * (!isLandscape && isMobile.apple.phone && isStarted && (currentScreenIndex === 0 || gamePause) ? 1.3 : 1)"
-      :resolution="1" :antialias="motionBlur" power-preference="high-performance" :clear-before-render="true">
+      :resolution="4" :antialias="motionBlur" power-preference="high-performance" :clear-before-render="true">
       <Loader :resources="{ ...resources.font, ...resources.image }" :on-progress="onProgress" :on-resolved="onResolve">
         <template #fallback>
           <Text :x="loadingText.x" :y="loadingText.y" :anchor="0.5" :style="loadingText.style"> Loading... {{
             Math.floor(progress * 99) }}% </Text>
         </template>
         <template #default>
-          <Container :scale="1">
+          <Container :scale="isWindowResized ? 1 : 1 / 4">
             <template v-if="!isStarted">
               <Text v-if="!isAllLoaded" :x="loadingText.x" :y="loadingText.y" :anchor="0.5"
                 :style="loadingText.style">Loading... 99%</Text>
