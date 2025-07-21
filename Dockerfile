@@ -11,7 +11,7 @@ RUN bun install --frozen-lockfile
 
 COPY . .
 
-RUN pnpm build
+RUN bun run build
 
 FROM oven/bun:1-alpine AS runner
 
