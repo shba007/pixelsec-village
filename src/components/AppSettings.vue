@@ -36,5 +36,5 @@ export const textureOptions = { scaleMode: 0 }
 </script>
 
 <template>
-  <div></div>
+  <div />
 </template>

@@ -7,5 +7,5 @@ gameStore.nextTimeline({ id: 2 })
 </script>
 
 <template>
-  <div></div>
+  <div />
 </template>

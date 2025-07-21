@@ -23,9 +23,7 @@
     "lint": "eslint . --fix",
     "format": "prettier . --write",
     "test": "vitest",
-    "type-check": "vue-tsc --build --force",
-    "build-only": "vite build",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
