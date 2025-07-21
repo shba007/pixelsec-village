@@ -61,7 +61,7 @@ const alarmLight = ref([
 const panicSpeedFactor = 0.7
 const charactersPanic = ref([
   {
-    type: 'green',
+    type: 'green' as const,
     states: [
       { x: 1030 - 1975, y: 120, scale: 0.75, alpha: 0, time: 0 * panicSpeedFactor },
       { x: 950 - 1975, y: 130, scale: 0.75, alpha: 1, time: 0.25 * panicSpeedFactor },
@@ -70,7 +70,7 @@ const charactersPanic = ref([
     ],
   },
   {
-    type: 'purple',
+    type: 'purple' as const,
     states: [
       { x: 1220 - 1975, y: 150, scale: 0.75, alpha: 0, time: 0 * panicSpeedFactor },
       { x: 1150 - 1975, y: 170, scale: 0.75, alpha: 1, time: 0.5 * panicSpeedFactor },
@@ -197,13 +197,7 @@ useTimeoutFn(() => {
     <Door :x="door.x" :y="door.y" :scale="door.scale" place="bank" :playing="true" />
     <AlarmBell :x="alarmBell.x" :y="alarmBell.y" :scale="alarmBell.scale" place="bank" />
     <template v-if="!gamePause">
-      <CharacterPanic
-        v-for="({ type, states }, index) of charactersPanic"
-        :key="index"
-        :states="states"
-        place="bank"
-        :play-sound="screen.animation === 'init' && type === 'purple'"
-        :type="type as 'purple' | 'green'" />
+      <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" place="bank" :play-sound="screen.animation === 'init' && type === 'purple'" :type="type" />
     </template>
     <AlarmLight v-for="({ type, x, y, scale }, index) of alarmLight" :key="index" :type="type" :x="x" :y="y" :scale="scale" />
     <CharacterGuard :state="characterGuard" place="bank" />

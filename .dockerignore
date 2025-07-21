@@ -1,0 +1,29 @@
+# Git/Github
+.git
+.github
+.gitignore
+
+# Vue dev/build outputs
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Testing
+coverage
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Env files
+.env*
+
+# Dockerfile
+.dockerignore
+Dockerfile

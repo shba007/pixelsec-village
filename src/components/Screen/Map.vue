@@ -297,7 +297,7 @@ const car = reactive({
   y: 1500,
   scale: 1,
   widthRange: 50,
-  direction: -1,
+  direction: -1 as const,
 })
 
 const fence = reactive({
@@ -368,7 +368,7 @@ const charactersGeneric = ref<State[][]>([
 const panicSpeedFactor = 0.5
 const charactersPanic = ref([
   {
-    type: 'green',
+    type: 'green' as const,
     states: [
       { x: 1110, y: 1752.5, scale: 0.425, alpha: 1, time: 0.2 * panicSpeedFactor },
       { x: 1030, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: (0.25 + 0.7) * panicSpeedFactor },
@@ -378,7 +378,7 @@ const charactersPanic = ref([
     ],
   },
   {
-    type: 'purple',
+    type: 'purple' as const,
     states: [
       { x: 1140, y: 1752.5, scale: 0.425, alpha: 0, time: 0 * panicSpeedFactor },
       { x: 1080, y: 1752.5 + 5, scale: 0.425, alpha: 1, time: (0.25 + 0.8) * panicSpeedFactor },
@@ -565,14 +565,14 @@ function transformY(y: number) {
       <CharacterGeneric v-for="(states, index) of charactersGeneric" :key="index" :states="states" :animation="true" place="map" />
       <Door :x="door.x" :y="door.y" :scale="door.scale" :playing="currentCharacterIndex === 16" place="map" />
       <template v-if="currentCharacterIndex === 16">
-        <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :play-sound="type === 'purple'" :type="type as 'purple' | 'green'" place="map" />
+        <CharacterPanic v-for="({ type, states }, index) of charactersPanic" :key="index" :states="states" :play-sound="type === 'purple'" :type="type" place="map" />
       </template>
       <CharacterIcecreamVendor place="map" :state="characterIcecreamVendor.state" />
       <CharacterGuard place="map" :state="characterGuard.state" />
       <CharacterBaloonVendor :state="characterBaloonVendor.state" />
       <BaloonStand :x="baloonStand.x" :y="baloonStand.y" :scale="baloonStand.scale" place="map" />
       <AppSign :x="appSign.x" :y="appSign.y" :scale="appSign.scale" />
-      <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction as -1 | 1" />
+      <Car :x="car.x" :y="car.y" :scale="car.scale" :width-range="car.widthRange" :direction="car.direction" />
       <Boat v-for="({ x, y, scale }, index) of boats" :key="index" :x="x" :y="y" :scale="scale" />
     </Container>
   </Container>

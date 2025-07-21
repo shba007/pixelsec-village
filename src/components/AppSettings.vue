@@ -35,4 +35,6 @@ onMounted(loop)
 export const textureOptions = { scaleMode: 0 }
 </script>
 
-<template></template>
+<template>
+  <div></div>
+</template>

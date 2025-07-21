@@ -110,8 +110,8 @@ export default {
             <p class="paragraph sbold"><span>1.</span>General</p>
             <div class="ms-md-5 ms-4">
               <p class="paragraph">
-                <span>1.1.</span> <a href="index.html" class="link">www.algostract.com</a> is a website operated by Algostract registered under the laws of the Republic of
-                Singapore. Together with its related entities from time to time, Affinity ID Network Pte. Ltd. shall be referred to as “Algostract”, “our”, “us” and “we” in this Terms of Use.
+                <span>1.1.</span> <a href="index.html" class="link">www.algostract.com</a> is a website operated by Algostract registered under the laws of the Republic of Singapore. Together with its
+                related entities from time to time, Affinity ID Network Pte. Ltd. shall be referred to as “Algostract”, “our”, “us” and “we” in this Terms of Use.
               </p>
               <p class="paragraph">
                 <span>1.2.</span>
@@ -205,8 +205,8 @@ export default {
             <div class="ms-md-5 ms-4">
               <p class="paragraph">
                 <span>6.1.</span>
-                Algostract may revise these terms of service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of
-                service. Every time you wish to use our website, please check these terms to ensure you understand the terms that apply at that time. These terms were most recently updated on 16
+                Algostract may revise these terms of service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms
+                of service. Every time you wish to use our website, please check these terms to ensure you understand the terms that apply at that time. These terms were most recently updated on 16
                 October 2020.
               </p>
               <p class="paragraph">

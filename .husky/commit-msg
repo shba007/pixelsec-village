@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+#Lint Commit
+bun x commitlint --edit $1

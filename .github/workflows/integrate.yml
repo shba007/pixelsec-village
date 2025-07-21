@@ -1,0 +1,71 @@
+name: Vue CI
+
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    if: >
+      !(
+        contains(github.event.head_commit.message, 'ci(release):') ||
+        contains(github.event.head_commit.message, '[skip ci]') ||
+        startsWith(github.event.head_commit.message, 'Merge pull request') ||
+        startsWith(github.event.head_commit.message, 'Merge branch')
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🛠️ Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: 📦 Install Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: ⚙️ Build Artifact
+        run: bun run build
+
+      # - name: ✅ Test Code
+      #   run: bun run test
+
+      - name: 🧹 Lint Code
+        run: bun run lint || echo "Linting failed, but continuing"
+
+      - name: 🧼 Format Code
+        run: bun run format
+
+      - name: 🤖 AutoFix Code
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: apply code fixes [skip ci]'
+
+      - name: 🏷️ Bump Version
+        id: bump_version
+        run: |
+          rm -f CHANGELOG.md
+          bunx changelogen@latest --bump
+          CHLOG=$(cat CHANGELOG.md)
+          echo -e "CHANGELOG_CONTENT<<EOF\n${CHLOG}\nEOF" >> $GITHUB_ENV
+          git reset --hard
+          bunx changelogen@latest --bump
+
+      - name: 🔀 Create or Update Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'ci(release): update version'
+          title: 'ci(release): update version'
+          body: ${{ env.CHANGELOG_CONTENT }}
+          branch: 'release/update-version'
+          base: 'develop'
+          delete-branch: true

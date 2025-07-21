@@ -6,4 +6,6 @@ const gameStore = useGameStore()
 gameStore.nextTimeline({ id: 2 })
 </script>
 
-<template></template>
+<template>
+  <div></div>
+</template>
