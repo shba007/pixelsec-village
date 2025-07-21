@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.5.11
+
+[compare changes](https://github.com/shba007/pixelsec-village/compare/v0.5.10...v0.5.11)
+
+### 🩹 Fixes
+
+- Update deploy workflow for improved artifact handling and Docker setup ([67fbf24](https://github.com/shba007/pixelsec-village/commit/67fbf24))
+
+### ❤️ Contributors
+
+- Shba007 ([@shba007](https://github.com/shba007))
+
 ## v0.5.10
 
 ### 🚀 Enhancements
